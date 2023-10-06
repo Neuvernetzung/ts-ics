@@ -1,4 +1,5 @@
 import { getLine } from "@/lib/parse/utils/line";
+
 import { parseIcsRecurrenceId } from "../..";
 
 it("Test Ics Recurrence Id Parse", async () => {

@@ -17,7 +17,7 @@ import { icsTimezoneToObject } from "./timezone";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 
-export const icsCalendarToObject = (calendarString: string) => {
+export const icsCalendarToObject = (calendarString: string): VCalendar => {
   const cleanedFileString = calendarString.replace(replaceCalendarRegex, "");
 
   const lines = splitLines(
@@ -59,8 +59,8 @@ export const icsCalendarToObject = (calendarString: string) => {
     set(calendar, "events", events);
   }
 
-  return calendar as VCalendar; // TODO: parsen
+  return calendar as VCalendar;
 };
 
-export const parseIcsCalendar = (calendarString: string) =>
+export const parseIcsCalendar = (calendarString: string): VCalendar =>
   zVCalendar.parse(icsCalendarToObject(calendarString));

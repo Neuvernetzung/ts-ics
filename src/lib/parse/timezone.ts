@@ -1,23 +1,23 @@
 import set from "lodash/set";
 
 import {
-  VTIMEZONE_KEYS,
-  VTIMEZONE_TO_OBJECT_KEYS,
-  VTimezoneKey,
-} from "@/constants/keys/timezone";
-
-import { icsDateTimeToDateTime } from "./date";
-import { getLine } from "./utils/line";
-import { splitLines } from "./utils/splitLines";
-import {
   getTimezoneDaylightRegex,
   getTimezoneStandardRegex,
   replaceTimezoneRegex,
 } from "@/constants";
-import { icsTimezonePropToObject } from "./timezoneProp";
-import { type VTimezoneProp, zVTimezone } from "@/types/timezone";
+import {
+  VTIMEZONE_KEYS,
+  VTIMEZONE_TO_OBJECT_KEYS,
+  VTimezoneKey,
+} from "@/constants/keys/timezone";
+import { type VTimezoneProp, zVTimezone, VTimezone } from "@/types/timezone";
 
-export const icsTimezoneToObject = (rawTimezoneString: string) => {
+import { icsDateTimeToDateTime } from "./date";
+import { icsTimezonePropToObject } from "./timezoneProp";
+import { getLine } from "./utils/line";
+import { splitLines } from "./utils/splitLines";
+
+export const icsTimezoneToObject = (rawTimezoneString: string): VTimezone => {
   const timezoneString = rawTimezoneString.replace(replaceTimezoneRegex, "");
 
   const lines = splitLines(
@@ -68,8 +68,8 @@ export const icsTimezoneToObject = (rawTimezoneString: string) => {
     });
   }
 
-  return timezone;
+  return timezone as VTimezone;
 };
 
-export const parseIcsTimezone = (timezoneString: string) =>
+export const parseIcsTimezone = (timezoneString: string): VTimezone =>
   zVTimezone.parse(icsTimezoneToObject(timezoneString));

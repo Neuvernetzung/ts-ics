@@ -1,13 +1,14 @@
-import { getKeys } from "./utils/getKeys";
+import { VTIMEZONE_TO_KEYS } from "@/constants/keys/timezone";
+import type { VTimezone } from "@/types/timezone";
+
+import { generateIcsDateTime } from "./date";
+import { generateIcsTimezoneProp } from "./timezoneProp";
 import {
   generateIcsLine,
   getIcsEndLine,
   getIcsStartLine,
 } from "./utils/addLine";
-import type { VTimezone } from "@/types/timezone";
-import { VTIMEZONE_TO_KEYS } from "@/constants/keys/timezone";
-import { generateIcsTimezoneProp } from "./timezoneProp";
-import { generateIcsDateTime } from "./date";
+import { getKeys } from "./utils/getKeys";
 
 export const generateIcsTimezone = (timezone: VTimezone) => {
   const timezoneKeys = getKeys(timezone);

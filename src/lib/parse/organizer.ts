@@ -1,4 +1,5 @@
 import { type Organizer, zOrganizer } from "@/types/organizer";
+
 import { replaceMailTo } from "./utils/replaceMailTo";
 
 export const icsOrganizerToObject = (
@@ -14,4 +15,5 @@ export const icsOrganizerToObject = (
 export const parseIcsOrganizer = (
   organizerString: string,
   options?: Record<string, string>
-) => zOrganizer.parse(icsOrganizerToObject(organizerString, options));
+): Organizer =>
+  zOrganizer.parse(icsOrganizerToObject(organizerString, options));

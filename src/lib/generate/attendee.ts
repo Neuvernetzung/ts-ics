@@ -2,9 +2,9 @@ import compact from "lodash/compact";
 
 import type { Attendee } from "@/types/attendee";
 
+import { generateIcsMail } from "./mail";
 import { generateIcsLine } from "./utils/addLine";
 import { generateIcsOptions } from "./utils/generateOptions";
-import { generateIcsMail } from "./mail";
 
 export const generateIcsAttendee = (attendee: Attendee, key: string) => {
   const options = generateIcsOptions(

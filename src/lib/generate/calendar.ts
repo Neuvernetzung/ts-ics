@@ -8,8 +8,8 @@ import {
   getIcsEndLine,
   getIcsStartLine,
 } from "./utils/addLine";
-import { getKeys } from "./utils/getKeys";
 import { formatLines } from "./utils/formatLines";
+import { getKeys } from "./utils/getKeys";
 
 export const generateIcsCalendar = (calendar: VCalendar) => {
   const calendarKeys = getKeys(calendar);

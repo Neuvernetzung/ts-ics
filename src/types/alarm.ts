@@ -1,13 +1,22 @@
 import { z } from "zod";
 
-import { zAttachment } from "./attachment";
-import { zAttendee } from "./attendee";
-import { zVEventDuration } from "./duration";
-import { zVEventTrigger } from "./trigger";
+import { Attachment, zAttachment } from "./attachment";
+import { type Attendee, zAttendee } from "./attendee";
+import { type VEventDuration, zVEventDuration } from "./duration";
+import { type VEventTrigger, zVEventTrigger } from "./trigger";
 
-export type VAlarm = z.infer<typeof zVAlarm>;
+export type VAlarm = {
+  action?: string;
+  description?: string;
+  trigger: VEventTrigger;
+  attendees?: Attendee[];
+  duration?: VEventDuration;
+  repeat?: number;
+  summary?: string;
+  attachments?: Attachment[];
+};
 
-export const zVAlarm = z.object({
+export const zVAlarm: z.ZodType<VAlarm> = z.object({
   action: z.string().default("DISPLAY"),
   description: z.string().optional(),
   trigger: zVEventTrigger,

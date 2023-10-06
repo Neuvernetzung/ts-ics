@@ -1,6 +1,7 @@
 export * from "./alarm";
-export * from "./calendar";
+export * from "./attachment";
 export * from "./attendee";
+export * from "./calendar";
 export * from "./date";
 export * from "./duration";
 export * from "./event";
@@ -12,4 +13,3 @@ export * from "./timezone";
 export * from "./timezoneProp";
 export * from "./trigger";
 export * from "./weekdayNumber";
-export * from "./attachment";

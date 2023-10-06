@@ -1,7 +1,9 @@
-import { VEventRecurrenceRule } from "@/types";
-import { generateIcsOptions } from "./utils/generateOptions";
-import { generateIcsLine } from "./utils/addLine";
 import compact from "lodash/compact";
+
+import { VEventRecurrenceRule } from "@/types";
+
+import { generateIcsLine } from "./utils/addLine";
+import { generateIcsOptions } from "./utils/generateOptions";
 import { generateIcsWeekdayNumber } from "./weekdayNumber";
 
 export const generateIcsRecurrenceRule = (value: VEventRecurrenceRule) => {

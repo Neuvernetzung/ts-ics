@@ -1,2 +1,2 @@
-export * from "./symbols";
 export * from "./regex";
+export * from "./symbols";

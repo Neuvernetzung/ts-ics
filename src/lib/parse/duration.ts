@@ -59,5 +59,5 @@ export const icsDurationToObject = (durationString: string): VEventDuration => {
   return duration as VEventDuration;
 };
 
-export const parseIcsDuration = (durationString: string) =>
+export const parseIcsDuration = (durationString: string): VEventDuration =>
   zVEventDuration.parse(icsDurationToObject(durationString));

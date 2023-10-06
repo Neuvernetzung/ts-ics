@@ -19,4 +19,5 @@ export const icsAttachmentToObject = (
 export const parseIcsAttachment = (
   attachmentString: string,
   options?: Record<string, string>
-) => zAttachment.parse(icsAttachmentToObject(attachmentString, options));
+): Attachment =>
+  zAttachment.parse(icsAttachmentToObject(attachmentString, options));

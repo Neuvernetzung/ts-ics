@@ -1,4 +1,5 @@
 import { getLine } from "@/lib/parse/utils/line";
+
 import { parseIcsRecurrenceRule } from "../..";
 
 it("Test Ics Recurrence Rule Parse", async () => {

@@ -1,5 +1,5 @@
-import { getLine } from "@/lib/parse/utils/line";
 import { parseIcsAttachment } from "@/lib/parse/attachment";
+import { getLine } from "@/lib/parse/utils/line";
 
 it("Test Ics Attachment Parse", async () => {
   const attachment = `ATTACH:CID:jsmith.part3.960817T083000.xyzMail@example.com`;

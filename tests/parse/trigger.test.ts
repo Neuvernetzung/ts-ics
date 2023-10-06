@@ -1,4 +1,5 @@
 import { getLine } from "@/lib/parse/utils/line";
+
 import { parseIcsTrigger } from "../..";
 
 it("Test Ics Trigger Parse", async () => {

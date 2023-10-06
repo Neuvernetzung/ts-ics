@@ -6,18 +6,18 @@ import {
   VALARM_TO_OBJECT_KEYS,
   VAlarmKey,
 } from "@/constants/keys/alarm";
-import { zVAlarm } from "@/types";
+import { VAlarm, zVAlarm } from "@/types";
 import type { Attachment } from "@/types/attachment";
+import { Attendee } from "@/types/attendee";
 
 import { icsAttachmentToObject } from "./attachment";
+import { icsAttendeeToObject } from "./attendee";
 import { icsDurationToObject } from "./duration";
 import { icsTriggerToObject } from "./trigger";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
-import { Attendee } from "@/types/attendee";
-import { icsAttendeeToObject } from "./attendee";
 
-export const icsAlarmToObject = (rawAlarmString: string) => {
+export const icsAlarmToObject = (rawAlarmString: string): VAlarm => {
   const alarmString = rawAlarmString.replace(replaceAlarmRegex, "");
 
   const lines = splitLines(VALARM_KEYS, alarmString);
@@ -71,8 +71,8 @@ export const icsAlarmToObject = (rawAlarmString: string) => {
     set(alarm, "attendees", attendees);
   }
 
-  return alarm;
+  return alarm as VAlarm;
 };
 
-export const parseIcsAlarm = (rawAlarmString: string) =>
+export const parseIcsAlarm = (rawAlarmString: string): VAlarm =>
   zVAlarm.parse(icsAlarmToObject(rawAlarmString));
