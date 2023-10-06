@@ -1,0 +1,9 @@
+src
+.github
+.changeset
+package-lock.json
+node_modules
+CHANGELOG.md
+**/**.tsbuildinfo
+.env
+tsup.config.ts
