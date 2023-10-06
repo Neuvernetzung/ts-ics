@@ -7,3 +7,9 @@ CHANGELOG.md
 **/**.tsbuildinfo
 .env
 tsup.config.ts
+src
+benchmark
+jest.config.ts
+.gitignore
+tsconfig.json
+tsup.config.ts
