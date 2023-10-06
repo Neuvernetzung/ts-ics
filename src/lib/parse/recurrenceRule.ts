@@ -90,5 +90,7 @@ export const icsRecurrenceRuleToObject = (
   return rule as VEventRecurrenceRule;
 };
 
-export const parseIcsRecurrenceRule = (ruleString: string) =>
+export const parseIcsRecurrenceRule = (
+  ruleString: string
+): VEventRecurrenceRule =>
   zVEventRecurrenceRule.parse(icsRecurrenceRuleToObject(ruleString));

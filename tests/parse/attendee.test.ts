@@ -1,4 +1,5 @@
 import { getLine } from "@/lib/parse/utils/line";
+
 import { parseIcsAttendee } from "../..";
 
 it("Test Ics Attendee Parse", async () => {

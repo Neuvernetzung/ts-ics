@@ -1,8 +1,17 @@
 import { z } from "zod";
 
-export type Attendee = z.infer<typeof zAttendee>;
+export type Attendee = {
+  email: string;
+  name?: string;
+  member?: string;
+  delegatedFrom?: string;
+  role?: string;
+  partstat?: string;
+  dir?: string;
+  sentBy?: string;
+};
 
-export const zAttendee = z.object({
+export const zAttendee: z.ZodType<Attendee> = z.object({
   email: z.string().email(),
   name: z.string().optional(),
   member: z.string().email().optional(),

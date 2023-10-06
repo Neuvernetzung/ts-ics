@@ -1,10 +1,13 @@
 import { z } from "zod";
 
-import { zDateObject } from "./date";
+import { type DateObject, zDateObject } from "./date";
 
-export type RecurrenceId = z.infer<typeof zRecurrenceId>;
+export type RecurrenceId = {
+  range?: "THISANDFUTURE";
+  value: DateObject;
+};
 
-export const zRecurrenceId = z.object({
+export const zRecurrenceId: z.ZodType<RecurrenceId> = z.object({
   range: z.literal("THISANDFUTURE").optional(),
   value: zDateObject,
 });

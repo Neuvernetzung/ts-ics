@@ -1,7 +1,9 @@
+import compact from "lodash/compact";
+
 import { Attachment } from "@/types/attachment";
+
 import { generateIcsLine } from "./utils/addLine";
 import { generateIcsOptions } from "./utils/generateOptions";
-import compact from "lodash/compact";
 
 export const generateIcsAttachment = (attachment: Attachment) => {
   if (attachment.type === "uri") {

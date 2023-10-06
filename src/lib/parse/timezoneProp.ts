@@ -1,10 +1,5 @@
-import {
-  type VTimezonePropType,
-  zVTimezoneProp,
-  VTimezoneProp,
-} from "@/types/timezone";
-import { splitLines } from "./utils/splitLines";
-import { getLine } from "./utils/line";
+import set from "lodash/set";
+
 import {
   replaceTimezoneDaylightRegex,
   replaceTimezoneStandardRegex,
@@ -14,15 +9,22 @@ import {
   VTIMEZONE_PROP_TO_OBJECT_KEYS,
   type VTimezonePropKey,
 } from "@/constants/keys/timezoneProp";
-import set from "lodash/set";
+import {
+  VTimezoneProp,
+  VTimezonePropType,
+  zVTimezoneProp,
+} from "@/types/timezone";
+
 import { icsDateTimeToDateTime } from "./date";
 import { icsRecurrenceRuleToObject } from "./recurrenceRule";
 import { icsTimeStampToObject } from "./timeStamp";
+import { getLine } from "./utils/line";
+import { splitLines } from "./utils/splitLines";
 
 export const icsTimezonePropToObject = (
   rawTimezonePropString: string,
   type?: VTimezonePropType
-) => {
+): VTimezoneProp => {
   const timezonePropString = rawTimezonePropString
     .replace(replaceTimezoneStandardRegex, "")
     .replace(replaceTimezoneDaylightRegex, "");
@@ -62,4 +64,5 @@ export const icsTimezonePropToObject = (
 export const parseIcsTimezoneProp = (
   rawTimezonePropString: string,
   type?: VTimezonePropType
-) => zVTimezoneProp.parse(icsTimezonePropToObject(rawTimezonePropString, type));
+): VTimezoneProp =>
+  zVTimezoneProp.parse(icsTimezonePropToObject(rawTimezonePropString, type));

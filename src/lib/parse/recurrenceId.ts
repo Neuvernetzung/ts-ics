@@ -1,4 +1,5 @@
 import { RecurrenceId, zRecurrenceId } from "@/types/recurrenceId";
+
 import { icsTimeStampToObject } from "./timeStamp";
 
 export const icsRecurrenceIdToObject = (
@@ -12,4 +13,5 @@ export const icsRecurrenceIdToObject = (
 export const parseIcsRecurrenceId = (
   recurrenceIdString: string,
   options?: Record<string, string>
-) => zRecurrenceId.parse(icsRecurrenceIdToObject(recurrenceIdString, options));
+): RecurrenceId =>
+  zRecurrenceId.parse(icsRecurrenceIdToObject(recurrenceIdString, options));

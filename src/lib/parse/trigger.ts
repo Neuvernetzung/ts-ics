@@ -29,4 +29,4 @@ export const icsTriggerToObject = (
 export const parseIcsTrigger = (
   value: string,
   options?: Record<string, string>
-) => zVEventTrigger.parse(icsTriggerToObject(value, options));
+): VEventTrigger => zVEventTrigger.parse(icsTriggerToObject(value, options));

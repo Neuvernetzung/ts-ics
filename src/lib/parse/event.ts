@@ -9,16 +9,16 @@ import {
 import { VEvent, zVEvent } from "@/types";
 import type { Attendee } from "@/types/attendee";
 
+import {
+  objectKeyIsArrayOfStrings,
+  objectKeyIsTimeStamp,
+} from "../../constants/keyTypes/event";
 import { icsAlarmToObject } from "./alarm";
 import { icsAttendeeToObject } from "./attendee";
 import { icsDurationToObject } from "./duration";
 import { icsOrganizerToObject } from "./organizer";
 import { icsRecurrenceRuleToObject } from "./recurrenceRule";
 import { icsTimeStampToObject } from "./timeStamp";
-import {
-  objectKeyIsArrayOfStrings,
-  objectKeyIsTimeStamp,
-} from "../../constants/keyTypes/event";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 
@@ -94,5 +94,5 @@ export const icsEventToObject = (rawEventString: string): VEvent => {
   return event as VEvent;
 };
 
-export const parseIcsEvent = (file: string) =>
+export const parseIcsEvent = (file: string): VEvent =>
   zVEvent.parse(icsEventToObject(file));

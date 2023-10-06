@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const icsDateToDate = (date: string) => {
+export const icsDateToDate = (date: string): Date => {
   const year = parseInt(date.slice(0, 4), 10);
   const month = parseInt(date.slice(4, 6), 10) - 1; // Monate in JavaScript sind 0-basiert
   const day = parseInt(date.slice(6, 8), 10);
@@ -28,5 +28,5 @@ export const icsDateTimeToDateTime = (date: string) => {
   return newDate;
 };
 
-export const parseIcsDateTime = (date: string) =>
+export const parseIcsDateTime = (date: string): Date =>
   z.date().parse(icsDateTimeToDateTime(date));

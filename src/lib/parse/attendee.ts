@@ -1,4 +1,5 @@
 import { Attendee, zAttendee } from "@/types/attendee";
+
 import { replaceMailTo } from "./utils/replaceMailTo";
 
 export const icsAttendeeToObject = (
@@ -20,4 +21,4 @@ export const icsAttendeeToObject = (
 export const parseIcsAttendee = (
   attendeeString: string,
   options?: Record<string, string>
-) => zAttendee.parse(icsAttendeeToObject(attendeeString, options));
+): Attendee => zAttendee.parse(icsAttendeeToObject(attendeeString, options));

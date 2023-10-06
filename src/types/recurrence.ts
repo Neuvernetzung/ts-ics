@@ -1,7 +1,12 @@
 import { z } from "zod";
 
-import { zDateObject } from "./date";
-import { weekDays, zWeekdayNumberObject } from "./weekday";
+import { type DateObject, zDateObject } from "./date";
+import {
+  type WeekDay,
+  type WeekdayNumberObject,
+  weekDays,
+  zWeekdayNumberObject,
+} from "./weekday";
 
 export const recurrenceRuleFrequencies = [
   "SECONDLY",
@@ -16,9 +21,24 @@ export const recurrenceRuleFrequencies = [
 export type RecurrenceRuleFrequencies = typeof recurrenceRuleFrequencies;
 export type RecurrenceRuleFrequency = RecurrenceRuleFrequencies[number];
 
-export type VEventRecurrenceRule = z.infer<typeof zVEventRecurrenceRule>;
+export type VEventRecurrenceRule = {
+  frequency: RecurrenceRuleFrequency;
+  until?: DateObject;
+  count?: number;
+  interval?: number;
+  bySecond?: number[];
+  byMinute?: number[];
+  byHour?: number[];
+  byDay?: WeekdayNumberObject[];
+  byMonthday?: number[];
+  byYearday?: number[];
+  byWeekNo?: number[];
+  byMonth?: number[];
+  bySetPos?: number[];
+  workweekStart?: WeekDay;
+};
 
-export const zVEventRecurrenceRule = z.object({
+export const zVEventRecurrenceRule: z.ZodType<VEventRecurrenceRule> = z.object({
   frequency: z.enum(recurrenceRuleFrequencies),
   until: zDateObject.optional(),
   count: z.number().optional(),

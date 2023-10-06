@@ -1,29 +1,38 @@
 import { z } from "zod";
 
-import { zDateObject } from "./date";
-import { zVEventDuration } from "./duration";
+import { type DateObject, zDateObject } from "./date";
+import { type VEventDuration, zVEventDuration } from "./duration";
 
 export const triggerRelations = ["START", "END"] as const;
 
 export type TriggerRelations = typeof triggerRelations;
 export type TriggerRelation = TriggerRelations[number];
 
-export type VEventTrigger = z.infer<typeof zVEventTrigger>;
+export type VEventTriggerUnion =
+  | { type: "absolute"; value: DateObject }
+  | { type: "relative"; value: VEventDuration };
 
-export const zVEventTriggerUnion = z.discriminatedUnion("type", [
-  z.object({ type: z.literal("absolute"), value: zDateObject }),
-  z.object({ type: z.literal("relative"), value: zVEventDuration }),
-]);
+export const zVEventTriggerUnion: z.ZodType<VEventTriggerUnion> =
+  z.discriminatedUnion("type", [
+    z.object({ type: z.literal("absolute"), value: zDateObject }),
+    z.object({ type: z.literal("relative"), value: zVEventDuration }),
+  ]);
 
-export const zVEventTriggerBase = z.object({
-  options: z
-    .object({
-      related: z.enum(triggerRelations).optional(),
-    })
-    .optional(),
+export type VEventTriggerOptions = { related?: TriggerRelation };
+
+export const zVEventTriggerOptions: z.ZodType<VEventTriggerOptions> = z.object({
+  related: z.enum(triggerRelations).optional(),
 });
 
-export const zVEventTrigger = z.intersection(
+export type VEventTriggerBase = { options?: VEventTriggerOptions };
+
+export const zVEventTriggerBase: z.ZodType<VEventTriggerBase> = z.object({
+  options: zVEventTriggerOptions.optional(),
+});
+
+export type VEventTrigger = VEventTriggerBase & VEventTriggerUnion;
+
+export const zVEventTrigger: z.ZodType<VEventTrigger> = z.intersection(
   zVEventTriggerBase,
   zVEventTriggerUnion
 );

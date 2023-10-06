@@ -2,6 +2,7 @@ import { VALARM_TO_KEYS } from "@/constants/keys/alarm";
 import type { VAlarm, VEventDuration, VEventTrigger } from "@/types";
 
 import { generateIcsAttachment } from "./attachment";
+import { generateIcsAttendee } from "./attendee";
 import { generateIcsDuration } from "./duration";
 import { generateIcsTrigger } from "./trigger";
 import {
@@ -10,7 +11,6 @@ import {
   getIcsStartLine,
 } from "./utils/addLine";
 import { getKeys } from "./utils/getKeys";
-import { generateIcsAttendee } from "./attendee";
 
 export const generateIcsAlarm = (alarm: VAlarm) => {
   const alarmKeys = getKeys(alarm);

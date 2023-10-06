@@ -1,4 +1,5 @@
 import { COMMA } from "@/constants";
+
 import { parseIcsWeekdayNumber } from "../..";
 
 it("Test Ics Weekday Number Parse", async () => {
