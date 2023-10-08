@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.0.4
+
+### Patch Changes
+
+- 28f5b91: Export hinzufügen für getEvendEnd #13
+
 ## 1.0.3
 
 ### Patch Changes
