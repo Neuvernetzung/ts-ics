@@ -1,4 +1,5 @@
-import { getEventEndFromDuration, type VEvent } from "..";
+import type { VEvent } from "../types";
+import { getEventEndFromDuration } from "./duration";
 
 export const getEventEnd = (event: VEvent) =>
   event.end

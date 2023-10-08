@@ -10,7 +10,7 @@ import {
   subSeconds,
   subWeeks,
 } from "date-fns";
-import type { VEventDuration } from "..";
+import type { VEventDuration } from "../types";
 
 export const getEventEndFromDuration = (
   start: Date,
