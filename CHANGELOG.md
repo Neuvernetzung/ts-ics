@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.0.3
+
+### Patch Changes
+
+- 2621304: Funktionen für Duration bereitstellen #8
+
 ## 1.0.2
 
 ### Patch Changes
