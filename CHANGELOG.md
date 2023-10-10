@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.0.5
+
+### Patch Changes
+
+- 771e773: Funktion um Duration zu berechnen zwischen 2 Dates #16
+
 ## 1.0.4
 
 ### Patch Changes
