@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.0.6
+
+### Patch Changes
+
+- d155057: Attendee Partstat Type anpassen #19
+
 ## 1.0.5
 
 ### Patch Changes
