@@ -15,7 +15,7 @@ it("Test Ics Event Parse", async () => {
 });
 
 it("Test Ics Event Parse", async () => {
-  const event = ` BEGIN:VEVENT
+  const event = `BEGIN:VEVENT
   UID:19970901T130000Z-123402@example.com
   DTSTAMP:19970901T130000Z
   DTSTART:19970401T163000Z
@@ -30,7 +30,7 @@ it("Test Ics Event Parse", async () => {
 });
 
 it("Test Ics Event Parse", async () => {
-  const event = ` BEGIN:VEVENT
+  const event = `BEGIN:VEVENT
   UID:19970901T130000Z-123403@example.com
   DTSTAMP:19970901T130000Z
   DTSTART;VALUE=DATE:19971102
@@ -46,7 +46,7 @@ it("Test Ics Event Parse", async () => {
 });
 
 it("Test Ics Event Parse", async () => {
-  const event = ` BEGIN:VEVENT
+  const event = `BEGIN:VEVENT
   UID:20070423T123432Z-541111@example.com
   DTSTAMP:20070423T123432Z
   DTSTART;VALUE=DATE:20070628

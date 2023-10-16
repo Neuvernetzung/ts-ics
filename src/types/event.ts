@@ -31,7 +31,7 @@ export const zVEventDurationOrEnd: z.ZodType<VEventDurationOrEnd> = z.union([
 export type VEventBase = {
   summary: string;
   uid: string;
-  created: DateObject;
+  created?: DateObject;
   lastModified?: DateObject;
   stamp: DateObject;
   start: DateObject;
@@ -57,7 +57,7 @@ export type VEventBase = {
 export const zVEventBase: z.ZodType<VEventBase> = z.object({
   summary: z.string(),
   uid: z.string(),
-  created: zDateObject,
+  created: zDateObject.optional(),
   lastModified: zDateObject.optional(),
   stamp: zDateObject,
   start: zDateObject,
