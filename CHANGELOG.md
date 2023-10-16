@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.0.7
+
+### Patch Changes
+
+- a004028: foldLine fixen #22
+
 ## 1.0.6
 
 ### Patch Changes
