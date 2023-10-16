@@ -1,7 +1,11 @@
 import { z } from "zod";
-import { statusTypes } from "./status";
 
-export const attendeePartStatusTypes = [...statusTypes, "DELEGATED"] as const;
+export const attendeePartStatusTypes = [
+  "TENTATIVE",
+  "ACCEPTED",
+  "CANCELLED",
+  "DELEGATED",
+] as const;
 
 export type AttendeePartStatusTypes = typeof attendeePartStatusTypes;
 export type AttendeePartStatusType = AttendeePartStatusTypes[number];

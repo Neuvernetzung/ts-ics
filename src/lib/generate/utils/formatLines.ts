@@ -18,14 +18,16 @@ export const formatLines = (lines: string) => {
   return formattedLines.join(BREAK);
 };
 
-function foldLine(line: string, length: number) {
+const foldLine = (line: string, length: number) => {
   let l = line;
   const lines = [];
 
   while (Math.ceil(l.length / length) >= 1) {
-    lines.push(l.substring(0, length));
-    l = l.substring(length + 1);
+    lines.push(
+      lines.length === 0 ? l.substring(0, length) : ` ${l.substring(0, length)}`
+    );
+    l = l.substring(length);
   }
 
   return lines;
-}
+};
