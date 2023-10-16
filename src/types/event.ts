@@ -7,6 +7,7 @@ import { type VEventDuration, zVEventDuration } from "./duration";
 import { type Organizer, zOrganizer } from "./organizer";
 import { type VEventRecurrenceRule, zVEventRecurrenceRule } from "./recurrence";
 import { type RecurrenceId, zRecurrenceId } from "./recurrenceId";
+import { type StatusType, statusTypes } from "./status";
 
 export const timeTransparentTypes = ["TRANSPARENT", "OPAQUE"] as const;
 
@@ -17,11 +18,6 @@ export const classTypes = ["PRIVATE", "PUBLIC", "CONFIDENTIAL"] as const;
 
 export type ClassTypes = typeof classTypes;
 export type ClassType = ClassTypes[number];
-
-export const statusTypes = ["TENTATIVE", "CONFIRMED", "CANCELLED"] as const;
-
-export type StatusTypes = typeof statusTypes;
-export type StatusType = StatusTypes[number];
 
 export type VEventDurationOrEnd =
   | { duration: VEventDuration; end?: never }

@@ -1,4 +1,4 @@
-import { Attendee, zAttendee } from "@/types/attendee";
+import { Attendee, AttendeePartStatusType, zAttendee } from "@/types/attendee";
 
 import { replaceMailTo } from "./utils/replaceMailTo";
 
@@ -13,7 +13,7 @@ export const icsAttendeeToObject = (
   dir: options?.DIR,
   member: options?.MEMBER ? replaceMailTo(options.MEMBER) : undefined,
   name: options?.NAME,
-  partstat: options?.PARTSTAT,
+  partstat: options?.PARTSTAT as AttendeePartStatusType,
   role: options?.ROLE,
   sentBy: options?.["SENT-BY"] ? replaceMailTo(options["SENT-BY"]) : undefined,
 });
