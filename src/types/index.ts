@@ -8,6 +8,7 @@ export * from "./event";
 export * from "./organizer";
 export * from "./recurrence";
 export * from "./recurrenceId";
+export * from "./status";
 export * from "./timezone";
 export * from "./trigger";
 export * from "./weekday";
