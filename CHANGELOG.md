@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.0.9
+
+### Patch Changes
+
+- 042f3bc: Deps updaten #30
+
 ## 1.0.8
 
 ### Patch Changes
