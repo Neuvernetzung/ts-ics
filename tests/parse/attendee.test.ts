@@ -15,5 +15,15 @@ it("Test Ics Attendee Parse", async () => {
 
   const { value, options } = getLine(attendee);
 
-  expect(() => parseIcsAttendee(value, options)).not.toThrowError();
+  const parsed = parseIcsAttendee(value, options);
+
+  expect(() => parsed).not.toThrowError();
+
+  expect(parsed).toEqual({
+    role: "REQ-PARTICIPANT",
+    delegatedFrom: "bob@example.com",
+    partstat: "ACCEPTED",
+    name: "Jane Doe",
+    email: "jdoe@example.com",
+  });
 });

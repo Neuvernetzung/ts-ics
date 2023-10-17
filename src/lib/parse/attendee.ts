@@ -12,7 +12,7 @@ export const icsAttendeeToObject = (
     : undefined,
   dir: options?.DIR,
   member: options?.MEMBER ? replaceMailTo(options.MEMBER) : undefined,
-  name: options?.NAME,
+  name: options?.CN,
   partstat: options?.PARTSTAT as AttendeePartStatusType,
   role: options?.ROLE,
   sentBy: options?.["SENT-BY"] ? replaceMailTo(options["SENT-BY"]) : undefined,
