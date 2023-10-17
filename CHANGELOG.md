@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.0.8
+
+### Patch Changes
+
+- 3cb10fb: Attendee korrekt parsen (CN) #25
+
 ## 1.0.7
 
 ### Patch Changes
