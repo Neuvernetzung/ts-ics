@@ -1,13 +1,25 @@
+import { zDateObject } from "@/types";
 import { parseIcsDate, parseIcsDateTime } from "../..";
+import { generateIcsDateTime } from "@/lib";
 
 it("Test Ics Date Time Parse", async () => {
-  const dateTime = `19980118T073000Z`;
+  const dateTime = `20230118T073000Z`;
 
   expect(() => parseIcsDateTime(dateTime)).not.toThrowError();
 });
 
 it("Test Ics Date Parse", async () => {
-  const date = `19980118`;
+  const date = `20230118`;
 
   expect(() => parseIcsDate(date)).not.toThrowError();
+});
+
+it("Strip Milliseconds - Milliseconds are not allowed in Ics", async () => {
+  const date = new Date("2023-01-18T07:30:00.123Z");
+
+  const dateObject = zDateObject.parse({ date });
+
+  const icsDate = generateIcsDateTime(dateObject.date);
+
+  expect(parseIcsDateTime(icsDate)).toEqual(dateObject.date);
 });
