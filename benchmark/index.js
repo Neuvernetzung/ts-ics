@@ -4,7 +4,7 @@ import { readFileSync } from "fs";
 import { generateIcsCalendar, parseIcsCalendar } from "../dist/index.cjs";
 
 const main = () => {
-  const file = readFileSync("src/tests/benchmark/calendar.ics", "utf-8");
+  const file = readFileSync("benchmark/calendar.ics", "utf-8");
 
   console.time("Parse");
 
