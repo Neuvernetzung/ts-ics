@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.0.10
+
+### Patch Changes
+
+- a2e3929: Date - Strip Milliseconds #33
+
 ## 1.0.9
 
 ### Patch Changes

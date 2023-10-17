@@ -1,7 +1,7 @@
 {
   "name": "ts-ics",
   "author": "Neuvernetzung Medienagentur UG",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Create and parse ICS format for TypeScript",
   "type": "module",
   "main": "dist/index.cjs",
