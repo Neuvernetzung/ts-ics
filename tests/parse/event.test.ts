@@ -60,7 +60,7 @@ it("Test Ics Event Parse", async () => {
 });
 
 it("Test ICS Event With Long Description Parse", async () => {
-  const buffer = await readFile(`${__dirname}/features/longDescriptionEvent.ics`);
+  const buffer = await readFile(`${__dirname}/fixtures/longDescriptionEvent.ics`);
   const event = buffer.toString();
   
   expect(() => parseIcsEvent(event)).not.toThrowError();
