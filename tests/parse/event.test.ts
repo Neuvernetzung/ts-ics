@@ -1,4 +1,5 @@
 import { parseIcsEvent } from "../..";
+import { readFile } from "fs/promises";
 
 it("Test Ics Event Parse", async () => {
   const event = `BEGIN:VEVENT
@@ -57,3 +58,10 @@ it("Test Ics Event Parse", async () => {
 
   expect(() => parseIcsEvent(event)).not.toThrowError();
 });
+
+it("Test ICS Event With Long Description Parse", async () => {
+  const buffer = await readFile(`${__dirname}/features/longDescriptionEvent.ics`);
+  const event = buffer.toString();
+  
+  expect(() => parseIcsEvent(event)).not.toThrowError();
+})
