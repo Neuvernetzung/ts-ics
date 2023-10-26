@@ -1,6 +1,6 @@
 import { getLine } from "@/lib/parse/utils/line";
 
-import { parseicsTimeStamp } from "../..";
+import { parseicsTimeStamp } from "@/lib/parse/timeStamp";
 
 it("Test Ics Timestamp Parse", async () => {
   const timestamp = `DTSTART;VALUE=DATE:19960401`;

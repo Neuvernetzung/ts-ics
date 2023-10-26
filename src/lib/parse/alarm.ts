@@ -2,7 +2,6 @@ import set from "lodash/set";
 
 import { replaceAlarmRegex } from "@/constants";
 import {
-  VALARM_KEYS,
   VALARM_TO_OBJECT_KEYS,
   VAlarmKey,
 } from "@/constants/keys/alarm";
@@ -20,7 +19,7 @@ import { splitLines } from "./utils/splitLines";
 export const icsAlarmToObject = (rawAlarmString: string): VAlarm => {
   const alarmString = rawAlarmString.replace(replaceAlarmRegex, "");
 
-  const lines = splitLines(VALARM_KEYS, alarmString);
+  const lines = splitLines(alarmString);
 
   const alarm = {};
 

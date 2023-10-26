@@ -1,4 +1,4 @@
-import { parseIcsDuration } from "../..";
+import { parseIcsDuration } from "@/lib/parse/duration";
 
 it("Test Ics Duration Parse", async () => {
   const duration = `P15DT5H0M20S`;

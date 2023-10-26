@@ -1,6 +1,6 @@
 import { getLine } from "@/lib/parse/utils/line";
 
-import { parseIcsTrigger } from "../..";
+import { parseIcsTrigger } from "@/lib/parse/trigger";
 
 it("Test Ics Trigger Parse", async () => {
   const trigger = `TRIGGER:-PT15M`;

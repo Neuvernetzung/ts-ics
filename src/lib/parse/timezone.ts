@@ -6,7 +6,6 @@ import {
   replaceTimezoneRegex,
 } from "@/constants";
 import {
-  VTIMEZONE_KEYS,
   VTIMEZONE_TO_OBJECT_KEYS,
   VTimezoneKey,
 } from "@/constants/keys/timezone";
@@ -21,7 +20,6 @@ export const icsTimezoneToObject = (rawTimezoneString: string): VTimezone => {
   const timezoneString = rawTimezoneString.replace(replaceTimezoneRegex, "");
 
   const lines = splitLines(
-    VTIMEZONE_KEYS,
     timezoneString
       .replace(getTimezoneStandardRegex, "")
       .replace(getTimezoneDaylightRegex, "")

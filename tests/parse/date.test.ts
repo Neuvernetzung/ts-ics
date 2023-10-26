@@ -1,5 +1,5 @@
 import { zDateObject } from "@/types";
-import { parseIcsDate, parseIcsDateTime } from "../..";
+import { parseIcsDate, parseIcsDateTime } from "@/lib/parse/date";
 import { generateIcsDateTime } from "@/lib";
 
 it("Test Ics Date Time Parse", async () => {
