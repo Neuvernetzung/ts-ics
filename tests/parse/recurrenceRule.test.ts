@@ -1,6 +1,6 @@
 import { getLine } from "@/lib/parse/utils/line";
 
-import { parseIcsRecurrenceRule } from "../..";
+import { parseIcsRecurrenceRule } from "@/lib/parse/recurrenceRule";
 
 it("Test Ics Recurrence Rule Parse", async () => {
   const rRule = `RRULE:FREQ=YEARLY;INTERVAL=2;BYMONTH=1;BYDAY=SU;BYHOUR=8,9;BYMINUTE=30`;

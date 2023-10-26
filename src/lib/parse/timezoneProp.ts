@@ -5,7 +5,6 @@ import {
   replaceTimezoneStandardRegex,
 } from "@/constants";
 import {
-  VTIMEZONE_PROP_KEYS,
   VTIMEZONE_PROP_TO_OBJECT_KEYS,
   type VTimezonePropKey,
 } from "@/constants/keys/timezoneProp";
@@ -29,7 +28,7 @@ export const icsTimezonePropToObject = (
     .replace(replaceTimezoneStandardRegex, "")
     .replace(replaceTimezoneDaylightRegex, "");
 
-  const lines = splitLines(VTIMEZONE_PROP_KEYS, timezonePropString);
+  const lines = splitLines(timezonePropString);
 
   const timezoneProp = { type: type || "STANDARD" };
 

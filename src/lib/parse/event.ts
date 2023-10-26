@@ -2,7 +2,6 @@ import set from "lodash/set";
 
 import { COMMA, getAlarmRegex, replaceEventRegex } from "@/constants";
 import {
-  VEVENT_KEYS,
   VEVENT_TO_OBJECT_KEYS,
   VEventKey,
 } from "@/constants/keys/event";
@@ -25,7 +24,7 @@ import { splitLines } from "./utils/splitLines";
 export const icsEventToObject = (rawEventString: string): VEvent => {
   const eventString = rawEventString.replace(replaceEventRegex, "");
 
-  const lines = splitLines(VEVENT_KEYS, eventString.replace(getAlarmRegex, ""));
+  const lines = splitLines(eventString.replace(getAlarmRegex, ""));
 
   const event = {};
 
