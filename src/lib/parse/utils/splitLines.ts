@@ -15,15 +15,17 @@ export const splitLines = <TKeys extends ReadonlyArray<string>>(
     .map((l) => l.trim())
     .filter((l) => l !== "");
 
-  for (let i = 0; i < rawLines.length; i += 1) {
+  for (let i = 0; i < rawLines.length;) {
     if (rawLines[i].length < 74) {
       // Notwendig, da eine Zeile in einer ICS Datei maximal 75 Zeichen lang sein darf.
       lines.push(rawLines[i]);
+      i += 1;
     } else if (
       rawLines[i + 1] &&
       allKeys.some((k) => rawLines[i + 1].startsWith(k))
     ) {
       lines.push(rawLines[i]);
+      i += 1;
     } else {
       let mergedLine = rawLines[i];
       i += 1;
