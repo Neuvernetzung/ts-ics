@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.0.12
+
+### Patch Changes
+
+- ee6e623: Changed splitLines to merge lines based on whitespace at start #41
+
 ## 1.0.11
 
 ### Patch Changes
