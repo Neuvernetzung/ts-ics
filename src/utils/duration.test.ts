@@ -16,7 +16,7 @@ const minutes = 4;
 const seconds = 5;
 
 it("Test getDurationFromInterval", async () => {
-  const start = new Date();
+  const start = new Date("2023-09-01");
   const end = addWeeks(
     addDays(
       addHours(addMinutes(addSeconds(start, seconds), minutes), hours),
@@ -36,7 +36,7 @@ it("Test getDurationFromInterval", async () => {
 });
 
 it("Test getDurationFromInterval", async () => {
-  const start = new Date();
+  const start = new Date("2023-09-01");
   const end = addWeeks(
     addDays(
       addHours(addMinutes(addSeconds(start, seconds), minutes), hours),
