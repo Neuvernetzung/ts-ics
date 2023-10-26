@@ -6,7 +6,6 @@ import {
   replaceCalendarRegex,
 } from "@/constants";
 import {
-  VCALENDAR_KEYS,
   VCALENDAR_TO_OBJECT_KEYS,
   VCalendarKey,
 } from "@/constants/keys";
@@ -21,7 +20,6 @@ export const icsCalendarToObject = (calendarString: string): VCalendar => {
   const cleanedFileString = calendarString.replace(replaceCalendarRegex, "");
 
   const lines = splitLines(
-    VCALENDAR_KEYS,
     cleanedFileString.replace(getEventRegex, "").replace(getTimezoneRegex, "")
   );
 
