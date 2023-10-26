@@ -1,5 +1,12 @@
 # ts-ics
 
+## 1.0.11
+
+### Patch Changes
+
+- 7a51531: Update deps #37
+- 7a51531: Fixed parsing events with long fields (i.e. description) #36
+
 ## 1.0.10
 
 ### Patch Changes
