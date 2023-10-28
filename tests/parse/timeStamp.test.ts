@@ -54,7 +54,7 @@ it("Test Ics Timestamp Parse - VTimezones", async () => {
 
   const parsed = parseicsTimeStamp(value, options, timezones);
 
-  expect(parsed.date.getUTCHours()).toEqual(15);
+  expect(parsed.date.getUTCHours()).toEqual(13);
 
   expect(parsed.local).toBeDefined();
   if (parsed.local) expect(parsed.local?.date.getUTCHours()).toEqual(14);
@@ -63,7 +63,7 @@ it("Test Ics Timestamp Parse - VTimezones", async () => {
 });
 
 it("Test Ics Timestamp Parse - IANA Timezone", async () => {
-  const timestamp = `DTSTART;TZID=Europe/Berlin:20230910T220000`;
+  const timestamp = `DTSTART;TZID=Europe/Berlin:20230910T020000`;
 
   const { value, options } = getLine(timestamp);
 
@@ -72,7 +72,7 @@ it("Test Ics Timestamp Parse - IANA Timezone", async () => {
   expect(parsed.date.getUTCHours()).toEqual(0);
 
   expect(parsed.local).toBeDefined();
-  if (parsed.local) expect(parsed.local?.date.getUTCHours()).toEqual(22);
+  if (parsed.local) expect(parsed.local?.date.getUTCHours()).toEqual(2);
 
   expect(() => parsed).not.toThrowError();
 });

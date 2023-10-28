@@ -47,7 +47,7 @@ export const icsTimeStampToObject: ParseIcsTimeStamp = (
     };
 
   return {
-    date: addMilliseconds(dateTime, timezone.milliseconds),
+    date: addMilliseconds(dateTime, -timezone.milliseconds),
     type,
     local: options?.TZID
       ? { date: dateTime, timezone: options?.TZID, tzoffset: timezone.offset }

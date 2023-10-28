@@ -18,8 +18,9 @@ export const getTimezoneObjectOffset = (
   const ianaTimezone = getTimezoneOffset(tzid, date);
 
   if (!Number.isNaN(ianaTimezone)) {
-    const hours = millisecondsToHours(ianaTimezone);
-    const minutes = millisecondsToMinutes(ianaTimezone) - hours * 60;
+    const isNegative = ianaTimezone < 0;
+    const hours = Math.abs(millisecondsToHours(ianaTimezone));
+    const minutes = Math.abs(millisecondsToMinutes(ianaTimezone)) - hours * 60;
 
     const pHours =
       hours.toString().length === 1 ? `0${hours}` : hours.toString();
@@ -27,7 +28,7 @@ export const getTimezoneObjectOffset = (
       minutes.toString().length === 1 ? `0${minutes}` : minutes.toString();
 
     return {
-      offset: `${hours < 0 ? "-" : "+"}${pHours}${pMinutes}`,
+      offset: `${isNegative ? "-" : "+"}${pHours}${pMinutes}`,
       milliseconds: ianaTimezone,
     };
   }
