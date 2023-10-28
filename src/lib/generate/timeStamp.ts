@@ -13,12 +13,12 @@ export const generateIcsTimeStamp = (
   const value =
     dateObject.type === "DATE"
       ? generateIcsDate(dateObject.date)
-      : generateIcsDateTime(dateObject.date);
+      : generateIcsDateTime(dateObject.local?.date || dateObject.date);
 
   const options = generateIcsOptions(
     compact([
       dateObject.type && { key: "VALUE", value: dateObject.type },
-      dateObject.timezone && { key: "TZID", value: dateObject.timezone },
+      dateObject.local && { key: "TZID", value: dateObject.local.timezone },
     ])
   );
 

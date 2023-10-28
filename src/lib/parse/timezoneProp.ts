@@ -20,10 +20,15 @@ import { icsTimeStampToObject } from "./timeStamp";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 
-export const icsTimezonePropToObject = (
+export type ParseIcsTimezoneProps = (
   rawTimezonePropString: string,
   type?: VTimezonePropType
-): VTimezoneProp => {
+) => VTimezoneProp;
+
+export const icsTimezonePropToObject: ParseIcsTimezoneProps = (
+  rawTimezonePropString,
+  type
+) => {
   const timezonePropString = rawTimezonePropString
     .replace(replaceTimezoneStandardRegex, "")
     .replace(replaceTimezoneDaylightRegex, "");
@@ -60,8 +65,7 @@ export const icsTimezonePropToObject = (
   return timezoneProp as VTimezoneProp;
 };
 
-export const parseIcsTimezoneProp = (
-  rawTimezonePropString: string,
-  type?: VTimezonePropType
-): VTimezoneProp =>
-  zVTimezoneProp.parse(icsTimezonePropToObject(rawTimezonePropString, type));
+export const parseIcsTimezoneProp: ParseIcsTimezoneProps = (
+  rawTimezonePropString,
+  type
+) => zVTimezoneProp.parse(icsTimezonePropToObject(rawTimezonePropString, type));

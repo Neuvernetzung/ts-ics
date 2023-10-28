@@ -1,11 +1,8 @@
 import set from "lodash/set";
 
 import { replaceAlarmRegex } from "@/constants";
-import {
-  VALARM_TO_OBJECT_KEYS,
-  VAlarmKey,
-} from "@/constants/keys/alarm";
-import { VAlarm, zVAlarm } from "@/types";
+import { VALARM_TO_OBJECT_KEYS, VAlarmKey } from "@/constants/keys/alarm";
+import { VAlarm, VTimezone, zVAlarm } from "@/types";
 import type { Attachment } from "@/types/attachment";
 import { Attendee } from "@/types/attendee";
 
@@ -16,7 +13,12 @@ import { icsTriggerToObject } from "./trigger";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 
-export const icsAlarmToObject = (rawAlarmString: string): VAlarm => {
+export type ParseIcsAlarm = (
+  rawAlarmString: string,
+  timezones?: VTimezone[]
+) => VAlarm;
+
+export const icsAlarmToObject: ParseIcsAlarm = (rawAlarmString, timezones) => {
   const alarmString = rawAlarmString.replace(replaceAlarmRegex, "");
 
   const lines = splitLines(alarmString);
@@ -35,7 +37,7 @@ export const icsAlarmToObject = (rawAlarmString: string): VAlarm => {
     if (!objectKey) return; // unknown Object key
 
     if (objectKey === "trigger") {
-      set(alarm, objectKey, icsTriggerToObject(value, options));
+      set(alarm, objectKey, icsTriggerToObject(value, options, timezones));
       return;
     }
 
@@ -73,5 +75,5 @@ export const icsAlarmToObject = (rawAlarmString: string): VAlarm => {
   return alarm as VAlarm;
 };
 
-export const parseIcsAlarm = (rawAlarmString: string): VAlarm =>
-  zVAlarm.parse(icsAlarmToObject(rawAlarmString));
+export const parseIcsAlarm: ParseIcsAlarm = (rawAlarmString, timezones) =>
+  zVAlarm.parse(icsAlarmToObject(rawAlarmString, timezones));
