@@ -32,12 +32,12 @@ export const generateIcsRecurrenceRule = (value: VEventRecurrenceRule) => {
       value.until && {
         key: "UNTIL",
         value: `${
-          value.until.timezone &&
+          value.until.local &&
           `${generateIcsOptions(
             compact([
               {
                 key: "TZID",
-                value: value.until.timezone,
+                value: value.until.local.timezone,
               },
             ])
           )}=`

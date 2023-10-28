@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { VTimezone } from "@/types";
+
 export const icsDateToDate = (date: string): Date => {
   const year = parseInt(date.slice(0, 4), 10);
   const month = parseInt(date.slice(4, 6), 10) - 1; // Monate in JavaScript sind 0-basiert
@@ -14,7 +16,9 @@ export const icsDateToDate = (date: string): Date => {
 export const parseIcsDate = (date: string) =>
   z.date().parse(icsDateToDate(date));
 
-export const icsDateTimeToDateTime = (date: string) => {
+export type ParseIcsDateTime = (date: string, timezones?: VTimezone[]) => Date;
+
+export const icsDateTimeToDateTime: ParseIcsDateTime = (date) => {
   const year = parseInt(date.slice(0, 4), 10);
   const month = parseInt(date.slice(4, 6), 10) - 1; // Monate in JavaScript sind 0-basiert
   const day = parseInt(date.slice(6, 8), 10);
@@ -22,11 +26,10 @@ export const icsDateTimeToDateTime = (date: string) => {
   const minute = parseInt(date.slice(11, 13), 10);
   const second = parseInt(date.slice(13, 15), 10);
 
-  // Erstellen Sie ein Date-Objekt mit den extrahierten Werten
   const newDate = new Date(Date.UTC(year, month, day, hour, minute, second));
 
   return newDate;
 };
 
-export const parseIcsDateTime = (date: string): Date =>
-  z.date().parse(icsDateTimeToDateTime(date));
+export const parseIcsDateTime: ParseIcsDateTime = (date, timezones): Date =>
+  z.date().parse(icsDateTimeToDateTime(date, timezones));

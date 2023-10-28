@@ -1,11 +1,8 @@
 import set from "lodash/set";
 
 import { COMMA, getAlarmRegex, replaceEventRegex } from "@/constants";
-import {
-  VEVENT_TO_OBJECT_KEYS,
-  VEventKey,
-} from "@/constants/keys/event";
-import { VEvent, zVEvent } from "@/types";
+import { VEVENT_TO_OBJECT_KEYS, VEventKey } from "@/constants/keys/event";
+import { VEvent, VTimezone, zVEvent } from "@/types";
 import type { Attendee } from "@/types/attendee";
 
 import {
@@ -21,7 +18,12 @@ import { icsTimeStampToObject } from "./timeStamp";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 
-export const icsEventToObject = (rawEventString: string): VEvent => {
+export type ParseIcsEvent = (
+  rawEventString: string,
+  timezones?: VTimezone[]
+) => VEvent;
+
+export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
   const eventString = rawEventString.replace(replaceEventRegex, "");
 
   const lines = splitLines(eventString.replace(getAlarmRegex, ""));
@@ -38,7 +40,7 @@ export const icsEventToObject = (rawEventString: string): VEvent => {
     if (!objectKey) return; // unknown Object key
 
     if (objectKeyIsTimeStamp(objectKey)) {
-      set(event, objectKey, icsTimeStampToObject(value, options));
+      set(event, objectKey, icsTimeStampToObject(value, options, timezones));
       return;
     }
 
@@ -48,7 +50,7 @@ export const icsEventToObject = (rawEventString: string): VEvent => {
     }
 
     if (objectKey === "recurrenceRule") {
-      set(event, objectKey, icsRecurrenceRuleToObject(value));
+      set(event, objectKey, icsRecurrenceRuleToObject(value, timezones));
       return;
     }
 
@@ -81,7 +83,7 @@ export const icsEventToObject = (rawEventString: string): VEvent => {
 
   if (alarmStrings.length > 0) {
     const alarms = alarmStrings.map((alarmString) =>
-      icsAlarmToObject(alarmString)
+      icsAlarmToObject(alarmString, timezones)
     );
     set(event, "alarms", alarms);
   }
@@ -93,5 +95,5 @@ export const icsEventToObject = (rawEventString: string): VEvent => {
   return event as VEvent;
 };
 
-export const parseIcsEvent = (file: string): VEvent =>
-  zVEvent.parse(icsEventToObject(file));
+export const parseIcsEvent: ParseIcsEvent = (file, timezones) =>
+  zVEvent.parse(icsEventToObject(file, timezones));

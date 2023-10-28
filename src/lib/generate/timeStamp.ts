@@ -18,7 +18,7 @@ export const generateIcsTimeStamp = (
   const options = generateIcsOptions(
     compact([
       dateObject.type && { key: "VALUE", value: dateObject.type },
-      dateObject.timezone && { key: "TZID", value: dateObject.timezone },
+      dateObject.local && { key: "TZID", value: dateObject.local.timezone },
     ])
   );
 

@@ -5,10 +5,7 @@ import {
   getTimezoneRegex,
   replaceCalendarRegex,
 } from "@/constants";
-import {
-  VCALENDAR_TO_OBJECT_KEYS,
-  VCalendarKey,
-} from "@/constants/keys";
+import { VCALENDAR_TO_OBJECT_KEYS, VCalendarKey } from "@/constants/keys";
 import { type VCalendar, zVCalendar } from "@/types";
 
 import { icsEventToObject } from "./event";
@@ -52,7 +49,7 @@ export const icsCalendarToObject = (calendarString: string): VCalendar => {
 
   if (eventStrings.length > 0) {
     const events = eventStrings.map((eventString) =>
-      icsEventToObject(eventString)
+      icsEventToObject(eventString, calendar.timezones)
     );
     set(calendar, "events", events);
   }
