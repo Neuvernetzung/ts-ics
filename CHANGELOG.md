@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.1.0
+
+### Minor Changes
+
+- 24e423f: parseTimestamp and parseIcsEvent should accept VTimezone[] | undefined #42
+
 ## 1.0.12
 
 ### Patch Changes
