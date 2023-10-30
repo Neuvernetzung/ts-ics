@@ -1,17 +1,28 @@
 import { RecurrenceId, zRecurrenceId } from "@/types/recurrenceId";
 
 import { icsTimeStampToObject } from "./timeStamp";
+import { VTimezone } from "@/types";
 
-export const icsRecurrenceIdToObject = (
+export type ParseIcsRecurrenceId = (
   recurrenceIdString: string,
-  options?: Record<string, string>
+  options?: Record<string, string>,
+  timezones?: VTimezone[]
+) => RecurrenceId;
+
+export const icsRecurrenceIdToObject: ParseIcsRecurrenceId = (
+  recurrenceIdString,
+  options,
+  timezones
 ): RecurrenceId => ({
-  value: icsTimeStampToObject(recurrenceIdString, options),
+  value: icsTimeStampToObject(recurrenceIdString, options, timezones),
   range: options?.RANGE as RecurrenceId["range"],
 });
 
-export const parseIcsRecurrenceId = (
-  recurrenceIdString: string,
-  options?: Record<string, string>
-): RecurrenceId =>
-  zRecurrenceId.parse(icsRecurrenceIdToObject(recurrenceIdString, options));
+export const parseIcsRecurrenceId: ParseIcsRecurrenceId = (
+  recurrenceIdString,
+  options,
+  timezones
+) =>
+  zRecurrenceId.parse(
+    icsRecurrenceIdToObject(recurrenceIdString, options, timezones)
+  );

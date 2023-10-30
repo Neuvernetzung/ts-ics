@@ -6,7 +6,11 @@ import {
   type RRuleKey,
   type RRuleObjectKey,
 } from "@/constants/keys/recurrenceRule";
-import { VEventRecurrenceRule, zVEventRecurrenceRule } from "@/types";
+import {
+  VEventRecurrenceRule,
+  VTimezone,
+  zVEventRecurrenceRule,
+} from "@/types";
 
 import { icsTimeStampToObject } from "./timeStamp";
 import { getOptions } from "./utils/options";
@@ -42,9 +46,15 @@ const recurrenceNumberKeys: RRuleObjectKey[] = ["count", "interval"];
 export const recurrenceObjectKeyIsNumber = (objectKey: RRuleObjectKey) =>
   recurrenceNumberKeys.includes(objectKey);
 
-export const icsRecurrenceRuleToObject = (
-  ruleString: string
-): VEventRecurrenceRule => {
+export type ParseIcsRecurrenceRule = (
+  ruleString: string,
+  timezones?: VTimezone[]
+) => VEventRecurrenceRule;
+
+export const icsRecurrenceRuleToObject: ParseIcsRecurrenceRule = (
+  ruleString,
+  timezones
+) => {
   const rule = {};
 
   const options = getOptions<RRuleKey>(ruleString.split(SEMICOLON));
@@ -57,7 +67,7 @@ export const icsRecurrenceRuleToObject = (
     if (!objectKey) return; // unknown Object key
 
     if (recurrenceObjectKeyIsTimeStamp(objectKey)) {
-      set(rule, objectKey, icsTimeStampToObject(value));
+      set(rule, objectKey, icsTimeStampToObject(value, {}, timezones));
       return;
     }
 
@@ -90,7 +100,8 @@ export const icsRecurrenceRuleToObject = (
   return rule as VEventRecurrenceRule;
 };
 
-export const parseIcsRecurrenceRule = (
-  ruleString: string
-): VEventRecurrenceRule =>
-  zVEventRecurrenceRule.parse(icsRecurrenceRuleToObject(ruleString));
+export const parseIcsRecurrenceRule: ParseIcsRecurrenceRule = (
+  ruleString,
+  timezones
+) =>
+  zVEventRecurrenceRule.parse(icsRecurrenceRuleToObject(ruleString, timezones));
