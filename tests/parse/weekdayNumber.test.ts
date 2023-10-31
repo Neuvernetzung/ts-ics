@@ -1,12 +1,11 @@
 import { COMMA } from "@/constants";
-
 import { parseIcsWeekdayNumber } from "@/lib/parse/weekdayNumber";
 
 it("Test Ics Weekday Number Parse", async () => {
   const weekdayNumber = `MO,TU,WE,TH,FR,SA,SU`;
 
   expect(() =>
-    weekdayNumber.split(COMMA).forEach((w) => parseIcsWeekdayNumber(w))
+    weekdayNumber.split(COMMA).forEach((w) => parseIcsWeekdayNumber(w)),
   ).not.toThrowError();
 });
 

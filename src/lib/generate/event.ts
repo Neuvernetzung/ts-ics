@@ -60,7 +60,7 @@ export const generateIcsEvent = (event: VEvent) => {
     if (key === "duration") {
       icsString += generateIcsLine(
         icsKey,
-        generateIcsDuration(value as VEventDuration)
+        generateIcsDuration(value as VEventDuration),
       );
       return;
     }

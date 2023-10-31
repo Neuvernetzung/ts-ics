@@ -13,13 +13,13 @@ import { getTimezoneObjectOffset } from "./utils/timezone/getTimezone";
 export type ParseIcsTimeStamp = (
   timestamp: string,
   options?: Record<string, string>,
-  timezones?: VTimezone[]
+  timezones?: VTimezone[],
 ) => DateObject;
 
 export const icsTimeStampToObject: ParseIcsTimeStamp = (
   timestamp,
   options,
-  timezones
+  timezones,
 ) => {
   if (options?.VALUE === "DATE")
     return {
@@ -58,6 +58,6 @@ export const icsTimeStampToObject: ParseIcsTimeStamp = (
 export const parseicsTimeStamp: ParseIcsTimeStamp = (
   timestamp,
   options,
-  timezones
+  timezones,
 ): DateObject =>
   zDateObject.parse(icsTimeStampToObject(timestamp, options, timezones));

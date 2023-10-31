@@ -15,12 +15,12 @@ export const generateIcsOrganizer = (organizer: Organizer) => {
         key: "SENT-BY",
         value: generateIcsMail(organizer.sentBy),
       },
-    ])
+    ]),
   );
 
   return generateIcsLine(
     "ORGANIZER",
     generateIcsMail(organizer.email),
-    options
+    options,
   );
 };

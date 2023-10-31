@@ -9,7 +9,7 @@ import {
   VTIMEZONE_TO_OBJECT_KEYS,
   VTimezoneKey,
 } from "@/constants/keys/timezone";
-import { type VTimezoneProp, zVTimezone, VTimezone } from "@/types/timezone";
+import { VTimezone, type VTimezoneProp, zVTimezone } from "@/types/timezone";
 
 import { icsDateTimeToDateTime } from "./date";
 import { icsTimezonePropToObject } from "./timezoneProp";
@@ -22,7 +22,7 @@ export const icsTimezoneToObject = (rawTimezoneString: string): VTimezone => {
   const lines = splitLines(
     timezoneString
       .replace(getTimezoneStandardRegex, "")
-      .replace(getTimezoneDaylightRegex, "")
+      .replace(getTimezoneDaylightRegex, ""),
   );
 
   const timezone = { props: [] as VTimezoneProp[] };
@@ -49,7 +49,7 @@ export const icsTimezoneToObject = (rawTimezoneString: string): VTimezone => {
   if (timezoneStandardPropStrings.length > 0) {
     timezoneStandardPropStrings.forEach((timezonePropString) => {
       timezone.props.push(
-        icsTimezonePropToObject(timezonePropString, "STANDARD")
+        icsTimezonePropToObject(timezonePropString, "STANDARD"),
       );
     });
   }
@@ -61,7 +61,7 @@ export const icsTimezoneToObject = (rawTimezoneString: string): VTimezone => {
   if (timezoneDaylightPropStrings.length > 0) {
     timezoneDaylightPropStrings.forEach((timezonePropString) => {
       timezone.props.push(
-        icsTimezonePropToObject(timezonePropString, "DAYLIGHT")
+        icsTimezonePropToObject(timezonePropString, "DAYLIGHT"),
       );
     });
   }

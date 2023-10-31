@@ -15,10 +15,10 @@ const createGetRegex = (key: string) =>
 export const getTimezoneRegex = createGetRegex(VTIMEZONE_OBJECT_KEY);
 
 export const getTimezoneStandardRegex = createGetRegex(
-  VTIMEZONE_STANDARD_OBJECT_KEY
+  VTIMEZONE_STANDARD_OBJECT_KEY,
 );
 export const getTimezoneDaylightRegex = createGetRegex(
-  VTIMEZONE_DAYLIGHT_OBJECT_KEY
+  VTIMEZONE_DAYLIGHT_OBJECT_KEY,
 );
 
 export const getEventRegex = createGetRegex(VEVENT_OBJECT_KEY);
@@ -33,10 +33,10 @@ export const replaceCalendarRegex = createReplaceRegex(VCALENDAR_OBJECT_KEY);
 export const replaceTimezoneRegex = createReplaceRegex(VTIMEZONE_OBJECT_KEY);
 
 export const replaceTimezoneStandardRegex = createReplaceRegex(
-  VTIMEZONE_STANDARD_OBJECT_KEY
+  VTIMEZONE_STANDARD_OBJECT_KEY,
 );
 export const replaceTimezoneDaylightRegex = createReplaceRegex(
-  VTIMEZONE_DAYLIGHT_OBJECT_KEY
+  VTIMEZONE_DAYLIGHT_OBJECT_KEY,
 );
 
 export const replaceEventRegex = createReplaceRegex(VEVENT_OBJECT_KEY);

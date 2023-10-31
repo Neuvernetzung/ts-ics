@@ -24,7 +24,9 @@ const foldLine = (line: string, length: number) => {
 
   while (Math.ceil(l.length / length) >= 1) {
     lines.push(
-      lines.length === 0 ? l.substring(0, length) : ` ${l.substring(0, length)}`
+      lines.length === 0
+        ? l.substring(0, length)
+        : ` ${l.substring(0, length)}`,
     );
     l = l.substring(length);
   }

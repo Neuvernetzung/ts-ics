@@ -40,7 +40,7 @@ export const generateIcsAlarm = (alarm: VAlarm) => {
     if (key === "duration") {
       icsString += generateIcsLine(
         icsKey,
-        generateIcsDuration(value as VEventDuration)
+        generateIcsDuration(value as VEventDuration),
       );
       return;
     }

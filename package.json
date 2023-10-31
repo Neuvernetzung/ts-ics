@@ -8,6 +8,8 @@
   "module": "dist/index.js",
   "scripts": {
     "lint": "eslint ./ --fix",
+    "pretty": "prettier --write .",
+    "prebuild": "npm run pretty",
     "clean": "rimraf dist",
     "type-check": "tsc --noEmit",
     "dev": "npm run clean && tsup --watch",
@@ -34,6 +36,7 @@
     "jest-environment-jsdom": "^29.7.0",
     "jest-environment-node": "^29.7.0",
     "lodash": "^4.17.21",
+    "prettier": "^3.0.3",
     "rimraf": "^5.0.5",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",

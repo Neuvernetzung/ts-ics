@@ -7,6 +7,7 @@ import {
   addWeeks,
   addYears,
 } from "date-fns";
+
 import { getDurationFromInterval } from "./duration";
 
 const weeks = 1;
@@ -20,9 +21,9 @@ it("Test getDurationFromInterval", async () => {
   const end = addWeeks(
     addDays(
       addHours(addMinutes(addSeconds(start, seconds), minutes), hours),
-      days
+      days,
     ),
-    weeks
+    weeks,
   );
 
   const duration = getDurationFromInterval(start, end);
@@ -40,9 +41,9 @@ it("Test getDurationFromInterval", async () => {
   const end = addWeeks(
     addDays(
       addHours(addMinutes(addSeconds(start, seconds), minutes), hours),
-      days
+      days,
     ),
-    weeks
+    weeks,
   );
 
   const duration = getDurationFromInterval(end, start);
@@ -65,13 +66,13 @@ it("Test getDurationFromInterval", async () => {
       addWeeks(
         addDays(
           addHours(addMinutes(addSeconds(start, seconds), minutes), hours),
-          days
+          days,
         ),
-        weeks
+        weeks,
       ),
-      months
+      months,
     ),
-    years
+    years,
   );
 
   const duration = getDurationFromInterval(start, end);

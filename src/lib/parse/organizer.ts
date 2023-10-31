@@ -4,7 +4,7 @@ import { replaceMailTo } from "./utils/replaceMailTo";
 
 export const icsOrganizerToObject = (
   organizerString: string,
-  options?: Record<string, string>
+  options?: Record<string, string>,
 ): Organizer => ({
   name: options?.CN,
   dir: options?.DIR,
@@ -14,6 +14,6 @@ export const icsOrganizerToObject = (
 
 export const parseIcsOrganizer = (
   organizerString: string,
-  options?: Record<string, string>
+  options?: Record<string, string>,
 ): Organizer =>
   zOrganizer.parse(icsOrganizerToObject(organizerString, options));

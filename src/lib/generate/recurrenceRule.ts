@@ -39,12 +39,12 @@ export const generateIcsRecurrenceRule = (value: VEventRecurrenceRule) => {
                 key: "TZID",
                 value: value.until.local.timezone,
               },
-            ])
+            ]),
           )}=`
         }${value.until.date}`,
       },
       value.workweekStart && { key: "WKST", value: value.workweekStart },
-    ])
+    ]),
   );
 
   icsString += generateIcsLine("RRULE", options);

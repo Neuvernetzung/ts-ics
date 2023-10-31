@@ -15,7 +15,7 @@ import { splitLines } from "./utils/splitLines";
 
 export type ParseIcsAlarm = (
   rawAlarmString: string,
-  timezones?: VTimezone[]
+  timezones?: VTimezone[],
 ) => VAlarm;
 
 export const icsAlarmToObject: ParseIcsAlarm = (rawAlarmString, timezones) => {

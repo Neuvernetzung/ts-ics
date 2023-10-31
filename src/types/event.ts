@@ -84,5 +84,5 @@ export type VEvent = VEventBase & VEventDurationOrEnd;
 
 export const zVEvent: z.ZodType<VEvent> = z.intersection(
   zVEventBase,
-  zVEventDurationOrEnd
+  zVEventDurationOrEnd,
 );

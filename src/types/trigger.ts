@@ -34,5 +34,5 @@ export type VEventTrigger = VEventTriggerBase & VEventTriggerUnion;
 
 export const zVEventTrigger: z.ZodType<VEventTrigger> = z.intersection(
   zVEventTriggerBase,
-  zVEventTriggerUnion
+  zVEventTriggerUnion,
 );

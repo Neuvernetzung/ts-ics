@@ -31,7 +31,7 @@ export const separateValue = (line: string) => {
 };
 
 export const getLine = <TKey extends string>(
-  line: string
+  line: string,
 ): GetLineProps<TKey> => {
   const { property, value } = separateValue(line);
 

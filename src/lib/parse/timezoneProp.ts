@@ -22,12 +22,12 @@ import { splitLines } from "./utils/splitLines";
 
 export type ParseIcsTimezoneProps = (
   rawTimezonePropString: string,
-  type?: VTimezonePropType
+  type?: VTimezonePropType,
 ) => VTimezoneProp;
 
 export const icsTimezonePropToObject: ParseIcsTimezoneProps = (
   rawTimezonePropString,
-  type
+  type,
 ) => {
   const timezonePropString = rawTimezonePropString
     .replace(replaceTimezoneStandardRegex, "")
@@ -67,5 +67,5 @@ export const icsTimezonePropToObject: ParseIcsTimezoneProps = (
 
 export const parseIcsTimezoneProp: ParseIcsTimezoneProps = (
   rawTimezonePropString,
-  type
+  type,
 ) => zVTimezoneProp.parse(icsTimezonePropToObject(rawTimezonePropString, type));

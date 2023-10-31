@@ -4,7 +4,7 @@ import { replaceMailTo } from "./utils/replaceMailTo";
 
 export const icsAttendeeToObject = (
   attendeeString: string,
-  options?: Record<string, string>
+  options?: Record<string, string>,
 ): Attendee => ({
   email: replaceMailTo(attendeeString),
   delegatedFrom: options?.["DELEGATED-FROM"]
@@ -20,5 +20,5 @@ export const icsAttendeeToObject = (
 
 export const parseIcsAttendee = (
   attendeeString: string,
-  options?: Record<string, string>
+  options?: Record<string, string>,
 ): Attendee => zAttendee.parse(icsAttendeeToObject(attendeeString, options));

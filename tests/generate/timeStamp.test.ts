@@ -25,7 +25,7 @@ it("Test Ics Timestamp Generate - VTimezone", async () => {
   const date = new Date(2023, 6, 2, 14, 30);
 
   const offset = fictiveTimezone.props.sort((a, b) =>
-    compareDesc(a.start, b.start)
+    compareDesc(a.start, b.start),
   )[0]?.offsetTo;
 
   const dateObject = zDateObject.parse({

@@ -5,7 +5,7 @@ import {
 } from "@/types/weekday";
 
 export const icsWeekdayNumberToObject = (
-  weekdayNumberString: string
+  weekdayNumberString: string,
 ): WeekdayNumberObject => {
   const isWeekdayOnly = weekdayNumberString.length === 2;
 
@@ -18,6 +18,6 @@ export const icsWeekdayNumberToObject = (
 };
 
 export const parseIcsWeekdayNumber = (
-  weekdayNumberString: string
+  weekdayNumberString: string,
 ): WeekdayNumberObject =>
   zWeekdayNumberObject.parse(icsWeekdayNumberToObject(weekdayNumberString));

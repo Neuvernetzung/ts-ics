@@ -14,7 +14,7 @@ export const generateIcsTrigger = (trigger: VEventTrigger) => {
         key: "RELATED",
         value: trigger.options.related,
       },
-    ])
+    ]),
   );
 
   if (trigger.type === "absolute") {
@@ -25,7 +25,7 @@ export const generateIcsTrigger = (trigger: VEventTrigger) => {
     return generateIcsLine(
       "TRIGGER",
       generateIcsDuration(trigger.value as VEventDuration),
-      options
+      options,
     );
   }
 };

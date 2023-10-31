@@ -20,7 +20,7 @@ import type { VEventDuration } from "../types";
 
 export const getEventEndFromDuration = (
   start: Date,
-  duration: VEventDuration
+  duration: VEventDuration,
 ) =>
   duration.before
     ? subWeeks(
@@ -28,31 +28,31 @@ export const getEventEndFromDuration = (
           subHours(
             subMinutes(
               subSeconds(start, duration.seconds || 0),
-              duration.minutes || 0
+              duration.minutes || 0,
             ),
-            duration.hours || 0
+            duration.hours || 0,
           ),
-          duration.days || 0
+          duration.days || 0,
         ),
-        duration.weeks || 0
+        duration.weeks || 0,
       )
     : addWeeks(
         addDays(
           addHours(
             addMinutes(
               addSeconds(start, duration.seconds || 0),
-              duration.minutes || 0
+              duration.minutes || 0,
             ),
-            duration.hours || 0
+            duration.hours || 0,
           ),
-          duration.days || 0
+          duration.days || 0,
         ),
-        duration.weeks || 0
+        duration.weeks || 0,
       );
 
 export const getDurationFromInterval = (
   start: Date,
-  end: Date
+  end: Date,
 ): VEventDuration => {
   const weeks = Math.abs(differenceInWeeks(end, start));
   const rawDays = Math.abs(differenceInDays(end, start));

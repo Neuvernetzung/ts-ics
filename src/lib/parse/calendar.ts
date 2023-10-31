@@ -17,7 +17,7 @@ export const icsCalendarToObject = (calendarString: string): VCalendar => {
   const cleanedFileString = calendarString.replace(replaceCalendarRegex, "");
 
   const lines = splitLines(
-    cleanedFileString.replace(getEventRegex, "").replace(getTimezoneRegex, "")
+    cleanedFileString.replace(getEventRegex, "").replace(getTimezoneRegex, ""),
   );
 
   const calendar: Partial<VCalendar> = {};
@@ -33,23 +33,23 @@ export const icsCalendarToObject = (calendarString: string): VCalendar => {
   });
 
   const timezoneStrings = [...cleanedFileString.matchAll(getTimezoneRegex)].map(
-    (match) => match[0]
+    (match) => match[0],
   );
 
   if (timezoneStrings.length > 0) {
     const timezones = timezoneStrings.map((timezoneString) =>
-      icsTimezoneToObject(timezoneString)
+      icsTimezoneToObject(timezoneString),
     );
     set(calendar, "timezones", timezones);
   }
 
   const eventStrings = [...cleanedFileString.matchAll(getEventRegex)].map(
-    (match) => match[0]
+    (match) => match[0],
   );
 
   if (eventStrings.length > 0) {
     const events = eventStrings.map((eventString) =>
-      icsEventToObject(eventString, calendar.timezones)
+      icsEventToObject(eventString, calendar.timezones),
     );
     set(calendar, "events", events);
   }

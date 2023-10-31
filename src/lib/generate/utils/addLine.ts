@@ -6,7 +6,7 @@ export const formatIcsLine = (line: string) => `${line}${BREAK}`;
 export const generateIcsLine = (
   key: string,
   value: string | number | undefined | null,
-  options?: string
+  options?: string,
 ) => {
   if (!options) return formatIcsLine(`${key}:${value}`);
 

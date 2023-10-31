@@ -1,8 +1,8 @@
 import {
   type TriggerRelation,
   type VEventTrigger,
-  zVEventTrigger,
   VTimezone,
+  zVEventTrigger,
 } from "@/types";
 
 import { icsDurationToObject } from "./duration";
@@ -11,13 +11,13 @@ import { icsTimeStampToObject } from "./timeStamp";
 export type ParseIcsTrigger = (
   value: string,
   options?: Record<string, string>,
-  timezones?: VTimezone[]
+  timezones?: VTimezone[],
 ) => VEventTrigger;
 
 export const icsTriggerToObject: ParseIcsTrigger = (
   value,
   options,
-  timezones
+  timezones,
 ) => {
   if (options?.VALUE === "DATE-TIME" || options?.VALUE === "DATE") {
     return {

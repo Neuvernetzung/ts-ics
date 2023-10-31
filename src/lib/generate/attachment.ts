@@ -13,7 +13,7 @@ export const generateIcsAttachment = (attachment: Attachment) => {
           key: "FMTTYPE",
           value: attachment.formatType,
         },
-      ])
+      ]),
     );
 
     return generateIcsLine("ATTACH", attachment.url, options);
@@ -24,7 +24,7 @@ export const generateIcsAttachment = (attachment: Attachment) => {
       compact([
         attachment.value && { key: "VALUE", value: attachment.value },
         attachment.encoding && { key: "ENCODING", value: attachment.encoding },
-      ])
+      ]),
     );
 
     return generateIcsLine("ATTACH", attachment.binary, options);

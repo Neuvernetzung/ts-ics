@@ -20,7 +20,7 @@ import { splitLines } from "./utils/splitLines";
 
 export type ParseIcsEvent = (
   rawEventString: string,
-  timezones?: VTimezone[]
+  timezones?: VTimezone[],
 ) => VEvent;
 
 export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
@@ -78,12 +78,12 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
   });
 
   const alarmStrings = [...rawEventString.matchAll(getAlarmRegex)].map(
-    (match) => match[0]
+    (match) => match[0],
   );
 
   if (alarmStrings.length > 0) {
     const alarms = alarmStrings.map((alarmString) =>
-      icsAlarmToObject(alarmString, timezones)
+      icsAlarmToObject(alarmString, timezones),
     );
     set(event, "alarms", alarms);
   }

@@ -26,7 +26,7 @@ export const generateIcsAttendee = (attendee: Attendee, key: string) => {
         key: "SENT-BY",
         value: generateIcsMail(attendee.sentBy, true),
       },
-    ])
+    ]),
   );
 
   return generateIcsLine(key, generateIcsMail(attendee.email), options);

@@ -2,7 +2,7 @@ import { Attachment, zAttachment } from "@/types/attachment";
 
 export const icsAttachmentToObject = (
   attachmentString: string,
-  options?: Record<string, string>
+  options?: Record<string, string>,
 ): Attachment => {
   if (options?.VALUE === "BINARY") {
     return {
@@ -18,6 +18,6 @@ export const icsAttachmentToObject = (
 
 export const parseIcsAttachment = (
   attachmentString: string,
-  options?: Record<string, string>
+  options?: Record<string, string>,
 ): Attachment =>
   zAttachment.parse(icsAttachmentToObject(attachmentString, options));
