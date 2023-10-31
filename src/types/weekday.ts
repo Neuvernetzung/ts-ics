@@ -1,9 +1,14 @@
 import { z } from "zod";
 
-export const weekDays = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"] as const;
+export const weekDays = ["SU", "MO", "TU", "WE", "TH", "FR", "SA"] as const;
 
 export type WeekDays = typeof weekDays;
 export type WeekDay = WeekDays[number];
+
+export const WeekDayOrdinal = weekDays.reduce((prev, curr, index) => {
+  prev[curr] = index as (0 | 1 | 2 | 3 | 4 | 5 | 6);
+  return prev
+}, {} as Record<WeekDay, 0 | 1 | 2 | 3 | 4 | 5 | 6>)
 
 export type WeekdayNumberObject = {
   day: WeekDay;
