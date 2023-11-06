@@ -1,5 +1,7 @@
 # TS-ICS
 
+[![neuvernetzung-logo](https://raw.githubusercontent.com/Neuvernetzung/ts-ics/master/public/Header.png)](https://neuvernetzung.de)
+
 This package can parse and create Ics files and provides TypeScript types for easy handling.
 
 ## Motivation
@@ -58,19 +60,31 @@ const event: VEvent = {...}
 const icsEventString = generateIcsEvent(event);
 ```
 
+## RRule
+
+### Extending by RRule
+
+```ts
+import { extendByRecurrenceRule } from "ts-ics";
+
+const start = new Date(Date.UTC(2023, 9, 5));
+const ruleString = "FREQ=DAILY;BYMINUTE=15,16,17,18,19;BYSECOND=0,20,40";
+
+const rule = parseIcsRecurrenceRule(ruleString);
+
+const dates = extendByRecurrenceRule(rule, {
+  start,
+  end: addDays(start, 1),
+});
+```
+
 ## More
 
 Parse and generate functions are available for every other Ics Type like:
 
 - VAlarm
 - VTimezone
-- RRULE
 - ...
-
-## Roadmap
-
-- [ ] In the future, this package will be further optimized for performance and functionality.
-- [ ] It is planned to offer functions for recurrence rule
 
 ## License
 
