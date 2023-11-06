@@ -14,3 +14,5 @@ export const zWeekdayNumberObject: z.ZodType<WeekdayNumberObject> = z.object({
   day: z.enum(weekDays),
   occurence: z.number().optional(),
 });
+
+export type WeekDayNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6;

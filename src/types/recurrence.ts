@@ -21,7 +21,7 @@ export const recurrenceRuleFrequencies = [
 export type RecurrenceRuleFrequencies = typeof recurrenceRuleFrequencies;
 export type RecurrenceRuleFrequency = RecurrenceRuleFrequencies[number];
 
-export type VEventRecurrenceRule = {
+export type RecurrenceRule = {
   frequency: RecurrenceRuleFrequency;
   until?: DateObject;
   count?: number;
@@ -38,7 +38,7 @@ export type VEventRecurrenceRule = {
   workweekStart?: WeekDay;
 };
 
-export const zVEventRecurrenceRule: z.ZodType<VEventRecurrenceRule> = z.object({
+export const zRecurrenceRule: z.ZodType<RecurrenceRule> = z.object({
   frequency: z.enum(recurrenceRuleFrequencies),
   until: zDateObject.optional(),
   count: z.number().optional(),
@@ -50,7 +50,7 @@ export const zVEventRecurrenceRule: z.ZodType<VEventRecurrenceRule> = z.object({
   byMonthday: z.array(z.number().min(-31).max(31)).optional(),
   byYearday: z.array(z.number().min(1).max(366)).optional(),
   byWeekNo: z.array(z.number().min(1).max(53)).optional(),
-  byMonth: z.array(z.number().min(1).max(12)).optional(),
+  byMonth: z.array(z.number().min(0).max(11)).optional(),
   bySetPos: z.array(z.number().min(-366).max(366)).optional(),
   workweekStart: z.enum(weekDays).optional(),
 });

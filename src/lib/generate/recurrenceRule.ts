@@ -1,12 +1,12 @@
 import compact from "lodash/compact";
 
-import { VEventRecurrenceRule } from "@/types";
+import { RecurrenceRule } from "@/types";
 
 import { generateIcsLine } from "./utils/addLine";
 import { generateIcsOptions } from "./utils/generateOptions";
 import { generateIcsWeekdayNumber } from "./weekdayNumber";
 
-export const generateIcsRecurrenceRule = (value: VEventRecurrenceRule) => {
+export const generateIcsRecurrenceRule = (value: RecurrenceRule) => {
   let icsString = "";
 
   const options = generateIcsOptions(
@@ -17,7 +17,10 @@ export const generateIcsRecurrenceRule = (value: VEventRecurrenceRule) => {
       },
       value.byHour && { key: "BYHOUR", value: value.byHour.join(",") },
       value.byMinute && { key: "BYMINUTE", value: value.byMinute.join(",") },
-      value.byMonth && { key: "BYMONTH", value: value.byMonth.join(",") },
+      value.byMonth && {
+        key: "BYMONTH",
+        value: value.byMonth.map((v) => v + 1).join(","), // Javascript Monat fängt bei 0 an, ICS byMonth bei 1
+      },
       value.byMonthday && {
         key: "BYMONTHDAY",
         value: value.byMonthday.join(","),
