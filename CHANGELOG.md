@@ -1,5 +1,16 @@
 # ts-ics
 
+## 1.2.0
+
+### Minor Changes
+
+- 898ff3d: Extend dates with recurrence #49
+- 9adc635: Add recurrence to timezones #50
+
+### Patch Changes
+
+- a966b60: Update readme #51
+
 ## 1.1.0
 
 ### Minor Changes
