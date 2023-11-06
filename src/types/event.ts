@@ -5,7 +5,7 @@ import { type Attendee, zAttendee } from "./attendee";
 import { type DateObject, zDateObject } from "./date";
 import { type VEventDuration, zVEventDuration } from "./duration";
 import { type Organizer, zOrganizer } from "./organizer";
-import { type VEventRecurrenceRule, zVEventRecurrenceRule } from "./recurrence";
+import { type RecurrenceRule, zRecurrenceRule } from "./recurrence";
 import { type RecurrenceId, zRecurrenceId } from "./recurrenceId";
 import { type StatusType, statusTypes } from "./status";
 
@@ -38,7 +38,7 @@ export type VEventBase = {
   location?: string;
   description?: string;
   categories?: string[];
-  recurrenceRule?: VEventRecurrenceRule;
+  recurrenceRule?: RecurrenceRule;
   alarms?: VAlarm[];
   timeTransparent?: TimeTransparentType;
   url?: string;
@@ -64,7 +64,7 @@ export const zVEventBase: z.ZodType<VEventBase> = z.object({
   location: z.string().optional(),
   description: z.string().optional(),
   categories: z.array(z.string()).optional(),
-  recurrenceRule: zVEventRecurrenceRule.optional(),
+  recurrenceRule: zRecurrenceRule.optional(),
   alarms: z.array(zVAlarm).optional(),
   timeTransparent: z.enum(timeTransparentTypes).optional(),
   url: z.string().url().optional(),

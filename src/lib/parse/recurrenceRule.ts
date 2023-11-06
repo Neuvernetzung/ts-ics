@@ -6,11 +6,7 @@ import {
   type RRuleKey,
   type RRuleObjectKey,
 } from "@/constants/keys/recurrenceRule";
-import {
-  VEventRecurrenceRule,
-  VTimezone,
-  zVEventRecurrenceRule,
-} from "@/types";
+import { RecurrenceRule, VTimezone, zRecurrenceRule } from "@/types";
 
 import { icsTimeStampToObject } from "./timeStamp";
 import { getOptions } from "./utils/options";
@@ -28,7 +24,6 @@ const recurrenceNumberArrayKeys: RRuleObjectKey[] = [
   "byMonthday",
   "byYearday",
   "byWeekNo",
-  "byMonth",
   "bySetPos",
 ];
 
@@ -49,7 +44,7 @@ export const recurrenceObjectKeyIsNumber = (objectKey: RRuleObjectKey) =>
 export type ParseIcsRecurrenceRule = (
   ruleString: string,
   timezones?: VTimezone[]
-) => VEventRecurrenceRule;
+) => RecurrenceRule;
 
 export const icsRecurrenceRuleToObject: ParseIcsRecurrenceRule = (
   ruleString,
@@ -80,6 +75,15 @@ export const icsRecurrenceRuleToObject: ParseIcsRecurrenceRule = (
       return;
     }
 
+    if (objectKey === "byMonth") {
+      set(
+        rule,
+        objectKey,
+        value.split(COMMA).map((v) => Number(v) - 1) // ICS byMonth fängt bei 1 an, Javascript bei 0
+      );
+      return;
+    }
+
     if (recurrenceObjectKeyIsWeekdayNumberArray(objectKey)) {
       set(
         rule,
@@ -97,11 +101,10 @@ export const icsRecurrenceRuleToObject: ParseIcsRecurrenceRule = (
     set(rule, objectKey, value); // Set string value
   });
 
-  return rule as VEventRecurrenceRule;
+  return rule as RecurrenceRule;
 };
 
 export const parseIcsRecurrenceRule: ParseIcsRecurrenceRule = (
   ruleString,
   timezones
-) =>
-  zVEventRecurrenceRule.parse(icsRecurrenceRuleToObject(ruleString, timezones));
+) => zRecurrenceRule.parse(icsRecurrenceRuleToObject(ruleString, timezones));

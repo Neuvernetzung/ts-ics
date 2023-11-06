@@ -1,6 +1,6 @@
 import { addMilliseconds } from "date-fns";
 
-import { VTimezone } from "@/types";
+import type { VTimezone } from "@/types";
 import {
   type DateObject,
   type DateObjectType,
@@ -8,7 +8,7 @@ import {
 } from "@/types/date";
 
 import { icsDateTimeToDateTime, icsDateToDate } from "./date";
-import { getTimezoneObjectOffset } from "./utils/timezone/getTimezone";
+import { getTimezoneObjectOffset } from "@/utils/timezone/getTimezone";
 
 export type ParseIcsTimeStamp = (
   timestamp: string,
