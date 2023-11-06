@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const weekDays = ["MO", "TU", "WE", "TH", "FR", "SA", "SU"] as const;
+export const weekDays = ["SU", "MO", "TU", "WE", "TH", "FR", "SA"] as const;
 
 export type WeekDays = typeof weekDays;
 export type WeekDay = WeekDays[number];

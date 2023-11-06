@@ -1,6 +1,7 @@
 import { addYears } from "date-fns";
 
-import { RecurrenceRule } from "@/types";
+import type { RecurrenceRule, WeekDayNumber } from "@/types";
+import { weekDays } from "@/types";
 
 import { iterateBase } from "./iterate";
 import { iterateBy } from "./iterateBy";
@@ -18,11 +19,19 @@ export const extendByRecurrenceRule = (
   const end: Date =
     rule.until?.date || options?.end || addYears(start, DEFAULT_END_IN_YEARS);
 
+  const weekStartsOn = ((rule.workweekStart
+    ? weekDays.indexOf(rule.workweekStart)
+    : 1) % 7) as WeekDayNumber;
+
   const dateGroups: Date[][] = [[start]];
 
   iterateBase(rule, { start, end }, dateGroups);
 
-  const finalDateGroups = iterateBy(rule, { start, end }, dateGroups);
+  const finalDateGroups = iterateBy(
+    rule,
+    { start, end, weekStartsOn },
+    dateGroups
+  );
 
   const finalDates = rule.count
     ? finalDateGroups.flat().splice(0, rule.count)

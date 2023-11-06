@@ -1,6 +1,6 @@
 import { compareAsc, isWithinInterval } from "date-fns";
 
-import { RecurrenceRule } from "@/types";
+import type { RecurrenceRule, WeekDayNumber } from "@/types";
 
 import type { ExtendByRecurrenceRuleOptions } from "..";
 import { iterateByDay } from "./day";
@@ -15,7 +15,9 @@ import { iterateByYearDay } from "./yearDay";
 
 export const iterateBy = (
   rule: RecurrenceRule,
-  options: Required<ExtendByRecurrenceRuleOptions>,
+  options: Required<ExtendByRecurrenceRuleOptions> & {
+    weekStartsOn: WeekDayNumber;
+  },
   dateGroups: Date[][]
 ): Date[][] => {
   let extendedDateGroups = dateGroups;
@@ -28,7 +30,8 @@ export const iterateBy = (
     extendedDateGroups = iterateByWeekNo(
       rule,
       extendedDateGroups,
-      rule.byWeekNo
+      rule.byWeekNo,
+      options.weekStartsOn
     );
   }
 
@@ -49,7 +52,12 @@ export const iterateBy = (
   }
 
   if (rule.byDay) {
-    extendedDateGroups = iterateByDay(rule, extendedDateGroups, rule.byDay);
+    extendedDateGroups = iterateByDay(
+      rule,
+      extendedDateGroups,
+      rule.byDay,
+      options.weekStartsOn
+    );
   }
 
   if (rule.byHour) {

@@ -207,7 +207,7 @@ it("Test extendByRecurrenceRule - Monthly on the first Friday for 10 occurrences
 
   expect(dates.length).toBe(10);
   dates.forEach((d) => {
-    expect(4).toEqual(getDay(d));
+    expect(5).toEqual(getDay(d));
   });
   dates.forEach((d, i) => {
     expect(getMonth(d)).toEqual(getMonth(addMonths(start, i)));
@@ -225,7 +225,7 @@ it("Test extendByRecurrenceRule - Monthly on the first Friday until December 24,
 
   expect(dates.length).toBe(3);
   dates.forEach((d) => {
-    expect(4).toEqual(getDay(d));
+    expect(5).toEqual(getDay(d));
   });
   dates.forEach((d, i) => {
     expect(getMonth(d)).toEqual(getMonth(addMonths(start, i)));
@@ -243,7 +243,7 @@ it("Test extendByRecurrenceRule - Every other month on the first and last Sunday
 
   expect(dates.length).toBe(10);
   dates.forEach((d) => {
-    expect(6).toEqual(getDay(d));
+    expect(0).toEqual(getDay(d));
   });
 });
 
@@ -258,7 +258,7 @@ it("Test extendByRecurrenceRule - Monthly on the second-to-last Monday of the mo
 
   expect(dates.length).toBe(6);
   dates.forEach((d) => {
-    expect(0).toEqual(getDay(d));
+    expect(1).toEqual(getDay(d));
   });
 });
 
@@ -331,9 +331,9 @@ it("Test extendByRecurrenceRule - Every Tuesday, every other month", async () =>
 
   const dates = extendByRecurrenceRule(rule, { start });
 
-  expect(dates.length).toBe(51);
+  expect(dates.length).toBe(52);
   dates.forEach((d) => {
-    expect([1]).toContain(getDay(d));
+    expect([2]).toContain(getDay(d));
   });
 });
 
@@ -404,7 +404,7 @@ it("Test extendByRecurrenceRule - Every 20th Monday of the year, forever - V1", 
 
   expect(dates.length).toBe(2);
   dates.forEach((d) => {
-    expect([0]).toContain(getDay(d));
+    expect([1]).toContain(getDay(d));
   });
 });
 
@@ -421,7 +421,7 @@ it("Test extendByRecurrenceRule - Every 20th Monday of the year, forever - V2", 
 
   expect(dates.length).toBe(2);
   dates.forEach((d) => {
-    expect([0]).toContain(getDay(d));
+    expect([1]).toContain(getDay(d));
     expect(getWeek(d, { weekStartsOn: 1 })).toEqual(20);
   });
 });
@@ -438,7 +438,7 @@ it("Test extendByRecurrenceRule - Every Thursday in March, forever", async () =>
 
   expect(dates.length).toBe(9);
   dates.forEach((d) => {
-    expect([3]).toContain(getDay(d));
+    expect([4]).toContain(getDay(d));
     expect(2).toEqual(getMonth(d));
   });
 });
@@ -453,9 +453,9 @@ it("Test extendByRecurrenceRule - Every Thursday, but only during June, July, an
     start,
   });
 
-  expect(dates.length).toBe(26);
+  expect(dates.length).toBe(27);
   dates.forEach((d) => {
-    expect([3]).toContain(getDay(d));
+    expect([4]).toContain(getDay(d));
     expect([5, 6, 7]).toContain(getMonth(d));
   });
 });
@@ -472,7 +472,7 @@ it("Test extendByRecurrenceRule - Every Friday the 13th, forever", async () => {
 
   expect(dates.length).toBe(3);
   dates.forEach((d) => {
-    expect([4]).toContain(getDay(d));
+    expect([5]).toContain(getDay(d));
     expect([13]).toContain(getDate(d));
   });
 });
@@ -489,7 +489,7 @@ it("Test extendByRecurrenceRule - The first Saturday that follows the first Sund
 
   expect(dates.length).toBe(24);
   dates.forEach((d) => {
-    expect([5]).toContain(getDay(d));
+    expect([6]).toContain(getDay(d));
     expect([7, 8, 9, 10, 11, 12, 13]).toContain(getDate(d));
   });
 });
@@ -508,7 +508,7 @@ it("Test extendByRecurrenceRule - Every 4 years, the first Tuesday after a Monda
 
   expect(dates.length).toBe(2);
   dates.forEach((d) => {
-    expect([1]).toContain(getDay(d));
+    expect([2]).toContain(getDay(d));
     expect([2, 3, 4, 5, 6, 7, 8]).toContain(getDate(d));
     expect([10]).toContain(getMonth(d));
   });
@@ -526,7 +526,7 @@ it("Test extendByRecurrenceRule - The third instance into the month of one of Tu
 
   expect(dates.length).toBe(3);
   dates.forEach((d) => {
-    expect([1, 2, 3]).toContain(getDay(d));
+    expect([2, 3, 4]).toContain(getDay(d));
   });
 });
 
@@ -542,7 +542,7 @@ it("Test extendByRecurrenceRule - The second-to-last weekday of the month", asyn
 
   expect(dates.length).toBe(24);
   dates.forEach((d) => {
-    expect([0, 1, 2, 3, 4]).toContain(getDay(d));
+    expect([1, 2, 3, 4, 5]).toContain(getDay(d));
   });
 });
 
@@ -647,16 +647,16 @@ it("Test extendByRecurrenceRule - Every 20 seconds from 9:15 AM to 9:20 AM every
 
 it("Test extendByRecurrenceRule - An example where the days generated makes a difference because of WKST", async () => {
   const start = new Date(Date.UTC(2023, 9, 5));
-  const ruleString = "FREQ=WEEKLY;INTERVAL=2;COUNT=4;BYDAY=TU,SU;WKST=MO";
+  const ruleStringMo = "FREQ=WEEKLY;INTERVAL=2;COUNT=4;BYDAY=TU,SU;WKST=MO";
 
-  const rule = parseIcsRecurrenceRule(ruleString);
+  const ruleMo = parseIcsRecurrenceRule(ruleStringMo);
 
-  const dates = extendByRecurrenceRule(rule, {
+  const datesMo = extendByRecurrenceRule(ruleMo, {
     start,
   });
 
-  expect(dates.length).toBe(4);
-  dates.forEach((date) => expect([1, 6]).toContain(getDay(date)));
+  expect(datesMo.length).toBe(4);
+  datesMo.forEach((date) => expect([0, 2]).toContain(getDay(date)));
 
   const ruleStringSu = "FREQ=WEEKLY;INTERVAL=2;COUNT=4;BYDAY=TU,SU;WKST=SU";
 
@@ -669,7 +669,7 @@ it("Test extendByRecurrenceRule - An example where the days generated makes a di
   expect(datesSu.length).toBe(4);
   datesSu.forEach((date) => expect([0, 2]).toContain(getDay(date)));
 
-  expect(dates).not.toEqual(datesSu);
+  expect(datesMo).not.toEqual(datesSu);
 });
 
 it("Test extendByRecurrenceRule - An example where an invalid date (i.e., February 30) is ignored", async () => {

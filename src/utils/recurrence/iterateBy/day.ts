@@ -18,17 +18,12 @@ import { type RecurrenceRule, WeekDayNumber, weekDays } from "@/types";
 export const iterateByDay = (
   rule: RecurrenceRule,
   dateGroups: Date[][],
-  byDay: NonNullable<RecurrenceRule["byDay"]>
+  byDay: NonNullable<RecurrenceRule["byDay"]>,
+  weekStartsOn: WeekDayNumber
 ): Date[][] => {
-  const weekStartsOn = (((rule.workweekStart
-    ? weekDays.indexOf(rule.workweekStart)
-    : 0) +
-    1) %
-    7) as WeekDayNumber;
-
   const dayIndeces = byDay.map(({ day, occurence }) => ({
     occurence,
-    day: (weekDays.indexOf(day) - (weekStartsOn - 1) + 7) % 7,
+    day: weekDays.indexOf(day),
   }));
 
   if (rule.frequency === "YEARLY") {
