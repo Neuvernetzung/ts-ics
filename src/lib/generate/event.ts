@@ -7,7 +7,7 @@ import type {
   DateObject,
   VEvent,
   VEventDuration,
-  VEventRecurrenceRule,
+  RecurrenceRule,
 } from "@/types";
 import { Organizer } from "@/types/organizer";
 
@@ -53,7 +53,7 @@ export const generateIcsEvent = (event: VEvent) => {
     }
 
     if (key === "recurrenceRule") {
-      icsString += generateIcsRecurrenceRule(value as VEventRecurrenceRule);
+      icsString += generateIcsRecurrenceRule(value as RecurrenceRule);
       return;
     }
 

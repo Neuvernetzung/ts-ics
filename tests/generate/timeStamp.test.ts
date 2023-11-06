@@ -54,7 +54,7 @@ it("Test Ics Timestamp Generate - IANA Timezone", async () => {
     date,
     type: "DATE-TIME",
     local: {
-      date: addMilliseconds(date, getTimezoneOffset("America/New_York")),
+      date: addMilliseconds(date, getTimezoneOffset("America/New_York", date)),
       timezone: "America/New_York",
       tzoffset: "-0400",
     },

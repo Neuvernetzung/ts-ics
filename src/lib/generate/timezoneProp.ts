@@ -1,5 +1,5 @@
 import { VTIMEZONE_PROP_TO_KEYS } from "@/constants/keys/timezoneProp";
-import type { DateObject, VEventRecurrenceRule } from "@/types";
+import type { DateObject, RecurrenceRule } from "@/types";
 import type { VTimezoneProp } from "@/types/timezone";
 
 import { generateIcsDateTime } from "./date";
@@ -34,7 +34,7 @@ export const generateIcsTimezoneProp = (timezoneProp: VTimezoneProp) => {
     }
 
     if (key === "recurrenceRule") {
-      icsString += generateIcsRecurrenceRule(value as VEventRecurrenceRule);
+      icsString += generateIcsRecurrenceRule(value as RecurrenceRule);
       return;
     }
 
