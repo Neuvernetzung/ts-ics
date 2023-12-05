@@ -1,9 +1,10 @@
 import { z } from "zod";
 
 export const attendeePartStatusTypes = [
-  "TENTATIVE",
+  "NEEDS-ACTION",
   "ACCEPTED",
-  "CANCELLED",
+  "DECLINED",
+  "TENTATIVE",
   "DELEGATED",
 ] as const;
 
