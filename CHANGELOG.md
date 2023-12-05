@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.2.1
+
+### Patch Changes
+
+- 135afba: Deps updaten #58
+
 ## 1.2.0
 
 ### Minor Changes
