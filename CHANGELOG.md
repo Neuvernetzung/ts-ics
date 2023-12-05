@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.2.2
+
+### Patch Changes
+
+- abd34d4: fix attendee participation status per specs #61
+
 ## 1.2.1
 
 ### Patch Changes
