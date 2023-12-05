@@ -1,12 +1,30 @@
 {
-  "extends": "@neuvernetzung/tsconfig/nextjs.json",
   "compilerOptions": {
     "baseUrl": "./src",
     "paths": {
       "@/*": ["./*"]
     },
     "target": "esnext",
-    "incremental": false
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": false,
+    "composite": false,
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": false,
+    "moduleResolution": "node",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx", "./tests/**/*.ts"],
   "exclude": ["dist", "node_modules"]
