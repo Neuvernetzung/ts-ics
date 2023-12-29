@@ -80,7 +80,7 @@ const config: Config = {
         links: [
           {
             label: "Docs",
-            to: "/docs/intro",
+            to: "/docs/Getting%20Started",
           },
           {
             label: "GitHub",
@@ -89,6 +89,7 @@ const config: Config = {
         ],
         copyright: `Copyright © ${new Date().getFullYear()} Neuvernetzung Medienagentur UG - Built with Docusaurus.`,
       },
+      prismThemes: [prismThemes],
     },
 };
 
