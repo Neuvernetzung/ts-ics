@@ -3,12 +3,12 @@ import {
   millisecondsToHours,
   millisecondsToMinutes,
 } from "date-fns";
-import { getTimezoneOffset } from "date-fns-tz";
 
 import { DateObjectTzProps, VTimezone } from "@/types";
 
 import { extendTimezoneProps } from "./extendProps";
 import { timeZoneOffsetToMilliseconds } from "./offsetToMilliseconds";
+import { getOffsetFromTimezoneId } from "./getOffsetFromTimezoneId";
 
 export const getTimezoneObjectOffset = (
   date: Date,
@@ -42,7 +42,7 @@ export const getTimezoneObjectOffset = (
     return { offset, milliseconds: timeZoneOffsetToMilliseconds(offset) };
   }
 
-  const ianaTimezone = getTimezoneOffset(tzid, date);
+  const ianaTimezone = getOffsetFromTimezoneId(tzid, date);
 
   if (!Number.isNaN(ianaTimezone)) {
     const isNegative = ianaTimezone < 0;

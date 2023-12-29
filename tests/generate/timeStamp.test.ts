@@ -1,11 +1,12 @@
 import { addMilliseconds, compareDesc } from "date-fns";
-import { getTimezoneOffset } from "date-fns-tz";
 
 import { generateIcsTimeStamp, parseicsTimeStamp } from "@/lib";
 import { getLine } from "@/lib/parse/utils/line";
 import { zDateObject } from "@/types";
 
 import { fictiveTimezone } from "./fixtures/timezones";
+import { timeZoneOffsetToMilliseconds } from "@/utils";
+import { getOffsetFromTimezoneId } from "@/utils/timezone/getOffsetFromTimezoneId";
 
 it("Test Ics Timestamp Generate - UTC", async () => {
   const date = new Date(2023, 6, 12, 14, 30);
@@ -32,7 +33,7 @@ it("Test Ics Timestamp Generate - VTimezone", async () => {
     date,
     type: "DATE-TIME",
     local: {
-      date: addMilliseconds(date, getTimezoneOffset(offset)),
+      date: addMilliseconds(date, timeZoneOffsetToMilliseconds(offset)),
       timezone: fictiveTimezone.id,
       tzoffset: offset,
     },
@@ -54,7 +55,10 @@ it("Test Ics Timestamp Generate - IANA Timezone", async () => {
     date,
     type: "DATE-TIME",
     local: {
-      date: addMilliseconds(date, getTimezoneOffset("America/New_York", date)),
+      date: addMilliseconds(
+        date,
+        getOffsetFromTimezoneId("America/New_York", date)
+      ),
       timezone: "America/New_York",
       tzoffset: "-0400",
     },
