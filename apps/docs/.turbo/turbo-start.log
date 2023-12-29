@@ -1,0 +1,164 @@
+
+> docs@0.0.0 start
+> docusaurus start
+
+[INFO] Starting the development server...
+[SUCCESS] Docusaurus website is running at: http://localhost:3000/ts-ics/
+i Compiling Client
+√ Client: Compiled successfully in 1.92s
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+
+[1m[33mwarn[39m[22m - The `content` option in your Tailwind CSS configuration is missing or empty.
+[1m[33mwarn[39m[22m - Configure your content sources or your generated CSS will be missing styles.
+[1m[33mwarn[39m[22m - https://tailwindcss.com/docs/content-configuration
+√ Client: Compiled successfully in 1.86s
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 121.65ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 115.36ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 119.88ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled with some errors in 201.34ms
+Module not found: Error: Can't resolve '@site/src/pages/index.tsx' in 'C:\Users\Tim\Desktop\Projekte\Repositories\ts-ics\apps\docs\.docusaurus'
+
+--------------------------
+
+Module not found: Error: Can't resolve '@site/src/pages/index.tsx' in 'C:\Users\Tim\Desktop\Projekte\Repositories\ts-ics\apps\docs\.docusaurus'
+[1mclient[39m[22m (webpack 5.89.0) compiled with [1m[31m2 errors[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 589.96ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 662.29ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 101.70ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 91.39ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 78.68ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 122.86ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+[WARNING] Duplicate routes found!
+- Attempting to create page at /ts-ics/, but a page already exists at this route.
+This could lead to non-deterministic routing behavior.
+i Compiling Client
+√ Client: Compiled with some errors in 138.75ms
+Module not found: Error: Can't resolve '@site/src/pages/index.tsx' in 'C:\Users\Tim\Desktop\Projekte\Repositories\ts-ics\apps\docs\.docusaurus'
+
+--------------------------
+
+Module not found: Error: Can't resolve '@site/src/pages/index.tsx' in 'C:\Users\Tim\Desktop\Projekte\Repositories\ts-ics\apps\docs\.docusaurus'
+[1mclient[39m[22m (webpack 5.89.0) compiled with [1m[31m2 errors[39m[22m
+i Compiling Client
+√ Client: Compiled with some errors in 94.48ms
+Module not found: Error: Can't resolve '@site/src/pages/index.tsx' in 'C:\Users\Tim\Desktop\Projekte\Repositories\ts-ics\apps\docs\.docusaurus'
+
+--------------------------
+
+Module not found: Error: Can't resolve '@site/src/pages/index.tsx' in 'C:\Users\Tim\Desktop\Projekte\Repositories\ts-ics\apps\docs\.docusaurus'
+
+--------------------------
+
+Module not found: Error: Can't resolve '@site/src/pages/index.md' in 'C:\Users\Tim\Desktop\Projekte\Repositories\ts-ics\apps\docs\.docusaurus'
+
+--------------------------
+
+Module not found: Error: Can't resolve '@site/src/pages/index.md' in 'C:\Users\Tim\Desktop\Projekte\Repositories\ts-ics\apps\docs\.docusaurus'
+[1mclient[39m[22m (webpack 5.89.0) compiled with [1m[31m4 errors[39m[22m
+i Compiling Client
+√ Client: Compiled with some errors in 137.31ms
+Module not found: Error: Can't resolve '@site/src/pages/index.tsx' in 'C:\Users\Tim\Desktop\Projekte\Repositories\ts-ics\apps\docs\.docusaurus'
+
+--------------------------
+
+Module not found: Error: Can't resolve '@site/src/pages/index.tsx' in 'C:\Users\Tim\Desktop\Projekte\Repositories\ts-ics\apps\docs\.docusaurus'
+[1mclient[39m[22m (webpack 5.89.0) compiled with [1m[31m2 errors[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 201.22ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 106.67ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 103.02ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 91.58ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 93.53ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 80.31ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 60.91ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 71.25ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 57.83ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 80.42ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 90.53ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 78.37ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 72.96ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 62.80ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 78.75ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 88.18ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled with some errors in 138.74ms
+Module not found: Error: Can't resolve '@site/docs/intro.md' in 'C:\Users\Tim\Desktop\Projekte\Repositories\ts-ics\apps\docs\.docusaurus'
+
+--------------------------
+
+Module not found: Error: Can't resolve '@site/docs/intro.md' in 'C:\Users\Tim\Desktop\Projekte\Repositories\ts-ics\apps\docs\.docusaurus'
+[1mclient[39m[22m (webpack 5.89.0) compiled with [1m[31m2 errors[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 213.81ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 71.11ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 61.51ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 87.24ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 104.43ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 83.52ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
+√ Client: Compiled successfully in 64.15ms
+[1mclient[39m[22m (webpack 5.89.0) compiled [1m[32msuccessfully[39m[22m
+i Compiling Client
