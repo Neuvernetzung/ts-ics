@@ -16,7 +16,7 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "date-fns": "^2",
+    "date-fns": "^3",
     "lodash": "^4",
     "zod": "^3"
   },
@@ -27,7 +27,7 @@
     "@types/jest": "^29.5.10",
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.10.3",
-    "date-fns": "^2.30.0",
+    "date-fns": "^3.0.6",
     "eslint": "^8.55.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
