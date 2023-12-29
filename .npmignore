@@ -13,3 +13,5 @@ jest.config.ts
 .gitignore
 tsconfig.json
 tsup.config.ts
+public
+tests
