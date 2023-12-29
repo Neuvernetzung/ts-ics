@@ -6,11 +6,13 @@
   ],
   "private": true,
   "scripts": {
-    "type-check": "turbo run type-check",
-    "lint": "turbo run lint",
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "test": "turbo run test"
+    "type-check": "turbo run type-check --filter=ts-ics",
+    "lint": "turbo run lint --filter=ts-ics",
+    "dev": "turbo run dev --filter=ts-ics",
+    "build": "turbo run build --filter=ts-ics",
+    "test": "turbo run test --filter=ts-ics",
+    "dev/docs": "turbo run start --filter=docs",
+    "build/docs": "turbo run build --filter=docs"
   },
   "author": "Neuvernetzung Medienagentur UG",
   "packageManager": "npm@10.2.1",
