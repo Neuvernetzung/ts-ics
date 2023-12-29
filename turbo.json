@@ -10,6 +10,7 @@
     },
     "type-check": {},
     "lint": {},
-    "test": {}
+    "test": {},
+    "start": {}
   }
 }
