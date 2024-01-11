@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.3.1
+
+### Patch Changes
+
+- 6a59628: defaultLocale zu getOffsetFromTimezoneId hinzufügen für Beständigkeit #79
+
 ## 1.3.0
 
 ### Minor Changes
