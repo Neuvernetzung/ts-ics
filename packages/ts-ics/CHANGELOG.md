@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.3.2
+
+### Patch Changes
+
+- 544e6ee: follow-redirects update #83
+
 ## 1.3.1
 
 ### Patch Changes
