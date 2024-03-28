@@ -1,5 +1,12 @@
 # ts-ics
 
+## 1.3.3
+
+### Patch Changes
+
+- c81d494: Bump express from 4.18.2 to 4.19.2 #87
+- bd3cd05: Bump webpack-dev-middleware from 5.3.3 to 5.3.4 #86
+
 ## 1.3.2
 
 ### Patch Changes
