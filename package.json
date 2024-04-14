@@ -17,8 +17,8 @@
   "author": "Neuvernetzung Medienagentur UG",
   "packageManager": "npm@10.2.1",
   "devDependencies": {
+    "@biomejs/biome": "^1.6.4",
     "@changesets/cli": "^2.27.1",
-    "@neuvernetzung/eslint-config-custom": "^1.1.6",
     "@neuvernetzung/tsconfig": "^1.0.2",
     "@types/node": "^20.10.4",
     "turbo": "^1.11.2"

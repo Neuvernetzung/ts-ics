@@ -10,8 +10,7 @@ export const iterateByYearDay = (
   if (rule.frequency === "YEARLY") {
     return dateGroups.map((dates) =>
       dates
-        .map((date) => byYearday.map((year) => setDayOfYear(date, year)))
-        .flat()
+        .flatMap((date) => byYearday.map((year) => setDayOfYear(date, year)))
     );
   }
 

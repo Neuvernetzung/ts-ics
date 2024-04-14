@@ -1,4 +1,4 @@
-import { VTimezoneProp } from "@/types";
+import type { VTimezoneProp } from "@/types";
 
 import { extendByRecurrenceRule } from "../recurrence";
 
@@ -7,7 +7,7 @@ export const extendTimezoneProps = (
   timezoneProps: VTimezoneProp[]
 ): VTimezoneProp[] =>
   timezoneProps
-    .map((timezoneProp) => {
+    .flatMap((timezoneProp) => {
       if (!timezoneProp.recurrenceRule) return timezoneProp;
       if (
         timezoneProp.recurrenceRule.until &&
@@ -21,5 +21,4 @@ export const extendTimezoneProps = (
       }).map((date) => ({ ...timezoneProp, start: date }));
 
       return extended;
-    })
-    .flat();
+    });

@@ -1,4 +1,4 @@
-import { VEventObjectKey } from "@/constants/keys/event";
+import type { VEventObjectKey } from "@/constants/keys/event";
 
 const timeStampKeys: VEventObjectKey[] = [
   "stamp",

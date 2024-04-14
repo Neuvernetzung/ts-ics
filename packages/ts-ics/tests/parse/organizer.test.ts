@@ -7,7 +7,7 @@ it("Test Ics Organizer Parse", async () => {
 
   const { value, options } = getLine(organizer);
 
-  expect(() => parseIcsOrganizer(value, options)).not.toThrowError();
+  expect(() => parseIcsOrganizer(value, options)).not.toThrow();
 });
 
 it("Test Ics Organizer Parse", async () => {
@@ -15,7 +15,7 @@ it("Test Ics Organizer Parse", async () => {
 
   const { value, options } = getLine(organizer);
 
-  expect(() => parseIcsOrganizer(value, options)).not.toThrowError();
+  expect(() => parseIcsOrganizer(value, options)).not.toThrow();
 });
 
 it("Test Ics Organizer Parse", async () => {
@@ -23,5 +23,5 @@ it("Test Ics Organizer Parse", async () => {
 
   const { value, options } = getLine(organizer);
 
-  expect(() => parseIcsOrganizer(value, options)).not.toThrowError();
+  expect(() => parseIcsOrganizer(value, options)).not.toThrow();
 });

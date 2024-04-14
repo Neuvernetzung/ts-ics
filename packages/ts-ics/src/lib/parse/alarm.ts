@@ -1,10 +1,10 @@
 import set from "lodash/set";
 
 import { replaceAlarmRegex } from "@/constants";
-import { VALARM_TO_OBJECT_KEYS, VAlarmKey } from "@/constants/keys/alarm";
-import { VAlarm, VTimezone, zVAlarm } from "@/types";
+import { VALARM_TO_OBJECT_KEYS, type VAlarmKey } from "@/constants/keys/alarm";
+import { type VAlarm, type VTimezone, zVAlarm } from "@/types";
 import type { Attachment } from "@/types/attachment";
-import { Attendee } from "@/types/attendee";
+import type { Attendee } from "@/types/attendee";
 
 import { icsAttachmentToObject } from "./attachment";
 import { icsAttendeeToObject } from "./attendee";

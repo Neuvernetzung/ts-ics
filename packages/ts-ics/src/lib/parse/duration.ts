@@ -1,6 +1,6 @@
 import set from "lodash/set";
 
-import { VEventDuration, zVEventDuration } from "@/types";
+import { type VEventDuration, zVEventDuration } from "@/types";
 
 export const icsDurationToObject = (durationString: string): VEventDuration => {
   let newString = durationString;

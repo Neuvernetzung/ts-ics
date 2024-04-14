@@ -3,15 +3,15 @@ import { parseIcsDate, parseIcsDateTime } from "@/lib/parse/date";
 import { zDateObject } from "@/types";
 
 it("Test Ics Date Time Parse", async () => {
-  const dateTime = `20230118T073000Z`;
+  const dateTime = "20230118T073000Z";
 
-  expect(() => parseIcsDateTime(dateTime)).not.toThrowError();
+  expect(() => parseIcsDateTime(dateTime)).not.toThrow();
 });
 
 it("Test Ics Date Parse", async () => {
-  const date = `20230118`;
+  const date = "20230118";
 
-  expect(() => parseIcsDate(date)).not.toThrowError();
+  expect(() => parseIcsDate(date)).not.toThrow();
 });
 
 it("Strip Milliseconds - Milliseconds are not allowed in Ics", async () => {

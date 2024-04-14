@@ -1,4 +1,4 @@
-import { Attachment, zAttachment } from "@/types/attachment";
+import { type Attachment, zAttachment } from "@/types/attachment";
 
 export const icsAttachmentToObject = (
   attachmentString: string,

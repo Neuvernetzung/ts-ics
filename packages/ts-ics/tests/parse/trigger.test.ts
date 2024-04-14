@@ -7,7 +7,7 @@ it("Test Ics Trigger Parse", async () => {
 
   const { value, options } = getLine(trigger);
 
-  expect(() => parseIcsTrigger(value, options)).not.toThrowError();
+  expect(() => parseIcsTrigger(value, options)).not.toThrow();
 });
 
 it("Test Ics Trigger Parse", async () => {
@@ -15,7 +15,7 @@ it("Test Ics Trigger Parse", async () => {
 
   const { value, options } = getLine(trigger);
 
-  expect(() => parseIcsTrigger(value, options)).not.toThrowError();
+  expect(() => parseIcsTrigger(value, options)).not.toThrow();
 });
 
 it("Test Ics Trigger Parse", async () => {
@@ -23,5 +23,5 @@ it("Test Ics Trigger Parse", async () => {
 
   const { value, options } = getLine(trigger);
 
-  expect(() => parseIcsTrigger(value, options)).not.toThrowError();
+  expect(() => parseIcsTrigger(value, options)).not.toThrow();
 });

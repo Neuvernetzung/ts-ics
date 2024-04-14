@@ -9,7 +9,7 @@ import type {
   VEventDuration,
   RecurrenceRule,
 } from "@/types";
-import { Organizer } from "@/types/organizer";
+import type { Organizer } from "@/types/organizer";
 
 import { generateIcsAlarm } from "./alarm";
 import { generateIcsAttendee } from "./attendee";

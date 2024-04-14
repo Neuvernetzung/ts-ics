@@ -55,7 +55,7 @@ TZNAME:EST
 END:STANDARD
 END:VTIMEZONE`;
 
-  expect(() => parseIcsTimezone(timezone)).not.toThrowError();
+  expect(() => parseIcsTimezone(timezone)).not.toThrow();
 });
 
 it("Test Ics Timezone Parse", async () => {
@@ -76,7 +76,7 @@ TZNAME:EDT
 END:DAYLIGHT
 END:VTIMEZONE`;
 
-  expect(() => parseIcsTimezone(timezone)).not.toThrowError();
+  expect(() => parseIcsTimezone(timezone)).not.toThrow();
 });
 
 it("Test Ics Timezone Parse", async () => {
@@ -100,7 +100,7 @@ TZNAME:EDT
 END:DAYLIGHT
 END:VTIMEZONE`;
 
-  expect(() => parseIcsTimezone(timezone)).not.toThrowError();
+  expect(() => parseIcsTimezone(timezone)).not.toThrow();
 });
 
 it("Test Ics Timezone Parse", async () => {
@@ -123,7 +123,7 @@ TZNAME:EDT
 END:DAYLIGHT
 END:VTIMEZONE`;
 
-  expect(() => parseIcsTimezone(timezone)).not.toThrowError();
+  expect(() => parseIcsTimezone(timezone)).not.toThrow();
 });
 
 it("Test Ics Timezone Parse", async () => {
@@ -153,5 +153,5 @@ TZNAME:EDT
 END:DAYLIGHT
 END:VTIMEZONE`;
 
-  expect(() => parseIcsTimezone(timezone)).not.toThrowError();
+  expect(() => parseIcsTimezone(timezone)).not.toThrow();
 });

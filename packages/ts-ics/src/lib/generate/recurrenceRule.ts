@@ -1,6 +1,6 @@
 import compact from "lodash/compact";
 
-import { RecurrenceRule } from "@/types";
+import type { RecurrenceRule } from "@/types";
 
 import { generateIcsLine } from "./utils/addLine";
 import { generateIcsOptions } from "./utils/generateOptions";

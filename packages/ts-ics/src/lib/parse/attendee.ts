@@ -1,4 +1,4 @@
-import { Attendee, AttendeePartStatusType, zAttendee } from "@/types/attendee";
+import { type Attendee, type AttendeePartStatusType, zAttendee } from "@/types/attendee";
 
 import { replaceMailTo } from "./utils/replaceMailTo";
 

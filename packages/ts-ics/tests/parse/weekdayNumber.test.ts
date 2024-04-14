@@ -7,17 +7,17 @@ it("Test Ics Weekday Number Parse", async () => {
 
   expect(() =>
     weekdayNumber.split(COMMA).forEach((w) => parseIcsWeekdayNumber(w))
-  ).not.toThrowError();
+  ).not.toThrow();
 });
 
 it("Test Ics Weekday Number Parse", async () => {
   const weekdayNumber = `1SU`;
 
-  expect(() => parseIcsWeekdayNumber(weekdayNumber)).not.toThrowError();
+  expect(() => parseIcsWeekdayNumber(weekdayNumber)).not.toThrow();
 });
 
 it("Test Ics Weekday Number Parse", async () => {
   const weekdayNumber = `-1MO`;
 
-  expect(() => parseIcsWeekdayNumber(weekdayNumber)).not.toThrowError();
+  expect(() => parseIcsWeekdayNumber(weekdayNumber)).not.toThrow();
 });
