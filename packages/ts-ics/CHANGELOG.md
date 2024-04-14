@@ -1,5 +1,12 @@
 # ts-ics
 
+## 1.3.4
+
+### Patch Changes
+
+- 91783fa: Replace eslint with biome #89
+- 57704e7: Update readme #91
+
 ## 1.3.3
 
 ### Patch Changes
