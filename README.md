@@ -1,6 +1,8 @@
 # TS-ICS
 
-[![neuvernetzung-logo](https://raw.githubusercontent.com/Neuvernetzung/ts-ics/master/public/Header.png)](https://neuvernetzung.github.io/ts-ics)
+[![neuvernetzung-logo](https://raw.githubusercontent.com/Neuvernetzung/ts-ics/master/public/Header.png)](https://neuvernetzung.de)
+
+[![NPM](https://nodei.co/npm/ts-ics.png)](https://nodei.co/npm/ts-ics/)
 
 This package can parse and create Ics files and provides TypeScript types for easy handling.
 
