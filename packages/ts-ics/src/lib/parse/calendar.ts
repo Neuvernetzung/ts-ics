@@ -5,7 +5,7 @@ import {
   getTimezoneRegex,
   replaceCalendarRegex,
 } from "@/constants";
-import { VCALENDAR_TO_OBJECT_KEYS, VCalendarKey } from "@/constants/keys";
+import { VCALENDAR_TO_OBJECT_KEYS, type VCalendarKey } from "@/constants/keys";
 import { type VCalendar, zVCalendar } from "@/types";
 
 import { icsEventToObject } from "./event";

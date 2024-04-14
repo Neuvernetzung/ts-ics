@@ -1,6 +1,6 @@
 import compact from "lodash/compact";
 
-import { Organizer } from "@/types/organizer";
+import type { Organizer } from "@/types/organizer";
 
 import { generateIcsMail } from "./mail";
 import { generateIcsLine } from "./utils/addLine";

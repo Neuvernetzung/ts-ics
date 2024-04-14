@@ -6,7 +6,7 @@ import {
   type RRuleKey,
   type RRuleObjectKey,
 } from "@/constants/keys/recurrenceRule";
-import { RecurrenceRule, VTimezone, zRecurrenceRule } from "@/types";
+import { type RecurrenceRule, type VTimezone, zRecurrenceRule } from "@/types";
 
 import { icsTimeStampToObject } from "./timeStamp";
 import { getOptions } from "./utils/options";

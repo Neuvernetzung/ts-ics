@@ -12,7 +12,7 @@ CLASS:PRIVATE
 CATEGORIES:BUSINESS,HUMAN RESOURCES
 END:VEVENT`;
 
-  expect(() => parseIcsEvent(event)).not.toThrowError();
+  expect(() => parseIcsEvent(event)).not.toThrow();
 });
 
 it("Test Ics Event Parse", async () => {
@@ -27,7 +27,7 @@ CATEGORIES:BUSINESS,HUMAN RESOURCES
 TRANSP:TRANSPARENT
 END:VEVENT`;
 
-  expect(() => parseIcsEvent(event)).not.toThrowError();
+  expect(() => parseIcsEvent(event)).not.toThrow();
 });
 
 it("Test Ics Event Parse", async () => {
@@ -43,7 +43,7 @@ CATEGORIES:ANNIVERSARY,PERSONAL,SPECIAL OCCASION
 RRULE:FREQ=YEARLY
 END:VEVENT`;
 
-  expect(() => parseIcsEvent(event)).not.toThrowError();
+  expect(() => parseIcsEvent(event)).not.toThrow();
 });
 
 it("Test Ics Event Parse", async () => {
@@ -56,12 +56,14 @@ SUMMARY:Festival International de Jazz de Montreal
 TRANSP:TRANSPARENT
 END:VEVENT`;
 
-  expect(() => parseIcsEvent(event)).not.toThrowError();
+  expect(() => parseIcsEvent(event)).not.toThrow();
 });
 
 it("Test ICS Event With Long Description Parse", async () => {
-  const buffer = await readFile(`${__dirname}/fixtures/longDescriptionEvent.ics`);
+  const buffer = await readFile(
+    `${__dirname}/fixtures/longDescriptionEvent.ics`
+  );
   const event = buffer.toString();
-  
-  expect(() => parseIcsEvent(event)).not.toThrowError();
-})
+
+  expect(() => parseIcsEvent(event)).not.toThrow();
+});

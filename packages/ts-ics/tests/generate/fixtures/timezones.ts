@@ -1,4 +1,4 @@
-import { VTimezone } from "@/types";
+import type { VTimezone } from "@/types";
 
 export const fictiveTimezone: VTimezone = {
   id: "Fictive/Timezone",

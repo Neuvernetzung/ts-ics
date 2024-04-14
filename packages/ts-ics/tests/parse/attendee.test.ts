@@ -7,7 +7,7 @@ it("Test Ics Attendee Parse", async () => {
 
   const { value, options } = getLine(attendee);
 
-  expect(() => parseIcsAttendee(value, options)).not.toThrowError();
+  expect(() => parseIcsAttendee(value, options)).not.toThrow();
 });
 
 it("Test Ics Attendee Parse", async () => {
@@ -17,7 +17,7 @@ it("Test Ics Attendee Parse", async () => {
 
   const parsed = parseIcsAttendee(value, options);
 
-  expect(() => parsed).not.toThrowError();
+  expect(() => parsed).not.toThrow();
 
   expect(parsed).toEqual({
     role: "REQ-PARTICIPANT",

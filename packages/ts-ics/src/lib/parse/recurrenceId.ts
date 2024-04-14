@@ -1,7 +1,7 @@
-import { RecurrenceId, zRecurrenceId } from "@/types/recurrenceId";
+import { type RecurrenceId, zRecurrenceId } from "@/types/recurrenceId";
 
 import { icsTimeStampToObject } from "./timeStamp";
-import { VTimezone } from "@/types";
+import type { VTimezone } from "@/types";
 
 export type ParseIcsRecurrenceId = (
   recurrenceIdString: string,

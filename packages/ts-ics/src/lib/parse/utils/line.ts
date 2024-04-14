@@ -10,7 +10,7 @@ type GetLineProps<TKey extends string> = {
 
 export const separateValue = (line: string) => {
   let isInsideQuotes = false;
-  let splitIndex;
+  let splitIndex: number | undefined;
 
   for (let i = 0; i < line.length; i += 1) {
     if (splitIndex !== undefined) break;

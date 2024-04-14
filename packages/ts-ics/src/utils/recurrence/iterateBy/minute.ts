@@ -15,7 +15,7 @@ export const iterateByMinute = (
     rule.frequency === "HOURLY"
   ) {
     return dateGroups.map((dates) =>
-      dates.map((date) => byMinute.map((hour) => setMinutes(date, hour))).flat()
+      dates.flatMap((date) => byMinute.map((hour) => setMinutes(date, hour)))
     );
   }
 

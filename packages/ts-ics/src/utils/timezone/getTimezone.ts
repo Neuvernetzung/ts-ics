@@ -4,7 +4,7 @@ import {
   millisecondsToMinutes,
 } from "date-fns";
 
-import { DateObjectTzProps, VTimezone } from "@/types";
+import type { DateObjectTzProps, VTimezone } from "@/types";
 
 import { extendTimezoneProps } from "./extendProps";
 import { timeZoneOffsetToMilliseconds } from "./offsetToMilliseconds";

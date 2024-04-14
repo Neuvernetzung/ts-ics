@@ -16,7 +16,7 @@ export const iterateBySecond = (
     rule.frequency === "MINUTELY"
   ) {
     return dateGroups.map((dates) =>
-      dates.map((date) => bySecond.map((hour) => setSeconds(date, hour))).flat()
+      dates.flatMap((date) => bySecond.map((hour) => setSeconds(date, hour)))
     );
   }
 

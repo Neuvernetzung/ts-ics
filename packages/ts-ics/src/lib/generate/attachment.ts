@@ -1,6 +1,6 @@
 import compact from "lodash/compact";
 
-import { Attachment } from "@/types/attachment";
+import type { Attachment } from "@/types/attachment";
 
 import { generateIcsLine } from "./utils/addLine";
 import { generateIcsOptions } from "./utils/generateOptions";

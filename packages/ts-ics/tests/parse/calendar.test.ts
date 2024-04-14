@@ -13,7 +13,7 @@ SUMMARY:Bastille Day Party
 END:VEVENT
 END:VCALENDAR`;
 
-  expect(() => parseIcsCalendar(calendar)).not.toThrowError();
+  expect(() => parseIcsCalendar(calendar)).not.toThrow();
 });
 
 it("Test Ics Calendar Parse", async () => {
@@ -78,7 +78,7 @@ END:VALARM
 END:VEVENT
 END:VCALENDAR`;
 
-  expect(() => parseIcsCalendar(calendar)).not.toThrowError();
+  expect(() => parseIcsCalendar(calendar)).not.toThrow();
 });
 
 it("Test Ics Calendar Parse", async () => {
@@ -172,5 +172,5 @@ UID:F_2023_termin651777ca02240@schulferien.org
 END:VEVENT
 END:VCALENDAR`;
 
-  expect(() => parseIcsCalendar(calendar)).not.toThrowError();
+  expect(() => parseIcsCalendar(calendar)).not.toThrow();
 });
