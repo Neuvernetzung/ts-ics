@@ -9,7 +9,7 @@ ACTION:AUDIO
 ATTACH;FMTTYPE=audio/basic:ftp://example.com/pub/sounds/bell-01.aud
 END:VALARM`;
 
-  expect(() => parseIcsAlarm(alarm)).not.toThrowError();
+  expect(() => parseIcsAlarm(alarm)).not.toThrow();
 });
 
 it("Test Ics Alarm Parse", async () => {
@@ -22,7 +22,7 @@ DESCRIPTION:Breakfast meeting with executive\n
   team at 8:30 AM EST.
 END:VALARM`;
 
-  expect(() => parseIcsAlarm(alarm)).not.toThrowError();
+  expect(() => parseIcsAlarm(alarm)).not.toThrow();
 });
 
 it("Test Ics Alarm Parse", async () => {
@@ -37,5 +37,5 @@ DESCRIPTION:A draft agenda needs to be sent out to the attendees to the we
 ATTACH;FMTTYPE=application/msword:http://example.com/templates/agenda.doc
 END:VALARM`;
 
-  expect(() => parseIcsAlarm(alarm)).not.toThrowError();
+  expect(() => parseIcsAlarm(alarm)).not.toThrow();
 });

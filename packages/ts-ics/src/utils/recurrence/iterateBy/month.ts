@@ -9,7 +9,7 @@ export const iterateByMonth = (
 ): Date[][] => {
   if (rule.frequency === "YEARLY") {
     return dateGroups.map((dates) =>
-      dates.map((date) => byMonth.map((month) => setMonth(date, month))).flat()
+      dates.flatMap((date) => byMonth.map((month) => setMonth(date, month)))
     );
   }
 

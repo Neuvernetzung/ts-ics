@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { Attachment, zAttachment } from "./attachment";
+import { type Attachment, zAttachment } from "./attachment";
 import { type Attendee, zAttendee } from "./attendee";
 import { type VEventDuration, zVEventDuration } from "./duration";
 import { type VEventTrigger, zVEventTrigger } from "./trigger";

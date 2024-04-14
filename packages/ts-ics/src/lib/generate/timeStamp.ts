@@ -1,6 +1,6 @@
 import compact from "lodash/compact";
 
-import { DateObject } from "@/types";
+import type { DateObject } from "@/types";
 
 import { generateIcsDate, generateIcsDateTime } from "./date";
 import { generateIcsLine } from "./utils/addLine";

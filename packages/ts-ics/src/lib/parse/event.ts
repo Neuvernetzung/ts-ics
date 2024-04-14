@@ -1,8 +1,8 @@
 import set from "lodash/set";
 
 import { COMMA, getAlarmRegex, replaceEventRegex } from "@/constants";
-import { VEVENT_TO_OBJECT_KEYS, VEventKey } from "@/constants/keys/event";
-import { VEvent, VTimezone, zVEvent } from "@/types";
+import { VEVENT_TO_OBJECT_KEYS, type VEventKey } from "@/constants/keys/event";
+import { type VEvent, type VTimezone, zVEvent } from "@/types";
 import type { Attendee } from "@/types/attendee";
 
 import {

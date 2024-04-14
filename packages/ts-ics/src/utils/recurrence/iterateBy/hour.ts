@@ -14,7 +14,7 @@ export const iterateByHour = (
     rule.frequency === "DAILY"
   ) {
     return dateGroups.map((dates) =>
-      dates.map((date) => byHour.map((hour) => setHours(date, hour))).flat()
+      dates.flatMap((date) => byHour.map((hour) => setHours(date, hour)))
     );
   }
 

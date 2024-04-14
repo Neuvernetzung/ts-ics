@@ -11,10 +11,9 @@ export const iterateByWeekNo = (
   if (rule.frequency === "YEARLY") {
     return dateGroups.map((dates) =>
       dates
-        .map((date) =>
+        .flatMap((date) =>
           byWeekNo.map((weekNo) => setWeek(date, weekNo, { weekStartsOn }))
         )
-        .flat()
     );
   }
 

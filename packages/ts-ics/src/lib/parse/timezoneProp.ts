@@ -9,8 +9,8 @@ import {
   type VTimezonePropKey,
 } from "@/constants/keys/timezoneProp";
 import {
-  VTimezoneProp,
-  VTimezonePropType,
+  type VTimezoneProp,
+  type VTimezonePropType,
   zVTimezoneProp,
 } from "@/types/timezone";
 

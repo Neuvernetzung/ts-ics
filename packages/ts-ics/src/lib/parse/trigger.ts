@@ -2,7 +2,7 @@ import {
   type TriggerRelation,
   type VEventTrigger,
   zVEventTrigger,
-  VTimezone,
+  type VTimezone,
 } from "@/types";
 
 import { icsDurationToObject } from "./duration";

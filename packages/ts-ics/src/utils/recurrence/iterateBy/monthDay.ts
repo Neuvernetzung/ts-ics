@@ -11,7 +11,7 @@ export const iterateByMonthDay = (
   if (rule.frequency === "YEARLY" || rule.frequency === "MONTHLY") {
     return dateGroups.map((dates) =>
       dates
-        .map((date) => {
+        .flatMap((date) => {
           const daysInMonth = getDaysInMonth(date);
 
           return compact(
@@ -20,7 +20,6 @@ export const iterateByMonthDay = (
             )
           );
         })
-        .flat()
     );
   }
 

@@ -9,7 +9,7 @@ import {
 } from "date-fns";
 
 import type { ExtendByRecurrenceRuleOptions } from ".";
-import { RecurrenceRule } from "@/types";
+import type { RecurrenceRule } from "@/types";
 
 const limitReached = (length: number, limit?: number) => {
   if (limit === undefined) return false;
