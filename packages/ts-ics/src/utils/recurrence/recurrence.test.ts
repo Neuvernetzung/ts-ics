@@ -691,3 +691,22 @@ it("Test extendByRecurrenceRule - An example where an invalid date (i.e., Februa
     }
   });
 });
+
+it("Test extendByRecurrenceRule - Every Friday the 13th except first and last", async () => {
+  const start = new Date(2024, 1, 1);
+  const end = new Date(2027, 1, 1);
+  const exceptions = [new Date(2024, 8, 13), new Date(2026, 10, 13)];
+  const ruleString = "FREQ=MONTHLY;BYDAY=FR;BYMONTHDAY=13";
+
+  const rule = parseIcsRecurrenceRule(ruleString);
+
+  const dates = extendByRecurrenceRule(rule, {
+    start,
+    end,
+    exceptions,
+  });
+
+  expect(dates.length).toBe(4);
+  expect(dates[0]).not.toEqual(exceptions[0]);
+  expect(dates[4]).not.toEqual(exceptions[1]);
+});

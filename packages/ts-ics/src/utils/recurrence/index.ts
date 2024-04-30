@@ -6,7 +6,11 @@ import { weekDays } from "@/types";
 import { iterateBase } from "./iterate";
 import { iterateBy } from "./iterateBy";
 
-export type ExtendByRecurrenceRuleOptions = { start: Date; end?: Date };
+export type ExtendByRecurrenceRuleOptions = {
+  start: Date;
+  end?: Date;
+  exceptions?: Date[];
+};
 
 export const DEFAULT_END_IN_YEARS = 2;
 
@@ -19,6 +23,8 @@ export const extendByRecurrenceRule = (
   const end: Date =
     rule.until?.date || options?.end || addYears(start, DEFAULT_END_IN_YEARS);
 
+  const exceptions: Date[] = options.exceptions || [];
+
   const weekStartsOn = ((rule.workweekStart
     ? weekDays.indexOf(rule.workweekStart)
     : 1) % 7) as WeekDayNumber;
@@ -29,7 +35,7 @@ export const extendByRecurrenceRule = (
 
   const finalDateGroups = iterateBy(
     rule,
-    { start, end, weekStartsOn },
+    { start, end, exceptions, weekStartsOn },
     dateGroups
   );
 

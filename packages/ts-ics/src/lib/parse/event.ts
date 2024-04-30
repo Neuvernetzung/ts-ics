@@ -2,7 +2,7 @@ import set from "lodash/set";
 
 import { COMMA, getAlarmRegex, replaceEventRegex } from "@/constants";
 import { VEVENT_TO_OBJECT_KEYS, type VEventKey } from "@/constants/keys/event";
-import { type VEvent, type VTimezone, zVEvent } from "@/types";
+import { type VEvent, type VTimezone, zVEvent, type DateObject } from "@/types";
 import type { Attendee } from "@/types/attendee";
 
 import {
@@ -17,6 +17,7 @@ import { icsRecurrenceRuleToObject } from "./recurrenceRule";
 import { icsTimeStampToObject } from "./timeStamp";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
+import { icsExceptionDateToObject } from "./exceptionDate";
 
 export type ParseIcsEvent = (
   rawEventString: string,
@@ -31,6 +32,7 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
   const event = {};
 
   const attendees: Attendee[] = [];
+  const exceptionDates: DateObject[] = [];
 
   lines.forEach((line) => {
     const { property, options, value } = getLine<VEventKey>(line);
@@ -74,6 +76,11 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
       return;
     }
 
+    if (objectKey === "exceptionDates") {
+      exceptionDates.push(...icsExceptionDateToObject(value, options));
+      return;
+    }
+
     set(event, objectKey, value); // Set string value
   });
 
@@ -90,6 +97,10 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
 
   if (attendees.length > 0) {
     set(event, "attendees", attendees);
+  }
+
+  if (exceptionDates.length > 0) {
+    set(event, "exceptionDates", exceptionDates);
   }
 
   return event as VEvent;
