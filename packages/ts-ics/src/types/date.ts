@@ -24,8 +24,10 @@ export type DateObject = {
   local?: DateObjectTzProps;
 };
 
+const zIcsDate = z.date().transform((date) => setMilliseconds(date, 0)); // Millisekunden sind nicht erlaubt bei Ics
+
 export const zDateObject: z.ZodType<DateObject> = z.object({
-  date: z.date().transform((date) => setMilliseconds(date, 0)), // Millisekunden sind nicht erlaubt bei Ics
+  date: zIcsDate,
   type: z.enum(dateObjectTypes).optional(),
   local: zDateObjectTzProps.optional(),
 });

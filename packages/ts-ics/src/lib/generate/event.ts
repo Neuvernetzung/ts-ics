@@ -13,6 +13,7 @@ import type { Organizer } from "@/types/organizer";
 
 import { generateIcsAlarm } from "./alarm";
 import { generateIcsAttendee } from "./attendee";
+import { generateIcsExceptionDate } from "./exceptionDate";
 import { generateIcsDuration } from "./duration";
 import { generateIcsOrganizer } from "./organizer";
 import { generateIcsRecurrenceRule } from "./recurrenceRule";
@@ -32,7 +33,8 @@ export const generateIcsEvent = (event: VEvent) => {
   icsString += getIcsStartLine("VEVENT");
 
   eventKeys.forEach((key) => {
-    if (key === "alarms" || key === "attendees") return;
+    if (key === "alarms" || key === "attendees" || key === "exceptionDates")
+      return;
 
     const icsKey = VEVENT_TO_KEYS[key];
 
@@ -87,6 +89,12 @@ export const generateIcsEvent = (event: VEvent) => {
   if (event.attendees && event.attendees.length > 0) {
     event.attendees.forEach((attendee) => {
       icsString += generateIcsAttendee(attendee, "ATTENDEE");
+    });
+  }
+
+  if (event.exceptionDates && event.exceptionDates.length > 0) {
+    event.exceptionDates.forEach((exceptionDate) => {
+      icsString += generateIcsExceptionDate(exceptionDate, "EXDATE");
     });
   }
 

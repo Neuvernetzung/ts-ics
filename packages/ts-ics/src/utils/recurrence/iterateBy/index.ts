@@ -1,4 +1,4 @@
-import { compareAsc, isWithinInterval } from "date-fns";
+import { compareAsc, isWithinInterval, isEqual } from "date-fns";
 
 import type { RecurrenceRule, WeekDayNumber } from "@/types";
 
@@ -89,11 +89,18 @@ export const iterateBy = (
   }
 
   const filtered = extendedDateGroups.map((dates) =>
-    dates
-      .sort(compareAsc)
-      .filter((date) =>
-        isWithinInterval(date, { start: options.start, end: options.end })
+    dates.sort(compareAsc).filter((date) => {
+      if (
+        options.exceptions.length > 0 &&
+        options.exceptions.some((exception) => isEqual(exception, date))
       )
+        return false;
+
+      if (!isWithinInterval(date, { start: options.start, end: options.end }))
+        return false;
+
+      return true;
+    })
   );
 
   return filtered;

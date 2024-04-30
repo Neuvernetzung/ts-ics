@@ -8,6 +8,7 @@ import { type Organizer, zOrganizer } from "./organizer";
 import { type RecurrenceRule, zRecurrenceRule } from "./recurrence";
 import { type RecurrenceId, zRecurrenceId } from "./recurrenceId";
 import { type StatusType, statusTypes } from "./status";
+import { type ExceptionDates, zExceptionDates } from "./exceptionDate";
 
 export const timeTransparentTypes = ["TRANSPARENT", "OPAQUE"] as const;
 
@@ -38,6 +39,7 @@ export type VEventBase = {
   location?: string;
   description?: string;
   categories?: string[];
+  exceptionDates?: ExceptionDates;
   recurrenceRule?: RecurrenceRule;
   alarms?: VAlarm[];
   timeTransparent?: TimeTransparentType;
@@ -64,6 +66,7 @@ export const zVEventBase: z.ZodType<VEventBase> = z.object({
   location: z.string().optional(),
   description: z.string().optional(),
   categories: z.array(z.string()).optional(),
+  exceptionDates: zExceptionDates.optional(),
   recurrenceRule: zRecurrenceRule.optional(),
   alarms: z.array(zVAlarm).optional(),
   timeTransparent: z.enum(timeTransparentTypes).optional(),

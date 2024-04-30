@@ -18,7 +18,7 @@ const limitReached = (length: number, limit?: number) => {
 
 export const iterateBase = (
   rule: RecurrenceRule,
-  { start, end }: Required<ExtendByRecurrenceRuleOptions>,
+  { start, end }: Required<Omit<ExtendByRecurrenceRuleOptions, "exceptions">>,
   dateGroups: Date[][]
 ) => {
   if (limitReached(dateGroups.length, rule.count)) return;

@@ -1,5 +1,5 @@
 import { parseIcsEvent } from "@/lib/parse/event";
-import { readFile } from "fs/promises";
+import { readFile } from "node:fs/promises";
 
 it("Test Ics Event Parse", async () => {
   const event = `BEGIN:VEVENT
