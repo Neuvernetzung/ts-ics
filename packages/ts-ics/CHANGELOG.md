@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.4.0
+
+### Minor Changes
+
+- 498943b: Add EXDATE to recurrenceRule and generate/parse #96
+
 ## 1.3.4
 
 ### Patch Changes
