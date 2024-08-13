@@ -1,3 +1,4 @@
+import { parseIcsEvent } from "@/lib";
 import { parseIcsTimezone } from "@/lib/parse/timezone";
 
 it("Test Ics Timezone Parse", async () => {
@@ -154,4 +155,18 @@ END:DAYLIGHT
 END:VTIMEZONE`;
 
   expect(() => parseIcsTimezone(timezone)).not.toThrow();
+});
+
+it("Test Ics custom not provided Timezone", async () => {
+  // https://github.com/Neuvernetzung/ts-ics/issues/104
+  const event = `BEGIN:VEVENT
+UID:20241210T100000-541111@example.com
+DTSTAMP:20241210T100000
+DTSTART;TZID=Customized Time Zone:20241210T100000
+DTEND;TZID=Customized Time Zone:20241210T110000
+SUMMARY:Festival International de Jazz de Montreal
+TRANSP:TRANSPARENT
+END:VEVENT`;
+
+  expect(() => parseIcsEvent(event)).not.toThrow();
 });
