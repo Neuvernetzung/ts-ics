@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.4.1
+
+### Patch Changes
+
+- a290080: Update README and Deps #101
+
 ## 1.4.0
 
 ### Minor Changes
