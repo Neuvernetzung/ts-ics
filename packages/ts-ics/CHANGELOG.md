@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.4.2
+
+### Patch Changes
+
+- 03c40c7: Custom time zone name make parsing ics calendar fails #104
+
 ## 1.4.1
 
 ### Patch Changes
