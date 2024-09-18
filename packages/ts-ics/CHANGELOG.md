@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.5.0
+
+### Minor Changes
+
+- 7fe6d53: Update date-fns to v4 #108
+
 ## 1.4.2
 
 ### Patch Changes
