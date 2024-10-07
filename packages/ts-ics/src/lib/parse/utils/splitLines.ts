@@ -17,7 +17,5 @@ export const splitLines = (str: string) => {
     lines.push(line);
   }
 
-  console.log(lines);
-
   return lines;
 };
