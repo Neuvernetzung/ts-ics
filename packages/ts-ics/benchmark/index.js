@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { readFileSync } from "fs";
+import { readFileSync } from "node:fs";
 
 import { generateIcsCalendar, parseIcsCalendar } from "../dist/index.cjs";
 
