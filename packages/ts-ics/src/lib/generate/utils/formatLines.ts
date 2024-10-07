@@ -1,21 +1,23 @@
-import { BREAK, BREAK_LINE } from "@/constants";
+import { CRLF_BREAK, CRLF_BREAK_REGEX, MAX_LINE_LENGTH } from "@/constants";
 
 export const formatLines = (lines: string) => {
-  const newLines = lines.split(BREAK_LINE);
+  const newLines = lines.split(CRLF_BREAK_REGEX);
 
   const formattedLines: string[] = [];
 
   newLines.forEach((line) => {
-    if (line.length < 75) {
-      formattedLines.push(line);
+    const escapedLine = line.replace(/\n/g, "\\n"); // "\n" needs to be escaped because javascript counts "\n".length as 1, but i needs to be 2
+
+    if (escapedLine.length < MAX_LINE_LENGTH) {
+      formattedLines.push(escapedLine);
       return;
     }
-    foldLine(line, 75).forEach((l) => {
+    foldLine(escapedLine, MAX_LINE_LENGTH).forEach((l) => {
       formattedLines.push(l);
     });
   });
 
-  return formattedLines.join(BREAK);
+  return formattedLines.join(CRLF_BREAK).replace(/\\n/g, "\n"); // Add back the original "\n", so it can be correctly displayed inside the ics string
 };
 
 const foldLine = (line: string, length: number) => {

@@ -1,7 +1,7 @@
-import { BREAK } from "@/constants";
+import { CRLF_BREAK } from "@/constants";
 import type { IcsComponent } from "@/constants/keys";
 
-export const formatIcsLine = (line: string) => `${line}${BREAK}`;
+export const formatIcsLine = (line: string) => `${line}${CRLF_BREAK}`;
 
 export const generateIcsLine = (
   key: string,
