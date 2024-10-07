@@ -24,6 +24,7 @@ import {
   getIcsStartLine,
 } from "./utils/addLine";
 import { getKeys } from "./utils/getKeys";
+import { formatLines } from "./utils/formatLines";
 
 export const generateIcsEvent = (event: VEvent) => {
   const eventKeys = getKeys(event);
@@ -100,5 +101,5 @@ export const generateIcsEvent = (event: VEvent) => {
 
   icsString += getIcsEndLine("VEVENT");
 
-  return icsString;
+  return formatLines(icsString);
 };

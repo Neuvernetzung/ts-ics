@@ -1,15 +1,11 @@
-import { BREAK_LINE } from "../../../constants";
+import { CRLF_BREAK_REGEX } from "../../../constants";
 
-export const splitLines = (
-  str: string
-) => {
+export const splitLines = (str: string) => {
   const lines: string[] = [];
 
-  const rawLines = str
-    .split(BREAK_LINE)
-    .filter((l) => l !== "");
+  const rawLines = str.split(CRLF_BREAK_REGEX).filter((l) => l !== "");
 
-  for (let i = 0; i < rawLines.length;) {
+  for (let i = 0; i < rawLines.length; ) {
     let line = rawLines[i];
     i += 1;
 
@@ -17,9 +13,11 @@ export const splitLines = (
       line += rawLines[i].trimStart();
       i += 1;
     }
-    
+
     lines.push(line);
   }
+
+  console.log(lines);
 
   return lines;
 };
