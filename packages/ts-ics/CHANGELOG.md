@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.6.0
+
+### Minor Changes
+
+- cf2565b: Correcly handle LF line breaks inside values #111
+
 ## 1.5.0
 
 ### Minor Changes
