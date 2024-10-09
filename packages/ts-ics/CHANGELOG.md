@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.6.1
+
+### Patch Changes
+
+- 6581389: Handle LF file imports but also support LF line breaks inside DESCRIPTION string #115
+
 ## 1.6.0
 
 ### Minor Changes
