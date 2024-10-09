@@ -63,6 +63,7 @@ it("Test Ics Event Parse", async () => {
     "TRANSP:TRANSPARENT",
     "END:VEVENT",
   ]);
+
   expect(() => parseIcsEvent(event)).not.toThrow();
 });
 
