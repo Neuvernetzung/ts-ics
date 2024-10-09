@@ -1,6 +1,7 @@
 export const CRLF_BREAK_REGEX = /\r\n/;
 export const BREAK_REGEX = /\r\n|\r|\n/;
 export const CRLF_BREAK = "\r\n";
+export const LF_BREAK = "\n";
 export const SEPARATOR = ":";
 export const COMMA = ",";
 export const QUOTE = '"';
