@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.6.2
+
+### Patch Changes
+
+- 36343d5: Fix `until` creation inside rrule and remove `undefined` if until.local is unset #117
+
 ## 1.6.1
 
 ### Patch Changes
