@@ -35,15 +35,16 @@ export const generateIcsRecurrenceRule = (value: RecurrenceRule) => {
       value.until && {
         key: "UNTIL",
         value: `${
-          value.until.local &&
-          `${generateIcsOptions(
-            compact([
-              {
-                key: "TZID",
-                value: value.until.local.timezone,
-              },
-            ])
-          )}=`
+          value.until.local
+            ? `${generateIcsOptions(
+                compact([
+                  {
+                    key: 'TZID',
+                    value: value.until.local.timezone,
+                  },
+                ])
+              )}=`
+            : ''
         }${value.until.date}`,
       },
       value.workweekStart && { key: "WKST", value: value.workweekStart },
