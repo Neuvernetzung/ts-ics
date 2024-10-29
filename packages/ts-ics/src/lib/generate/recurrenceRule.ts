@@ -5,6 +5,7 @@ import type { RecurrenceRule } from "@/types";
 import { generateIcsLine } from "./utils/addLine";
 import { generateIcsOptions } from "./utils/generateOptions";
 import { generateIcsWeekdayNumber } from "./weekdayNumber";
+import { generateIcsDate, generateIcsDateTime } from "./date";
 
 export const generateIcsRecurrenceRule = (value: RecurrenceRule) => {
   let icsString = "";
@@ -34,17 +35,10 @@ export const generateIcsRecurrenceRule = (value: RecurrenceRule) => {
       value.interval && { key: "INTERVAL", value: value.interval.toString() },
       value.until && {
         key: "UNTIL",
-        value: `${
-          value.until.local &&
-          `${generateIcsOptions(
-            compact([
-              {
-                key: "TZID",
-                value: value.until.local.timezone,
-              },
-            ])
-          )}=`
-        }${value.until.date}`,
+        value:
+          value.until.type === "DATE"
+            ? generateIcsDate(value.until.date)
+            : generateIcsDateTime(value.until.local?.date || value.until.date),
       },
       value.workweekStart && { key: "WKST", value: value.workweekStart },
     ])
