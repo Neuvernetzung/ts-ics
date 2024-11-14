@@ -6,11 +6,22 @@ import { parseicsTimeStamp } from "@/lib/parse/timeStamp";
 import { getLine } from "@/lib/parse/utils/line";
 
 it("Test Ics Timestamp Parse - Date", async () => {
-  const timestamp = "DTSTART;VALUE=DATE:20230401";
+  const year = 2023;
+  const month = 4;
+  const javascriptMonth = month - 1; // Months in Javascript are 0-based
+  const day = 1;
+
+  const timestamp = `DTSTART;VALUE=DATE:${year}${month
+    .toString()
+    .padStart(2, "0")}${day.toString().padStart(2, "0")}`;
 
   const { value, options } = getLine(timestamp);
 
-  expect(() => parseicsTimeStamp(value, options)).not.toThrow();
+  const timeStamp = parseicsTimeStamp(value, options);
+
+  expect(timeStamp.date).toStrictEqual(
+    new Date(Date.UTC(year, javascriptMonth, day))
+  );
 });
 
 it("Test Ics Timestamp Parse - Datetime", async () => {
