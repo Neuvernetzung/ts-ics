@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.6.3
+
+### Patch Changes
+
+- eaa370e: Correctly handle VALUE=DATE in timeStamp #120
+
 ## 1.6.2
 
 ### Patch Changes
