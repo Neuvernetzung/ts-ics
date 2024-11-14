@@ -7,8 +7,7 @@ export const icsDateToDate = (date: string): Date => {
   const month = Number.parseInt(date.slice(4, 6), 10) - 1; // Monate in JavaScript sind 0-basiert
   const day = Number.parseInt(date.slice(6, 8), 10);
 
-  // Erstellen Sie ein Date-Objekt mit den extrahierten Werten
-  const newDate = new Date(year, month, day);
+  const newDate = new Date(Date.UTC(year, month, day));
 
   return newDate;
 };
