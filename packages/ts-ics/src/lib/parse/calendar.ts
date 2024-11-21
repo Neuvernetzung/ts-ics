@@ -19,6 +19,7 @@ export const icsCalendarToObject = (calendarString: string): VCalendar => {
   const lines = splitLines(
     cleanedFileString.replace(getEventRegex, "").replace(getTimezoneRegex, "")
   );
+  console.log(lines);
 
   const calendar: Partial<VCalendar> = {};
 
