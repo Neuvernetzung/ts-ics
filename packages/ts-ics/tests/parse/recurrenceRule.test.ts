@@ -148,3 +148,11 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   expect(() => parseIcsRecurrenceRule(value)).not.toThrow();
 });
+
+it("Test Ics Recurrence Rule - Until is a date", async () => {
+  const rRule = "RRULE:FREQ=WEEKLY;UNTIL=20241015";
+
+  const { value } = getLine(rRule);
+
+  expect(() => parseIcsRecurrenceRule(value)).not.toThrow();
+});
