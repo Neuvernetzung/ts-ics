@@ -1,5 +1,6 @@
 import { parseIcsCalendar } from "@/lib/parse/calendar";
 import { icsTestData } from "../utils";
+import { readFile } from "node:fs/promises";
 
 it("Test Ics Calendar Parse", async () => {
   const calendar = icsTestData([
@@ -176,5 +177,12 @@ it("Test Ics Calendar Parse", async () => {
     "END:VEVENT",
     "END:VCALENDAR",
   ]);
+  expect(() => parseIcsCalendar(calendar)).not.toThrow();
+});
+
+it("Parse Apple ICS Calendar", async () => {
+  const buffer = await readFile(`${__dirname}/fixtures/apple.ics`, "utf8");
+  const calendar = buffer.toString();
+
   expect(() => parseIcsCalendar(calendar)).not.toThrow();
 });

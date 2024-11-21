@@ -1,5 +1,9 @@
 import { BREAK_REGEX, LF_BREAK } from "../../../constants";
 
+const startsWithWhiteSpace = (value: string): boolean => /^[ \t]/.test(value);
+const isNewValue = (value: string): boolean =>
+  /^[A-Z]+(?:-[A-Z]+)*[:;]/.test(value); // regex checks for uppercase, "-" between and ":" or ";" at the end to know if its a new line value
+
 export const splitLines = (str: string) => {
   const lines: string[] = [];
 
@@ -15,13 +19,13 @@ export const splitLines = (str: string) => {
 
     while (
       rawLines[i] !== undefined &&
-      (/^[ \t]/.test(rawLines[i]) || !/^[A-Z]+[:;]/.test(rawLines[i]))
+      (startsWithWhiteSpace(rawLines[i]) || !isNewValue(rawLines[i]))
     ) {
       if (rawLines[i] === "") {
         // handle multiple breaks
         line += LF_BREAK;
       } else {
-        if (/^[ \t]/.test(rawLines[i])) {
+        if (startsWithWhiteSpace(rawLines[i])) {
           line += rawLines[i].trimStart();
         } else {
           line += LF_BREAK;
