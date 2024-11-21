@@ -62,7 +62,15 @@ export const icsRecurrenceRuleToObject: ParseIcsRecurrenceRule = (
     if (!objectKey) return; // unknown Object key
 
     if (recurrenceObjectKeyIsTimeStamp(objectKey)) {
-      set(rule, objectKey, icsTimeStampToObject(value, {}, timezones));
+      set(
+        rule,
+        objectKey,
+        icsTimeStampToObject(
+          value,
+          { VALUE: value.includes("T") ? "DATE-TIME" : "DATE" },
+          timezones
+        )
+      );
       return;
     }
 
