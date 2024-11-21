@@ -1,5 +1,12 @@
 # ts-ics
 
+## 1.6.4
+
+### Patch Changes
+
+- 52f4f6a: RRule Until - Correctly parse date value #123
+- f531823: Dont throw on apple values #126
+
 ## 1.6.3
 
 ### Patch Changes
