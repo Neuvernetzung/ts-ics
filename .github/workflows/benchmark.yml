@@ -1,0 +1,59 @@
+name: Benchmark
+
+on:
+  push:
+    branches:
+      - "**"
+      - "!master"
+
+permissions:
+  # allow posting comments to pull request
+  pull-requests: write
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: NodeJs aufsetzen
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Run benchmark
+        run: npm run benchmark | tee output.txt
+      # Download previous benchmark result from cache (if exists)
+      - name: Download previous benchmark data
+        uses: actions/cache@v4
+        with:
+          path: ./cache
+          key: ${{ runner.os }}-benchmark
+      # Run `github-action-benchmark` action
+      - name: Store benchmark result
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          # What benchmark tool the output.txt came from
+          tool: "benchmarkjs"
+          # Where the output from the benchmark tool is stored
+          output-file-path: output.txt
+          # Where the previous data file is stored
+          external-data-json-path: ./cache/benchmark-data.json
+          # GitHub API token to make a commit comment
+          github-token: ${{ secrets.GH_TOKEN }}
+          # Enable alert commit comment
+          comment-on-alert: true
+          # Enable Job Summary for PRs
+          summary-always: true
+      # Upload the updated cache file for the next job by actions/cache
