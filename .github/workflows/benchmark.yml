@@ -33,7 +33,7 @@ jobs:
         run: npm run build
 
       - name: Run benchmark
-        run: npm run benchmark | tee output.txt
+        run: npm run benchmark
       # Download previous benchmark result from cache (if exists)
       - name: Download previous benchmark data
         uses: actions/cache@v4
@@ -44,16 +44,9 @@ jobs:
       - name: Store benchmark result
         uses: benchmark-action/github-action-benchmark@v1
         with:
-          # What benchmark tool the output.txt came from
-          tool: "benchmarkjs"
-          # Where the output from the benchmark tool is stored
-          output-file-path: output.txt
-          # Where the previous data file is stored
+          tool: "customSmallerIsBetter"
+          output-file-path: bench_result.json
           external-data-json-path: ./cache/benchmark-data.json
-          # GitHub API token to make a commit comment
           github-token: ${{ secrets.GH_TOKEN }}
-          # Enable alert commit comment
           comment-on-alert: true
-          # Enable Job Summary for PRs
           summary-always: true
-      # Upload the updated cache file for the next job by actions/cache

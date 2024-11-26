@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
-import { readFileSync } from "node:fs";
-import Benchmark from "benchmark";
+import { readFileSync, writeFileSync } from "node:fs";
+import { Bench } from "tinybench";
 
-const suite = new Benchmark.Suite();
+const bench = new Bench({ name: "Calendar Benchmark", time: 100 });
 
 import {
   generateIcsCalendar,
@@ -13,15 +13,32 @@ const file = readFileSync("benchmark/calendar.ics", "utf-8");
 
 const parsed = parseIcsCalendar(file);
 
-suite
+bench
   .add("parse Calendar", () => {
     parseIcsCalendar(file);
   })
   .add("generate Calendar", () => {
     generateIcsCalendar(parsed);
-  })
-  .on("cycle", (event) => {
-    // Output benchmark result by converting benchmark result to string
-    console.log(String(event.target));
-  })
-  .run();
+  });
+
+await bench.run();
+
+console.log(bench.table());
+
+writeFileSync(
+  "bench_result.json",
+  JSON.stringify(
+    bench.tasks.flatMap((t) => [
+      {
+        name: `${t.name} - latency`,
+        unit: "ms",
+        value: t.result.latency.mean.toFixed(3),
+      },
+      // {
+      //   name: `${t.name} - throughput`,
+      //   unit: "ops/s",
+      //   value: t.result?.throughput.mean.toFixed(0),
+      // },
+    ])
+  )
+);
