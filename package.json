@@ -1,5 +1,6 @@
 {
   "name": "root",
+  "type": "module",
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -12,7 +13,8 @@
     "build": "turbo run build --filter=ts-ics",
     "test": "turbo run test --filter=ts-ics",
     "dev/docs": "turbo run start --filter=docs",
-    "build/docs": "turbo run build --filter=docs"
+    "build/docs": "turbo run build --filter=docs",
+    "benchmark": "node benchmark/index.js"
   },
   "author": "Neuvernetzung Medienagentur UG",
   "packageManager": "npm@10.2.1",
@@ -21,6 +23,7 @@
     "@changesets/cli": "^2.27.8",
     "@neuvernetzung/tsconfig": "^1.0.2",
     "@types/node": "^22.5.5",
+    "tinybench": "^3.0.6",
     "turbo": "^2.1.2"
   }
 }

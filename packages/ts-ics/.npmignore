@@ -8,7 +8,6 @@ CHANGELOG.md
 .env
 tsup.config.ts
 src
-benchmark
 jest.config.ts
 .gitignore
 tsconfig.json

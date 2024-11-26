@@ -1,0 +1,52 @@
+name: Benchmark
+
+on:
+  push:
+    branches:
+      - "**"
+      - "!master"
+
+permissions:
+  # allow posting comments to pull request
+  pull-requests: write
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: NodeJs aufsetzen
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Run benchmark
+        run: npm run benchmark
+      # Download previous benchmark result from cache (if exists)
+      - name: Download previous benchmark data
+        uses: actions/cache@v4
+        with:
+          path: ./cache
+          key: ${{ runner.os }}-benchmark
+      # Run `github-action-benchmark` action
+      - name: Store benchmark result
+        uses: benchmark-action/github-action-benchmark@v1
+        with:
+          tool: "customSmallerIsBetter"
+          output-file-path: bench_result.json
+          external-data-json-path: ./cache/benchmark-data.json
+          github-token: ${{ secrets.GH_TOKEN }}
+          comment-on-alert: true
+          summary-always: true
