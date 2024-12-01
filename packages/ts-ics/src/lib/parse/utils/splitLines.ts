@@ -9,9 +9,16 @@ export const splitLines = (str: string) => {
 
   const rawLines = str.split(BREAK_REGEX);
 
-  // remove forgotten linebreaks infront and after
-  if (rawLines[0] === "") rawLines.shift();
-  if (rawLines[rawLines.length - 1] === "") rawLines.pop();
+  // remove forgotten leading linebreaks
+  while (rawLines[0] === "") rawLines.shift();
+
+  let endIndex = rawLines.length;
+
+  // remove forgotten trailing linebreaks #130
+  while (endIndex > 0 && rawLines[endIndex - 1] === "") {
+    endIndex -= 1;
+    rawLines.pop();
+  }
 
   for (let i = 0; i < rawLines.length; ) {
     let line = rawLines[i];

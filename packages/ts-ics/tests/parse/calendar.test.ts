@@ -186,3 +186,22 @@ it("Parse Apple ICS Calendar", async () => {
 
   expect(() => parseIcsCalendar(calendar)).not.toThrow();
 });
+
+it("Leftover line breaks should not affect parsing - #130", async () => {
+  const calendar = icsTestData([
+    "BEGIN:VCALENDAR",
+    "PRODID:ID",
+    "VERSION:2.0",
+    "BEGIN:VEVENT",
+    "CREATED:20240112T095511Z",
+    "DTEND:20240112T105511Z",
+    "DTSTAMP:20240112T095511Z",
+    "DTSTART:20240112T095511Z",
+    "SUMMARY:Test",
+    "UID:d908f270-64fa-4916-9f72-b48eb7222a64",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ]);
+
+  expect(() => parseIcsCalendar(calendar)).not.toThrow();
+});
