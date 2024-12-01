@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.6.5
+
+### Patch Changes
+
+- 9f05bb4: If Version is last key of Calendar Object, leftover line breaks break validation #130
+
 ## 1.6.4
 
 ### Patch Changes
