@@ -40,3 +40,21 @@ it("Correctly handle LF line breaks - when importing as LF (Linux readFile)", as
 
   expect(splitLines(formatted).join(LF_BREAK)).toEqual(unformatted);
 });
+
+it("Correct removal of leading and trailing line breaks - if there is more than one", async () => {
+  const formatted = icsTestData([
+    "",
+    "",
+    "",
+    "PRODID:ID",
+    "VERSION:2.0",
+    "",
+    "",
+    "",
+  ]);
+
+  const lines = splitLines(formatted);
+
+  expect(lines[0]).not.toEqual("\n");
+  expect(lines[lines.length - 1].endsWith("\n")).toEqual(false);
+});
