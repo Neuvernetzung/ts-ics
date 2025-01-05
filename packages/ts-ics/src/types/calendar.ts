@@ -14,6 +14,7 @@ export type VCalendar = {
   method?: VCalenderMethod | string;
   timezones?: VTimezone[];
   events?: VEvent[];
+  name?: string;
 };
 
 export const zVCalendar: z.ZodType<VCalendar> = z.object({
@@ -22,4 +23,5 @@ export const zVCalendar: z.ZodType<VCalendar> = z.object({
   method: z.union([z.enum(zVCalendarMethods), z.string()]).optional(),
   timezones: z.array(zVTimezone).optional(),
   events: z.array(zVEvent).optional(),
+  name: z.string(),
 });
