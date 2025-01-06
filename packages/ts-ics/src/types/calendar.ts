@@ -9,19 +9,19 @@ export type VCalendarMethods = typeof zVCalendarMethods;
 export type VCalenderMethod = VCalendarMethods[number];
 
 export type VCalendar = {
-  version: "2.0";
-  prodId: string;
-  method?: VCalenderMethod | string;
-  timezones?: VTimezone[];
-  events?: VEvent[];
-  name?: string;
+	version: "2.0";
+	prodId: string;
+	method?: VCalenderMethod | string;
+	timezones?: VTimezone[];
+	events?: VEvent[];
+	calname?: string;
 };
 
 export const zVCalendar: z.ZodType<VCalendar> = z.object({
-  version: z.literal("2.0"),
-  prodId: z.string(),
-  method: z.union([z.enum(zVCalendarMethods), z.string()]).optional(),
-  timezones: z.array(zVTimezone).optional(),
-  events: z.array(zVEvent).optional(),
-  name: z.string(),
+	version: z.literal("2.0"),
+	prodId: z.string(),
+	method: z.union([z.enum(zVCalendarMethods), z.string()]).optional(),
+	timezones: z.array(zVTimezone).optional(),
+	events: z.array(zVEvent).optional(),
+	calname: z.string().optional(),
 });
