@@ -7,6 +7,7 @@ import type { Attendee } from "@/types/attendee";
 
 import {
   objectKeyIsArrayOfStrings,
+  objectKeyIsTextString,
   objectKeyIsTimeStamp,
 } from "../../constants/keyTypes/event";
 import { icsAlarmToObject } from "./alarm";
@@ -18,6 +19,7 @@ import { icsTimeStampToObject } from "./timeStamp";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 import { icsExceptionDateToObject } from "./exceptionDate";
+import { unescapeTextString } from "./utils/unescapeText";
 
 export type ParseIcsEvent = (
   rawEventString: string,
@@ -48,6 +50,11 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
 
     if (objectKeyIsArrayOfStrings(objectKey)) {
       set(event, objectKey, value.split(COMMA));
+      return;
+    }
+
+    if (objectKeyIsTextString(objectKey)) {
+      set(event, objectKey, unescapeTextString(value));
       return;
     }
 
