@@ -1,5 +1,12 @@
 # ts-ics
 
+## 1.6.6
+
+### Patch Changes
+
+- eafde97: add support for X-WR-CALNAME
+- 4071e2f: Escape commas and semicolons in value type of TEXT #134
+
 ## 1.6.5
 
 ### Patch Changes
