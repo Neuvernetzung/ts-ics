@@ -1,6 +1,7 @@
 import { VEVENT_TO_KEYS } from "@/constants/keys/event";
 import {
   objectKeyIsArrayOfStrings,
+  objectKeyIsTextString,
   objectKeyIsTimeStamp,
 } from "@/constants/keyTypes";
 import type {
@@ -25,6 +26,7 @@ import {
 } from "./utils/addLine";
 import { getKeys } from "./utils/getKeys";
 import { formatLines } from "./utils/formatLines";
+import { escapeTextString } from "./utils/escapeText";
 
 export const generateIcsEvent = (event: VEvent) => {
   const eventKeys = getKeys(event);
@@ -52,6 +54,11 @@ export const generateIcsEvent = (event: VEvent) => {
 
     if (objectKeyIsArrayOfStrings(key)) {
       icsString += generateIcsLine(icsKey, (value as string[]).join(","));
+      return;
+    }
+
+    if (objectKeyIsTextString(key)) {
+      icsString += generateIcsLine(icsKey, escapeTextString(value as string));
       return;
     }
 
