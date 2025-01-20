@@ -38,7 +38,7 @@ export const generateIcsCalendar = (calendar: VCalendar) => {
 
   if (calendar.events && calendar.events.length > 0) {
     calendar.events.forEach((event) => {
-      icsString += generateIcsEvent(event);
+      icsString += generateIcsEvent(event, { skipFormatLines: true });
     });
   }
 
