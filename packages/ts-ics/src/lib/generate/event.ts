@@ -28,7 +28,12 @@ import { getKeys } from "./utils/getKeys";
 import { formatLines } from "./utils/formatLines";
 import { escapeTextString } from "./utils/escapeText";
 
-export const generateIcsEvent = (event: VEvent) => {
+type GenerateIcsEventOptions = { skipFormatLines?: boolean };
+
+export const generateIcsEvent = (
+  event: VEvent,
+  options?: GenerateIcsEventOptions
+) => {
   const eventKeys = getKeys(event);
 
   let icsString = "";
@@ -107,6 +112,8 @@ export const generateIcsEvent = (event: VEvent) => {
   }
 
   icsString += getIcsEndLine("VEVENT");
+
+  if (options?.skipFormatLines) return icsString;
 
   return formatLines(icsString);
 };
