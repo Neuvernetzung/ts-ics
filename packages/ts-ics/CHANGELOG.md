@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.6.7
+
+### Patch Changes
+
+- 9340426: Dont fold lines twice on generateCalendar #141
+
 ## 1.6.6
 
 ### Patch Changes
