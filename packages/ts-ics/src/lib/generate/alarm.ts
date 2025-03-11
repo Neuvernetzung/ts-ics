@@ -1,5 +1,5 @@
 import { VALARM_TO_KEYS } from "@/constants/keys/alarm";
-import type { VAlarm, VEventDuration, VEventTrigger } from "@/types";
+import type { VAlarm, Duration, VEventTrigger } from "@/types";
 
 import { generateIcsAttachment } from "./attachment";
 import { generateIcsAttendee } from "./attendee";
@@ -40,7 +40,7 @@ export const generateIcsAlarm = (alarm: VAlarm) => {
     if (key === "duration") {
       icsString += generateIcsLine(
         icsKey,
-        generateIcsDuration(value as VEventDuration)
+        generateIcsDuration(value as Duration)
       );
       return;
     }

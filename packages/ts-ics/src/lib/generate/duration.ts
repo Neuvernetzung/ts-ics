@@ -1,6 +1,6 @@
-import type { VEventDuration } from "@/types";
+import type { Duration } from "@/types";
 
-export const generateIcsDuration = (duration: VEventDuration) => {
+export const generateIcsDuration = (duration: Duration) => {
   let icsString = "";
 
   if (duration.before) {

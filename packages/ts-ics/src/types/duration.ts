@@ -1,4 +1,4 @@
-export type VEventDuration = {
+export type Duration = {
   before?: boolean;
   weeks?: number;
   days?: number;

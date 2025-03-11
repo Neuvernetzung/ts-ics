@@ -1,7 +1,7 @@
-import { icsDurationToObject, VEventDuration } from "ts-ics";
+import { icsDurationToObject, Duration } from "ts-ics";
 import { z } from "zod";
 
-export const zVEventDuration: z.ZodType<VEventDuration> = z.object({
+export const zDuration: z.ZodType<Duration> = z.object({
   before: z.boolean().optional(),
   weeks: z.number().optional(),
   days: z.number().optional(),
@@ -10,5 +10,5 @@ export const zVEventDuration: z.ZodType<VEventDuration> = z.object({
   seconds: z.number().optional(),
 });
 
-export const parseIcsDuration = (durationString: string): VEventDuration =>
-  zVEventDuration.parse(icsDurationToObject(durationString));
+export const parseIcsDuration = (durationString: string): Duration =>
+  icsDurationToObject(durationString, zDuration);

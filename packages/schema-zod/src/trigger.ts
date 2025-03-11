@@ -9,12 +9,12 @@ import {
 } from "ts-ics";
 import { z } from "zod";
 import { zDateObject } from "./date";
-import { zVEventDuration } from "./duration";
+import { zDuration } from "./duration";
 
 export const zVEventTriggerUnion: z.ZodType<VEventTriggerUnion> =
   z.discriminatedUnion("type", [
     z.object({ type: z.literal("absolute"), value: zDateObject }),
-    z.object({ type: z.literal("relative"), value: zVEventDuration }),
+    z.object({ type: z.literal("relative"), value: zDuration }),
   ]);
 
 export const zVEventTriggerOptions: z.ZodType<VEventTriggerOptions> = z.object({

@@ -1,15 +1,15 @@
 import {
   icsEventToObject,
-  ParseIcsEvent,
   VEvent,
   VEventBase,
-  VEventDurationOrEnd,
+  DurationOrEnd,
+  ParseEventOptions,
 } from "ts-ics";
 import { z } from "zod";
 import { zDateObject } from "./date";
 import { zExceptionDates } from "./exceptionDate";
 import { zAttendee } from "./attendee";
-import { zVEventDuration } from "./duration";
+import { zDuration } from "./duration";
 import { zRecurrenceRule } from "./recurrenceRule";
 import { zVAlarm } from "./alarm";
 import { zTimeTransparentType } from "./timeTransparent";
@@ -18,8 +18,8 @@ import { zOrganizer } from "./organizer";
 import { zStatusType } from "./status";
 import { zRecurrenceId } from "./recurrenceId";
 
-export const zVEventDurationOrEnd: z.ZodType<VEventDurationOrEnd> = z.union([
-  z.object({ duration: zVEventDuration, end: z.never().optional() }),
+export const zDurationOrEnd: z.ZodType<DurationOrEnd> = z.union([
+  z.object({ duration: zDuration, end: z.never().optional() }),
   z.object({ duration: z.never().optional(), end: zDateObject }),
 ]);
 
@@ -52,8 +52,8 @@ export const zVEventBase: z.ZodType<VEventBase> = z.object({
 
 export const zVEvent: z.ZodType<VEvent> = z.intersection(
   zVEventBase,
-  zVEventDurationOrEnd
+  zDurationOrEnd
 );
 
-export const parseIcsEvent: ParseIcsEvent = (file, timezones) =>
-  zVEvent.parse(icsEventToObject(file, timezones));
+export const parseIcsEvent = (file: string, eventOptions: ParseEventOptions) =>
+  icsEventToObject(file, zVEvent, eventOptions);

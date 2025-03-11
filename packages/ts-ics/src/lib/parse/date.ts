@@ -1,18 +1,23 @@
-import type { VTimezone } from "@/types";
+import { StandardSchemaV1 } from "@standard-schema/spec";
+import { standardValidate } from "./utils/standardValidate";
 
-export const icsDateToDate = (date: string): Date => {
+export const icsDateToDate = (
+  date: string,
+  schema?: StandardSchemaV1<Date>
+): Date => {
   const year = Number.parseInt(date.slice(0, 4), 10);
   const month = Number.parseInt(date.slice(4, 6), 10) - 1; // Monate in JavaScript sind 0-basiert
   const day = Number.parseInt(date.slice(6, 8), 10);
 
   const newDate = new Date(Date.UTC(year, month, day));
 
-  return newDate;
+  return standardValidate(schema, newDate);
 };
 
-export type ParseIcsDateTime = (date: string, timezones?: VTimezone[]) => Date;
-
-export const icsDateTimeToDateTime: ParseIcsDateTime = (date) => {
+export const icsDateTimeToDateTime = (
+  date: string,
+  schema?: StandardSchemaV1<Date>
+): Date => {
   const year = Number.parseInt(date.slice(0, 4), 10);
   const month = Number.parseInt(date.slice(4, 6), 10) - 1; // Monate in JavaScript sind 0-basiert
   const day = Number.parseInt(date.slice(6, 8), 10);
@@ -22,5 +27,5 @@ export const icsDateTimeToDateTime: ParseIcsDateTime = (date) => {
 
   const newDate = new Date(Date.UTC(year, month, day, hour, minute, second));
 
-  return newDate;
+  return standardValidate(schema, newDate);
 };

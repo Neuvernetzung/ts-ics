@@ -1,7 +1,7 @@
 import { type VAlarm } from "./alarm";
 import { type Attendee } from "./attendee";
 import { type DateObject } from "./date";
-import { type VEventDuration } from "./duration";
+import { type Duration } from "./duration";
 import { type Organizer } from "./organizer";
 import { type RecurrenceRule } from "./recurrenceRule";
 import { type RecurrenceId } from "./recurrenceId";
@@ -10,8 +10,8 @@ import { type ExceptionDates } from "./exceptionDate";
 import { type ClassType } from "./class";
 import { type TimeTransparentType } from "./timeTransparent";
 
-export type VEventDurationOrEnd =
-  | { duration: VEventDuration; end?: never }
+export type DurationOrEnd =
+  | { duration: Duration; end?: never }
   | { duration?: never; end: DateObject };
 
 export type VEventBase = {
@@ -41,4 +41,4 @@ export type VEventBase = {
   comment?: string;
 };
 
-export type VEvent = VEventBase & VEventDurationOrEnd;
+export type VEvent = VEventBase & DurationOrEnd;

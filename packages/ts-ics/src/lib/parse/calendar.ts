@@ -10,8 +10,13 @@ import { icsEventToObject } from "./event";
 import { icsTimezoneToObject } from "./timezone";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
+import { standardValidate } from "./utils/standardValidate";
+import type { StandardSchemaV1 } from "@standard-schema/spec";
 
-export const icsCalendarToObject = (calendarString: string): VCalendar => {
+export const icsCalendarToObject = (
+  calendarString: string,
+  schema?: StandardSchemaV1<VCalendar>
+): VCalendar => {
   const cleanedFileString = calendarString.replace(replaceCalendarRegex, "");
 
   const lines = splitLines(
@@ -41,7 +46,7 @@ export const icsCalendarToObject = (calendarString: string): VCalendar => {
 
   if (timezoneStrings.length > 0) {
     const timezones = timezoneStrings.map((timezoneString) =>
-      icsTimezoneToObject(timezoneString)
+      icsTimezoneToObject(timezoneString, undefined)
     );
     calendar.timezones = timezones;
   }
@@ -52,10 +57,12 @@ export const icsCalendarToObject = (calendarString: string): VCalendar => {
 
   if (eventStrings.length > 0) {
     const events = eventStrings.map((eventString) =>
-      icsEventToObject(eventString, calendar.timezones)
+      icsEventToObject(eventString, undefined, {
+        timezones: calendar.timezones,
+      })
     );
     calendar.events = events;
   }
 
-  return calendar as VCalendar;
+  return standardValidate(schema, calendar as VCalendar);
 };

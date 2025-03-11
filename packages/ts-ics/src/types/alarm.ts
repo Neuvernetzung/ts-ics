@@ -1,6 +1,6 @@
 import { type Attachment } from "./attachment";
 import { type Attendee } from "./attendee";
-import { type VEventDuration } from "./duration";
+import { type Duration } from "./duration";
 import { type VEventTrigger } from "./trigger";
 
 export type VAlarm = {
@@ -8,7 +8,7 @@ export type VAlarm = {
   description?: string;
   trigger: VEventTrigger;
   attendees?: Attendee[];
-  duration?: VEventDuration;
+  duration?: Duration;
   repeat?: number;
   summary?: string;
   attachments?: Attachment[];

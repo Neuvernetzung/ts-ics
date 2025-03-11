@@ -22,4 +22,4 @@ export const zVCalendar: z.ZodType<VCalendar> = z.object({
 });
 
 export const parseIcsCalendar = (calendarString: string): VCalendar =>
-  zVCalendar.parse(icsCalendarToObject(calendarString));
+  icsCalendarToObject(calendarString, zVCalendar);

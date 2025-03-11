@@ -1,8 +1,6 @@
 import { classTypes, type ClassType } from "@/types";
 
-export type ParseIcsClass = (classString: string) => ClassType | undefined;
-
-export const icsClassStringToClass: ParseIcsClass = (classString) => {
+export const icsClassStringToClass = (classString: string | undefined) => {
   if (!classString) return;
 
   if (classTypes.includes(classString as ClassType))

@@ -10,13 +10,18 @@ import { icsDurationToObject } from "./duration";
 import { icsTriggerToObject } from "./trigger";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
+import { StandardSchemaV1 } from "@standard-schema/spec";
+import { standardValidate } from "./utils/standardValidate";
 
-export type ParseIcsAlarm = (
+export type ParseAlarmOptions = {
+  timezones?: VTimezone[];
+};
+
+export const icsAlarmToObject = (
   rawAlarmString: string,
-  timezones?: VTimezone[]
-) => VAlarm;
-
-export const icsAlarmToObject: ParseIcsAlarm = (rawAlarmString, timezones) => {
+  schema?: StandardSchemaV1<VAlarm>,
+  alarmOptions?: ParseAlarmOptions
+): VAlarm => {
   const alarmString = rawAlarmString.replace(replaceAlarmRegex, "");
 
   const lines = splitLines(alarmString);
@@ -35,7 +40,11 @@ export const icsAlarmToObject: ParseIcsAlarm = (rawAlarmString, timezones) => {
     if (!objectKey) return; // unknown Object key
 
     if (objectKey === "trigger") {
-      alarm[objectKey] = icsTriggerToObject(value, options, timezones);
+      alarm[objectKey] = icsTriggerToObject(
+        value,
+        options,
+        alarmOptions?.timezones
+      );
       return;
     }
 
@@ -50,12 +59,12 @@ export const icsAlarmToObject: ParseIcsAlarm = (rawAlarmString, timezones) => {
     }
 
     if (objectKey === "attachment") {
-      attachments.push(icsAttachmentToObject(value, options));
+      attachments.push(icsAttachmentToObject(value, undefined, options));
       return;
     }
 
     if (objectKey === "attendee") {
-      attendees.push(icsAttendeeToObject(value, options));
+      attendees.push(icsAttendeeToObject(value, undefined, options));
       return;
     }
 
@@ -70,5 +79,5 @@ export const icsAlarmToObject: ParseIcsAlarm = (rawAlarmString, timezones) => {
     alarm.attendees = attendees;
   }
 
-  return alarm as VAlarm;
+  return standardValidate(schema, alarm as VAlarm);
 };

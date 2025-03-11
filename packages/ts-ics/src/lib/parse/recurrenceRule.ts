@@ -15,6 +15,8 @@ import { icsTimeStampToObject } from "./timeStamp";
 import { getOptions } from "./utils/options";
 import { icsWeekdayNumberToObject } from "./weekdayNumber";
 import { icsWeekDayStringToWeekDay } from "./weekDay";
+import { StandardSchemaV1 } from "@standard-schema/spec";
+import { standardValidate } from "./utils/standardValidate";
 
 const recurrenceTimestampKeys = ["until"] satisfies RRuleObjectKey[];
 
@@ -63,15 +65,15 @@ export const recurrenceObjectKeyIsNumber = (
 ): objectKey is RecurrenceNumberKey =>
   recurrenceNumberKeys.includes(objectKey as RecurrenceNumberKey);
 
-export type ParseIcsRecurrenceRule = (
-  ruleString: string,
-  timezones?: VTimezone[]
-) => RecurrenceRule;
+export type ParseRecurrenceRuleOptions = {
+  timezones?: VTimezone[];
+};
 
-export const icsRecurrenceRuleToObject: ParseIcsRecurrenceRule = (
-  ruleString,
-  timezones
-) => {
+export const icsRecurrenceRuleToObject = (
+  ruleString: string,
+  schema?: StandardSchemaV1<RecurrenceRule>,
+  recurrenceRuleOptions?: ParseRecurrenceRuleOptions
+): RecurrenceRule => {
   const rule: Partial<RecurrenceRule> = {};
 
   const options = getOptions<RRuleKey>(ruleString.split(SEMICOLON));
@@ -87,7 +89,7 @@ export const icsRecurrenceRuleToObject: ParseIcsRecurrenceRule = (
       rule[objectKey] = icsTimeStampToObject(
         value,
         { VALUE: value.includes("T") ? "DATE-TIME" : "DATE" },
-        timezones
+        recurrenceRuleOptions?.timezones
       );
 
       return;
@@ -133,5 +135,5 @@ export const icsRecurrenceRuleToObject: ParseIcsRecurrenceRule = (
     }
   });
 
-  return rule as RecurrenceRule;
+  return standardValidate(schema, rule as RecurrenceRule);
 };

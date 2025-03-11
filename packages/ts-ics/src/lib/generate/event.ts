@@ -4,12 +4,7 @@ import {
   objectKeyIsTextString,
   objectKeyIsTimeStamp,
 } from "@/constants/keyTypes";
-import type {
-  DateObject,
-  VEvent,
-  VEventDuration,
-  RecurrenceRule,
-} from "@/types";
+import type { DateObject, VEvent, Duration, RecurrenceRule } from "@/types";
 import type { Organizer } from "@/types/organizer";
 
 import { generateIcsAlarm } from "./alarm";
@@ -75,7 +70,7 @@ export const generateIcsEvent = (
     if (key === "duration") {
       icsString += generateIcsLine(
         icsKey,
-        generateIcsDuration(value as VEventDuration)
+        generateIcsDuration(value as Duration)
       );
       return;
     }

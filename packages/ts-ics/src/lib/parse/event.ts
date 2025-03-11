@@ -22,13 +22,16 @@ import { icsRecurrenceIdToObject } from "./recurrenceId";
 import { icsClassStringToClass } from "./class";
 import { icsStatusStringToStatus } from "./status";
 import { icsTimeTransparentStringToTimeTransparent } from "./timeTransparent";
+import { StandardSchemaV1 } from "@standard-schema/spec";
+import { standardValidate } from "./utils/standardValidate";
 
-export type ParseIcsEvent = (
+export type ParseEventOptions = { timezones?: VTimezone[] };
+
+export const icsEventToObject = (
   rawEventString: string,
-  timezones?: VTimezone[]
-) => VEvent;
-
-export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
+  schema?: StandardSchemaV1<VEvent>,
+  eventOptions?: ParseEventOptions
+): VEvent => {
   const eventString = rawEventString.replace(replaceEventRegex, "");
 
   const lines = splitLines(eventString.replace(getAlarmRegex, ""));
@@ -46,7 +49,11 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
     if (!objectKey) return; // unknown Object key
 
     if (objectKeyIsTimeStamp(objectKey)) {
-      event[objectKey] = icsTimeStampToObject(value, options, timezones);
+      event[objectKey] = icsTimeStampToObject(
+        value,
+        options,
+        eventOptions?.timezones
+      );
       return;
     }
 
@@ -62,7 +69,9 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
     }
 
     if (objectKey === "recurrenceRule") {
-      event[objectKey] = icsRecurrenceRuleToObject(value, timezones);
+      event[objectKey] = icsRecurrenceRuleToObject(value, undefined, {
+        timezones: eventOptions?.timezones,
+      });
       return;
     }
 
@@ -72,7 +81,7 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
     }
 
     if (objectKey === "organizer") {
-      event[objectKey] = icsOrganizerToObject(value, options);
+      event[objectKey] = icsOrganizerToObject(value, undefined, options);
       return;
     }
 
@@ -82,7 +91,7 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
     }
 
     if (objectKey === "attendee") {
-      attendees.push(icsAttendeeToObject(value, options));
+      attendees.push(icsAttendeeToObject(value, undefined, options));
       return;
     }
 
@@ -99,7 +108,7 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
     }
 
     if (objectKey === "recurrenceId") {
-      event[objectKey] = icsRecurrenceIdToObject(value);
+      event[objectKey] = icsRecurrenceIdToObject(value, undefined, options);
       return;
     }
 
@@ -122,7 +131,7 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
 
   if (alarmStrings.length > 0) {
     const alarms = alarmStrings.map((alarmString) =>
-      icsAlarmToObject(alarmString, timezones)
+      icsAlarmToObject(alarmString, undefined, eventOptions)
     );
 
     event.alarms = alarms;
@@ -136,5 +145,5 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
     event.exceptionDates = exceptionDates;
   }
 
-  return event as VEvent;
+  return standardValidate(schema, event as VEvent);
 };

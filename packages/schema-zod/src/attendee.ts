@@ -15,4 +15,4 @@ export const zAttendee: z.ZodType<Attendee> = z.object({
 export const parseIcsAttendee = (
   attendeeString: string,
   options?: Record<string, string>
-): Attendee => zAttendee.parse(icsAttendeeToObject(attendeeString, options));
+): Attendee => icsAttendeeToObject(attendeeString, zAttendee, options);

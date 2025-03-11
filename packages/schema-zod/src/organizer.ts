@@ -11,5 +11,4 @@ export const zOrganizer: z.ZodType<Organizer> = z.object({
 export const parseIcsOrganizer = (
   organizerString: string,
   options?: Record<string, string>
-): Organizer =>
-  zOrganizer.parse(icsOrganizerToObject(organizerString, options));
+): Organizer => icsOrganizerToObject(organizerString, zOrganizer, options);

@@ -1,4 +1,4 @@
-import type { DateObject, VEventDuration, VEventTrigger } from "@/types";
+import type { DateObject, Duration, VEventTrigger } from "@/types";
 
 import { generateIcsDuration } from "./duration";
 import { generateIcsTimeStamp } from "./timeStamp";
@@ -22,7 +22,7 @@ export const generateIcsTrigger = (trigger: VEventTrigger) => {
   if (trigger.type === "relative") {
     return generateIcsLine(
       "TRIGGER",
-      generateIcsDuration(trigger.value as VEventDuration),
+      generateIcsDuration(trigger.value as Duration),
       options
     );
   }

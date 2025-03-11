@@ -1,9 +1,14 @@
-import { type VEventDuration } from "@/types";
+import { type Duration } from "@/types";
+import { StandardSchemaV1 } from "@standard-schema/spec";
+import { standardValidate } from "./utils/standardValidate";
 
-export const icsDurationToObject = (durationString: string): VEventDuration => {
+export const icsDurationToObject = (
+  durationString: string,
+  schema?: StandardSchemaV1<Duration>
+): Duration => {
   let newString = durationString;
 
-  const duration: Partial<VEventDuration> = {};
+  const duration: Partial<Duration> = {};
 
   if (newString[0] === "-") {
     duration.before = true;
@@ -54,5 +59,5 @@ export const icsDurationToObject = (durationString: string): VEventDuration => {
     }
   }
 
-  return duration as VEventDuration;
+  return standardValidate(schema, duration as Duration);
 };

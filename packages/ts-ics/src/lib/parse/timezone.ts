@@ -13,8 +13,13 @@ import { icsDateTimeToDateTime } from "./date";
 import { icsTimezonePropToObject } from "./timezoneProp";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
+import { StandardSchemaV1 } from "@standard-schema/spec";
+import { standardValidate } from "./utils/standardValidate";
 
-export const icsTimezoneToObject = (rawTimezoneString: string): VTimezone => {
+export const icsTimezoneToObject = (
+  rawTimezoneString: string,
+  schema?: StandardSchemaV1<VTimezone>
+): VTimezone => {
   const timezoneString = rawTimezoneString.replace(replaceTimezoneRegex, "");
 
   const lines = splitLines(
@@ -50,7 +55,9 @@ export const icsTimezoneToObject = (rawTimezoneString: string): VTimezone => {
   if (timezoneStandardPropStrings.length > 0) {
     timezoneStandardPropStrings.forEach((timezonePropString) => {
       timezone.props.push(
-        icsTimezonePropToObject(timezonePropString, "STANDARD")
+        icsTimezonePropToObject(timezonePropString, undefined, {
+          type: "STANDARD",
+        })
       );
     });
   }
@@ -62,10 +69,12 @@ export const icsTimezoneToObject = (rawTimezoneString: string): VTimezone => {
   if (timezoneDaylightPropStrings.length > 0) {
     timezoneDaylightPropStrings.forEach((timezonePropString) => {
       timezone.props.push(
-        icsTimezonePropToObject(timezonePropString, "DAYLIGHT")
+        icsTimezonePropToObject(timezonePropString, undefined, {
+          type: "DAYLIGHT",
+        })
       );
     });
   }
 
-  return timezone as VTimezone;
+  return standardValidate(schema, timezone as VTimezone);
 };

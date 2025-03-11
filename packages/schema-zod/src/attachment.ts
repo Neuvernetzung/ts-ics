@@ -23,5 +23,4 @@ export const zAttachment: z.ZodType<Attachment> = z.discriminatedUnion("type", [
 export const parseIcsAttachment = (
   attachmentString: string,
   options?: Record<string, string>
-): Attachment =>
-  zAttachment.parse(icsAttachmentToObject(attachmentString, options));
+): Attachment => icsAttachmentToObject(attachmentString, zAttachment, options);

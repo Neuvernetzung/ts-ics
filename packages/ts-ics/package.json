@@ -36,5 +36,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "@standard-schema/spec": "^1.0.0"
   }
 }
