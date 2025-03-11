@@ -1,5 +1,3 @@
-import set from "lodash/set";
-
 import {
   replaceTimezoneDaylightRegex,
   replaceTimezoneStandardRegex,
@@ -35,7 +33,7 @@ export const icsTimezonePropToObject: ParseIcsTimezoneProps = (
 
   const lines = splitLines(timezonePropString);
 
-  const timezoneProp = { type: type || "STANDARD" };
+  const timezoneProp: Partial<VTimezoneProp> = { type: type || "STANDARD" };
 
   lines.forEach((line) => {
     const { property, options, value } = getLine<VTimezonePropKey>(line);
@@ -45,21 +43,24 @@ export const icsTimezonePropToObject: ParseIcsTimezoneProps = (
     if (!objectKey) return;
 
     if (objectKey === "start") {
-      set(timezoneProp, objectKey, icsDateTimeToDateTime(value));
+      timezoneProp[objectKey] = icsDateTimeToDateTime(value);
+
       return;
     }
 
     if (objectKey === "recurrenceRule") {
-      set(timezoneProp, objectKey, icsRecurrenceRuleToObject(value));
+      timezoneProp[objectKey] = icsRecurrenceRuleToObject(value);
+
       return;
     }
 
     if (objectKey === "recurrenceDate") {
-      set(timezoneProp, objectKey, icsTimeStampToObject(value, options));
+      timezoneProp[objectKey] = icsTimeStampToObject(value, options);
+
       return;
     }
 
-    set(timezoneProp, objectKey, value);
+    timezoneProp[objectKey] = value;
   });
 
   return timezoneProp as VTimezoneProp;

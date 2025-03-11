@@ -1,5 +1,3 @@
-import compact from "lodash/compact";
-
 import type { RecurrenceRule } from "@/types";
 
 import { generateIcsLine } from "./utils/addLine";
@@ -11,7 +9,7 @@ export const generateIcsRecurrenceRule = (value: RecurrenceRule) => {
   let icsString = "";
 
   const options = generateIcsOptions(
-    compact([
+    [
       value.byDay && {
         key: "BYDAY",
         value: value.byDay.map((v) => generateIcsWeekdayNumber(v)).join(","),
@@ -41,7 +39,7 @@ export const generateIcsRecurrenceRule = (value: RecurrenceRule) => {
             : generateIcsDateTime(value.until.local?.date || value.until.date),
       },
       value.workweekStart && { key: "WKST", value: value.workweekStart },
-    ])
+    ].filter((v) => !!v)
   );
 
   icsString += generateIcsLine("RRULE", options);

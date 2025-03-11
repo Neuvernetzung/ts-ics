@@ -1,5 +1,3 @@
-import compact from "lodash/compact";
-
 import type { Attendee } from "@/types/attendee";
 
 import { generateIcsMail } from "./mail";
@@ -8,7 +6,7 @@ import { generateIcsOptions } from "./utils/generateOptions";
 
 export const generateIcsAttendee = (attendee: Attendee, key: string) => {
   const options = generateIcsOptions(
-    compact([
+    [
       attendee.dir && { key: "DIR", value: `"${attendee.dir}"` },
       attendee.delegatedFrom && {
         key: "DELEGATED-FROM",
@@ -26,7 +24,7 @@ export const generateIcsAttendee = (attendee: Attendee, key: string) => {
         key: "SENT-BY",
         value: generateIcsMail(attendee.sentBy, true),
       },
-    ])
+    ].filter((v) => !!v)
   );
 
   return generateIcsLine(key, generateIcsMail(attendee.email), options);

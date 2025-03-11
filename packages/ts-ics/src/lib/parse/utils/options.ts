@@ -1,5 +1,3 @@
-import set from "lodash/set";
-
 import { EQUAL_SIGN } from "@/constants";
 
 type RawOption = { property: string; value: string };
@@ -25,8 +23,9 @@ export const getOptions = <TKey extends string>(optionsStrings: string[]) =>
   }, {});
 
 export const reduceOptions = (options: RawOption[]) =>
-  options.reduce((prev, next) => {
-    set(prev, next.property, next.value);
+  options.reduce<Record<string, string>>((prev, next) => {
+    prev[next.property] = next.value;
+
     return prev;
   }, {});
 

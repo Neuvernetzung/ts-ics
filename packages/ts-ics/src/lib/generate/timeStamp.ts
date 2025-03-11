@@ -1,5 +1,3 @@
-import compact from "lodash/compact";
-
 import type { DateObject } from "@/types";
 
 import { generateIcsDate, generateIcsDateTime } from "./date";
@@ -16,10 +14,10 @@ export const generateIcsTimeStamp = (
       : generateIcsDateTime(dateObject.local?.date || dateObject.date);
 
   const options = generateIcsOptions(
-    compact([
+    [
       dateObject.type && { key: "VALUE", value: dateObject.type },
       dateObject.local && { key: "TZID", value: dateObject.local.timezone },
-    ])
+    ].filter((v) => !!v)
   );
 
   return generateIcsLine(icsKey, value, options);

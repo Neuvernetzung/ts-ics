@@ -1,23 +1,35 @@
-import set from "lodash/set";
-
 import { COMMA, SEMICOLON } from "@/constants";
 import {
   RRULE_TO_OBJECT_KEYS,
   type RRuleKey,
   type RRuleObjectKey,
 } from "@/constants/keys/recurrenceRule";
-import { type RecurrenceRule, type VTimezone, zRecurrenceRule } from "@/types";
+import {
+  type RecurrenceRule,
+  type RecurrenceRuleFrequencies,
+  recurrenceRuleFrequencies,
+  type RecurrenceRuleFrequency,
+  type VTimezone,
+  type WeekDay,
+  weekDays,
+  zRecurrenceRule,
+} from "@/types";
 
 import { icsTimeStampToObject } from "./timeStamp";
 import { getOptions } from "./utils/options";
 import { icsWeekdayNumberToObject } from "./weekdayNumber";
+import { icsWeekDayStringToWeekDay } from "./weekDay";
 
-const recurrenceTimestampKeys: RRuleObjectKey[] = ["until"];
+const recurrenceTimestampKeys = ["until"] satisfies RRuleObjectKey[];
 
-export const recurrenceObjectKeyIsTimeStamp = (objectKey: RRuleObjectKey) =>
-  recurrenceTimestampKeys.includes(objectKey);
+type RecurrenceTimeStampKey = (typeof recurrenceTimestampKeys)[number];
 
-const recurrenceNumberArrayKeys: RRuleObjectKey[] = [
+export const recurrenceObjectKeyIsTimeStamp = (
+  objectKey: RRuleObjectKey
+): objectKey is RecurrenceTimeStampKey =>
+  recurrenceTimestampKeys.includes(objectKey as RecurrenceTimeStampKey);
+
+const recurrenceNumberArrayKeys = [
   "bySecond",
   "byMinute",
   "byHour",
@@ -25,21 +37,35 @@ const recurrenceNumberArrayKeys: RRuleObjectKey[] = [
   "byYearday",
   "byWeekNo",
   "bySetPos",
-];
+] satisfies RRuleObjectKey[];
 
-export const recurrenceObjectKeyIsNumberArray = (objectKey: RRuleObjectKey) =>
-  recurrenceNumberArrayKeys.includes(objectKey);
+type RecurrenceNumberArrayKey = (typeof recurrenceNumberArrayKeys)[number];
 
-const recurrenceWeekdayNumberArrayKeys: RRuleObjectKey[] = ["byDay"];
+export const recurrenceObjectKeyIsNumberArray = (
+  objectKey: RRuleObjectKey
+): objectKey is RecurrenceNumberArrayKey =>
+  recurrenceNumberArrayKeys.includes(objectKey as RecurrenceNumberArrayKey);
+
+const recurrenceWeekdayNumberArrayKeys = ["byDay"] satisfies RRuleObjectKey[];
+
+type RecurrenceWeekDayNumberArrayKey =
+  (typeof recurrenceWeekdayNumberArrayKeys)[number];
 
 export const recurrenceObjectKeyIsWeekdayNumberArray = (
   objectKey: RRuleObjectKey
-) => recurrenceWeekdayNumberArrayKeys.includes(objectKey);
+): objectKey is RecurrenceWeekDayNumberArrayKey =>
+  recurrenceWeekdayNumberArrayKeys.includes(
+    objectKey as RecurrenceWeekDayNumberArrayKey
+  );
 
-const recurrenceNumberKeys: RRuleObjectKey[] = ["count", "interval"];
+const recurrenceNumberKeys = ["count", "interval"] satisfies RRuleObjectKey[];
 
-export const recurrenceObjectKeyIsNumber = (objectKey: RRuleObjectKey) =>
-  recurrenceNumberKeys.includes(objectKey);
+type RecurrenceNumberKey = (typeof recurrenceNumberKeys)[number];
+
+export const recurrenceObjectKeyIsNumber = (
+  objectKey: RRuleObjectKey
+): objectKey is RecurrenceNumberKey =>
+  recurrenceNumberKeys.includes(objectKey as RecurrenceNumberKey);
 
 export type ParseIcsRecurrenceRule = (
   ruleString: string,
@@ -50,7 +76,7 @@ export const icsRecurrenceRuleToObject: ParseIcsRecurrenceRule = (
   ruleString,
   timezones
 ) => {
-  const rule = {};
+  const rule: Partial<RecurrenceRule> = {};
 
   const options = getOptions<RRuleKey>(ruleString.split(SEMICOLON));
 
@@ -62,51 +88,53 @@ export const icsRecurrenceRuleToObject: ParseIcsRecurrenceRule = (
     if (!objectKey) return; // unknown Object key
 
     if (recurrenceObjectKeyIsTimeStamp(objectKey)) {
-      set(
-        rule,
-        objectKey,
-        icsTimeStampToObject(
-          value,
-          { VALUE: value.includes("T") ? "DATE-TIME" : "DATE" },
-          timezones
-        )
+      rule[objectKey] = icsTimeStampToObject(
+        value,
+        { VALUE: value.includes("T") ? "DATE-TIME" : "DATE" },
+        timezones
       );
+
       return;
     }
 
     if (recurrenceObjectKeyIsNumberArray(objectKey)) {
-      set(
-        rule,
-        objectKey,
-        value.split(COMMA).map((v) => Number(v))
-      );
+      rule[objectKey] = value.split(COMMA).map((v) => Number(v));
+
       return;
     }
 
     if (objectKey === "byMonth") {
-      set(
-        rule,
-        objectKey,
-        value.split(COMMA).map((v) => Number(v) - 1) // ICS byMonth fängt bei 1 an, Javascript bei 0
-      );
+      rule[objectKey] = value.split(COMMA).map((v) => Number(v) - 1); // ICS byMonth fängt bei 1 an, Javascript bei 0
       return;
     }
 
     if (recurrenceObjectKeyIsWeekdayNumberArray(objectKey)) {
-      set(
-        rule,
-        objectKey,
-        value.split(COMMA).map((v) => icsWeekdayNumberToObject(v))
-      );
+      rule[objectKey] = value
+        .split(COMMA)
+        .map((v) => icsWeekdayNumberToObject(v));
       return;
     }
 
     if (recurrenceObjectKeyIsNumber(objectKey)) {
-      set(rule, objectKey, Number(value));
+      rule[objectKey] = Number(value);
       return;
     }
 
-    set(rule, objectKey, value); // Set string value
+    if (objectKey === "frequency") {
+      if (
+        !value ||
+        !recurrenceRuleFrequencies.includes(value as RecurrenceRuleFrequency)
+      )
+        return;
+
+      rule[objectKey] = value as RecurrenceRuleFrequency;
+      return;
+    }
+
+    if (objectKey === "workweekStart") {
+      rule[objectKey] = icsWeekDayStringToWeekDay(value);
+      return;
+    }
   });
 
   return rule as RecurrenceRule;

@@ -7,18 +7,13 @@ import { type VEventDuration, zVEventDuration } from "./duration";
 import { type Organizer, zOrganizer } from "./organizer";
 import { type RecurrenceRule, zRecurrenceRule } from "./recurrence";
 import { type RecurrenceId, zRecurrenceId } from "./recurrenceId";
-import { type StatusType, statusTypes } from "./status";
+import { zStatusType, type StatusType } from "./status";
 import { type ExceptionDates, zExceptionDates } from "./exceptionDate";
-
-export const timeTransparentTypes = ["TRANSPARENT", "OPAQUE"] as const;
-
-export type TimeTransparentTypes = typeof timeTransparentTypes;
-export type TimeTransparentType = TimeTransparentTypes[number];
-
-export const classTypes = ["PRIVATE", "PUBLIC", "CONFIDENTIAL"] as const;
-
-export type ClassTypes = typeof classTypes;
-export type ClassType = ClassTypes[number];
+import { zClassType, type ClassType } from "./class";
+import {
+  zTimeTransparentType,
+  type TimeTransparentType,
+} from "./timeTransparent";
 
 export type VEventDurationOrEnd =
   | { duration: VEventDuration; end?: never }
@@ -69,14 +64,14 @@ export const zVEventBase: z.ZodType<VEventBase> = z.object({
   exceptionDates: zExceptionDates.optional(),
   recurrenceRule: zRecurrenceRule.optional(),
   alarms: z.array(zVAlarm).optional(),
-  timeTransparent: z.enum(timeTransparentTypes).optional(),
+  timeTransparent: zTimeTransparentType.optional(),
   url: z.string().url().optional(),
   geo: z.string().optional(),
-  class: z.enum(classTypes).optional(),
+  class: zClassType.optional(),
   organizer: zOrganizer.optional(),
   priority: z.string().optional(),
   sequence: z.number().optional(),
-  status: z.enum(statusTypes).optional(),
+  status: zStatusType.optional(),
   attach: z.string().optional(),
   recurrenceId: zRecurrenceId.optional(),
   attendees: z.array(zAttendee).optional(),

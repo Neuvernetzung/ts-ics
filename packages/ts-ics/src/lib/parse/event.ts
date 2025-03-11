@@ -1,8 +1,13 @@
-import set from "lodash/set";
-
 import { COMMA, getAlarmRegex, replaceEventRegex } from "@/constants";
 import { VEVENT_TO_OBJECT_KEYS, type VEventKey } from "@/constants/keys/event";
-import { type VEvent, type VTimezone, zVEvent, type DateObject } from "@/types";
+import {
+  type VEvent,
+  type VTimezone,
+  zVEvent,
+  type DateObject,
+  classTypes,
+  type ClassType,
+} from "@/types";
 import type { Attendee } from "@/types/attendee";
 
 import {
@@ -20,6 +25,10 @@ import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 import { icsExceptionDateToObject } from "./exceptionDate";
 import { unescapeTextString } from "./utils/unescapeText";
+import { icsRecurrenceIdToObject } from "./recurrenceId";
+import { icsClassStringToClass } from "./class";
+import { icsStatusStringToStatus } from "./status";
+import { icsTimeTransparentStringToTimeTransparent } from "./timeTransparent";
 
 export type ParseIcsEvent = (
   rawEventString: string,
@@ -31,7 +40,7 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
 
   const lines = splitLines(eventString.replace(getAlarmRegex, ""));
 
-  const event = {};
+  const event: Partial<VEvent> = {};
 
   const attendees: Attendee[] = [];
   const exceptionDates: DateObject[] = [];
@@ -44,37 +53,38 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
     if (!objectKey) return; // unknown Object key
 
     if (objectKeyIsTimeStamp(objectKey)) {
-      set(event, objectKey, icsTimeStampToObject(value, options, timezones));
+      event[objectKey] = icsTimeStampToObject(value, options, timezones);
       return;
     }
 
     if (objectKeyIsArrayOfStrings(objectKey)) {
-      set(event, objectKey, value.split(COMMA));
+      event[objectKey] = value.split(COMMA);
+
       return;
     }
 
     if (objectKeyIsTextString(objectKey)) {
-      set(event, objectKey, unescapeTextString(value));
+      event[objectKey] = unescapeTextString(value);
       return;
     }
 
     if (objectKey === "recurrenceRule") {
-      set(event, objectKey, icsRecurrenceRuleToObject(value, timezones));
+      event[objectKey] = icsRecurrenceRuleToObject(value, timezones);
       return;
     }
 
     if (objectKey === "duration") {
-      set(event, objectKey, icsDurationToObject(value));
+      event[objectKey] = icsDurationToObject(value);
       return;
     }
 
     if (objectKey === "organizer") {
-      set(event, objectKey, icsOrganizerToObject(value, options));
+      event[objectKey] = icsOrganizerToObject(value, options);
       return;
     }
 
     if (objectKey === "sequence") {
-      set(event, objectKey, Number(value));
+      event[objectKey] = Number(value);
       return;
     }
 
@@ -88,7 +98,29 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
       return;
     }
 
-    set(event, objectKey, value); // Set string value
+    if (objectKey === "alarm") return;
+
+    if (objectKey === "class") {
+      event[objectKey] = icsClassStringToClass(value);
+      return;
+    }
+
+    if (objectKey === "recurrenceId") {
+      event[objectKey] = icsRecurrenceIdToObject(value);
+      return;
+    }
+
+    if (objectKey === "status") {
+      event[objectKey] = icsStatusStringToStatus(value);
+      return;
+    }
+
+    if (objectKey === "timeTransparent") {
+      event[objectKey] = icsTimeTransparentStringToTimeTransparent(value);
+      return;
+    }
+
+    event[objectKey] = value; // Set string value
   });
 
   const alarmStrings = [...rawEventString.matchAll(getAlarmRegex)].map(
@@ -99,15 +131,16 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
     const alarms = alarmStrings.map((alarmString) =>
       icsAlarmToObject(alarmString, timezones)
     );
-    set(event, "alarms", alarms);
+
+    event.alarms = alarms;
   }
 
   if (attendees.length > 0) {
-    set(event, "attendees", attendees);
+    event.attendees = attendees;
   }
 
   if (exceptionDates.length > 0) {
-    set(event, "exceptionDates", exceptionDates);
+    event.exceptionDates = exceptionDates;
   }
 
   return event as VEvent;

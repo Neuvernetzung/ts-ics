@@ -1,5 +1,3 @@
-import set from "lodash/set";
-
 import { replaceAlarmRegex } from "@/constants";
 import { VALARM_TO_OBJECT_KEYS, type VAlarmKey } from "@/constants/keys/alarm";
 import { type VAlarm, type VTimezone, zVAlarm } from "@/types";
@@ -23,7 +21,7 @@ export const icsAlarmToObject: ParseIcsAlarm = (rawAlarmString, timezones) => {
 
   const lines = splitLines(alarmString);
 
-  const alarm = {};
+  const alarm: Partial<VAlarm> = {};
 
   const attachments: Attachment[] = [];
 
@@ -37,17 +35,17 @@ export const icsAlarmToObject: ParseIcsAlarm = (rawAlarmString, timezones) => {
     if (!objectKey) return; // unknown Object key
 
     if (objectKey === "trigger") {
-      set(alarm, objectKey, icsTriggerToObject(value, options, timezones));
+      alarm[objectKey] = icsTriggerToObject(value, options, timezones);
       return;
     }
 
     if (objectKey === "duration") {
-      set(alarm, objectKey, icsDurationToObject(value));
+      alarm[objectKey] = icsDurationToObject(value);
       return;
     }
 
     if (objectKey === "repeat") {
-      set(alarm, objectKey, Number(value));
+      alarm[objectKey] = Number(value);
       return;
     }
 
@@ -61,15 +59,15 @@ export const icsAlarmToObject: ParseIcsAlarm = (rawAlarmString, timezones) => {
       return;
     }
 
-    set(alarm, objectKey, value); // Set string value
+    alarm[objectKey] = value; // Set string value
   });
 
   if (attachments.length > 0) {
-    set(alarm, "attachments", attachments);
+    alarm.attachments = attachments;
   }
 
   if (attendees.length > 0) {
-    set(alarm, "attendees", attendees);
+    alarm.attendees = attendees;
   }
 
   return alarm as VAlarm;

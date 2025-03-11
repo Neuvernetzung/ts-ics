@@ -1,5 +1,3 @@
-import compact from "lodash/compact";
-
 import type { DateObject, VEventDuration, VEventTrigger } from "@/types";
 
 import { generateIcsDuration } from "./duration";
@@ -9,12 +7,12 @@ import { generateIcsOptions } from "./utils/generateOptions";
 
 export const generateIcsTrigger = (trigger: VEventTrigger) => {
   const options = generateIcsOptions(
-    compact([
+    [
       trigger.options?.related && {
         key: "RELATED",
         value: trigger.options.related,
       },
-    ])
+    ].filter((v) => !!v)
   );
 
   if (trigger.type === "absolute") {

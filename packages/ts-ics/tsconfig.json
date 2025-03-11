@@ -24,7 +24,8 @@
     "moduleResolution": "node",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "preserveWatchOutput": true
+    "preserveWatchOutput": true,
+    "erasableSyntaxOnly": true
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx", "./tests/**/*.ts"],
   "exclude": ["dist", "node_modules"]

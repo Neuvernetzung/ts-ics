@@ -1,4 +1,4 @@
-import isDate from "lodash/isDate";
+import { isDate } from "date-fns";
 
 export const generateIcsDate = (date: Date) => {
   if (!isDate(date)) throw Error(`Incorrect date object: ${date}`);
