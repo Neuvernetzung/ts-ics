@@ -7,7 +7,7 @@ it("Test Ics Recurrence Id Parse", async () => {
 
   const { line } = getLine(rId);
 
-  expect(() => icsRecurrenceIdToObject(line, undefined, {})).not.toThrow();
+  expect(() => icsRecurrenceIdToObject(undefined, line)).not.toThrow();
 });
 
 it("Test Ics Recurrence Id Parse", async () => {
@@ -15,5 +15,5 @@ it("Test Ics Recurrence Id Parse", async () => {
 
   const { line } = getLine(rId);
 
-  expect(() => icsRecurrenceIdToObject(line, undefined, {})).not.toThrow();
+  expect(() => icsRecurrenceIdToObject(undefined, line)).not.toThrow();
 });

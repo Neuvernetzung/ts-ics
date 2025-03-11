@@ -1,7 +1,7 @@
 import { DurationLineToObject, type Duration } from "@/types";
 import { standardValidate } from "./utils/standardValidate";
 
-export const icsDurationToObject: DurationLineToObject = (line, schema) => {
+export const icsDurationToObject: DurationLineToObject = (schema, line) => {
   let newString = line.value;
 
   const duration: Partial<Duration> = {};

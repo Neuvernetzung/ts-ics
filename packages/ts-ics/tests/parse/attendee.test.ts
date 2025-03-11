@@ -7,7 +7,7 @@ it("Test Ics Attendee Parse", async () => {
 
   const { line } = getLine(attendee);
 
-  expect(() => icsAttendeeToObject(line, undefined)).not.toThrow();
+  expect(() => icsAttendeeToObject(undefined, line)).not.toThrow();
 });
 
 it("Test Ics Attendee Parse", async () => {
@@ -15,7 +15,7 @@ it("Test Ics Attendee Parse", async () => {
 
   const { line } = getLine(attendee);
 
-  const parsed = icsAttendeeToObject(line, undefined);
+  const parsed = icsAttendeeToObject(undefined, line);
 
   expect(() => parsed).not.toThrow();
 

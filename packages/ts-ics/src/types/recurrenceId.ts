@@ -11,10 +11,10 @@ export type ParseRecurrenceIdOptions = { timezones?: VTimezone[] };
 
 export type RecurrenceIdLineToObject = LineToObject<
   RecurrenceId,
-  [ParseRecurrenceIdOptions]
+  ParseRecurrenceIdOptions
 >;
 
 export type ParseRecurrenceId = ParseLineType<
   RecurrenceId,
-  [ParseRecurrenceIdOptions]
+  ParseRecurrenceIdOptions
 >;

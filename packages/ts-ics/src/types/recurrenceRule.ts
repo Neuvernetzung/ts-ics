@@ -39,10 +39,10 @@ export type ParseRecurrenceRuleOptions = {
 
 export type RecurrenceRuleLineToObject = LineToObject<
   RecurrenceRule,
-  [ParseRecurrenceRuleOptions]
+  ParseRecurrenceRuleOptions
 >;
 
 export type ParseRecurrenceRule = ParseLineType<
   RecurrenceRule,
-  [ParseRecurrenceRuleOptions]
+  ParseRecurrenceRuleOptions
 >;

@@ -3,5 +3,5 @@ import { z } from "zod";
 
 export const zStatusType = z.enum(statusTypes);
 
-export const parseIcsStatus: ParseStatusType = (line) =>
-  icsStatusStringToStatus(line, zStatusType);
+export const parseIcsStatus: ParseStatusType = (...props) =>
+  icsStatusStringToStatus(zStatusType, ...props);

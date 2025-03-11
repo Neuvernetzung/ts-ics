@@ -19,8 +19,8 @@ import { splitLines } from "./utils/splitLines";
 import { standardValidate } from "./utils/standardValidate";
 
 export const icsTimezonePropToObject: TimezonePropLinesToObject = (
-  rawTimezonePropString,
   schema,
+  rawTimezonePropString,
   timezonePropOptions
 ) => {
   const timezonePropString = rawTimezonePropString
@@ -41,22 +41,22 @@ export const icsTimezonePropToObject: TimezonePropLinesToObject = (
     if (!objectKey) return;
 
     if (objectKey === "start") {
-      timezoneProp[objectKey] = icsDateTimeToDateTime(line, undefined);
+      timezoneProp[objectKey] = icsDateTimeToDateTime(undefined, line);
 
       return;
     }
 
     if (objectKey === "recurrenceRule") {
-      timezoneProp[objectKey] = icsRecurrenceRuleToObject(line, undefined, {
-        timezones: timezonePropOptions.timezones,
+      timezoneProp[objectKey] = icsRecurrenceRuleToObject(undefined, line, {
+        timezones: timezonePropOptions?.timezones,
       });
 
       return;
     }
 
     if (objectKey === "recurrenceDate") {
-      timezoneProp[objectKey] = icsTimeStampToObject(line, undefined, {
-        timezones: timezonePropOptions.timezones,
+      timezoneProp[objectKey] = icsTimeStampToObject(undefined, line, {
+        timezones: timezonePropOptions?.timezones,
       });
 
       return;

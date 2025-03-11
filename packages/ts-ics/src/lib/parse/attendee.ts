@@ -6,7 +6,7 @@ import {
 import { replaceMailTo } from "./utils/replaceMailTo";
 import { standardValidate } from "./utils/standardValidate";
 
-export const icsAttendeeToObject: AttendeeLineToObject = (line, schema) =>
+export const icsAttendeeToObject: AttendeeLineToObject = (schema, line) =>
   standardValidate(schema, {
     email: replaceMailTo(line.value),
     delegatedFrom: line.options?.["DELEGATED-FROM"]

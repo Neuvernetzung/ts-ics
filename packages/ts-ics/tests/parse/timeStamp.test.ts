@@ -17,7 +17,7 @@ it("Test Ics Timestamp Parse - Date", async () => {
 
   const { line } = getLine(timestamp);
 
-  const timeStamp = icsTimeStampToObject(line, undefined, {});
+  const timeStamp = icsTimeStampToObject(undefined, line);
 
   expect(timeStamp.date).toStrictEqual(
     new Date(Date.UTC(year, javascriptMonth, day))
@@ -29,7 +29,7 @@ it("Test Ics Timestamp Parse - Datetime", async () => {
 
   const { line } = getLine(timestamp);
 
-  expect(() => icsTimeStampToObject(line, undefined, {})).not.toThrow();
+  expect(() => icsTimeStampToObject(undefined, line)).not.toThrow();
 });
 
 it("Test Ics Timestamp Parse - UTC", async () => {
@@ -37,7 +37,7 @@ it("Test Ics Timestamp Parse - UTC", async () => {
 
   const { line } = getLine(timestamp);
 
-  const parsed = icsTimeStampToObject(line, undefined, {});
+  const parsed = icsTimeStampToObject(undefined, line);
 
   expect(parsed.date.getUTCHours()).toEqual(9);
 
@@ -58,12 +58,12 @@ it("Test Ics Timestamp Parse - VTimezones - Standard", async () => {
   );
 
   const timezones = timezoneStrings.map((timezoneString) =>
-    icsTimezoneToObject(timezoneString, undefined)
+    icsTimezoneToObject(undefined, timezoneString)
   );
 
   const { line } = getLine(timestamp);
 
-  const parsed = icsTimeStampToObject(line, undefined, { timezones });
+  const parsed = icsTimeStampToObject(undefined, line, { timezones });
 
   expect(parsed.date.getUTCHours()).toEqual(13);
 
@@ -85,12 +85,12 @@ it("Test Ics Timestamp Parse - VTimezones - Daylight", async () => {
   );
 
   const timezones = timezoneStrings.map((timezoneString) =>
-    icsTimezoneToObject(timezoneString, undefined)
+    icsTimezoneToObject(undefined, timezoneString)
   );
 
   const { line } = getLine(timestamp);
 
-  const parsed = icsTimeStampToObject(line, undefined, { timezones });
+  const parsed = icsTimeStampToObject(undefined, line, { timezones });
 
   expect(parsed.date.getUTCHours()).toEqual(12);
 
@@ -105,7 +105,7 @@ it("Test Ics Timestamp Parse - IANA Timezone", async () => {
 
   const { line } = getLine(timestamp);
 
-  const parsed = icsTimeStampToObject(line, undefined, {});
+  const parsed = icsTimeStampToObject(undefined, line);
 
   expect(parsed.date.getUTCHours()).toEqual(0);
 

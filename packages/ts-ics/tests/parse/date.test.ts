@@ -5,13 +5,13 @@ import { setMilliseconds } from "date-fns";
 it("Test Ics Date Time Parse", async () => {
   const value = "20230118T073000Z";
 
-  expect(() => icsDateTimeToDateTime({ value }, undefined)).not.toThrow();
+  expect(() => icsDateTimeToDateTime(undefined, { value })).not.toThrow();
 });
 
 it("Test Ics Date Parse", async () => {
   const value = "20230118";
 
-  expect(() => icsDateToDate({ value }, undefined)).not.toThrow();
+  expect(() => icsDateToDate(undefined, { value })).not.toThrow();
 });
 
 it("Strip Milliseconds - Milliseconds are not allowed in Ics", async () => {
@@ -19,7 +19,7 @@ it("Strip Milliseconds - Milliseconds are not allowed in Ics", async () => {
 
   const icsDate = generateIcsDateTime(date);
 
-  expect(icsDateTimeToDateTime({ value: icsDate }, undefined)).toEqual(
+  expect(icsDateTimeToDateTime(undefined, { value: icsDate })).toEqual(
     setMilliseconds(date, 0)
   );
 });

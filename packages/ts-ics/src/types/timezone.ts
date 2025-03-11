@@ -25,12 +25,12 @@ export type ParseTimezonePropOptions = {
 
 export type TimezonePropLinesToObject = LinesToObject<
   VTimezoneProp,
-  [ParseTimezonePropOptions]
+  ParseTimezonePropOptions
 >;
 
 export type ParseTimezoneProp = ParseLinesType<
   VTimezoneProp,
-  [ParseTimezonePropOptions]
+  ParseTimezonePropOptions
 >;
 
 export type VTimezone = {

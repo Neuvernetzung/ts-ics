@@ -5,4 +5,4 @@ import {
 import { standardValidate } from "./utils/standardValidate";
 
 export const icsTimeTransparentStringToTimeTransparent: TimeTransparentTypeLineToObject =
-  (line, schema) => standardValidate(schema, line.value as TimeTransparentType);
+  (schema, line) => standardValidate(schema, line.value as TimeTransparentType);

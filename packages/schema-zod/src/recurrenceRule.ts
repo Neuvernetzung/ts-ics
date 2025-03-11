@@ -25,7 +25,5 @@ export const zRecurrenceRule: z.ZodType<RecurrenceRule> = z.object({
   workweekStart: zWeekDay.optional(),
 });
 
-export const parseIcsRecurrenceRule: ParseRecurrenceRule = (
-  line,
-  recurrenceRuleOptions
-) => icsRecurrenceRuleToObject(line, zRecurrenceRule, recurrenceRuleOptions);
+export const parseIcsRecurrenceRule: ParseRecurrenceRule = (...props) =>
+  icsRecurrenceRuleToObject(zRecurrenceRule, ...props);

@@ -22,7 +22,7 @@ export type ParseTriggerOptions = { timezones?: VTimezone[] };
 
 export type TriggerLineToObject = LineToObject<
   VEventTrigger,
-  [ParseTriggerOptions]
+  ParseTriggerOptions
 >;
 
-export type ParseTrigger = ParseLineType<VEventTrigger, [ParseTriggerOptions]>;
+export type ParseTrigger = ParseLineType<VEventTrigger, ParseTriggerOptions>;

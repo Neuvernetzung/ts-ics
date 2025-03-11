@@ -26,7 +26,7 @@ export type ParseTimeStampOptions = { timezones?: VTimezone[] };
 
 export type TimeStampLineToObject = LineToObject<
   DateObject,
-  [ParseTimeStampOptions]
+  ParseTimeStampOptions
 >;
 
-export type ParseTimeStamp = ParseLineType<DateObject, [ParseTimeStampOptions]>;
+export type ParseTimeStamp = ParseLineType<DateObject, ParseTimeStampOptions>;

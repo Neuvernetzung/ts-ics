@@ -18,5 +18,5 @@ export const zAttendee: z.ZodType<Attendee> = z.object({
   sentBy: z.string().email().optional(),
 });
 
-export const parseIcsAttendee: ParseAttendee = (line) =>
-  icsAttendeeToObject(line, zAttendee);
+export const parseIcsAttendee: ParseAttendee = (...props) =>
+  icsAttendeeToObject(zAttendee, ...props);

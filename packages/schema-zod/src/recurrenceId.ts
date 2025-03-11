@@ -11,5 +11,5 @@ export const zRecurrenceId: z.ZodType<RecurrenceId> = z.object({
   value: zDateObject,
 });
 
-export const parseIcsRecurrenceId: ParseRecurrenceId = (line, options) =>
-  icsRecurrenceIdToObject(line, zRecurrenceId, options);
+export const parseIcsRecurrenceId: ParseRecurrenceId = (...props) =>
+  icsRecurrenceIdToObject(zRecurrenceId, ...props);

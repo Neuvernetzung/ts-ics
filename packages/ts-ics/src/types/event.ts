@@ -47,6 +47,6 @@ export type VEvent = VEventBase & DurationOrEnd;
 
 export type ParseEventOptions = { timezones?: VTimezone[] };
 
-export type EventLinesToObject = LinesToObject<VEvent, [ParseEventOptions]>;
+export type EventLinesToObject = LinesToObject<VEvent, ParseEventOptions>;
 
-export type ParseEvent = ParseLinesType<VEvent, [ParseEventOptions]>;
+export type ParseEvent = ParseLinesType<VEvent, ParseEventOptions>;

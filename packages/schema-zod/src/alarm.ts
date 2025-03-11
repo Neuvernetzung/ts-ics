@@ -21,5 +21,5 @@ export const zVAlarm: z.ZodType<VAlarm> = z.object({
   attachments: z.array(zAttachment).optional(),
 });
 
-export const parseIcsAlarm: ParseAlarm = (rawAlarmString, alarmOptions) =>
-  icsAlarmToObject(rawAlarmString, zVAlarm, alarmOptions);
+export const parseIcsAlarm: ParseAlarm = (...props) =>
+  icsAlarmToObject(zVAlarm, ...props);

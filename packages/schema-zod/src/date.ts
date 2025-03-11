@@ -20,7 +20,8 @@ export const zDateObject: z.ZodType<DateObject> = z.object({
   local: zDateObjectTzProps.optional(),
 });
 
-export const parseIcsDate: ParseDate = (line) => icsDateToDate(line, z.date());
+export const parseIcsDate: ParseDate = (...props) =>
+  icsDateToDate(z.date(), ...props);
 
-export const parseIcsDateTime: ParseDate = (line) =>
-  icsDateTimeToDateTime(line, z.date());
+export const parseIcsDateTime: ParseDate = (...props) =>
+  icsDateTimeToDateTime(z.date(), ...props);

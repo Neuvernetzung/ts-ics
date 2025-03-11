@@ -10,5 +10,5 @@ export const zDuration: z.ZodType<Duration> = z.object({
   seconds: z.number().optional(),
 });
 
-export const parseIcsDuration: ParseDuration = (line) =>
-  icsDurationToObject(line, zDuration);
+export const parseIcsDuration: ParseDuration = (...props) =>
+  icsDurationToObject(zDuration, ...props);

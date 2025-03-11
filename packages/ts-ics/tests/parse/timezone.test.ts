@@ -59,7 +59,7 @@ it("Test Ics Timezone Parse", async () => {
     "END:VTIMEZONE",
   ]);
 
-  expect(() => icsTimezoneToObject(timezone, undefined)).not.toThrow();
+  expect(() => icsTimezoneToObject(undefined, timezone)).not.toThrow();
 });
 
 it("Test Ics Timezone Parse", async () => {
@@ -81,7 +81,7 @@ it("Test Ics Timezone Parse", async () => {
     "END:DAYLIGHT",
     "END:VTIMEZONE",
   ]);
-  expect(() => icsTimezoneToObject(timezone, undefined)).not.toThrow();
+  expect(() => icsTimezoneToObject(undefined, timezone)).not.toThrow();
 });
 
 it("Test Ics Timezone Parse", async () => {
@@ -106,7 +106,7 @@ it("Test Ics Timezone Parse", async () => {
     "END:DAYLIGHT",
     "END:VTIMEZONE",
   ]);
-  expect(() => icsTimezoneToObject(timezone, undefined)).not.toThrow();
+  expect(() => icsTimezoneToObject(undefined, timezone)).not.toThrow();
 });
 
 it("Test Ics Timezone Parse", async () => {
@@ -130,7 +130,7 @@ it("Test Ics Timezone Parse", async () => {
     "END:DAYLIGHT",
     "END:VTIMEZONE",
   ]);
-  expect(() => icsTimezoneToObject(timezone, undefined)).not.toThrow();
+  expect(() => icsTimezoneToObject(undefined, timezone)).not.toThrow();
 });
 
 it("Test Ics Timezone Parse", async () => {
@@ -161,7 +161,7 @@ it("Test Ics Timezone Parse", async () => {
     "END:DAYLIGHT",
     "END:VTIMEZONE",
   ]);
-  expect(() => icsTimezoneToObject(timezone, undefined)).not.toThrow();
+  expect(() => icsTimezoneToObject(undefined, timezone)).not.toThrow();
 });
 
 it("Test Ics custom not provided Timezone", async () => {
@@ -176,5 +176,5 @@ it("Test Ics custom not provided Timezone", async () => {
     "TRANSP:TRANSPARENT",
     "END:VEVENT",
   ]);
-  expect(() => icsEventToObject(event, undefined, {})).not.toThrow();
+  expect(() => icsEventToObject(undefined, event)).not.toThrow();
 });

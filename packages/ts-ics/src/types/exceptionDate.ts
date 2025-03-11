@@ -10,10 +10,10 @@ export type ParseExceptionDatesOptions = { timezones?: VTimezone[] };
 
 export type ExceptionDatesLineToObject = LineToObject<
   ExceptionDates,
-  [ParseExceptionDatesOptions]
+  ParseExceptionDatesOptions
 >;
 
 export type ParseExceptionDates = ParseLineType<
   ExceptionDates,
-  [ParseExceptionDatesOptions]
+  ParseExceptionDatesOptions
 >;

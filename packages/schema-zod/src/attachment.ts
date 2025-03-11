@@ -26,5 +26,5 @@ export const zAttachment: z.ZodType<Attachment> = z.discriminatedUnion("type", [
   }),
 ]);
 
-export const parseIcsAttachment: ParseAttachment = (line) =>
-  icsAttachmentToObject(line, zAttachment);
+export const parseIcsAttachment: ParseAttachment = (...props) =>
+  icsAttachmentToObject(zAttachment, ...props);

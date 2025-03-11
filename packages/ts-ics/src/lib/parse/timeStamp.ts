@@ -17,14 +17,14 @@ const __icsTimeStampToObject = (
 ) => {
   if (line.options?.VALUE === "DATE")
     return {
-      date: icsDateToDate(line, undefined),
+      date: icsDateToDate(undefined, line),
       type: line.options?.VALUE as DateObjectType,
     };
 
   const type: DateObjectType =
     (line.options?.VALUE as DateObjectType) || "DATE-TIME";
 
-  const dateTime = icsDateTimeToDateTime(line, undefined);
+  const dateTime = icsDateTimeToDateTime(undefined, line);
 
   if (!line.options?.TZID)
     return {
@@ -58,8 +58,8 @@ const __icsTimeStampToObject = (
 };
 
 export const icsTimeStampToObject: TimeStampLineToObject = (
-  line,
   schema,
+  line,
   options
 ) => {
   return standardValidate(schema, __icsTimeStampToObject(line, options));

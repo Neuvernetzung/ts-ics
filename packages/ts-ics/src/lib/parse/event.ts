@@ -25,8 +25,8 @@ import { icsTimeTransparentStringToTimeTransparent } from "./timeTransparent";
 import { standardValidate } from "./utils/standardValidate";
 
 export const icsEventToObject: EventLinesToObject = (
-  rawEventString,
   schema,
+  rawEventString,
   eventOptions
 ) => {
   const eventString = rawEventString.replace(replaceEventRegex, "");
@@ -46,7 +46,7 @@ export const icsEventToObject: EventLinesToObject = (
     if (!objectKey) return; // unknown Object key
 
     if (objectKeyIsTimeStamp(objectKey)) {
-      event[objectKey] = icsTimeStampToObject(line, undefined, {
+      event[objectKey] = icsTimeStampToObject(undefined, line, {
         timezones: eventOptions?.timezones,
       });
       return;
@@ -64,19 +64,19 @@ export const icsEventToObject: EventLinesToObject = (
     }
 
     if (objectKey === "recurrenceRule") {
-      event[objectKey] = icsRecurrenceRuleToObject(line, undefined, {
+      event[objectKey] = icsRecurrenceRuleToObject(undefined, line, {
         timezones: eventOptions?.timezones,
       });
       return;
     }
 
     if (objectKey === "duration") {
-      event[objectKey] = icsDurationToObject(line, undefined);
+      event[objectKey] = icsDurationToObject(undefined, line);
       return;
     }
 
     if (objectKey === "organizer") {
-      event[objectKey] = icsOrganizerToObject(line, undefined);
+      event[objectKey] = icsOrganizerToObject(undefined, line);
       return;
     }
 
@@ -86,14 +86,14 @@ export const icsEventToObject: EventLinesToObject = (
     }
 
     if (objectKey === "attendee") {
-      attendees.push(icsAttendeeToObject(line, undefined));
+      attendees.push(icsAttendeeToObject(undefined, line));
       return;
     }
 
     if (objectKey === "exceptionDates") {
       exceptionDates.push(
-        ...icsExceptionDateToObject(line, undefined, {
-          timezones: eventOptions.timezones,
+        ...icsExceptionDateToObject(undefined, line, {
+          timezones: eventOptions?.timezones,
         })
       );
       return;
@@ -102,26 +102,26 @@ export const icsEventToObject: EventLinesToObject = (
     if (objectKey === "alarm") return;
 
     if (objectKey === "class") {
-      event[objectKey] = icsClassStringToClass(line, undefined);
+      event[objectKey] = icsClassStringToClass(undefined, line);
       return;
     }
 
     if (objectKey === "recurrenceId") {
-      event[objectKey] = icsRecurrenceIdToObject(line, undefined, {
+      event[objectKey] = icsRecurrenceIdToObject(undefined, line, {
         timezones: eventOptions?.timezones,
       });
       return;
     }
 
     if (objectKey === "status") {
-      event[objectKey] = icsStatusStringToStatus(line, undefined);
+      event[objectKey] = icsStatusStringToStatus(undefined, line);
       return;
     }
 
     if (objectKey === "timeTransparent") {
       event[objectKey] = icsTimeTransparentStringToTimeTransparent(
-        line,
-        undefined
+        undefined,
+        line
       );
       return;
     }
@@ -135,7 +135,7 @@ export const icsEventToObject: EventLinesToObject = (
 
   if (alarmStrings.length > 0) {
     const alarms = alarmStrings.map((alarmString) =>
-      icsAlarmToObject(alarmString, undefined, eventOptions)
+      icsAlarmToObject(undefined, alarmString, eventOptions)
     );
 
     event.alarms = alarms;

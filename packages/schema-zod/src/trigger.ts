@@ -32,5 +32,5 @@ export const zVEventTrigger: z.ZodType<VEventTrigger> = z.intersection(
   zVEventTriggerUnion
 );
 
-export const parseIcsTrigger: ParseTrigger = (line, options) =>
-  icsTriggerToObject(line, zVEventTrigger, options);
+export const parseIcsTrigger: ParseTrigger = (...props) =>
+  icsTriggerToObject(zVEventTrigger, ...props);

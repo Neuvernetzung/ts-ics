@@ -1,24 +1,24 @@
 import type { StandardSchemaV1 } from "@standard-schema/spec";
 import { Line } from "./line";
 
-export type LinesToObject<TType, TArgs extends unknown[] = []> = (
-  lines: string,
+export type LinesToObject<TType, TOptions = undefined> = (
   schema: StandardSchemaV1<TType> | undefined,
-  ...options: TArgs
-) => TType;
-
-export type ParseLinesType<TType, TArgs extends unknown[] = []> = (
   lines: string,
-  ...options: TArgs
+  options?: TOptions
 ) => TType;
 
-export type LineToObject<TType, TArgs extends unknown[] = []> = (
-  line: Line,
+export type ParseLinesType<TType, TOptions = undefined> = (
+  lines: string,
+  options?: TOptions
+) => TType;
+
+export type LineToObject<TType, TOptions = undefined> = (
   schema: StandardSchemaV1<TType> | undefined,
-  ...options: TArgs
+  line: Line,
+  options?: TOptions
 ) => TType;
 
-export type ParseLineType<TType, TArgs extends unknown[] = []> = (
+export type ParseLineType<TType, TOptions = undefined> = (
   line: Line,
-  ...options: TArgs
+  options?: TOptions
 ) => TType;

@@ -3,8 +3,8 @@ import { icsTimeStampToObject } from "./timeStamp";
 import { standardValidate } from "./utils/standardValidate";
 
 export const icsExceptionDateToObject: ExceptionDatesLineToObject = (
-  line,
   schema,
+  line,
   options
 ) =>
   standardValidate(
@@ -13,8 +13,8 @@ export const icsExceptionDateToObject: ExceptionDatesLineToObject = (
       .split(",")
       .map((value) =>
         icsTimeStampToObject(
-          { value, options: line.options },
           undefined,
+          { value, options: line.options },
           options
         )
       )

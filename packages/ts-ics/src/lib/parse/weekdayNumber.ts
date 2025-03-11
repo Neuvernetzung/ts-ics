@@ -14,6 +14,6 @@ const __icsWeekdayNumberToObject = (value: Line["value"]) => {
 };
 
 export const icsWeekdayNumberToObject: WeekDayNumberLineToObject = (
-  line,
-  schema
+  schema,
+  line
 ) => standardValidate(schema, __icsWeekdayNumberToObject(line.value));

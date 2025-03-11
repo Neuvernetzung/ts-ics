@@ -17,8 +17,8 @@ import { splitLines } from "./utils/splitLines";
 import { standardValidate } from "./utils/standardValidate";
 
 export const icsCalendarToObject: CalendarLinesToObject = (
-  calendarString,
-  schema
+  schema,
+  calendarString
 ) => {
   const cleanedFileString = calendarString.replace(replaceCalendarRegex, "");
 
@@ -49,7 +49,7 @@ export const icsCalendarToObject: CalendarLinesToObject = (
 
   if (timezoneStrings.length > 0) {
     const timezones = timezoneStrings.map((timezoneString) =>
-      icsTimezoneToObject(timezoneString, undefined)
+      icsTimezoneToObject(undefined, timezoneString)
     );
     calendar.timezones = timezones;
   }
@@ -60,7 +60,7 @@ export const icsCalendarToObject: CalendarLinesToObject = (
 
   if (eventStrings.length > 0) {
     const events = eventStrings.map((eventString) =>
-      icsEventToObject(eventString, undefined, {
+      icsEventToObject(undefined, eventString, {
         timezones: calendar.timezones,
       })
     );

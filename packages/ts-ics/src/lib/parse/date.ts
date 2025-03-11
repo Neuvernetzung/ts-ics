@@ -2,7 +2,7 @@ import type { StandardSchemaV1 } from "@standard-schema/spec";
 import { standardValidate } from "./utils/standardValidate";
 import { DateLineToDate, Line } from "@/types";
 
-export const icsDateToDate: DateLineToDate = (line, schema) => {
+export const icsDateToDate: DateLineToDate = (schema, line) => {
   const year = Number.parseInt(line.value.slice(0, 4), 10);
   const month = Number.parseInt(line.value.slice(4, 6), 10) - 1; // Monate in JavaScript sind 0-basiert
   const day = Number.parseInt(line.value.slice(6, 8), 10);
@@ -12,7 +12,7 @@ export const icsDateToDate: DateLineToDate = (line, schema) => {
   return standardValidate(schema, newDate);
 };
 
-export const icsDateTimeToDateTime: DateLineToDate = (line, schema) => {
+export const icsDateTimeToDateTime: DateLineToDate = (schema, line) => {
   const year = Number.parseInt(line.value.slice(0, 4), 10);
   const month = Number.parseInt(line.value.slice(4, 6), 10) - 1; // Monate in JavaScript sind 0-basiert
   const day = Number.parseInt(line.value.slice(6, 8), 10);

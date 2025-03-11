@@ -3,5 +3,5 @@ import { z } from "zod";
 
 export const zClassType = z.enum(classTypes);
 
-export const parseIcsClassType: ParseClassType = (line) =>
-  icsClassStringToClass(line, zClassType);
+export const parseIcsClassType: ParseClassType = (...props) =>
+  icsClassStringToClass(zClassType, ...props);

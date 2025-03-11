@@ -13,5 +13,5 @@ export const zExceptionDate: z.ZodType<ExceptionDate> = zDateObject;
 export const zExceptionDates: z.ZodType<ExceptionDates> =
   z.array(zExceptionDate);
 
-export const parseIcsExceptionDate: ParseExceptionDates = (line, options) =>
-  icsExceptionDateToObject(line, zExceptionDates, options);
+export const parseIcsExceptionDate: ParseExceptionDates = (...props) =>
+  icsExceptionDateToObject(zExceptionDates, ...props);

@@ -13,5 +13,5 @@ export const zWeekdayNumberObject: z.ZodType<WeekdayNumberObject> = z.object({
   occurence: z.number().optional(),
 });
 
-export const parseIcsWeekDay: ParseWeekDay = (line) =>
-  icsWeekDayStringToWeekDay(line, zWeekDay);
+export const parseIcsWeekDay: ParseWeekDay = (...props) =>
+  icsWeekDayStringToWeekDay(zWeekDay, ...props);

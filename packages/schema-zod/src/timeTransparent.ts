@@ -8,5 +8,5 @@ import { z } from "zod";
 
 export const zTimeTransparentType = z.enum(timeTransparentTypes);
 
-export const parseIcsTimeTransparent: ParseTimeTransparentType = (line) =>
-  icsTimeTransparentStringToTimeTransparent(line, zTimeTransparentType);
+export const parseIcsTimeTransparent: ParseTimeTransparentType = (...props) =>
+  icsTimeTransparentStringToTimeTransparent(zTimeTransparentType, ...props);

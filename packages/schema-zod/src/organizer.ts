@@ -8,5 +8,5 @@ export const zOrganizer: z.ZodType<Organizer> = z.object({
   sentBy: z.string().email().optional(),
 });
 
-export const parseIcsOrganizer: ParseOrganizer = (line) =>
-  icsOrganizerToObject(line, zOrganizer);
+export const parseIcsOrganizer: ParseOrganizer = (...props) =>
+  icsOrganizerToObject(zOrganizer, ...props);

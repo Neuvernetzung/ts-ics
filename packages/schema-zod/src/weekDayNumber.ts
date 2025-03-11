@@ -5,5 +5,5 @@ import {
 } from "ts-ics";
 import { zWeekdayNumberObject } from "./weekDay";
 
-export const parseIcsWeekdayNumber: ParseWeekDayNumber = (line) =>
-  icsWeekdayNumberToObject(line, zWeekdayNumberObject);
+export const parseIcsWeekdayNumber: ParseWeekDayNumber = (...props) =>
+  icsWeekdayNumberToObject(zWeekdayNumberObject, ...props);

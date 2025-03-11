@@ -20,6 +20,6 @@ export type ParseAlarmOptions = {
   timezones?: VTimezone[];
 };
 
-export type AlarmLinesToObject = LinesToObject<VAlarm, [ParseAlarmOptions]>;
+export type AlarmLinesToObject = LinesToObject<VAlarm, ParseAlarmOptions>;
 
-export type ParseAlarm = ParseLinesType<VAlarm, [ParseAlarmOptions]>;
+export type ParseAlarm = ParseLinesType<VAlarm, ParseAlarmOptions>;

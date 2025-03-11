@@ -5,19 +5,16 @@ import {
   type RRuleObjectKey,
 } from "@/constants/keys/recurrenceRule";
 import {
-  Line,
   type RecurrenceRule,
   recurrenceRuleFrequencies,
   type RecurrenceRuleFrequency,
   RecurrenceRuleLineToObject,
-  type VTimezone,
 } from "@/types";
 
 import { icsTimeStampToObject } from "./timeStamp";
 import { getOptions } from "./utils/options";
 import { icsWeekdayNumberToObject } from "./weekdayNumber";
 import { icsWeekDayStringToWeekDay } from "./weekDay";
-import { StandardSchemaV1 } from "@standard-schema/spec";
 import { standardValidate } from "./utils/standardValidate";
 
 const recurrenceTimestampKeys = ["until"] satisfies RRuleObjectKey[];
@@ -68,8 +65,8 @@ export const recurrenceObjectKeyIsNumber = (
   recurrenceNumberKeys.includes(objectKey as RecurrenceNumberKey);
 
 export const icsRecurrenceRuleToObject: RecurrenceRuleLineToObject = (
-  line,
   schema,
+  line,
   recurrenceRuleOptions
 ) => {
   const rule: Partial<RecurrenceRule> = {};
@@ -85,11 +82,11 @@ export const icsRecurrenceRuleToObject: RecurrenceRuleLineToObject = (
 
     if (recurrenceObjectKeyIsTimeStamp(objectKey)) {
       rule[objectKey] = icsTimeStampToObject(
+        undefined,
         {
           value,
           options: { VALUE: value.includes("T") ? "DATE-TIME" : "DATE" },
         },
-        undefined,
         { timezones: recurrenceRuleOptions?.timezones }
       );
 
@@ -110,7 +107,7 @@ export const icsRecurrenceRuleToObject: RecurrenceRuleLineToObject = (
     if (recurrenceObjectKeyIsWeekdayNumberArray(objectKey)) {
       rule[objectKey] = value
         .split(COMMA)
-        .map((v) => icsWeekdayNumberToObject({ value: v }, undefined));
+        .map((v) => icsWeekdayNumberToObject(undefined, { value: v }));
       return;
     }
 
@@ -131,7 +128,7 @@ export const icsRecurrenceRuleToObject: RecurrenceRuleLineToObject = (
     }
 
     if (objectKey === "workweekStart") {
-      rule[objectKey] = icsWeekDayStringToWeekDay({ value }, undefined);
+      rule[objectKey] = icsWeekDayStringToWeekDay(undefined, { value });
       return;
     }
   });

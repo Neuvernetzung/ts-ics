@@ -6,7 +6,7 @@ it("Test Ics Attachment Parse", async () => {
 
   const { line } = getLine(attachment);
 
-  expect(() => icsAttachmentToObject(line, undefined)).not.toThrow();
+  expect(() => icsAttachmentToObject(undefined, line)).not.toThrow();
 });
 
 it("Test Ics Attachment Parse", async () => {
@@ -14,5 +14,5 @@ it("Test Ics Attachment Parse", async () => {
 
   const { line } = getLine(attachment);
 
-  expect(() => icsAttachmentToObject(line, undefined)).not.toThrow();
+  expect(() => icsAttachmentToObject(undefined, line)).not.toThrow();
 });

@@ -16,8 +16,8 @@ import { splitLines } from "./utils/splitLines";
 import { standardValidate } from "./utils/standardValidate";
 
 export const icsTimezoneToObject: TimezoneLinesToObject = (
-  rawTimezoneString,
-  schema
+  schema,
+  rawTimezoneString
 ) => {
   const timezoneString = rawTimezoneString.replace(replaceTimezoneRegex, "");
 
@@ -39,7 +39,7 @@ export const icsTimezoneToObject: TimezoneLinesToObject = (
     if (!objectKey) return; // unknown Object key
 
     if (objectKey === "lastModified") {
-      timezone[objectKey] = icsDateTimeToDateTime(line, undefined);
+      timezone[objectKey] = icsDateTimeToDateTime(undefined, line);
 
       return;
     }
@@ -54,7 +54,7 @@ export const icsTimezoneToObject: TimezoneLinesToObject = (
   if (timezoneStandardPropStrings.length > 0) {
     timezoneStandardPropStrings.forEach((timezonePropString) => {
       timezone.props.push(
-        icsTimezonePropToObject(timezonePropString, undefined, {
+        icsTimezonePropToObject(undefined, timezonePropString, {
           type: "STANDARD",
         })
       );
@@ -68,7 +68,7 @@ export const icsTimezoneToObject: TimezoneLinesToObject = (
   if (timezoneDaylightPropStrings.length > 0) {
     timezoneDaylightPropStrings.forEach((timezonePropString) => {
       timezone.props.push(
-        icsTimezonePropToObject(timezonePropString, undefined, {
+        icsTimezonePropToObject(undefined, timezonePropString, {
           type: "DAYLIGHT",
         })
       );

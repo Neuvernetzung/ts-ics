@@ -55,5 +55,5 @@ export const zVEvent: z.ZodType<VEvent> = z.intersection(
   zDurationOrEnd
 );
 
-export const parseIcsEvent: ParseEvent = (file, eventOptions) =>
-  icsEventToObject(file, zVEvent, eventOptions);
+export const parseIcsEvent: ParseEvent = (...props) =>
+  icsEventToObject(zVEvent, ...props);

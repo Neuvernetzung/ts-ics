@@ -13,8 +13,8 @@ import { splitLines } from "./utils/splitLines";
 import { standardValidate } from "./utils/standardValidate";
 
 export const icsAlarmToObject: AlarmLinesToObject = (
-  rawAlarmString,
   schema,
+  rawAlarmString,
   alarmOptions
 ): VAlarm => {
   const alarmString = rawAlarmString.replace(replaceAlarmRegex, "");
@@ -35,14 +35,14 @@ export const icsAlarmToObject: AlarmLinesToObject = (
     if (!objectKey) return; // unknown Object key
 
     if (objectKey === "trigger") {
-      alarm[objectKey] = icsTriggerToObject(line, undefined, {
+      alarm[objectKey] = icsTriggerToObject(undefined, line, {
         timezones: alarmOptions?.timezones,
       });
       return;
     }
 
     if (objectKey === "duration") {
-      alarm[objectKey] = icsDurationToObject(line, undefined);
+      alarm[objectKey] = icsDurationToObject(undefined, line);
       return;
     }
 
@@ -52,12 +52,12 @@ export const icsAlarmToObject: AlarmLinesToObject = (
     }
 
     if (objectKey === "attachment") {
-      attachments.push(icsAttachmentToObject(line, undefined));
+      attachments.push(icsAttachmentToObject(undefined, line));
       return;
     }
 
     if (objectKey === "attendee") {
-      attendees.push(icsAttendeeToObject(line, undefined));
+      attendees.push(icsAttendeeToObject(undefined, line));
       return;
     }
 
