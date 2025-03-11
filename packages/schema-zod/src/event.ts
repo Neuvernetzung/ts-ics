@@ -3,7 +3,7 @@ import {
   VEvent,
   VEventBase,
   DurationOrEnd,
-  ParseEventOptions,
+  ParseEvent,
 } from "ts-ics";
 import { z } from "zod";
 import { zDateObject } from "./date";
@@ -55,5 +55,5 @@ export const zVEvent: z.ZodType<VEvent> = z.intersection(
   zDurationOrEnd
 );
 
-export const parseIcsEvent = (file: string, eventOptions: ParseEventOptions) =>
+export const parseIcsEvent: ParseEvent = (file, eventOptions) =>
   icsEventToObject(file, zVEvent, eventOptions);

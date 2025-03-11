@@ -17,7 +17,7 @@ it("Test Ics Timestamp Generate - UTC", async () => {
 
   const { line } = getLine(dateTimeString);
 
-  const parsed = icsTimeStampToObject(line, undefined);
+  const parsed = icsTimeStampToObject(line, undefined, {});
 
   expect(parsed.date).toEqual(dateObject.date);
 });
@@ -70,7 +70,7 @@ it("Test Ics Timestamp Generate - IANA Timezone", async () => {
 
   const { line } = getLine(dateTimeString);
 
-  const parsed = icsTimeStampToObject(line, undefined);
+  const parsed = icsTimeStampToObject(line, undefined, {});
 
   expect(parsed.date).toEqual(dateObject.date);
 });

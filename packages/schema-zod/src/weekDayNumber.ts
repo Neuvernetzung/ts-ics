@@ -1,7 +1,9 @@
-import { icsWeekdayNumberToObject, WeekdayNumberObject } from "ts-ics";
+import {
+  icsWeekdayNumberToObject,
+  ParseWeekDayNumber,
+  WeekdayNumberObject,
+} from "ts-ics";
 import { zWeekdayNumberObject } from "./weekDay";
 
-export const parseIcsWeekdayNumber = (
-  weekdayNumberString: string
-): WeekdayNumberObject =>
-  icsWeekdayNumberToObject(weekdayNumberString, zWeekdayNumberObject);
+export const parseIcsWeekdayNumber: ParseWeekDayNumber = (line) =>
+  icsWeekdayNumberToObject(line, zWeekdayNumberObject);

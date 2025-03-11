@@ -1,6 +1,6 @@
 import { replaceAlarmRegex } from "@/constants";
 import { VALARM_TO_OBJECT_KEYS, type VAlarmKey } from "@/constants/keys/alarm";
-import { type VAlarm, type VTimezone } from "@/types";
+import { AlarmLinesToObject, type VAlarm, type VTimezone } from "@/types";
 import type { Attachment } from "@/types/attachment";
 import type { Attendee } from "@/types/attendee";
 
@@ -10,17 +10,12 @@ import { icsDurationToObject } from "./duration";
 import { icsTriggerToObject } from "./trigger";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
-import { StandardSchemaV1 } from "@standard-schema/spec";
 import { standardValidate } from "./utils/standardValidate";
 
-export type ParseAlarmOptions = {
-  timezones?: VTimezone[];
-};
-
-export const icsAlarmToObject = (
-  rawAlarmString: string,
-  schema: StandardSchemaV1<VAlarm> | undefined,
-  alarmOptions?: ParseAlarmOptions
+export const icsAlarmToObject: AlarmLinesToObject = (
+  rawAlarmString,
+  schema,
+  alarmOptions
 ): VAlarm => {
   const alarmString = rawAlarmString.replace(replaceAlarmRegex, "");
 

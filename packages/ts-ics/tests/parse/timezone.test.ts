@@ -176,5 +176,5 @@ it("Test Ics custom not provided Timezone", async () => {
     "TRANSP:TRANSPARENT",
     "END:VEVENT",
   ]);
-  expect(() => icsEventToObject(event, undefined)).not.toThrow();
+  expect(() => icsEventToObject(event, undefined, {})).not.toThrow();
 });

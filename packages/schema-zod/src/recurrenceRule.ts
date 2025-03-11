@@ -1,7 +1,6 @@
 import {
   icsRecurrenceRuleToObject,
-  Line,
-  ParseRecurrenceRuleOptions,
+  ParseRecurrenceRule,
   RecurrenceRule,
   recurrenceRuleFrequencies,
 } from "ts-ics";
@@ -26,7 +25,7 @@ export const zRecurrenceRule: z.ZodType<RecurrenceRule> = z.object({
   workweekStart: zWeekDay.optional(),
 });
 
-export const parseIcsRecurrenceRule = (
-  line: Line,
-  recurrenceRuleOptions: ParseRecurrenceRuleOptions
+export const parseIcsRecurrenceRule: ParseRecurrenceRule = (
+  line,
+  recurrenceRuleOptions
 ) => icsRecurrenceRuleToObject(line, zRecurrenceRule, recurrenceRuleOptions);

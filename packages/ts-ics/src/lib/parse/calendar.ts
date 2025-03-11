@@ -4,19 +4,22 @@ import {
   replaceCalendarRegex,
 } from "@/constants";
 import { VCALENDAR_TO_OBJECT_KEYS, type VCalendarKey } from "@/constants/keys";
-import { type VCalendar } from "@/types";
+import {
+  CalendarLinesToObject,
+  VCalendarVersion,
+  type VCalendar,
+} from "@/types";
 
 import { icsEventToObject } from "./event";
 import { icsTimezoneToObject } from "./timezone";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 import { standardValidate } from "./utils/standardValidate";
-import type { StandardSchemaV1 } from "@standard-schema/spec";
 
-export const icsCalendarToObject = (
-  calendarString: string,
-  schema: StandardSchemaV1<VCalendar> | undefined
-): VCalendar => {
+export const icsCalendarToObject: CalendarLinesToObject = (
+  calendarString,
+  schema
+) => {
   const cleanedFileString = calendarString.replace(replaceCalendarRegex, "");
 
   const lineStrings = splitLines(
@@ -33,7 +36,7 @@ export const icsCalendarToObject = (
     if (!objectKey) return; // unknown Object key
 
     if (objectKey === "version") {
-      calendar[objectKey] = "2.0";
+      calendar[objectKey] = line.value as VCalendarVersion;
       return;
     }
 

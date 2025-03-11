@@ -1,4 +1,6 @@
 import { type DateObject } from "./date";
+import { LineToObject, ParseLineType } from "./parse";
+import { VTimezone } from "./timezone";
 import { type WeekDay, type WeekdayNumberObject } from "./weekday";
 
 export const recurrenceRuleFrequencies = [
@@ -30,3 +32,17 @@ export type RecurrenceRule = {
   bySetPos?: number[];
   workweekStart?: WeekDay;
 };
+
+export type ParseRecurrenceRuleOptions = {
+  timezones?: VTimezone[];
+};
+
+export type RecurrenceRuleLineToObject = LineToObject<
+  RecurrenceRule,
+  [ParseRecurrenceRuleOptions]
+>;
+
+export type ParseRecurrenceRule = ParseLineType<
+  RecurrenceRule,
+  [ParseRecurrenceRuleOptions]
+>;

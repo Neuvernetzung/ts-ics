@@ -1,22 +1,18 @@
 import {
-  Line,
+  TriggerLineToObject,
   type TriggerRelation,
   type VEventTrigger,
-  type VTimezone,
 } from "@/types";
 
 import { icsDurationToObject } from "./duration";
 import { icsTimeStampToObject } from "./timeStamp";
-import { StandardSchemaV1 } from "@standard-schema/spec";
 import { standardValidate } from "./utils/standardValidate";
 
-export type ParseTriggerOptions = { timezones?: VTimezone[] };
-
-export const icsTriggerToObject = (
-  line: Line,
-  schema: StandardSchemaV1<VEventTrigger> | undefined,
-  options?: ParseTriggerOptions
-): VEventTrigger => {
+export const icsTriggerToObject: TriggerLineToObject = (
+  line,
+  schema,
+  options
+) => {
   const trigger: VEventTrigger =
     line.options?.VALUE === "DATE-TIME" || line.options?.VALUE === "DATE"
       ? {

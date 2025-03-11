@@ -5,7 +5,7 @@ import { icsTestData } from "../utils";
 it("Test Ics Event Parse - Exception Date-Times, comma separated", async () => {
   const value = "20070402T010000Z,20070403T010000Z,20070404T010000Z";
 
-  const parsed = icsExceptionDateToObject({ value }, undefined);
+  const parsed = icsExceptionDateToObject({ value }, undefined, {});
 
   expect(parsed?.length).toBe(3);
 });
@@ -24,7 +24,7 @@ it("Test Ics Event Parse - multiple Exception Date-Times", async () => {
     "TRANSP:TRANSPARENT",
     "END:VEVENT",
   ]);
-  const parsed = icsEventToObject(event, undefined);
+  const parsed = icsEventToObject(event, undefined, {});
 
   expect(parsed.exceptionDates?.length).toBe(3);
 });

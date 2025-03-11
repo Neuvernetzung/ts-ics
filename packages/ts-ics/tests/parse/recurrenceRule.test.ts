@@ -8,7 +8,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -16,7 +16,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -24,7 +24,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -32,7 +32,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -40,7 +40,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -48,7 +48,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -56,7 +56,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -64,7 +64,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -72,7 +72,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -80,7 +80,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -89,7 +89,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -97,7 +97,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -105,7 +105,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -113,7 +113,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -122,7 +122,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -130,7 +130,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -138,7 +138,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule Parse", async () => {
@@ -146,7 +146,7 @@ it("Test Ics Recurrence Rule Parse", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Recurrence Rule - Until is a date", async () => {
@@ -154,5 +154,5 @@ it("Test Ics Recurrence Rule - Until is a date", async () => {
 
   const { line } = getLine(rRule);
 
-  expect(() => icsRecurrenceRuleToObject(line, undefined)).not.toThrow();
+  expect(() => icsRecurrenceRuleToObject(line, undefined, {})).not.toThrow();
 });

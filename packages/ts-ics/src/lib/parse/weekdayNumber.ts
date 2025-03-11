@@ -1,5 +1,4 @@
-import { type WeekDay, type WeekdayNumberObject } from "@/types/weekday";
-import { StandardSchemaV1 } from "@standard-schema/spec";
+import { WeekDayNumberLineToObject, type WeekDay } from "@/types/weekday";
 import { standardValidate } from "./utils/standardValidate";
 import { Line } from "@/types";
 
@@ -14,8 +13,7 @@ const __icsWeekdayNumberToObject = (value: Line["value"]) => {
   return { day: day as WeekDay, occurence: Number(occurence) };
 };
 
-export const icsWeekdayNumberToObject = (
-  value: Line["value"],
-  schema: StandardSchemaV1<WeekdayNumberObject> | undefined
-): WeekdayNumberObject =>
-  standardValidate(schema, __icsWeekdayNumberToObject(value));
+export const icsWeekdayNumberToObject: WeekDayNumberLineToObject = (
+  line,
+  schema
+) => standardValidate(schema, __icsWeekdayNumberToObject(line.value));

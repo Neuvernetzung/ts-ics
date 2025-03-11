@@ -3,6 +3,7 @@ import {
   attendeePartStatusTypes,
   icsAttendeeToObject,
   Line,
+  ParseAttendee,
 } from "ts-ics";
 import { z } from "zod";
 
@@ -17,5 +18,5 @@ export const zAttendee: z.ZodType<Attendee> = z.object({
   sentBy: z.string().email().optional(),
 });
 
-export const parseIcsAttendee = (line: Line): Attendee =>
+export const parseIcsAttendee: ParseAttendee = (line) =>
   icsAttendeeToObject(line, zAttendee);

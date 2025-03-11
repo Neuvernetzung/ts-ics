@@ -1,8 +1,5 @@
-import { Line, weekDays, type WeekDay } from "@/types";
-import { StandardSchemaV1 } from "@standard-schema/spec";
+import { WeekDayLineToWeekDay, type WeekDay } from "@/types";
 import { standardValidate } from "./utils/standardValidate";
 
-export const icsWeekDayStringToWeekDay = (
-  line: Line,
-  schema: StandardSchemaV1<WeekDay> | undefined
-): WeekDay => standardValidate(schema, line.value as WeekDay);
+export const icsWeekDayStringToWeekDay: WeekDayLineToWeekDay = (line, schema) =>
+  standardValidate(schema, line.value as WeekDay);

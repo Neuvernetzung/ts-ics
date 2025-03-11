@@ -7,7 +7,7 @@ it("Test Ics Trigger Parse", async () => {
 
   const { line } = getLine(trigger);
 
-  expect(() => icsTriggerToObject(line, undefined)).not.toThrow();
+  expect(() => icsTriggerToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Trigger Parse", async () => {
@@ -15,7 +15,7 @@ it("Test Ics Trigger Parse", async () => {
 
   const { line } = getLine(trigger);
 
-  expect(() => icsTriggerToObject(line, undefined)).not.toThrow();
+  expect(() => icsTriggerToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Trigger Parse", async () => {
@@ -23,5 +23,5 @@ it("Test Ics Trigger Parse", async () => {
 
   const { line } = getLine(trigger);
 
-  expect(() => icsTriggerToObject(line, undefined)).not.toThrow();
+  expect(() => icsTriggerToObject(line, undefined, {})).not.toThrow();
 });

@@ -1,4 +1,4 @@
-import { icsOrganizerToObject, Line, Organizer } from "ts-ics";
+import { icsOrganizerToObject, Line, Organizer, ParseOrganizer } from "ts-ics";
 import { z } from "zod";
 
 export const zOrganizer: z.ZodType<Organizer> = z.object({
@@ -8,5 +8,5 @@ export const zOrganizer: z.ZodType<Organizer> = z.object({
   sentBy: z.string().email().optional(),
 });
 
-export const parseIcsOrganizer = (line: Line): Organizer =>
+export const parseIcsOrganizer: ParseOrganizer = (line) =>
   icsOrganizerToObject(line, zOrganizer);

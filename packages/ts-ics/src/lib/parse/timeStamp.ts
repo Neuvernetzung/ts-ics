@@ -1,14 +1,15 @@
 import { addMilliseconds } from "date-fns";
 
-import type { Line, VTimezone } from "@/types";
-import { type DateObject, type DateObjectType } from "@/types/date";
+import type {
+  Line,
+  ParseTimeStampOptions,
+  TimeStampLineToObject,
+} from "@/types";
+import { type DateObjectType } from "@/types/date";
 
 import { icsDateTimeToDateTime, icsDateToDate } from "./date";
 import { getTimezoneObjectOffset } from "@/utils/timezone/getTimezone";
-import { StandardSchemaV1 } from "@standard-schema/spec";
 import { standardValidate } from "./utils/standardValidate";
-
-export type ParseTimeStampOptions = { timezones?: VTimezone[] };
 
 const __icsTimeStampToObject = (
   line: Line,
@@ -56,10 +57,10 @@ const __icsTimeStampToObject = (
   };
 };
 
-export const icsTimeStampToObject = (
-  line: Line,
-  schema: StandardSchemaV1<DateObject> | undefined,
-  options?: ParseTimeStampOptions
-): DateObject => {
+export const icsTimeStampToObject: TimeStampLineToObject = (
+  line,
+  schema,
+  options
+) => {
   return standardValidate(schema, __icsTimeStampToObject(line, options));
 };

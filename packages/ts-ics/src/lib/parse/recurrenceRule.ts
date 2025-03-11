@@ -9,6 +9,7 @@ import {
   type RecurrenceRule,
   recurrenceRuleFrequencies,
   type RecurrenceRuleFrequency,
+  RecurrenceRuleLineToObject,
   type VTimezone,
 } from "@/types";
 
@@ -66,15 +67,11 @@ export const recurrenceObjectKeyIsNumber = (
 ): objectKey is RecurrenceNumberKey =>
   recurrenceNumberKeys.includes(objectKey as RecurrenceNumberKey);
 
-export type ParseRecurrenceRuleOptions = {
-  timezones?: VTimezone[];
-};
-
-export const icsRecurrenceRuleToObject = (
-  line: Line,
-  schema: StandardSchemaV1<RecurrenceRule> | undefined,
-  recurrenceRuleOptions?: ParseRecurrenceRuleOptions
-): RecurrenceRule => {
+export const icsRecurrenceRuleToObject: RecurrenceRuleLineToObject = (
+  line,
+  schema,
+  recurrenceRuleOptions
+) => {
   const rule: Partial<RecurrenceRule> = {};
 
   const options = getOptions<RRuleKey>(line.value.split(SEMICOLON));
@@ -113,7 +110,7 @@ export const icsRecurrenceRuleToObject = (
     if (recurrenceObjectKeyIsWeekdayNumberArray(objectKey)) {
       rule[objectKey] = value
         .split(COMMA)
-        .map((v) => icsWeekdayNumberToObject(v, undefined));
+        .map((v) => icsWeekdayNumberToObject({ value: v }, undefined));
       return;
     }
 

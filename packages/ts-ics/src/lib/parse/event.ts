@@ -1,6 +1,6 @@
 import { COMMA, getAlarmRegex, replaceEventRegex } from "@/constants";
 import { VEVENT_TO_OBJECT_KEYS, type VEventKey } from "@/constants/keys/event";
-import { type VEvent, type VTimezone, type DateObject } from "@/types";
+import { type VEvent, type DateObject, EventLinesToObject } from "@/types";
 import type { Attendee } from "@/types/attendee";
 
 import {
@@ -22,16 +22,13 @@ import { icsRecurrenceIdToObject } from "./recurrenceId";
 import { icsClassStringToClass } from "./class";
 import { icsStatusStringToStatus } from "./status";
 import { icsTimeTransparentStringToTimeTransparent } from "./timeTransparent";
-import { StandardSchemaV1 } from "@standard-schema/spec";
 import { standardValidate } from "./utils/standardValidate";
 
-export type ParseEventOptions = { timezones?: VTimezone[] };
-
-export const icsEventToObject = (
-  rawEventString: string,
-  schema: StandardSchemaV1<VEvent> | undefined,
-  eventOptions?: ParseEventOptions
-): VEvent => {
+export const icsEventToObject: EventLinesToObject = (
+  rawEventString,
+  schema,
+  eventOptions
+) => {
   const eventString = rawEventString.replace(replaceEventRegex, "");
 
   const lineStrings = splitLines(eventString.replace(getAlarmRegex, ""));
@@ -94,7 +91,11 @@ export const icsEventToObject = (
     }
 
     if (objectKey === "exceptionDates") {
-      exceptionDates.push(...icsExceptionDateToObject(line, undefined));
+      exceptionDates.push(
+        ...icsExceptionDateToObject(line, undefined, {
+          timezones: eventOptions.timezones,
+        })
+      );
       return;
     }
 
@@ -106,7 +107,9 @@ export const icsEventToObject = (
     }
 
     if (objectKey === "recurrenceId") {
-      event[objectKey] = icsRecurrenceIdToObject(line, undefined);
+      event[objectKey] = icsRecurrenceIdToObject(line, undefined, {
+        timezones: eventOptions?.timezones,
+      });
       return;
     }
 

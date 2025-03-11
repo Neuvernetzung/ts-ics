@@ -1,12 +1,7 @@
-import { type Attachment } from "@/types/attachment";
-import { StandardSchemaV1 } from "@standard-schema/spec";
+import { AttachmentLineToObject, type Attachment } from "@/types/attachment";
 import { standardValidate } from "./utils/standardValidate";
-import { Line } from "@/types";
 
-export const icsAttachmentToObject = (
-  line: Line,
-  schema: StandardSchemaV1<Attachment> | undefined
-): Attachment => {
+export const icsAttachmentToObject: AttachmentLineToObject = (line, schema) => {
   const attachment: Attachment =
     line.options?.VALUE === "BINARY"
       ? {

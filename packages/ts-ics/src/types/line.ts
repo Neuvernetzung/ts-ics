@@ -1,1 +1,1 @@
-export type Line = { options?: Record<string, string>; value: string };
+export type Line = { value: string; options?: Record<string, string> };

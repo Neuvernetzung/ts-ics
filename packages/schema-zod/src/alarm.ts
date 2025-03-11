@@ -1,4 +1,9 @@
-import { icsAlarmToObject, ParseAlarmOptions, VAlarm } from "ts-ics";
+import {
+  icsAlarmToObject,
+  ParseAlarm,
+  ParseAlarmOptions,
+  VAlarm,
+} from "ts-ics";
 import { z } from "zod";
 import { zVEventTrigger } from "./trigger";
 import { zAttendee } from "./attendee";
@@ -16,7 +21,5 @@ export const zVAlarm: z.ZodType<VAlarm> = z.object({
   attachments: z.array(zAttachment).optional(),
 });
 
-export const parseIcsAlarm = (
-  rawAlarmString: string,
-  alarmOptions?: ParseAlarmOptions
-) => icsAlarmToObject(rawAlarmString, zVAlarm, alarmOptions);
+export const parseIcsAlarm: ParseAlarm = (rawAlarmString, alarmOptions) =>
+  icsAlarmToObject(rawAlarmString, zVAlarm, alarmOptions);

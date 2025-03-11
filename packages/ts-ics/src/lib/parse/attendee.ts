@@ -1,14 +1,12 @@
-import { type Attendee, type AttendeePartStatusType } from "@/types/attendee";
+import {
+  AttendeeLineToObject,
+  type AttendeePartStatusType,
+} from "@/types/attendee";
 
 import { replaceMailTo } from "./utils/replaceMailTo";
-import { StandardSchemaV1 } from "@standard-schema/spec";
 import { standardValidate } from "./utils/standardValidate";
-import { Line } from "@/types";
 
-export const icsAttendeeToObject = (
-  line: Line,
-  schema: StandardSchemaV1<Attendee> | undefined
-): Attendee =>
+export const icsAttendeeToObject: AttendeeLineToObject = (line, schema) =>
   standardValidate(schema, {
     email: replaceMailTo(line.value),
     delegatedFrom: line.options?.["DELEGATED-FROM"]

@@ -6,23 +6,23 @@ import {
   VTIMEZONE_PROP_TO_OBJECT_KEYS,
   type VTimezonePropKey,
 } from "@/constants/keys/timezoneProp";
-import { type VTimezoneProp, type VTimezonePropType } from "@/types/timezone";
+import {
+  TimezonePropLinesToObject,
+  type VTimezoneProp,
+} from "@/types/timezone";
 
 import { icsDateTimeToDateTime } from "./date";
 import { icsRecurrenceRuleToObject } from "./recurrenceRule";
 import { icsTimeStampToObject } from "./timeStamp";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
-import { StandardSchemaV1 } from "@standard-schema/spec";
 import { standardValidate } from "./utils/standardValidate";
 
-export type ParseTimezonePropOptions = { type?: VTimezonePropType };
-
-export const icsTimezonePropToObject = (
-  rawTimezonePropString: string,
-  schema: StandardSchemaV1<VTimezoneProp> | undefined,
-  timezonePropOptions?: ParseTimezonePropOptions
-): VTimezoneProp => {
+export const icsTimezonePropToObject: TimezonePropLinesToObject = (
+  rawTimezonePropString,
+  schema,
+  timezonePropOptions
+) => {
   const timezonePropString = rawTimezonePropString
     .replace(replaceTimezoneStandardRegex, "")
     .replace(replaceTimezoneDaylightRegex, "");
@@ -47,13 +47,17 @@ export const icsTimezonePropToObject = (
     }
 
     if (objectKey === "recurrenceRule") {
-      timezoneProp[objectKey] = icsRecurrenceRuleToObject(line, undefined);
+      timezoneProp[objectKey] = icsRecurrenceRuleToObject(line, undefined, {
+        timezones: timezonePropOptions.timezones,
+      });
 
       return;
     }
 
     if (objectKey === "recurrenceDate") {
-      timezoneProp[objectKey] = icsTimeStampToObject(line, undefined);
+      timezoneProp[objectKey] = icsTimeStampToObject(line, undefined, {
+        timezones: timezonePropOptions.timezones,
+      });
 
       return;
     }

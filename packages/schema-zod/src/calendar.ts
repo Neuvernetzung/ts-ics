@@ -3,7 +3,8 @@ import {
   calendarMethods,
   calendarVersions,
   icsCalendarToObject,
-  VCalendar,
+  type ParseCalendar,
+  type VCalendar,
 } from "ts-ics";
 import { zVTimezone } from "./timezone";
 import { zVEvent } from "./event";
@@ -21,5 +22,5 @@ export const zVCalendar: z.ZodType<VCalendar> = z.object({
   name: z.string().optional(),
 });
 
-export const parseIcsCalendar = (calendarString: string): VCalendar =>
+export const parseIcsCalendar: ParseCalendar = (calendarString) =>
   icsCalendarToObject(calendarString, zVCalendar);

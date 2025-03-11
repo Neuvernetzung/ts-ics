@@ -17,7 +17,7 @@ it("Test Ics Timestamp Parse - Date", async () => {
 
   const { line } = getLine(timestamp);
 
-  const timeStamp = icsTimeStampToObject(line, undefined);
+  const timeStamp = icsTimeStampToObject(line, undefined, {});
 
   expect(timeStamp.date).toStrictEqual(
     new Date(Date.UTC(year, javascriptMonth, day))
@@ -29,7 +29,7 @@ it("Test Ics Timestamp Parse - Datetime", async () => {
 
   const { line } = getLine(timestamp);
 
-  expect(() => icsTimeStampToObject(line, undefined)).not.toThrow();
+  expect(() => icsTimeStampToObject(line, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Timestamp Parse - UTC", async () => {
@@ -37,7 +37,7 @@ it("Test Ics Timestamp Parse - UTC", async () => {
 
   const { line } = getLine(timestamp);
 
-  const parsed = icsTimeStampToObject(line, undefined);
+  const parsed = icsTimeStampToObject(line, undefined, {});
 
   expect(parsed.date.getUTCHours()).toEqual(9);
 
@@ -105,7 +105,7 @@ it("Test Ics Timestamp Parse - IANA Timezone", async () => {
 
   const { line } = getLine(timestamp);
 
-  const parsed = icsTimeStampToObject(line, undefined);
+  const parsed = icsTimeStampToObject(line, undefined, {});
 
   expect(parsed.date.getUTCHours()).toEqual(0);
 

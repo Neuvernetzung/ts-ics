@@ -11,7 +11,7 @@ it("Test Ics Alarm Parse", async () => {
     "ATTACH;FMTTYPE=audio/basic:ftp://example.com/pub/sounds/bell-01.aud",
     "END:VALARM",
   ]);
-  expect(() => icsAlarmToObject(alarm, undefined)).not.toThrow();
+  expect(() => icsAlarmToObject(alarm, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Alarm Parse", async () => {
@@ -25,7 +25,7 @@ it("Test Ics Alarm Parse", async () => {
     "  team at 8:30 AM EST.",
     "END:VALARM",
   ]);
-  expect(() => icsAlarmToObject(alarm, undefined)).not.toThrow();
+  expect(() => icsAlarmToObject(alarm, undefined, {})).not.toThrow();
 });
 
 it("Test Ics Alarm Parse", async () => {
@@ -41,5 +41,5 @@ it("Test Ics Alarm Parse", async () => {
     "ATTACH;FMTTYPE=application/msword:http://example.com/templates/agenda.doc",
     "END:VALARM",
   ]);
-  expect(() => icsAlarmToObject(alarm, undefined)).not.toThrow();
+  expect(() => icsAlarmToObject(alarm, undefined, {})).not.toThrow();
 });

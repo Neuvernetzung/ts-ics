@@ -8,7 +8,7 @@ it("Test Ics Weekday Number Parse", async () => {
   expect(() =>
     weekdayNumber
       .split(COMMA)
-      .forEach((w) => icsWeekdayNumberToObject(w, undefined))
+      .forEach((w) => icsWeekdayNumberToObject({ value: w }, undefined))
   ).not.toThrow();
 });
 
@@ -16,7 +16,7 @@ it("Test Ics Weekday Number Parse", async () => {
   const weekdayNumber = `1SU`;
 
   expect(() =>
-    icsWeekdayNumberToObject(weekdayNumber, undefined)
+    icsWeekdayNumberToObject({ value: weekdayNumber }, undefined)
   ).not.toThrow();
 });
 
@@ -24,6 +24,6 @@ it("Test Ics Weekday Number Parse", async () => {
   const weekdayNumber = `-1MO`;
 
   expect(() =>
-    icsWeekdayNumberToObject(weekdayNumber, undefined)
+    icsWeekdayNumberToObject({ value: weekdayNumber }, undefined)
   ).not.toThrow();
 });

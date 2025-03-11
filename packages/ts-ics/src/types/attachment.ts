@@ -1,3 +1,5 @@
+import { LineToObject, ParseLineType } from "./parse";
+
 export const encodingTypes = ["BASE64"] as const;
 
 export type EncodingTypes = typeof encodingTypes;
@@ -25,3 +27,7 @@ export type Attachment =
       value?: ValueType;
       binary: string;
     };
+
+export type AttachmentLineToObject = LineToObject<Attachment>;
+
+export type ParseAttachment = ParseLineType<Attachment>;

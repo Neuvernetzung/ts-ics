@@ -7,19 +7,18 @@ import {
   VTIMEZONE_TO_OBJECT_KEYS,
   type VTimezoneKey,
 } from "@/constants/keys/timezone";
-import { type VTimezone } from "@/types/timezone";
+import { TimezoneLinesToObject, type VTimezone } from "@/types/timezone";
 
 import { icsDateTimeToDateTime } from "./date";
 import { icsTimezonePropToObject } from "./timezoneProp";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
-import { StandardSchemaV1 } from "@standard-schema/spec";
 import { standardValidate } from "./utils/standardValidate";
 
-export const icsTimezoneToObject = (
-  rawTimezoneString: string,
-  schema: StandardSchemaV1<VTimezone> | undefined
-): VTimezone => {
+export const icsTimezoneToObject: TimezoneLinesToObject = (
+  rawTimezoneString,
+  schema
+) => {
   const timezoneString = rawTimezoneString.replace(replaceTimezoneRegex, "");
 
   const lineStrings = splitLines(

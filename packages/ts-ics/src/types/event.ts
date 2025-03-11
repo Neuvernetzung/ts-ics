@@ -9,6 +9,8 @@ import { type StatusType } from "./status";
 import { type ExceptionDates } from "./exceptionDate";
 import { type ClassType } from "./class";
 import { type TimeTransparentType } from "./timeTransparent";
+import { VTimezone } from "./timezone";
+import { LinesToObject, ParseLinesType } from "./parse";
 
 export type DurationOrEnd =
   | { duration: Duration; end?: never }
@@ -42,3 +44,9 @@ export type VEventBase = {
 };
 
 export type VEvent = VEventBase & DurationOrEnd;
+
+export type ParseEventOptions = { timezones?: VTimezone[] };
+
+export type EventLinesToObject = LinesToObject<VEvent, [ParseEventOptions]>;
+
+export type ParseEvent = ParseLinesType<VEvent, [ParseEventOptions]>;
