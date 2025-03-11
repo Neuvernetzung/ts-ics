@@ -4,7 +4,7 @@ import {
   replaceCalendarRegex,
 } from "@/constants";
 import { VCALENDAR_TO_OBJECT_KEYS, type VCalendarKey } from "@/constants/keys";
-import { type VCalendar, zVCalendar } from "@/types";
+import { type VCalendar } from "@/types";
 
 import { icsEventToObject } from "./event";
 import { icsTimezoneToObject } from "./timezone";
@@ -59,6 +59,3 @@ export const icsCalendarToObject = (calendarString: string): VCalendar => {
 
   return calendar as VCalendar;
 };
-
-export const parseIcsCalendar = (calendarString: string): VCalendar =>
-  zVCalendar.parse(icsCalendarToObject(calendarString));

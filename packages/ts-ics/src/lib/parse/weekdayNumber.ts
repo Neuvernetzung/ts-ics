@@ -1,8 +1,4 @@
-import {
-  type WeekDay,
-  type WeekdayNumberObject,
-  zWeekdayNumberObject,
-} from "@/types/weekday";
+import { type WeekDay, type WeekdayNumberObject } from "@/types/weekday";
 
 export const icsWeekdayNumberToObject = (
   weekdayNumberString: string
@@ -16,8 +12,3 @@ export const icsWeekdayNumberToObject = (
 
   return { day: day as WeekDay, occurence: Number(occurence) };
 };
-
-export const parseIcsWeekdayNumber = (
-  weekdayNumberString: string
-): WeekdayNumberObject =>
-  zWeekdayNumberObject.parse(icsWeekdayNumberToObject(weekdayNumberString));

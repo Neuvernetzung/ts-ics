@@ -1,5 +1,5 @@
 import { generateIcsEvent } from "@/lib";
-import { parseIcsEvent } from "@/lib/parse/event";
+import { icsEventToObject } from "@/lib/parse/event";
 import type { VEvent } from "@/types";
 import { readFile } from "node:fs/promises";
 import { icsTestData } from "../utils";
@@ -16,7 +16,7 @@ it("Test Ics Event Parse", async () => {
     "CATEGORIES:BUSINESS,HUMAN RESOURCES",
     "END:VEVENT",
   ]);
-  expect(() => parseIcsEvent(event)).not.toThrow();
+  expect(() => icsEventToObject(event)).not.toThrow();
 });
 
 it("Test Ics Event Parse", async () => {
@@ -32,7 +32,7 @@ it("Test Ics Event Parse", async () => {
     "TRANSP:TRANSPARENT",
     "END:VEVENT",
   ]);
-  expect(() => parseIcsEvent(event)).not.toThrow();
+  expect(() => icsEventToObject(event)).not.toThrow();
 });
 
 it("Test Ics Event Parse", async () => {
@@ -49,7 +49,7 @@ it("Test Ics Event Parse", async () => {
     "RRULE:FREQ=YEARLY",
     "END:VEVENT",
   ]);
-  expect(() => parseIcsEvent(event)).not.toThrow();
+  expect(() => icsEventToObject(event)).not.toThrow();
 });
 
 it("Test Ics Event Parse", async () => {
@@ -64,7 +64,7 @@ it("Test Ics Event Parse", async () => {
     "END:VEVENT",
   ]);
 
-  expect(() => parseIcsEvent(event)).not.toThrow();
+  expect(() => icsEventToObject(event)).not.toThrow();
 });
 
 it("Test ICS Event With Long Description Parse", async () => {
@@ -74,7 +74,7 @@ it("Test ICS Event With Long Description Parse", async () => {
   );
   const event = buffer.toString();
 
-  expect(() => parseIcsEvent(event)).not.toThrow();
+  expect(() => icsEventToObject(event)).not.toThrow();
 });
 
 it("Expect 'formatLines' to handle multiple line breaks correctly", async () => {
@@ -90,9 +90,9 @@ it("Expect 'formatLines' to handle multiple line breaks correctly", async () => 
 
   const generatedEvent = generateIcsEvent(event);
 
-  expect(() => parseIcsEvent(generatedEvent)).not.toThrow();
+  expect(() => icsEventToObject(generatedEvent)).not.toThrow();
 
-  const parsed = parseIcsEvent(generatedEvent);
+  const parsed = icsEventToObject(generatedEvent);
 
   expect(parsed.description).toEqual(event.description);
 });

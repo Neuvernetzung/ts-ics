@@ -1,4 +1,4 @@
-import { type Attendee, type AttendeePartStatusType, zAttendee } from "@/types/attendee";
+import { type Attendee, type AttendeePartStatusType } from "@/types/attendee";
 
 import { replaceMailTo } from "./utils/replaceMailTo";
 
@@ -17,8 +17,3 @@ export const icsAttendeeToObject = (
   role: options?.ROLE,
   sentBy: options?.["SENT-BY"] ? replaceMailTo(options["SENT-BY"]) : undefined,
 });
-
-export const parseIcsAttendee = (
-  attendeeString: string,
-  options?: Record<string, string>
-): Attendee => zAttendee.parse(icsAttendeeToObject(attendeeString, options));

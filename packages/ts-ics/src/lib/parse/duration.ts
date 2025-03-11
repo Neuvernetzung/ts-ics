@@ -1,4 +1,4 @@
-import { type VEventDuration, zVEventDuration } from "@/types";
+import { type VEventDuration } from "@/types";
 
 export const icsDurationToObject = (durationString: string): VEventDuration => {
   let newString = durationString;
@@ -56,6 +56,3 @@ export const icsDurationToObject = (durationString: string): VEventDuration => {
 
   return duration as VEventDuration;
 };
-
-export const parseIcsDuration = (durationString: string): VEventDuration =>
-  zVEventDuration.parse(icsDurationToObject(durationString));

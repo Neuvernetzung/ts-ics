@@ -1,4 +1,4 @@
-import { type Organizer, zOrganizer } from "@/types/organizer";
+import { type Organizer } from "@/types/organizer";
 
 import { replaceMailTo } from "./utils/replaceMailTo";
 
@@ -11,9 +11,3 @@ export const icsOrganizerToObject = (
   sentBy: options?.["SENT-BY"] ? replaceMailTo(options["SENT-BY"]) : undefined,
   email: replaceMailTo(organizerString),
 });
-
-export const parseIcsOrganizer = (
-  organizerString: string,
-  options?: Record<string, string>
-): Organizer =>
-  zOrganizer.parse(icsOrganizerToObject(organizerString, options));

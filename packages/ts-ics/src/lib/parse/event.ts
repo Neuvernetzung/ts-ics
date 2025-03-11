@@ -1,13 +1,6 @@
 import { COMMA, getAlarmRegex, replaceEventRegex } from "@/constants";
 import { VEVENT_TO_OBJECT_KEYS, type VEventKey } from "@/constants/keys/event";
-import {
-  type VEvent,
-  type VTimezone,
-  zVEvent,
-  type DateObject,
-  classTypes,
-  type ClassType,
-} from "@/types";
+import { type VEvent, type VTimezone, type DateObject } from "@/types";
 import type { Attendee } from "@/types/attendee";
 
 import {
@@ -145,6 +138,3 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
 
   return event as VEvent;
 };
-
-export const parseIcsEvent: ParseIcsEvent = (file, timezones) =>
-  zVEvent.parse(icsEventToObject(file, timezones));

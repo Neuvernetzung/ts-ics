@@ -1,27 +1,21 @@
-import { z } from "zod";
+import { type VEvent } from "./event";
+import { type VTimezone } from "./timezone";
 
-import { type VEvent, zVEvent } from "./event";
-import { type VTimezone, zVTimezone } from "./timezone";
+export const calendarMethods = ["PUBLISH"] as const;
 
-export const zVCalendarMethods = ["PUBLISH"] as const;
-
-export type VCalendarMethods = typeof zVCalendarMethods;
+export type VCalendarMethods = typeof calendarMethods;
 export type VCalenderMethod = VCalendarMethods[number];
 
-export type VCalendar = {
-	version: "2.0";
-	prodId: string;
-	method?: VCalenderMethod | string;
-	timezones?: VTimezone[];
-	events?: VEvent[];
-	name?: string;
-};
+export const calendarVersions = ["2.0"] as const;
 
-export const zVCalendar: z.ZodType<VCalendar> = z.object({
-	version: z.literal("2.0"),
-	prodId: z.string(),
-	method: z.union([z.enum(zVCalendarMethods), z.string()]).optional(),
-	timezones: z.array(zVTimezone).optional(),
-	events: z.array(zVEvent).optional(),
-	name: z.string().optional(),
-});
+export type VCalendarVersions = typeof calendarVersions;
+export type VCalendarVersion = VCalendarVersions[number];
+
+export type VCalendar = {
+  version: VCalendarVersion;
+  prodId: string;
+  method?: VCalenderMethod | string;
+  timezones?: VTimezone[];
+  events?: VEvent[];
+  name?: string;
+};

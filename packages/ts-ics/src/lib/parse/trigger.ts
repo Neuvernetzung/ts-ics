@@ -1,7 +1,6 @@
 import {
   type TriggerRelation,
   type VEventTrigger,
-  zVEventTrigger,
   type VTimezone,
 } from "@/types";
 
@@ -33,6 +32,3 @@ export const icsTriggerToObject: ParseIcsTrigger = (
     options: { related: options?.RELATED as TriggerRelation },
   };
 };
-
-export const parseIcsTrigger: ParseIcsTrigger = (value, options, timezones) =>
-  zVEventTrigger.parse(icsTriggerToObject(value, options, timezones));

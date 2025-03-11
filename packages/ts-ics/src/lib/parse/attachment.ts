@@ -1,4 +1,4 @@
-import { type Attachment, zAttachment } from "@/types/attachment";
+import { type Attachment } from "@/types/attachment";
 
 export const icsAttachmentToObject = (
   attachmentString: string,
@@ -15,9 +15,3 @@ export const icsAttachmentToObject = (
 
   return { type: "uri", url: attachmentString, formatType: options?.FMTTYPE };
 };
-
-export const parseIcsAttachment = (
-  attachmentString: string,
-  options?: Record<string, string>
-): Attachment =>
-  zAttachment.parse(icsAttachmentToObject(attachmentString, options));

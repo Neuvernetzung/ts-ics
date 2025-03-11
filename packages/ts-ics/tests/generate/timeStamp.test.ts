@@ -1,8 +1,8 @@
 import { addMilliseconds, compareDesc } from "date-fns";
 
-import { generateIcsTimeStamp, parseicsTimeStamp } from "@/lib";
+import { generateIcsTimeStamp, icsTimeStampToObject } from "@/lib";
 import { getLine } from "@/lib/parse/utils/line";
-import { zDateObject } from "@/types";
+import { DateObject } from "@/types";
 
 import { fictiveTimezone } from "./fixtures/timezones";
 import { timeZoneOffsetToMilliseconds } from "@/utils";
@@ -11,13 +11,13 @@ import { getOffsetFromTimezoneId } from "@/utils/timezone/getOffsetFromTimezoneI
 it("Test Ics Timestamp Generate - UTC", async () => {
   const date = new Date(2023, 6, 12, 14, 30);
 
-  const dateObject = zDateObject.parse({ date, type: "DATE-TIME" });
+  const dateObject: DateObject = { date, type: "DATE-TIME" };
 
   const dateTimeString = generateIcsTimeStamp("DTSTART", dateObject);
 
   const { value, options } = getLine(dateTimeString);
 
-  const parsed = parseicsTimeStamp(value, options);
+  const parsed = icsTimeStampToObject(value, options);
 
   expect(parsed.date).toEqual(dateObject.date);
 });
@@ -29,7 +29,7 @@ it("Test Ics Timestamp Generate - VTimezone", async () => {
     compareDesc(a.start, b.start)
   )[0]?.offsetTo;
 
-  const dateObject = zDateObject.parse({
+  const dateObject: DateObject = {
     date,
     type: "DATE-TIME",
     local: {
@@ -37,13 +37,13 @@ it("Test Ics Timestamp Generate - VTimezone", async () => {
       timezone: fictiveTimezone.id,
       tzoffset: offset,
     },
-  });
+  };
 
   const dateTimeString = generateIcsTimeStamp("DTSTART", dateObject);
 
   const { value, options } = getLine(dateTimeString);
 
-  const parsed = parseicsTimeStamp(value, options, [fictiveTimezone]);
+  const parsed = icsTimeStampToObject(value, options, [fictiveTimezone]);
 
   expect(parsed.date).toEqual(dateObject.date);
 });
@@ -51,7 +51,7 @@ it("Test Ics Timestamp Generate - VTimezone", async () => {
 it("Test Ics Timestamp Generate - IANA Timezone", async () => {
   const date = new Date(2023, 6, 2, 14, 30);
 
-  const dateObject = zDateObject.parse({
+  const dateObject: DateObject = {
     date,
     type: "DATE-TIME",
     local: {
@@ -62,13 +62,13 @@ it("Test Ics Timestamp Generate - IANA Timezone", async () => {
       timezone: "America/New_York",
       tzoffset: "-0400",
     },
-  });
+  };
 
   const dateTimeString = generateIcsTimeStamp("DTSTART", dateObject);
 
   const { value, options } = getLine(dateTimeString);
 
-  const parsed = parseicsTimeStamp(value, options);
+  const parsed = icsTimeStampToObject(value, options);
 
   expect(parsed.date).toEqual(dateObject.date);
 });

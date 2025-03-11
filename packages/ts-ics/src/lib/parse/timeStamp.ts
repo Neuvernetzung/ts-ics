@@ -1,11 +1,7 @@
 import { addMilliseconds } from "date-fns";
 
 import type { VTimezone } from "@/types";
-import {
-  type DateObject,
-  type DateObjectType,
-  zDateObject,
-} from "@/types/date";
+import { type DateObject, type DateObjectType } from "@/types/date";
 
 import { icsDateTimeToDateTime, icsDateToDate } from "./date";
 import { getTimezoneObjectOffset } from "@/utils/timezone/getTimezone";
@@ -54,10 +50,3 @@ export const icsTimeStampToObject: ParseIcsTimeStamp = (
       : undefined,
   };
 };
-
-export const parseicsTimeStamp: ParseIcsTimeStamp = (
-  timestamp,
-  options,
-  timezones
-): DateObject =>
-  zDateObject.parse(icsTimeStampToObject(timestamp, options, timezones));

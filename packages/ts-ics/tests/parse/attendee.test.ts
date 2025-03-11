@@ -1,13 +1,13 @@
 import { getLine } from "@/lib/parse/utils/line";
 
-import { parseIcsAttendee } from "@/lib/parse/attendee";
+import { icsAttendeeToObject } from "@/lib/parse/attendee";
 
 it("Test Ics Attendee Parse", async () => {
   const attendee = `ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com":mailto:joecool@example.com`;
 
   const { value, options } = getLine(attendee);
 
-  expect(() => parseIcsAttendee(value, options)).not.toThrow();
+  expect(() => icsAttendeeToObject(value, options)).not.toThrow();
 });
 
 it("Test Ics Attendee Parse", async () => {
@@ -15,7 +15,7 @@ it("Test Ics Attendee Parse", async () => {
 
   const { value, options } = getLine(attendee);
 
-  const parsed = parseIcsAttendee(value, options);
+  const parsed = icsAttendeeToObject(value, options);
 
   expect(() => parsed).not.toThrow();
 

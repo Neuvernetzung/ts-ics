@@ -6,13 +6,9 @@ import {
 } from "@/constants/keys/recurrenceRule";
 import {
   type RecurrenceRule,
-  type RecurrenceRuleFrequencies,
   recurrenceRuleFrequencies,
   type RecurrenceRuleFrequency,
   type VTimezone,
-  type WeekDay,
-  weekDays,
-  zRecurrenceRule,
 } from "@/types";
 
 import { icsTimeStampToObject } from "./timeStamp";
@@ -139,8 +135,3 @@ export const icsRecurrenceRuleToObject: ParseIcsRecurrenceRule = (
 
   return rule as RecurrenceRule;
 };
-
-export const parseIcsRecurrenceRule: ParseIcsRecurrenceRule = (
-  ruleString,
-  timezones
-) => zRecurrenceRule.parse(icsRecurrenceRuleToObject(ruleString, timezones));

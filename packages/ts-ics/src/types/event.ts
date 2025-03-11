@@ -1,28 +1,18 @@
-import { z } from "zod";
-
-import { type VAlarm, zVAlarm } from "./alarm";
-import { type Attendee, zAttendee } from "./attendee";
-import { type DateObject, zDateObject } from "./date";
-import { type VEventDuration, zVEventDuration } from "./duration";
-import { type Organizer, zOrganizer } from "./organizer";
-import { type RecurrenceRule, zRecurrenceRule } from "./recurrence";
-import { type RecurrenceId, zRecurrenceId } from "./recurrenceId";
-import { zStatusType, type StatusType } from "./status";
-import { type ExceptionDates, zExceptionDates } from "./exceptionDate";
-import { zClassType, type ClassType } from "./class";
-import {
-  zTimeTransparentType,
-  type TimeTransparentType,
-} from "./timeTransparent";
+import { type VAlarm } from "./alarm";
+import { type Attendee } from "./attendee";
+import { type DateObject } from "./date";
+import { type VEventDuration } from "./duration";
+import { type Organizer } from "./organizer";
+import { type RecurrenceRule } from "./recurrenceRule";
+import { type RecurrenceId } from "./recurrenceId";
+import { type StatusType } from "./status";
+import { type ExceptionDates } from "./exceptionDate";
+import { type ClassType } from "./class";
+import { type TimeTransparentType } from "./timeTransparent";
 
 export type VEventDurationOrEnd =
   | { duration: VEventDuration; end?: never }
   | { duration?: never; end: DateObject };
-
-export const zVEventDurationOrEnd: z.ZodType<VEventDurationOrEnd> = z.union([
-  z.object({ duration: zVEventDuration, end: z.never().optional() }),
-  z.object({ duration: z.never().optional(), end: zDateObject }),
-]);
 
 export type VEventBase = {
   summary: string;
@@ -51,36 +41,4 @@ export type VEventBase = {
   comment?: string;
 };
 
-export const zVEventBase: z.ZodType<VEventBase> = z.object({
-  summary: z.string(),
-  uid: z.string(),
-  created: zDateObject.optional(),
-  lastModified: zDateObject.optional(),
-  stamp: zDateObject,
-  start: zDateObject,
-  location: z.string().optional(),
-  description: z.string().optional(),
-  categories: z.array(z.string()).optional(),
-  exceptionDates: zExceptionDates.optional(),
-  recurrenceRule: zRecurrenceRule.optional(),
-  alarms: z.array(zVAlarm).optional(),
-  timeTransparent: zTimeTransparentType.optional(),
-  url: z.string().url().optional(),
-  geo: z.string().optional(),
-  class: zClassType.optional(),
-  organizer: zOrganizer.optional(),
-  priority: z.string().optional(),
-  sequence: z.number().optional(),
-  status: zStatusType.optional(),
-  attach: z.string().optional(),
-  recurrenceId: zRecurrenceId.optional(),
-  attendees: z.array(zAttendee).optional(),
-  comment: z.string().optional(),
-});
-
 export type VEvent = VEventBase & VEventDurationOrEnd;
-
-export const zVEvent: z.ZodType<VEvent> = z.intersection(
-  zVEventBase,
-  zVEventDurationOrEnd
-);

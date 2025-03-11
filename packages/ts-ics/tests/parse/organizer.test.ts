@@ -1,13 +1,13 @@
 import { getLine } from "@/lib/parse/utils/line";
 
-import { parseIcsOrganizer } from "@/lib/parse/organizer";
+import { icsOrganizerToObject } from "@/lib/parse/organizer";
 
 it("Test Ics Organizer Parse", async () => {
   const organizer = `ORGANIZER;CN=John Smith:mailto:jsmith@example.com`;
 
   const { value, options } = getLine(organizer);
 
-  expect(() => parseIcsOrganizer(value, options)).not.toThrow();
+  expect(() => icsOrganizerToObject(value, options)).not.toThrow();
 });
 
 it("Test Ics Organizer Parse", async () => {
@@ -15,7 +15,7 @@ it("Test Ics Organizer Parse", async () => {
 
   const { value, options } = getLine(organizer);
 
-  expect(() => parseIcsOrganizer(value, options)).not.toThrow();
+  expect(() => icsOrganizerToObject(value, options)).not.toThrow();
 });
 
 it("Test Ics Organizer Parse", async () => {
@@ -23,5 +23,5 @@ it("Test Ics Organizer Parse", async () => {
 
   const { value, options } = getLine(organizer);
 
-  expect(() => parseIcsOrganizer(value, options)).not.toThrow();
+  expect(() => icsOrganizerToObject(value, options)).not.toThrow();
 });

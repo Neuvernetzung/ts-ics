@@ -1,4 +1,4 @@
-import { weekDays, zWeekDay, type WeekDay } from "@/types";
+import { weekDays, type WeekDay } from "@/types";
 
 export type ParseIcsWeekDay = (weekDayString: string) => WeekDay | undefined;
 
@@ -10,6 +10,3 @@ export const icsWeekDayStringToWeekDay: ParseIcsWeekDay = (weekDayString) => {
 
   return;
 };
-
-export const parseIcsWeekDay: ParseIcsWeekDay = (WeekDayString) =>
-  zWeekDay.parse(icsWeekDayStringToWeekDay(WeekDayString));

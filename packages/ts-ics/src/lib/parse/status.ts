@@ -1,4 +1,4 @@
-import { statusTypes, zStatusType, type StatusType } from "@/types";
+import { statusTypes, type StatusType } from "@/types";
 
 export type ParseIcsStatus = (StatusString: string) => StatusType | undefined;
 
@@ -10,6 +10,3 @@ export const icsStatusStringToStatus: ParseIcsStatus = (StatusString) => {
 
   return;
 };
-
-export const parseIcsStatus: ParseIcsStatus = (StatusString) =>
-  zStatusType.parse(icsStatusStringToStatus(StatusString));

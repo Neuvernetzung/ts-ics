@@ -1,8 +1,4 @@
-import {
-  timeTransparentTypes,
-  zTimeTransparentType,
-  type TimeTransparentType,
-} from "@/types";
+import { timeTransparentTypes, type TimeTransparentType } from "@/types";
 
 export type ParseIcsTimeTransparent = (
   TimeTransparentString: string
@@ -21,10 +17,3 @@ export const icsTimeTransparentStringToTimeTransparent: ParseIcsTimeTransparent 
 
     return;
   };
-
-export const parseIcsTimeTransparent: ParseIcsTimeTransparent = (
-  TimeTransparentString
-) =>
-  zTimeTransparentType.parse(
-    icsTimeTransparentStringToTimeTransparent(TimeTransparentString)
-  );

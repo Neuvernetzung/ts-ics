@@ -7,11 +7,7 @@ import {
   VTIMEZONE_TO_OBJECT_KEYS,
   type VTimezoneKey,
 } from "@/constants/keys/timezone";
-import {
-  type VTimezoneProp,
-  zVTimezone,
-  type VTimezone,
-} from "@/types/timezone";
+import { type VTimezone } from "@/types/timezone";
 
 import { icsDateTimeToDateTime } from "./date";
 import { icsTimezonePropToObject } from "./timezoneProp";
@@ -73,6 +69,3 @@ export const icsTimezoneToObject = (rawTimezoneString: string): VTimezone => {
 
   return timezone as VTimezone;
 };
-
-export const parseIcsTimezone = (timezoneString: string): VTimezone =>
-  zVTimezone.parse(icsTimezoneToObject(timezoneString));

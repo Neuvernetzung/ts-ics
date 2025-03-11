@@ -1,4 +1,4 @@
-import { classTypes, zClassType, type ClassType } from "@/types";
+import { classTypes, type ClassType } from "@/types";
 
 export type ParseIcsClass = (classString: string) => ClassType | undefined;
 
@@ -10,6 +10,3 @@ export const icsClassStringToClass: ParseIcsClass = (classString) => {
 
   return;
 };
-
-export const parseIcsClass: ParseIcsClass = (ClassString) =>
-  zClassType.parse(icsClassStringToClass(ClassString));

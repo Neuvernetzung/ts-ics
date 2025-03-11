@@ -1,5 +1,5 @@
-import { parseIcsEvent } from "@/lib";
-import { parseIcsTimezone } from "@/lib/parse/timezone";
+import { icsEventToObject } from "@/lib";
+import { icsTimezoneToObject } from "@/lib/parse/timezone";
 import { icsTestData } from "../utils";
 
 it("Test Ics Timezone Parse", async () => {
@@ -59,7 +59,7 @@ it("Test Ics Timezone Parse", async () => {
     "END:VTIMEZONE",
   ]);
 
-  expect(() => parseIcsTimezone(timezone)).not.toThrow();
+  expect(() => icsTimezoneToObject(timezone)).not.toThrow();
 });
 
 it("Test Ics Timezone Parse", async () => {
@@ -81,7 +81,7 @@ it("Test Ics Timezone Parse", async () => {
     "END:DAYLIGHT",
     "END:VTIMEZONE",
   ]);
-  expect(() => parseIcsTimezone(timezone)).not.toThrow();
+  expect(() => icsTimezoneToObject(timezone)).not.toThrow();
 });
 
 it("Test Ics Timezone Parse", async () => {
@@ -106,7 +106,7 @@ it("Test Ics Timezone Parse", async () => {
     "END:DAYLIGHT",
     "END:VTIMEZONE",
   ]);
-  expect(() => parseIcsTimezone(timezone)).not.toThrow();
+  expect(() => icsTimezoneToObject(timezone)).not.toThrow();
 });
 
 it("Test Ics Timezone Parse", async () => {
@@ -130,7 +130,7 @@ it("Test Ics Timezone Parse", async () => {
     "END:DAYLIGHT",
     "END:VTIMEZONE",
   ]);
-  expect(() => parseIcsTimezone(timezone)).not.toThrow();
+  expect(() => icsTimezoneToObject(timezone)).not.toThrow();
 });
 
 it("Test Ics Timezone Parse", async () => {
@@ -161,7 +161,7 @@ it("Test Ics Timezone Parse", async () => {
     "END:DAYLIGHT",
     "END:VTIMEZONE",
   ]);
-  expect(() => parseIcsTimezone(timezone)).not.toThrow();
+  expect(() => icsTimezoneToObject(timezone)).not.toThrow();
 });
 
 it("Test Ics custom not provided Timezone", async () => {
@@ -176,5 +176,5 @@ it("Test Ics custom not provided Timezone", async () => {
     "TRANSP:TRANSPARENT",
     "END:VEVENT",
   ]);
-  expect(() => parseIcsEvent(event)).not.toThrow();
+  expect(() => icsEventToObject(event)).not.toThrow();
 });

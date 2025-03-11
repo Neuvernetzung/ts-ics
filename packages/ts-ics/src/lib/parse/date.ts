@@ -1,5 +1,3 @@
-import { z } from "zod";
-
 import type { VTimezone } from "@/types";
 
 export const icsDateToDate = (date: string): Date => {
@@ -11,9 +9,6 @@ export const icsDateToDate = (date: string): Date => {
 
   return newDate;
 };
-
-export const parseIcsDate = (date: string) =>
-  z.date().parse(icsDateToDate(date));
 
 export type ParseIcsDateTime = (date: string, timezones?: VTimezone[]) => Date;
 
@@ -29,6 +24,3 @@ export const icsDateTimeToDateTime: ParseIcsDateTime = (date) => {
 
   return newDate;
 };
-
-export const parseIcsDateTime: ParseIcsDateTime = (date, timezones): Date =>
-  z.date().parse(icsDateTimeToDateTime(date, timezones));

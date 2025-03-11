@@ -1,13 +1,13 @@
 import { getLine } from "@/lib/parse/utils/line";
 
-import { parseIcsRecurrenceId } from "@/lib/parse/recurrenceId";
+import { icsRecurrenceIdToObject } from "@/lib/parse/recurrenceId";
 
 it("Test Ics Recurrence Id Parse", async () => {
   const rId = `RECURRENCE-ID;VALUE=DATE:19960401`;
 
   const { value, options } = getLine(rId);
 
-  expect(() => parseIcsRecurrenceId(value, options)).not.toThrow();
+  expect(() => icsRecurrenceIdToObject(value, options)).not.toThrow();
 });
 
 it("Test Ics Recurrence Id Parse", async () => {
@@ -15,5 +15,5 @@ it("Test Ics Recurrence Id Parse", async () => {
 
   const { value, options } = getLine(rId);
 
-  expect(() => parseIcsRecurrenceId(value, options)).not.toThrow();
+  expect(() => icsRecurrenceIdToObject(value, options)).not.toThrow();
 });

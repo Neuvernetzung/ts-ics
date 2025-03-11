@@ -1,5 +1,5 @@
 import { generateIcsExceptionDate } from "@/lib/generate/exceptionDate";
-import { parseIcsExceptionDate } from "@/lib/parse/exceptionDate";
+import { icsExceptionDateToObject } from "@/lib/parse/exceptionDate";
 import { getLine } from "@/lib/parse/utils/line";
 import { splitLines } from "@/lib/parse/utils/splitLines";
 import type { ExceptionDates } from "@/types/exceptionDate";
@@ -21,7 +21,7 @@ it("Test Ics Exception Date Generate", async () => {
   lines.forEach((line, i) => {
     const { options, value } = getLine(line);
 
-    const parsed = parseIcsExceptionDate(value, options);
+    const parsed = icsExceptionDateToObject(value, options);
 
     expect(parsed[0].date).toEqual(exceptions[i].date);
   });

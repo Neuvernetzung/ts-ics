@@ -1,6 +1,6 @@
 import { replaceAlarmRegex } from "@/constants";
 import { VALARM_TO_OBJECT_KEYS, type VAlarmKey } from "@/constants/keys/alarm";
-import { type VAlarm, type VTimezone, zVAlarm } from "@/types";
+import { type VAlarm, type VTimezone } from "@/types";
 import type { Attachment } from "@/types/attachment";
 import type { Attendee } from "@/types/attendee";
 
@@ -72,6 +72,3 @@ export const icsAlarmToObject: ParseIcsAlarm = (rawAlarmString, timezones) => {
 
   return alarm as VAlarm;
 };
-
-export const parseIcsAlarm: ParseIcsAlarm = (rawAlarmString, timezones) =>
-  zVAlarm.parse(icsAlarmToObject(rawAlarmString, timezones));

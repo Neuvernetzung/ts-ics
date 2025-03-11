@@ -6,11 +6,7 @@ import {
   VTIMEZONE_PROP_TO_OBJECT_KEYS,
   type VTimezonePropKey,
 } from "@/constants/keys/timezoneProp";
-import {
-  type VTimezoneProp,
-  type VTimezonePropType,
-  zVTimezoneProp,
-} from "@/types/timezone";
+import { type VTimezoneProp, type VTimezonePropType } from "@/types/timezone";
 
 import { icsDateTimeToDateTime } from "./date";
 import { icsRecurrenceRuleToObject } from "./recurrenceRule";
@@ -65,8 +61,3 @@ export const icsTimezonePropToObject: ParseIcsTimezoneProps = (
 
   return timezoneProp as VTimezoneProp;
 };
-
-export const parseIcsTimezoneProp: ParseIcsTimezoneProps = (
-  rawTimezonePropString,
-  type
-) => zVTimezoneProp.parse(icsTimezonePropToObject(rawTimezonePropString, type));

@@ -1,4 +1,4 @@
-import { parseIcsAlarm } from "@/lib/parse/alarm";
+import { icsAlarmToObject } from "@/lib/parse/alarm";
 import { icsTestData } from "../utils";
 
 it("Test Ics Alarm Parse", async () => {
@@ -11,7 +11,7 @@ it("Test Ics Alarm Parse", async () => {
     "ATTACH;FMTTYPE=audio/basic:ftp://example.com/pub/sounds/bell-01.aud",
     "END:VALARM",
   ]);
-  expect(() => parseIcsAlarm(alarm)).not.toThrow();
+  expect(() => icsAlarmToObject(alarm)).not.toThrow();
 });
 
 it("Test Ics Alarm Parse", async () => {
@@ -25,7 +25,7 @@ it("Test Ics Alarm Parse", async () => {
     "  team at 8:30 AM EST.",
     "END:VALARM",
   ]);
-  expect(() => parseIcsAlarm(alarm)).not.toThrow();
+  expect(() => icsAlarmToObject(alarm)).not.toThrow();
 });
 
 it("Test Ics Alarm Parse", async () => {
@@ -41,5 +41,5 @@ it("Test Ics Alarm Parse", async () => {
     "ATTACH;FMTTYPE=application/msword:http://example.com/templates/agenda.doc",
     "END:VALARM",
   ]);
-  expect(() => parseIcsAlarm(alarm)).not.toThrow();
+  expect(() => icsAlarmToObject(alarm)).not.toThrow();
 });

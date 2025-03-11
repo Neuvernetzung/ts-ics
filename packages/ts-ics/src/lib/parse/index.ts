@@ -15,3 +15,6 @@ export * from "./trigger";
 export * from "./weekdayNumber";
 export * from "./class";
 export * from "./timeTransparent";
+export * from "./exceptionDate";
+export * from "./weekDay";
+export * from "./status";

@@ -1,7 +1,5 @@
-import { z } from "zod";
-
-import { type DateObject, zDateObject } from "./date";
-import { type RecurrenceRule, zRecurrenceRule } from "./recurrence";
+import { type DateObject } from "./date";
+import { type RecurrenceRule } from "./recurrenceRule";
 
 export const timezonePropTypes = ["STANDARD", "DAYLIGHT"] as const;
 
@@ -19,27 +17,9 @@ export type VTimezoneProp = {
   name?: string;
 };
 
-export const zVTimezoneProp: z.ZodType<VTimezoneProp> = z.object({
-  type: z.enum(timezonePropTypes),
-  start: z.date(),
-  offsetTo: z.string(),
-  offsetFrom: z.string(),
-  recurrenceRule: zRecurrenceRule.optional(),
-  comment: z.string().optional(),
-  recurrenceDate: zDateObject.optional(),
-  name: z.string().optional(),
-});
-
 export type VTimezone = {
   id: string;
   lastModified?: Date;
   url?: string;
   props: VTimezoneProp[];
 };
-
-export const zVTimezone: z.ZodType<VTimezone> = z.object({
-  id: z.string(),
-  lastModified: z.date().optional(),
-  url: z.string().url().optional(),
-  props: z.array(zVTimezoneProp),
-});
