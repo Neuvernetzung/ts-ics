@@ -5,6 +5,7 @@ import {
   type WeekDay,
   type WeekdayNumberObject,
   weekDays,
+  zWeekDay,
   zWeekdayNumberObject,
 } from "./weekday";
 
@@ -52,5 +53,5 @@ export const zRecurrenceRule: z.ZodType<RecurrenceRule> = z.object({
   byWeekNo: z.array(z.number().min(1).max(53)).optional(),
   byMonth: z.array(z.number().min(0).max(11)).optional(),
   bySetPos: z.array(z.number().min(-366).max(366)).optional(),
-  workweekStart: z.enum(weekDays).optional(),
+  workweekStart: zWeekDay.optional(),
 });

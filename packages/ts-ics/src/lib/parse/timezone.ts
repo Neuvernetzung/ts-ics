@@ -1,5 +1,3 @@
-import set from "lodash/set";
-
 import {
   getTimezoneDaylightRegex,
   getTimezoneStandardRegex,
@@ -9,7 +7,11 @@ import {
   VTIMEZONE_TO_OBJECT_KEYS,
   type VTimezoneKey,
 } from "@/constants/keys/timezone";
-import { type VTimezoneProp, zVTimezone, type VTimezone } from "@/types/timezone";
+import {
+  type VTimezoneProp,
+  zVTimezone,
+  type VTimezone,
+} from "@/types/timezone";
 
 import { icsDateTimeToDateTime } from "./date";
 import { icsTimezonePropToObject } from "./timezoneProp";
@@ -25,7 +27,9 @@ export const icsTimezoneToObject = (rawTimezoneString: string): VTimezone => {
       .replace(getTimezoneDaylightRegex, "")
   );
 
-  const timezone = { props: [] as VTimezoneProp[] };
+  const timezone: Partial<VTimezone> & Required<Pick<VTimezone, "props">> = {
+    props: [],
+  };
 
   lines.forEach((line) => {
     const { property, value } = getLine<VTimezoneKey>(line);
@@ -35,11 +39,12 @@ export const icsTimezoneToObject = (rawTimezoneString: string): VTimezone => {
     if (!objectKey) return; // unknown Object key
 
     if (objectKey === "lastModified") {
-      set(timezone, objectKey, icsDateTimeToDateTime(value));
+      timezone[objectKey] = icsDateTimeToDateTime(value);
+
       return;
     }
 
-    set(timezone, objectKey, value); // Set string value
+    timezone[objectKey] = value; // Set string value
   });
 
   const timezoneStandardPropStrings = [

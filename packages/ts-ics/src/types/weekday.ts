@@ -5,13 +5,15 @@ export const weekDays = ["SU", "MO", "TU", "WE", "TH", "FR", "SA"] as const;
 export type WeekDays = typeof weekDays;
 export type WeekDay = WeekDays[number];
 
+export const zWeekDay = z.enum(weekDays);
+
 export type WeekdayNumberObject = {
   day: WeekDay;
   occurence?: number;
 };
 
 export const zWeekdayNumberObject: z.ZodType<WeekdayNumberObject> = z.object({
-  day: z.enum(weekDays),
+  day: zWeekDay,
   occurence: z.number().optional(),
 });
 

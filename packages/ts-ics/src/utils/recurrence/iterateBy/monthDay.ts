@@ -1,5 +1,4 @@
 import { getDaysInMonth, getMonth, setDate } from "date-fns";
-import compact from "lodash/compact";
 
 import type { RecurrenceRule } from "@/types";
 
@@ -10,16 +9,15 @@ export const iterateByMonthDay = (
 ): Date[][] => {
   if (rule.frequency === "YEARLY" || rule.frequency === "MONTHLY") {
     return dateGroups.map((dates) =>
-      dates
-        .flatMap((date) => {
-          const daysInMonth = getDaysInMonth(date);
+      dates.flatMap((date) => {
+        const daysInMonth = getDaysInMonth(date);
 
-          return compact(
-            byMonthday.map(
-              (day) => (day > daysInMonth ? undefined : setDate(date, day)) // Invalide Dates entfernen z.B. 30. FEB
-            )
-          );
-        })
+        return byMonthday
+          .map(
+            (day) => (day > daysInMonth ? undefined : setDate(date, day)) // Invalide Dates entfernen z.B. 30. FEB
+          )
+          .filter((v) => !!v);
+      })
     );
   }
 

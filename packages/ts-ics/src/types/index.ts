@@ -12,3 +12,5 @@ export * from "./status";
 export * from "./timezone";
 export * from "./trigger";
 export * from "./weekday";
+export * from "./class";
+export * from "./timeTransparent";

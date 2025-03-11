@@ -1,5 +1,3 @@
-import set from "lodash/set";
-
 import {
   getEventRegex,
   getTimezoneRegex,
@@ -29,7 +27,12 @@ export const icsCalendarToObject = (calendarString: string): VCalendar => {
 
     if (!objectKey) return; // unknown Object key
 
-    set(calendar, objectKey, value);
+    if (objectKey === "version") {
+      calendar[objectKey] = "2.0";
+      return;
+    }
+
+    calendar[objectKey] = value;
   });
 
   const timezoneStrings = [...cleanedFileString.matchAll(getTimezoneRegex)].map(
@@ -40,7 +43,7 @@ export const icsCalendarToObject = (calendarString: string): VCalendar => {
     const timezones = timezoneStrings.map((timezoneString) =>
       icsTimezoneToObject(timezoneString)
     );
-    set(calendar, "timezones", timezones);
+    calendar.timezones = timezones;
   }
 
   const eventStrings = [...cleanedFileString.matchAll(getEventRegex)].map(
@@ -51,7 +54,7 @@ export const icsCalendarToObject = (calendarString: string): VCalendar => {
     const events = eventStrings.map((eventString) =>
       icsEventToObject(eventString, calendar.timezones)
     );
-    set(calendar, "events", events);
+    calendar.events = events;
   }
 
   return calendar as VCalendar;
