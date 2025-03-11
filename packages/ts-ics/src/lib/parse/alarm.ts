@@ -19,12 +19,12 @@ export type ParseAlarmOptions = {
 
 export const icsAlarmToObject = (
   rawAlarmString: string,
-  schema?: StandardSchemaV1<VAlarm>,
+  schema: StandardSchemaV1<VAlarm> | undefined,
   alarmOptions?: ParseAlarmOptions
 ): VAlarm => {
   const alarmString = rawAlarmString.replace(replaceAlarmRegex, "");
 
-  const lines = splitLines(alarmString);
+  const lineStrings = splitLines(alarmString);
 
   const alarm: Partial<VAlarm> = {};
 
@@ -32,43 +32,41 @@ export const icsAlarmToObject = (
 
   const attendees: Attendee[] = [];
 
-  lines.forEach((line) => {
-    const { property, options, value } = getLine<VAlarmKey>(line);
+  lineStrings.forEach((lineString) => {
+    const { property, line } = getLine<VAlarmKey>(lineString);
 
     const objectKey = VALARM_TO_OBJECT_KEYS[property];
 
     if (!objectKey) return; // unknown Object key
 
     if (objectKey === "trigger") {
-      alarm[objectKey] = icsTriggerToObject(
-        value,
-        options,
-        alarmOptions?.timezones
-      );
+      alarm[objectKey] = icsTriggerToObject(line, undefined, {
+        timezones: alarmOptions?.timezones,
+      });
       return;
     }
 
     if (objectKey === "duration") {
-      alarm[objectKey] = icsDurationToObject(value);
+      alarm[objectKey] = icsDurationToObject(line, undefined);
       return;
     }
 
     if (objectKey === "repeat") {
-      alarm[objectKey] = Number(value);
+      alarm[objectKey] = Number(line.value);
       return;
     }
 
     if (objectKey === "attachment") {
-      attachments.push(icsAttachmentToObject(value, undefined, options));
+      attachments.push(icsAttachmentToObject(line, undefined));
       return;
     }
 
     if (objectKey === "attendee") {
-      attendees.push(icsAttendeeToObject(value, undefined, options));
+      attendees.push(icsAttendeeToObject(line, undefined));
       return;
     }
 
-    alarm[objectKey] = value; // Set string value
+    alarm[objectKey] = line.value; // Set string value
   });
 
   if (attachments.length > 0) {

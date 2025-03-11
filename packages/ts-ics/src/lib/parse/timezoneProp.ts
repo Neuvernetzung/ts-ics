@@ -20,45 +20,45 @@ export type ParseTimezonePropOptions = { type?: VTimezonePropType };
 
 export const icsTimezonePropToObject = (
   rawTimezonePropString: string,
-  schema?: StandardSchemaV1<VTimezoneProp>,
+  schema: StandardSchemaV1<VTimezoneProp> | undefined,
   timezonePropOptions?: ParseTimezonePropOptions
 ): VTimezoneProp => {
   const timezonePropString = rawTimezonePropString
     .replace(replaceTimezoneStandardRegex, "")
     .replace(replaceTimezoneDaylightRegex, "");
 
-  const lines = splitLines(timezonePropString);
+  const lineStrings = splitLines(timezonePropString);
 
   const timezoneProp: Partial<VTimezoneProp> = {
     type: timezonePropOptions?.type || "STANDARD",
   };
 
-  lines.forEach((line) => {
-    const { property, options, value } = getLine<VTimezonePropKey>(line);
+  lineStrings.forEach((lineString) => {
+    const { property, line } = getLine<VTimezonePropKey>(lineString);
 
     const objectKey = VTIMEZONE_PROP_TO_OBJECT_KEYS[property];
 
     if (!objectKey) return;
 
     if (objectKey === "start") {
-      timezoneProp[objectKey] = icsDateTimeToDateTime(value);
+      timezoneProp[objectKey] = icsDateTimeToDateTime(line, undefined);
 
       return;
     }
 
     if (objectKey === "recurrenceRule") {
-      timezoneProp[objectKey] = icsRecurrenceRuleToObject(value);
+      timezoneProp[objectKey] = icsRecurrenceRuleToObject(line, undefined);
 
       return;
     }
 
     if (objectKey === "recurrenceDate") {
-      timezoneProp[objectKey] = icsTimeStampToObject(value, options);
+      timezoneProp[objectKey] = icsTimeStampToObject(line, undefined);
 
       return;
     }
 
-    timezoneProp[objectKey] = value;
+    timezoneProp[objectKey] = line.value;
   });
 
   return standardValidate(schema, timezoneProp as VTimezoneProp);

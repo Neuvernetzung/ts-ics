@@ -4,6 +4,7 @@ import {
   ExceptionDate,
   ExceptionDates,
   icsExceptionDateToObject,
+  Line,
 } from "ts-ics";
 
 export const zExceptionDate: z.ZodType<ExceptionDate> = zDateObject;
@@ -11,8 +12,5 @@ export const zExceptionDate: z.ZodType<ExceptionDate> = zDateObject;
 export const zExceptionDates: z.ZodType<ExceptionDates> =
   z.array(zExceptionDate);
 
-export const parseIcsExceptionDate = (
-  exceptionDateString: string,
-  options?: Record<string, string>
-): ExceptionDates =>
-  zExceptionDates.parse(icsExceptionDateToObject(exceptionDateString, options));
+export const parseIcsExceptionDate = (line: Line): ExceptionDates =>
+  icsExceptionDateToObject(line, zExceptionDates);

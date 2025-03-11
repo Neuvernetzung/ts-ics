@@ -10,7 +10,7 @@ it("RecurrenceRule UNTIL is generated correctly - DATE-TIME", async () => {
 
   const ruleString = generateIcsRecurrenceRule(rule);
 
-  const parsed = icsRecurrenceRuleToObject(getLine(ruleString).value);
+  const parsed = icsRecurrenceRuleToObject(getLine(ruleString).line, undefined);
 
   expect(rule).toEqual(parsed);
 });

@@ -1,12 +1,8 @@
-import { statusTypes, type StatusType } from "@/types";
+import { Line, statusTypes, type StatusType } from "@/types";
+import { standardValidate } from "./utils/standardValidate";
+import { StandardSchemaV1 } from "@standard-schema/spec";
 
-export type ParseIcsStatus = (StatusString: string) => StatusType | undefined;
-
-export const icsStatusStringToStatus: ParseIcsStatus = (statusString) => {
-  if (!statusString) return;
-
-  if (statusTypes.includes(statusString as StatusType))
-    return statusString as StatusType;
-
-  return;
-};
+export const icsStatusStringToStatus = (
+  line: Line,
+  schema: StandardSchemaV1<StatusType> | undefined
+): StatusType => standardValidate(schema, line.value as StatusType);

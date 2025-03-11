@@ -1,9 +1,12 @@
-import { DateObject, icsTimeStampToObject, ParseIcsTimeStamp } from "ts-ics";
+import {
+  DateObject,
+  icsTimeStampToObject,
+  Line,
+  ParseTimeStampOptions,
+} from "ts-ics";
 import { zDateObject } from "./date";
 
-export const parseicsTimeStamp: ParseIcsTimeStamp = (
-  timestamp,
-  options,
-  timezones
-): DateObject =>
-  zDateObject.parse(icsTimeStampToObject(timestamp, options, timezones));
+export const parseicsTimeStamp = (
+  line: Line,
+  options: ParseTimeStampOptions
+): DateObject => icsTimeStampToObject(line, zDateObject, options);

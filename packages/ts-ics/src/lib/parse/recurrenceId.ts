@@ -1,24 +1,18 @@
 import { type RecurrenceId } from "@/types/recurrenceId";
 
 import { icsTimeStampToObject } from "./timeStamp";
-import type { VTimezone } from "@/types";
+import type { Line, VTimezone } from "@/types";
 import { StandardSchemaV1 } from "@standard-schema/spec";
 import { standardValidate } from "./utils/standardValidate";
 
-export type ParseIcsRecurrenceId = (
-  recurrenceIdString: string,
-  schema?: StandardSchemaV1<RecurrenceId>,
-  options?: Record<string, string>,
-  timezones?: VTimezone[]
-) => RecurrenceId;
+export type ParseRecurrenceIdOptions = { timezones?: VTimezone[] };
 
-export const icsRecurrenceIdToObject: ParseIcsRecurrenceId = (
-  recurrenceIdString,
-  schema,
-  options,
-  timezones
+export const icsRecurrenceIdToObject = (
+  line: Line,
+  schema: StandardSchemaV1<RecurrenceId> | undefined,
+  options?: ParseRecurrenceIdOptions
 ): RecurrenceId =>
   standardValidate(schema, {
-    value: icsTimeStampToObject(recurrenceIdString, options, timezones),
-    range: options?.RANGE as RecurrenceId["range"],
+    value: icsTimeStampToObject(line, undefined, options),
+    range: line.options?.RANGE as RecurrenceId["range"],
   });

@@ -1,6 +1,6 @@
 import {
   icsWeekDayStringToWeekDay,
-  ParseIcsWeekDay,
+  Line,
   WeekdayNumberObject,
   weekDays,
 } from "ts-ics";
@@ -13,5 +13,5 @@ export const zWeekdayNumberObject: z.ZodType<WeekdayNumberObject> = z.object({
   occurence: z.number().optional(),
 });
 
-export const parseIcsWeekDay: ParseIcsWeekDay = (weekDayString) =>
-  zWeekDay.parse(icsWeekDayStringToWeekDay(weekDayString));
+export const parseIcsWeekDay = (line: Line) =>
+  icsWeekDayStringToWeekDay(line, zWeekDay);

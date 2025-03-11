@@ -1,10 +1,8 @@
-import { classTypes, type ClassType } from "@/types";
+import { classTypes, Line, type ClassType } from "@/types";
+import { StandardSchemaV1 } from "@standard-schema/spec";
+import { standardValidate } from "./utils/standardValidate";
 
-export const icsClassStringToClass = (classString: string | undefined) => {
-  if (!classString) return;
-
-  if (classTypes.includes(classString as ClassType))
-    return classString as ClassType;
-
-  return;
-};
+export const icsClassStringToClass = (
+  line: Line,
+  schema: StandardSchemaV1<ClassType> | undefined
+) => standardValidate(schema, line.value as ClassType);

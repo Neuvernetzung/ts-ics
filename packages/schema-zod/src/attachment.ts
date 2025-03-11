@@ -1,4 +1,4 @@
-import { Attachment, encodingTypes, icsAttachmentToObject } from "ts-ics";
+import { Attachment, encodingTypes, icsAttachmentToObject, Line } from "ts-ics";
 import { z } from "zod";
 
 export const zAttachment: z.ZodType<Attachment> = z.discriminatedUnion("type", [
@@ -20,7 +20,5 @@ export const zAttachment: z.ZodType<Attachment> = z.discriminatedUnion("type", [
   }),
 ]);
 
-export const parseIcsAttachment = (
-  attachmentString: string,
-  options?: Record<string, string>
-): Attachment => icsAttachmentToObject(attachmentString, zAttachment, options);
+export const parseIcsAttachment = (line: Line): Attachment =>
+  icsAttachmentToObject(line, zAttachment);

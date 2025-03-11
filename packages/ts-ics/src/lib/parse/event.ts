@@ -29,100 +29,101 @@ export type ParseEventOptions = { timezones?: VTimezone[] };
 
 export const icsEventToObject = (
   rawEventString: string,
-  schema?: StandardSchemaV1<VEvent>,
+  schema: StandardSchemaV1<VEvent> | undefined,
   eventOptions?: ParseEventOptions
 ): VEvent => {
   const eventString = rawEventString.replace(replaceEventRegex, "");
 
-  const lines = splitLines(eventString.replace(getAlarmRegex, ""));
+  const lineStrings = splitLines(eventString.replace(getAlarmRegex, ""));
 
   const event: Partial<VEvent> = {};
 
   const attendees: Attendee[] = [];
   const exceptionDates: DateObject[] = [];
 
-  lines.forEach((line) => {
-    const { property, options, value } = getLine<VEventKey>(line);
+  lineStrings.forEach((lineString) => {
+    const { property, line } = getLine<VEventKey>(lineString);
 
     const objectKey = VEVENT_TO_OBJECT_KEYS[property];
 
     if (!objectKey) return; // unknown Object key
 
     if (objectKeyIsTimeStamp(objectKey)) {
-      event[objectKey] = icsTimeStampToObject(
-        value,
-        options,
-        eventOptions?.timezones
-      );
+      event[objectKey] = icsTimeStampToObject(line, undefined, {
+        timezones: eventOptions?.timezones,
+      });
       return;
     }
 
     if (objectKeyIsArrayOfStrings(objectKey)) {
-      event[objectKey] = value.split(COMMA);
+      event[objectKey] = line.value.split(COMMA);
 
       return;
     }
 
     if (objectKeyIsTextString(objectKey)) {
-      event[objectKey] = unescapeTextString(value);
+      event[objectKey] = unescapeTextString(line.value);
       return;
     }
 
     if (objectKey === "recurrenceRule") {
-      event[objectKey] = icsRecurrenceRuleToObject(value, undefined, {
+      event[objectKey] = icsRecurrenceRuleToObject(line, undefined, {
         timezones: eventOptions?.timezones,
       });
       return;
     }
 
     if (objectKey === "duration") {
-      event[objectKey] = icsDurationToObject(value);
+      event[objectKey] = icsDurationToObject(line, undefined);
       return;
     }
 
     if (objectKey === "organizer") {
-      event[objectKey] = icsOrganizerToObject(value, undefined, options);
+      event[objectKey] = icsOrganizerToObject(line, undefined);
       return;
     }
 
     if (objectKey === "sequence") {
-      event[objectKey] = Number(value);
+      event[objectKey] = Number(line.value);
       return;
     }
 
     if (objectKey === "attendee") {
-      attendees.push(icsAttendeeToObject(value, undefined, options));
+      attendees.push(icsAttendeeToObject(line, undefined));
       return;
     }
 
     if (objectKey === "exceptionDates") {
-      exceptionDates.push(...icsExceptionDateToObject(value, options));
+      exceptionDates.push(...icsExceptionDateToObject(line, undefined));
       return;
     }
 
     if (objectKey === "alarm") return;
 
     if (objectKey === "class") {
-      event[objectKey] = icsClassStringToClass(value);
+      event[objectKey] = icsClassStringToClass(line, undefined);
       return;
     }
 
     if (objectKey === "recurrenceId") {
-      event[objectKey] = icsRecurrenceIdToObject(value, undefined, options);
+      event[objectKey] = icsRecurrenceIdToObject(line, undefined);
       return;
     }
 
     if (objectKey === "status") {
-      event[objectKey] = icsStatusStringToStatus(value);
+      event[objectKey] = icsStatusStringToStatus(line, undefined);
       return;
     }
 
     if (objectKey === "timeTransparent") {
-      event[objectKey] = icsTimeTransparentStringToTimeTransparent(value);
+      event[objectKey] = icsTimeTransparentStringToTimeTransparent(
+        line,
+        undefined
+      );
       return;
     }
 
-    event[objectKey] = value; // Set string value
+    event[objectKey] = line.value; // Set string value
   });
 
   const alarmStrings = [...rawEventString.matchAll(getAlarmRegex)].map(

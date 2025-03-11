@@ -3,6 +3,7 @@ import {
   dateObjectTypes,
   icsDateTimeToDateTime,
   icsDateToDate,
+  Line,
 } from "ts-ics";
 import { z } from "zod";
 
@@ -18,8 +19,7 @@ export const zDateObject: z.ZodType<DateObject> = z.object({
   local: zDateObjectTzProps.optional(),
 });
 
-export const parseIcsDate = (date: string) =>
-  z.date().parse(icsDateToDate(date));
+export const parseIcsDate = (line: Line) => icsDateToDate(line, z.date());
 
-export const parseIcsDateTime = (date: string): Date =>
-  icsDateTimeToDateTime(date, z.date());
+export const parseIcsDateTime = (line: Line): Date =>
+  icsDateTimeToDateTime(line, z.date());

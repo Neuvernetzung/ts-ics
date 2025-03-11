@@ -1,11 +1,11 @@
 import { QUOTE, SEMICOLON, SEPARATOR } from "@/constants";
 
 import { splitOptions } from "./options";
+import { Line } from "@/types";
 
 type GetLineProps<TKey extends string> = {
   property: TKey;
-  options?: Record<string, string>;
-  value: string;
+  line: Line;
 };
 
 export const separateValue = (line: string) => {
@@ -42,10 +42,9 @@ export const getLine = <TKey extends string>(
 
     return {
       property: splittedProperty as TKey,
-      options,
-      value,
+      line: { options, value },
     };
   }
 
-  return { property: property as TKey, value };
+  return { property: property as TKey, line: { value } };
 };

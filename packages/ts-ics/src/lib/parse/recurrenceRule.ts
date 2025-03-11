@@ -5,6 +5,7 @@ import {
   type RRuleObjectKey,
 } from "@/constants/keys/recurrenceRule";
 import {
+  Line,
   type RecurrenceRule,
   recurrenceRuleFrequencies,
   type RecurrenceRuleFrequency,
@@ -70,13 +71,13 @@ export type ParseRecurrenceRuleOptions = {
 };
 
 export const icsRecurrenceRuleToObject = (
-  ruleString: string,
-  schema?: StandardSchemaV1<RecurrenceRule>,
+  line: Line,
+  schema: StandardSchemaV1<RecurrenceRule> | undefined,
   recurrenceRuleOptions?: ParseRecurrenceRuleOptions
 ): RecurrenceRule => {
   const rule: Partial<RecurrenceRule> = {};
 
-  const options = getOptions<RRuleKey>(ruleString.split(SEMICOLON));
+  const options = getOptions<RRuleKey>(line.value.split(SEMICOLON));
 
   options.forEach((r) => {
     const { property, value } = r;
@@ -87,9 +88,12 @@ export const icsRecurrenceRuleToObject = (
 
     if (recurrenceObjectKeyIsTimeStamp(objectKey)) {
       rule[objectKey] = icsTimeStampToObject(
-        value,
-        { VALUE: value.includes("T") ? "DATE-TIME" : "DATE" },
-        recurrenceRuleOptions?.timezones
+        {
+          value,
+          options: { VALUE: value.includes("T") ? "DATE-TIME" : "DATE" },
+        },
+        undefined,
+        { timezones: recurrenceRuleOptions?.timezones }
       );
 
       return;
@@ -109,7 +113,7 @@ export const icsRecurrenceRuleToObject = (
     if (recurrenceObjectKeyIsWeekdayNumberArray(objectKey)) {
       rule[objectKey] = value
         .split(COMMA)
-        .map((v) => icsWeekdayNumberToObject(v));
+        .map((v) => icsWeekdayNumberToObject(v, undefined));
       return;
     }
 
@@ -130,7 +134,7 @@ export const icsRecurrenceRuleToObject = (
     }
 
     if (objectKey === "workweekStart") {
-      rule[objectKey] = icsWeekDayStringToWeekDay(value);
+      rule[objectKey] = icsWeekDayStringToWeekDay({ value }, undefined);
       return;
     }
   });

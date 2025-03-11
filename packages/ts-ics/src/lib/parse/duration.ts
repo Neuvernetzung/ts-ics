@@ -1,12 +1,12 @@
-import { type Duration } from "@/types";
+import { Line, type Duration } from "@/types";
 import { StandardSchemaV1 } from "@standard-schema/spec";
 import { standardValidate } from "./utils/standardValidate";
 
 export const icsDurationToObject = (
-  durationString: string,
-  schema?: StandardSchemaV1<Duration>
+  line: Line,
+  schema: StandardSchemaV1<Duration> | undefined
 ): Duration => {
-  let newString = durationString;
+  let newString = line.value;
 
   const duration: Partial<Duration> = {};
 

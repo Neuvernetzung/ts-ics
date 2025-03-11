@@ -3,15 +3,15 @@ import { icsDateToDate, icsDateTimeToDateTime } from "@/lib/parse/date";
 import { setMilliseconds } from "date-fns";
 
 it("Test Ics Date Time Parse", async () => {
-  const dateTime = "20230118T073000Z";
+  const value = "20230118T073000Z";
 
-  expect(() => icsDateTimeToDateTime(dateTime)).not.toThrow();
+  expect(() => icsDateTimeToDateTime({ value }, undefined)).not.toThrow();
 });
 
 it("Test Ics Date Parse", async () => {
-  const date = "20230118";
+  const value = "20230118";
 
-  expect(() => icsDateToDate(date)).not.toThrow();
+  expect(() => icsDateToDate({ value }, undefined)).not.toThrow();
 });
 
 it("Strip Milliseconds - Milliseconds are not allowed in Ics", async () => {
@@ -19,5 +19,7 @@ it("Strip Milliseconds - Milliseconds are not allowed in Ics", async () => {
 
   const icsDate = generateIcsDateTime(date);
 
-  expect(icsDateTimeToDateTime(icsDate)).toEqual(setMilliseconds(date, 0));
+  expect(icsDateTimeToDateTime({ value: icsDate }, undefined)).toEqual(
+    setMilliseconds(date, 0)
+  );
 });

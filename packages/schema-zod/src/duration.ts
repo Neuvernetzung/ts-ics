@@ -1,4 +1,4 @@
-import { icsDurationToObject, Duration } from "ts-ics";
+import { icsDurationToObject, Duration, Line } from "ts-ics";
 import { z } from "zod";
 
 export const zDuration: z.ZodType<Duration> = z.object({
@@ -10,5 +10,5 @@ export const zDuration: z.ZodType<Duration> = z.object({
   seconds: z.number().optional(),
 });
 
-export const parseIcsDuration = (durationString: string): Duration =>
-  icsDurationToObject(durationString, zDuration);
+export const parseIcsDuration = (line: Line): Duration =>
+  icsDurationToObject(line, zDuration);

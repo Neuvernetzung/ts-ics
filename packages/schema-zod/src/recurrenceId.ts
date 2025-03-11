@@ -1,8 +1,8 @@
 import {
   icsRecurrenceIdToObject,
-  ParseIcsRecurrenceId,
+  Line,
+  ParseRecurrenceIdOptions,
   RecurrenceId,
-  VTimezone,
 } from "ts-ics";
 import { z } from "zod";
 import { zDateObject } from "./date";
@@ -13,13 +13,6 @@ export const zRecurrenceId: z.ZodType<RecurrenceId> = z.object({
 });
 
 export const parseIcsRecurrenceId = (
-  recurrenceIdString: string,
-  options: Record<string, string>,
-  timezones?: VTimezone[]
-) =>
-  icsRecurrenceIdToObject(
-    recurrenceIdString,
-    zRecurrenceId,
-    options,
-    timezones
-  );
+  line: Line,
+  options?: ParseRecurrenceIdOptions
+) => icsRecurrenceIdToObject(line, zRecurrenceId, options);

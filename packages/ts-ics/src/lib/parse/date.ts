@@ -1,13 +1,14 @@
-import { StandardSchemaV1 } from "@standard-schema/spec";
+import type { StandardSchemaV1 } from "@standard-schema/spec";
 import { standardValidate } from "./utils/standardValidate";
+import { Line } from "@/types";
 
 export const icsDateToDate = (
-  date: string,
-  schema?: StandardSchemaV1<Date>
+  line: Line,
+  schema: StandardSchemaV1<Date> | undefined
 ): Date => {
-  const year = Number.parseInt(date.slice(0, 4), 10);
-  const month = Number.parseInt(date.slice(4, 6), 10) - 1; // Monate in JavaScript sind 0-basiert
-  const day = Number.parseInt(date.slice(6, 8), 10);
+  const year = Number.parseInt(line.value.slice(0, 4), 10);
+  const month = Number.parseInt(line.value.slice(4, 6), 10) - 1; // Monate in JavaScript sind 0-basiert
+  const day = Number.parseInt(line.value.slice(6, 8), 10);
 
   const newDate = new Date(Date.UTC(year, month, day));
 
@@ -15,15 +16,15 @@ export const icsDateToDate = (
 };
 
 export const icsDateTimeToDateTime = (
-  date: string,
-  schema?: StandardSchemaV1<Date>
+  line: Line,
+  schema: StandardSchemaV1<Date> | undefined
 ): Date => {
-  const year = Number.parseInt(date.slice(0, 4), 10);
-  const month = Number.parseInt(date.slice(4, 6), 10) - 1; // Monate in JavaScript sind 0-basiert
-  const day = Number.parseInt(date.slice(6, 8), 10);
-  const hour = Number.parseInt(date.slice(9, 11), 10);
-  const minute = Number.parseInt(date.slice(11, 13), 10);
-  const second = Number.parseInt(date.slice(13, 15), 10);
+  const year = Number.parseInt(line.value.slice(0, 4), 10);
+  const month = Number.parseInt(line.value.slice(4, 6), 10) - 1; // Monate in JavaScript sind 0-basiert
+  const day = Number.parseInt(line.value.slice(6, 8), 10);
+  const hour = Number.parseInt(line.value.slice(9, 11), 10);
+  const minute = Number.parseInt(line.value.slice(11, 13), 10);
+  const second = Number.parseInt(line.value.slice(13, 15), 10);
 
   const newDate = new Date(Date.UTC(year, month, day, hour, minute, second));
 

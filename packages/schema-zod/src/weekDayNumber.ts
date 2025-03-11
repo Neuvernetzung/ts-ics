@@ -4,4 +4,4 @@ import { zWeekdayNumberObject } from "./weekDay";
 export const parseIcsWeekdayNumber = (
   weekdayNumberString: string
 ): WeekdayNumberObject =>
-  zWeekdayNumberObject.parse(icsWeekdayNumberToObject(weekdayNumberString));
+  icsWeekdayNumberToObject(weekdayNumberString, zWeekdayNumberObject);

@@ -1,19 +1,9 @@
-import { timeTransparentTypes, type TimeTransparentType } from "@/types";
+import { Line, timeTransparentTypes, type TimeTransparentType } from "@/types";
+import { StandardSchemaV1 } from "@standard-schema/spec";
+import { standardValidate } from "./utils/standardValidate";
 
-export type ParseIcsTimeTransparent = (
-  TimeTransparentString: string
-) => TimeTransparentType | undefined;
-
-export const icsTimeTransparentStringToTimeTransparent: ParseIcsTimeTransparent =
-  (TimeTransparentString) => {
-    if (!TimeTransparentString) return;
-
-    if (
-      timeTransparentTypes.includes(
-        TimeTransparentString as TimeTransparentType
-      )
-    )
-      return TimeTransparentString as TimeTransparentType;
-
-    return;
-  };
+export const icsTimeTransparentStringToTimeTransparent = (
+  line: Line,
+  schema: StandardSchemaV1<TimeTransparentType> | undefined
+): TimeTransparentType =>
+  standardValidate(schema, line.value as TimeTransparentType);

@@ -1,4 +1,9 @@
-import { Attendee, attendeePartStatusTypes, icsAttendeeToObject } from "ts-ics";
+import {
+  Attendee,
+  attendeePartStatusTypes,
+  icsAttendeeToObject,
+  Line,
+} from "ts-ics";
 import { z } from "zod";
 
 export const zAttendee: z.ZodType<Attendee> = z.object({
@@ -12,7 +17,5 @@ export const zAttendee: z.ZodType<Attendee> = z.object({
   sentBy: z.string().email().optional(),
 });
 
-export const parseIcsAttendee = (
-  attendeeString: string,
-  options?: Record<string, string>
-): Attendee => icsAttendeeToObject(attendeeString, zAttendee, options);
+export const parseIcsAttendee = (line: Line): Attendee =>
+  icsAttendeeToObject(line, zAttendee);

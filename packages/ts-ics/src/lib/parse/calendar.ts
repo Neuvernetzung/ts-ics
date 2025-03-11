@@ -15,18 +15,18 @@ import type { StandardSchemaV1 } from "@standard-schema/spec";
 
 export const icsCalendarToObject = (
   calendarString: string,
-  schema?: StandardSchemaV1<VCalendar>
+  schema: StandardSchemaV1<VCalendar> | undefined
 ): VCalendar => {
   const cleanedFileString = calendarString.replace(replaceCalendarRegex, "");
 
-  const lines = splitLines(
+  const lineStrings = splitLines(
     cleanedFileString.replace(getEventRegex, "").replace(getTimezoneRegex, "")
   );
 
   const calendar: Partial<VCalendar> = {};
 
-  lines.forEach((line) => {
-    const { property, value } = getLine<VCalendarKey>(line);
+  lineStrings.forEach((lineString) => {
+    const { property, line } = getLine<VCalendarKey>(lineString);
 
     const objectKey = VCALENDAR_TO_OBJECT_KEYS[property];
 
@@ -37,7 +37,7 @@ export const icsCalendarToObject = (
       return;
     }
 
-    calendar[objectKey] = value;
+    calendar[objectKey] = line.value;
   });
 
   const timezoneStrings = [...cleanedFileString.matchAll(getTimezoneRegex)].map(

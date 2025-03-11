@@ -16,12 +16,12 @@ it("Test Ics Exception Date Generate", async () => {
     exceptionsString += generateIcsExceptionDate(exception, "EXDATE");
   });
 
-  const lines = splitLines(exceptionsString);
+  const lineStrings = splitLines(exceptionsString);
 
-  lines.forEach((line, i) => {
-    const { options, value } = getLine(line);
+  lineStrings.forEach((lineString, i) => {
+    const { line } = getLine(lineString);
 
-    const parsed = icsExceptionDateToObject(value, options);
+    const parsed = icsExceptionDateToObject(line, undefined);
 
     expect(parsed[0].date).toEqual(exceptions[i].date);
   });

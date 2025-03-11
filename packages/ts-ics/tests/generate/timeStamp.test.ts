@@ -15,9 +15,9 @@ it("Test Ics Timestamp Generate - UTC", async () => {
 
   const dateTimeString = generateIcsTimeStamp("DTSTART", dateObject);
 
-  const { value, options } = getLine(dateTimeString);
+  const { line } = getLine(dateTimeString);
 
-  const parsed = icsTimeStampToObject(value, options);
+  const parsed = icsTimeStampToObject(line, undefined);
 
   expect(parsed.date).toEqual(dateObject.date);
 });
@@ -41,9 +41,11 @@ it("Test Ics Timestamp Generate - VTimezone", async () => {
 
   const dateTimeString = generateIcsTimeStamp("DTSTART", dateObject);
 
-  const { value, options } = getLine(dateTimeString);
+  const { line } = getLine(dateTimeString);
 
-  const parsed = icsTimeStampToObject(value, options, [fictiveTimezone]);
+  const parsed = icsTimeStampToObject(line, undefined, {
+    timezones: [fictiveTimezone],
+  });
 
   expect(parsed.date).toEqual(dateObject.date);
 });
@@ -66,9 +68,9 @@ it("Test Ics Timestamp Generate - IANA Timezone", async () => {
 
   const dateTimeString = generateIcsTimeStamp("DTSTART", dateObject);
 
-  const { value, options } = getLine(dateTimeString);
+  const { line } = getLine(dateTimeString);
 
-  const parsed = icsTimeStampToObject(value, options);
+  const parsed = icsTimeStampToObject(line, undefined);
 
   expect(parsed.date).toEqual(dateObject.date);
 });

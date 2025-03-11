@@ -1,10 +1,18 @@
 import { type ExceptionDates } from "@/types/exceptionDate";
 import { icsTimeStampToObject } from "./timeStamp";
+import { Line } from "@/types";
+import { StandardSchemaV1 } from "@standard-schema/spec";
+import { standardValidate } from "./utils/standardValidate";
 
 export const icsExceptionDateToObject = (
-  exceptionDateString: string,
-  options?: Record<string, string>
+  line: Line,
+  schema: StandardSchemaV1<ExceptionDates> | undefined
 ): ExceptionDates =>
-  exceptionDateString
-    .split(",")
-    .map((timeStamp) => icsTimeStampToObject(timeStamp, options));
+  standardValidate(
+    schema,
+    line.value
+      .split(",")
+      .map((value) =>
+        icsTimeStampToObject({ value, options: line.options }, undefined)
+      )
+  );

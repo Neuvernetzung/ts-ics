@@ -18,11 +18,11 @@ import { standardValidate } from "./utils/standardValidate";
 
 export const icsTimezoneToObject = (
   rawTimezoneString: string,
-  schema?: StandardSchemaV1<VTimezone>
+  schema: StandardSchemaV1<VTimezone> | undefined
 ): VTimezone => {
   const timezoneString = rawTimezoneString.replace(replaceTimezoneRegex, "");
 
-  const lines = splitLines(
+  const lineStrings = splitLines(
     timezoneString
       .replace(getTimezoneStandardRegex, "")
       .replace(getTimezoneDaylightRegex, "")
@@ -32,20 +32,20 @@ export const icsTimezoneToObject = (
     props: [],
   };
 
-  lines.forEach((line) => {
-    const { property, value } = getLine<VTimezoneKey>(line);
+  lineStrings.forEach((lineString) => {
+    const { property, line } = getLine<VTimezoneKey>(lineString);
 
     const objectKey = VTIMEZONE_TO_OBJECT_KEYS[property];
 
     if (!objectKey) return; // unknown Object key
 
     if (objectKey === "lastModified") {
-      timezone[objectKey] = icsDateTimeToDateTime(value);
+      timezone[objectKey] = icsDateTimeToDateTime(line, undefined);
 
       return;
     }
 
-    timezone[objectKey] = value; // Set string value
+    timezone[objectKey] = line.value; // Set string value
   });
 
   const timezoneStandardPropStrings = [

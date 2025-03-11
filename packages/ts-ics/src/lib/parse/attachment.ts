@@ -1,24 +1,26 @@
 import { type Attachment } from "@/types/attachment";
 import { StandardSchemaV1 } from "@standard-schema/spec";
 import { standardValidate } from "./utils/standardValidate";
+import { Line } from "@/types";
 
 export const icsAttachmentToObject = (
-  attachmentString: string,
-  schema?: StandardSchemaV1<Attachment>,
-  options?: Record<string, string>
+  line: Line,
+  schema: StandardSchemaV1<Attachment> | undefined
 ): Attachment => {
-  if (options?.VALUE === "BINARY") {
-    return {
-      type: "binary",
-      encoding: (options?.ENCODING as Attachment["encoding"]) || "BASE64",
-      binary: attachmentString,
-      value: options?.VALUE,
-    };
-  }
+  const attachment: Attachment =
+    line.options?.VALUE === "BINARY"
+      ? {
+          type: "binary",
+          encoding:
+            (line.options?.ENCODING as Attachment["encoding"]) || "BASE64",
+          binary: line.value,
+          value: line.options?.VALUE,
+        }
+      : {
+          type: "uri",
+          url: line.value,
+          formatType: line.options?.FMTTYPE,
+        };
 
-  return standardValidate(schema, {
-    type: "uri",
-    url: attachmentString,
-    formatType: options?.FMTTYPE,
-  });
+  return standardValidate(schema, attachment);
 };
