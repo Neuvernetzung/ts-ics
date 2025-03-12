@@ -7,15 +7,26 @@ import {
   VCALENDAR_TO_OBJECT_KEYS,
   type IcsCalendarKey,
 } from "@/constants/keys";
-import type { ConvertCalendar, IcsCalendarVersion, IcsCalendar } from "@/types";
+import type {
+  ConvertCalendar,
+  IcsCalendarVersion,
+  IcsCalendar,
+  Line,
+} from "@/types";
 
 import { convertIcsEvent } from "./event";
 import { convertIcsTimezone } from "./timezone";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 import { standardValidate } from "./utils/standardValidate";
+import { convertNonStandardValues } from "./utils/nonStandardValues";
+import { valueIsNonStandard } from "@/utils/nonStandardValue";
 
-export const convertIcsCalendar: ConvertCalendar = (schema, calendarString) => {
+export const convertIcsCalendar = <T extends Record<string, any>>(
+  ...args: Parameters<ConvertCalendar<T>>
+): ReturnType<ConvertCalendar<T>> => {
+  const [schema, calendarString, options] = args;
+
   const cleanedFileString = calendarString.replace(replaceCalendarRegex, "");
 
   const lineStrings = splitLines(
@@ -24,8 +35,15 @@ export const convertIcsCalendar: ConvertCalendar = (schema, calendarString) => {
 
   const calendar: Partial<IcsCalendar> = {};
 
+  const nonStandardValues: Record<string, Line> = {};
+
   lineStrings.forEach((lineString) => {
     const { property, line } = getLine<IcsCalendarKey>(lineString);
+
+    if (valueIsNonStandard(property)) {
+      nonStandardValues[property] = line;
+      return;
+    }
 
     const objectKey = VCALENDAR_TO_OBJECT_KEYS[property];
 
@@ -63,5 +81,16 @@ export const convertIcsCalendar: ConvertCalendar = (schema, calendarString) => {
     calendar.events = events;
   }
 
-  return standardValidate(schema, calendar as IcsCalendar);
+  const validatedCalendar = standardValidate(
+    schema,
+    calendar as IcsCalendar<T>
+  );
+
+  if (!options?.nonStandard) return validatedCalendar;
+
+  return convertNonStandardValues(
+    validatedCalendar,
+    nonStandardValues,
+    options?.nonStandard
+  );
 };

@@ -205,3 +205,34 @@ it("Leftover line breaks should not affect parsing - #130", async () => {
 
   expect(() => convertIcsCalendar(undefined, calendar)).not.toThrow();
 });
+
+it("Test non standard values", async () => {
+  const calendarString = icsTestData([
+    "BEGIN:VCALENDAR",
+    "PRODID:ID",
+    "VERSION:2.0",
+    "X-WTF:yeah",
+    "BEGIN:VEVENT",
+    "CREATED:20240112T095511Z",
+    "DTEND:20240112T105511Z",
+    "DTSTAMP:20240112T095511Z",
+    "DTSTART:20240112T095511Z",
+    "SUMMARY:Test",
+    "UID:d908f270-64fa-4916-9f72-b48eb7222a63",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ]);
+
+  const calendar = convertIcsCalendar(undefined, calendarString, {
+    nonStandard: {
+      wtf: {
+        name: "X-WTF",
+        convert: (line) => line.value,
+        // parse: (v) => v <-- verursacht unknown aktuell
+      },
+    },
+  });
+
+  console.log(calendar);
+  console.log(calendar.nonStandard?.wtf);
+});
