@@ -6,53 +6,53 @@ import {
   type ParseEvent,
 } from "ts-ics";
 import { z } from "zod";
-import { zDateObject } from "./date";
-import { zExceptionDates } from "./exceptionDate";
-import { zAttendee } from "./attendee";
-import { zDuration } from "./duration";
-import { zRecurrenceRule } from "./recurrenceRule";
+import { zIcsDateObject } from "./date";
+import { zIcsExceptionDates } from "./exceptionDate";
+import { zIcsAttendee } from "./attendee";
+import { zIcsDuration } from "./duration";
+import { zIcsRecurrenceRule } from "./recurrenceRule";
 import { zIcsAlarm } from "./alarm";
-import { zTimeTransparentType } from "./timeTransparent";
-import { zClassType } from "./class";
-import { zOrganizer } from "./organizer";
-import { zStatusType } from "./status";
-import { zRecurrenceId } from "./recurrenceId";
+import { zIcsTimeTransparentType } from "./timeTransparent";
+import { zIcsClassType } from "./class";
+import { zIcsOrganizer } from "./organizer";
+import { zIcsStatusType } from "./status";
+import { zIcsRecurrenceId } from "./recurrenceId";
 
-export const zDurationOrEnd: z.ZodType<IcsEventDurationOrEnd> = z.union([
-  z.object({ duration: zDuration, end: z.never().optional() }),
-  z.object({ duration: z.never().optional(), end: zDateObject }),
+export const zIcsDurationOrEnd: z.ZodType<IcsEventDurationOrEnd> = z.union([
+  z.object({ duration: zIcsDuration, end: z.never().optional() }),
+  z.object({ duration: z.never().optional(), end: zIcsDateObject }),
 ]);
 
 export const zIcsEventBase: z.ZodType<IcsEventBase> = z.object({
   summary: z.string(),
   uid: z.string(),
-  created: zDateObject.optional(),
-  lastModified: zDateObject.optional(),
-  stamp: zDateObject,
-  start: zDateObject,
+  created: zIcsDateObject.optional(),
+  lastModified: zIcsDateObject.optional(),
+  stamp: zIcsDateObject,
+  start: zIcsDateObject,
   location: z.string().optional(),
   description: z.string().optional(),
   categories: z.array(z.string()).optional(),
-  exceptionDates: zExceptionDates.optional(),
-  recurrenceRule: zRecurrenceRule.optional(),
+  exceptionDates: zIcsExceptionDates.optional(),
+  recurrenceRule: zIcsRecurrenceRule.optional(),
   alarms: z.array(zIcsAlarm).optional(),
-  timeTransparent: zTimeTransparentType.optional(),
+  timeTransparent: zIcsTimeTransparentType.optional(),
   url: z.string().url().optional(),
   geo: z.string().optional(),
-  class: zClassType.optional(),
-  organizer: zOrganizer.optional(),
+  class: zIcsClassType.optional(),
+  organizer: zIcsOrganizer.optional(),
   priority: z.string().optional(),
   sequence: z.number().optional(),
-  status: zStatusType.optional(),
+  status: zIcsStatusType.optional(),
   attach: z.string().optional(),
-  recurrenceId: zRecurrenceId.optional(),
-  attendees: z.array(zAttendee).optional(),
+  recurrenceId: zIcsRecurrenceId.optional(),
+  attendees: z.array(zIcsAttendee).optional(),
   comment: z.string().optional(),
 });
 
 export const zIcsEvent: z.ZodType<IcsEvent> = z.intersection(
   zIcsEventBase,
-  zDurationOrEnd
+  zIcsDurationOrEnd
 );
 
 export const parseIcsEvent: ParseEvent = (...props) =>

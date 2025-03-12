@@ -8,17 +8,17 @@ import {
   type IcsTimezoneProp,
 } from "ts-ics";
 import { z } from "zod";
-import { zRecurrenceRule } from "./recurrenceRule";
-import { zDateObject } from "./date";
+import { zIcsRecurrenceRule } from "./recurrenceRule";
+import { zIcsDateObject } from "./date";
 
 export const zIcsTimezoneProp: z.ZodType<IcsTimezoneProp> = z.object({
   type: z.enum(timezonePropTypes),
   start: z.date(),
   offsetTo: z.string(),
   offsetFrom: z.string(),
-  recurrenceRule: zRecurrenceRule.optional(),
+  recurrenceRule: zIcsRecurrenceRule.optional(),
   comment: z.string().optional(),
-  recurrenceDate: zDateObject.optional(),
+  recurrenceDate: zIcsDateObject.optional(),
   name: z.string().optional(),
 });
 

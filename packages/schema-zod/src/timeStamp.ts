@@ -1,5 +1,5 @@
 import { convertIcsTimeStamp, type ParseTimeStamp } from "ts-ics";
-import { zDateObject } from "./date";
+import { zIcsDateObject } from "./date";
 
 export const parseicsTimeStamp: ParseTimeStamp = (...props) =>
-  convertIcsTimeStamp(zDateObject, ...props);
+  convertIcsTimeStamp(zIcsDateObject, ...props);

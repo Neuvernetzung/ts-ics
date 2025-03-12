@@ -1,5 +1,5 @@
 import { convertIcsWeekDayNumber, type ParseWeekDayNumber } from "ts-ics";
-import { zWeekdayNumberObject } from "./weekDay";
+import { zIcsWeekdayNumber } from "./weekDay";
 
 export const parseIcsWeekdayNumber: ParseWeekDayNumber = (...props) =>
-  convertIcsWeekDayNumber(zWeekdayNumberObject, ...props);
+  convertIcsWeekDayNumber(zIcsWeekdayNumber, ...props);

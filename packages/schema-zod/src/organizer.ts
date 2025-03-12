@@ -5,7 +5,7 @@ import {
 } from "ts-ics";
 import { z } from "zod";
 
-export const zOrganizer: z.ZodType<IcsOrganizer> = z.object({
+export const zIcsOrganizer: z.ZodType<IcsOrganizer> = z.object({
   name: z.string().optional(),
   email: z.string().email(),
   dir: z.string().optional(),
@@ -13,4 +13,4 @@ export const zOrganizer: z.ZodType<IcsOrganizer> = z.object({
 });
 
 export const parseIcsOrganizer: ParseOrganizer = (...props) =>
-  convertIcsOrganizer(zOrganizer, ...props);
+  convertIcsOrganizer(zIcsOrganizer, ...props);

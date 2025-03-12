@@ -5,7 +5,7 @@ import {
 } from "ts-ics";
 import { z } from "zod";
 
-export const zDuration: z.ZodType<IcsDuration> = z.object({
+export const zIcsDuration: z.ZodType<IcsDuration> = z.object({
   before: z.boolean().optional(),
   weeks: z.number().optional(),
   days: z.number().optional(),
@@ -15,4 +15,4 @@ export const zDuration: z.ZodType<IcsDuration> = z.object({
 });
 
 export const parseIcsDuration: ParseDuration = (...props) =>
-  convertIcsDuration(zDuration, ...props);
+  convertIcsDuration(zIcsDuration, ...props);

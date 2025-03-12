@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zDateObject } from "./date";
+import { zIcsDateObject } from "./date";
 import {
   type IcsExceptionDate,
   type IcsExceptionDates,
@@ -7,10 +7,10 @@ import {
   type ParseExceptionDates,
 } from "ts-ics";
 
-export const zExceptionDate: z.ZodType<IcsExceptionDate> = zDateObject;
+export const zIcsExceptionDate: z.ZodType<IcsExceptionDate> = zIcsDateObject;
 
-export const zExceptionDates: z.ZodType<IcsExceptionDates> =
-  z.array(zExceptionDate);
+export const zIcsExceptionDates: z.ZodType<IcsExceptionDates> =
+  z.array(zIcsExceptionDate);
 
 export const parseIcsExceptionDate: ParseExceptionDates = (...props) =>
-  convertIcsExceptionDates(zExceptionDates, ...props);
+  convertIcsExceptionDates(zIcsExceptionDates, ...props);

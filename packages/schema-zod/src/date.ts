@@ -7,16 +7,16 @@ import {
 } from "ts-ics";
 import { z } from "zod";
 
-export const zDateObjectTzProps = z.object({
+export const zIcsDateObjectTzProps = z.object({
   date: z.date(),
   timezone: z.string(),
   tzoffset: z.string(),
 });
 
-export const zDateObject: z.ZodType<IcsDateObject> = z.object({
+export const zIcsDateObject: z.ZodType<IcsDateObject> = z.object({
   date: z.date(),
   type: z.enum(dateObjectTypes).optional(),
-  local: zDateObjectTzProps.optional(),
+  local: zIcsDateObjectTzProps.optional(),
 });
 
 export const parseIcsDate: ParseDate = (...props) =>

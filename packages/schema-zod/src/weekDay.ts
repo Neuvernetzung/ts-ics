@@ -6,12 +6,12 @@ import {
 } from "ts-ics";
 import { z } from "zod";
 
-export const zWeekDay = z.enum(weekDays);
+export const zIcsWeekDay = z.enum(weekDays);
 
-export const zWeekdayNumberObject: z.ZodType<IcsWeekdayNumber> = z.object({
-  day: zWeekDay,
+export const zIcsWeekdayNumber: z.ZodType<IcsWeekdayNumber> = z.object({
+  day: zIcsWeekDay,
   occurence: z.number().optional(),
 });
 
 export const parseIcsWeekDay: ParseWeekDay = (...props) =>
-  convertIcsWeekDay(zWeekDay, ...props);
+  convertIcsWeekDay(zIcsWeekDay, ...props);
