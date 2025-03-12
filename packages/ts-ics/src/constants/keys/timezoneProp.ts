@@ -1,47 +1,10 @@
 import { IcsTimezoneProp } from "@/types";
+import { invertKeys, keysFromObject } from "./utils";
 
-export const VTIMEZONE_PROP_KEYS = [
-  "DTSTART",
-  "TZOFFSETTO",
-  "TZOFFSETFROM",
-  "RRULE",
-  "COMMENT",
-  "RDATE",
-  "TZNAME",
-] as const;
-export type IcsTimezonePropKeys = typeof VTIMEZONE_PROP_KEYS;
-export type IcsTimezonePropKey = IcsTimezonePropKeys[number];
+export type IcsTimezonePropObjectKey = Exclude<keyof IcsTimezoneProp, "type">;
+export type IcsTimezonePropObjectKeys = IcsTimezonePropObjectKey[];
 
-export const VTIMEZONE_PROP_OBJECT_KEYS = [
-  "start",
-  "offsetTo",
-  "offsetFrom",
-  "recurrenceRule",
-  "comment",
-  "recurrenceDate",
-  "name",
-] as const satisfies (keyof IcsTimezoneProp)[];
-
-export type IcsTimezonePropObjectKeys = typeof VTIMEZONE_PROP_OBJECT_KEYS;
-export type IcsTimezonePropObjectKey = IcsTimezonePropObjectKeys[number];
-
-export const VTIMEZONE_PROP_TO_OBJECT_KEYS: Record<
-  IcsTimezonePropKey,
-  IcsTimezonePropObjectKey
-> = {
-  COMMENT: "comment",
-  DTSTART: "start",
-  RDATE: "recurrenceDate",
-  RRULE: "recurrenceRule",
-  TZNAME: "name",
-  TZOFFSETFROM: "offsetFrom",
-  TZOFFSETTO: "offsetTo",
-};
-
-export const VTIMEZONE_PROP_TO_KEYS: Record<
-  IcsTimezonePropObjectKey,
-  IcsTimezonePropKey
-> = {
+export const VTIMEZONE_PROP_TO_KEYS = {
   comment: "COMMENT",
   name: "TZNAME",
   offsetFrom: "TZOFFSETFROM",
@@ -49,4 +12,17 @@ export const VTIMEZONE_PROP_TO_KEYS: Record<
   recurrenceDate: "RDATE",
   recurrenceRule: "RRULE",
   start: "DTSTART",
-};
+} as const satisfies Record<IcsTimezonePropObjectKey, string>;
+
+export const VTIMEZONE_PROP_TO_OBJECT_KEYS = invertKeys(VTIMEZONE_PROP_TO_KEYS);
+
+export type IcsTimezonePropKey = keyof typeof VTIMEZONE_PROP_TO_OBJECT_KEYS;
+export type IcsTimezonePropKeys = IcsTimezonePropKey[];
+
+export const VTIMEZONE_PROP_KEYS = keysFromObject(
+  VTIMEZONE_PROP_TO_OBJECT_KEYS
+);
+
+export const VTIMEZONE_PROP_OBJECT_KEYS = keysFromObject(
+  VTIMEZONE_PROP_TO_KEYS
+);
