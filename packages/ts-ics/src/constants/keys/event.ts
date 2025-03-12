@@ -1,99 +1,11 @@
 import { IcsEvent } from "@/types";
+import { invertKeys, keysFromObject } from "./utils";
 
-export const VEVENT_KEYS = [
-  "SUMMARY",
-  "UID",
-  "CREATED",
-  "LAST-MODIFIED",
-  "DTSTAMP",
-  "DTSTART",
-  "LOCATION",
-  "DESCRIPTION",
-  "CATEGORIES",
-  "EXDATE",
-  "RRULE",
-  "ALARM",
-  "TRANSP",
-  "URL",
-  "DTEND",
-  "DURATION",
-  "GEO",
-  "CLASS",
-  "ORGANIZER",
-  "PRIORITY",
-  "SEQUENCE",
-  "STATUS",
-  "ATTACH",
-  "RECURRENCE-ID",
-  "ATTENDEE",
-  "COMMENT",
-] as const;
+export type IcsEventObjectKey = keyof IcsEvent;
 
-export type IcsEventKeys = typeof VEVENT_KEYS;
-export type IcsEventKey = IcsEventKeys[number];
+export type IcsEventObjectKeys = IcsEventObjectKey[];
 
-export const VEVENT_OBJECT_KEYS = [
-  "summary",
-  "uid",
-  "created",
-  "lastModified",
-  "stamp",
-  "start",
-  "location",
-  "description",
-  "categories",
-  "exceptionDates",
-  "recurrenceRule",
-  "alarms",
-  "timeTransparent",
-  "url",
-  "end",
-  "duration",
-  "geo",
-  "class",
-  "organizer",
-  "priority",
-  "sequence",
-  "status",
-  "attach",
-  "recurrenceId",
-  "attendees",
-  "comment",
-] as const satisfies (keyof IcsEvent)[];
-
-export type IcsEventObjectKeys = typeof VEVENT_OBJECT_KEYS;
-export type IcsEventObjectKey = IcsEventObjectKeys[number];
-
-export const VEVENT_TO_OBJECT_KEYS: Record<IcsEventKey, IcsEventObjectKey> = {
-  "LAST-MODIFIED": "lastModified",
-  ALARM: "alarms",
-  CATEGORIES: "categories",
-  CREATED: "created",
-  DESCRIPTION: "description",
-  DTSTAMP: "stamp",
-  DTSTART: "start",
-  LOCATION: "location",
-  EXDATE: "exceptionDates",
-  RRULE: "recurrenceRule",
-  SUMMARY: "summary",
-  UID: "uid",
-  TRANSP: "timeTransparent",
-  URL: "url",
-  DTEND: "end",
-  DURATION: "duration",
-  GEO: "geo",
-  CLASS: "class",
-  ORGANIZER: "organizer",
-  PRIORITY: "priority",
-  SEQUENCE: "sequence",
-  STATUS: "status",
-  ATTACH: "attach",
-  "RECURRENCE-ID": "recurrenceId",
-  ATTENDEE: "attendees",
-  COMMENT: "comment",
-};
-
-export const VEVENT_TO_KEYS: Record<IcsEventObjectKey, IcsEventKey> = {
+export const VEVENT_TO_KEYS = {
   alarms: "ALARM",
   categories: "CATEGORIES",
   created: "CREATED",
@@ -120,4 +32,13 @@ export const VEVENT_TO_KEYS: Record<IcsEventObjectKey, IcsEventKey> = {
   recurrenceId: "RECURRENCE-ID",
   attendees: "ATTENDEE",
   comment: "COMMENT",
-};
+} as const satisfies Record<IcsEventObjectKey, string>;
+
+export const VEVENT_TO_OBJECT_KEYS = invertKeys(VEVENT_TO_KEYS);
+
+export type IcsEventKey = keyof typeof VEVENT_TO_OBJECT_KEYS;
+export type IcsEventKeys = IcsEventKey[];
+
+export const VEVENT_KEYS = keysFromObject(VEVENT_TO_OBJECT_KEYS);
+
+export const VEVENT_OBJECT_KEYS = keysFromObject(VEVENT_TO_KEYS);
