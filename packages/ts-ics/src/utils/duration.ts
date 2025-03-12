@@ -16,9 +16,9 @@ import {
   subWeeks,
 } from "date-fns";
 
-import type { Duration } from "../types";
+import type { IcsDuration } from "../types";
 
-export const getEventEndFromDuration = (start: Date, duration: Duration) =>
+export const getEventEndFromDuration = (start: Date, duration: IcsDuration) =>
   duration.before
     ? subWeeks(
         subDays(
@@ -47,7 +47,10 @@ export const getEventEndFromDuration = (start: Date, duration: Duration) =>
         duration.weeks || 0
       );
 
-export const getDurationFromInterval = (start: Date, end: Date): Duration => {
+export const getDurationFromInterval = (
+  start: Date,
+  end: Date
+): IcsDuration => {
   const weeks = Math.abs(differenceInWeeks(end, start));
   const rawDays = Math.abs(differenceInDays(end, start));
   const days = rawDays - weeks * 7;

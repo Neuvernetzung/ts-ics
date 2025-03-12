@@ -4,8 +4,13 @@ import {
   objectKeyIsTextString,
   objectKeyIsTimeStamp,
 } from "@/constants/keyTypes";
-import type { DateObject, VEvent, Duration, RecurrenceRule } from "@/types";
-import type { Organizer } from "@/types/organizer";
+import type {
+  IcsDateObject,
+  IcsEvent,
+  IcsDuration,
+  IcsRecurrenceRule,
+} from "@/types";
+import type { IcsOrganizer } from "@/types/organizer";
 
 import { generateIcsAlarm } from "./alarm";
 import { generateIcsAttendee } from "./attendee";
@@ -26,7 +31,7 @@ import { escapeTextString } from "./utils/escapeText";
 type GenerateIcsEventOptions = { skipFormatLines?: boolean };
 
 export const generateIcsEvent = (
-  event: VEvent,
+  event: IcsEvent,
   options?: GenerateIcsEventOptions
 ) => {
   const eventKeys = getKeys(event);
@@ -48,7 +53,7 @@ export const generateIcsEvent = (
     if (value === undefined || value === null) return;
 
     if (objectKeyIsTimeStamp(key)) {
-      icsString += generateIcsTimeStamp(icsKey, value as DateObject);
+      icsString += generateIcsTimeStamp(icsKey, value as IcsDateObject);
       return;
     }
 
@@ -63,20 +68,20 @@ export const generateIcsEvent = (
     }
 
     if (key === "recurrenceRule") {
-      icsString += generateIcsRecurrenceRule(value as RecurrenceRule);
+      icsString += generateIcsRecurrenceRule(value as IcsRecurrenceRule);
       return;
     }
 
     if (key === "duration") {
       icsString += generateIcsLine(
         icsKey,
-        generateIcsDuration(value as Duration)
+        generateIcsDuration(value as IcsDuration)
       );
       return;
     }
 
     if (key === "organizer") {
-      icsString += generateIcsOrganizer(value as Organizer);
+      icsString += generateIcsOrganizer(value as IcsOrganizer);
       return;
     }
 

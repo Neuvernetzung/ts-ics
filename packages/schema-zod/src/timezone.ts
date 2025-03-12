@@ -4,14 +4,14 @@ import {
   type ParseTimezone,
   type ParseTimezoneProp,
   timezonePropTypes,
-  type VTimezone,
-  type VTimezoneProp,
+  type IcsTimezone,
+  type IcsTimezoneProp,
 } from "ts-ics";
 import { z } from "zod";
 import { zRecurrenceRule } from "./recurrenceRule";
 import { zDateObject } from "./date";
 
-export const zVTimezoneProp: z.ZodType<VTimezoneProp> = z.object({
+export const zIcsTimezoneProp: z.ZodType<IcsTimezoneProp> = z.object({
   type: z.enum(timezonePropTypes),
   start: z.date(),
   offsetTo: z.string(),
@@ -23,14 +23,14 @@ export const zVTimezoneProp: z.ZodType<VTimezoneProp> = z.object({
 });
 
 export const parseIcsTimezoneProp: ParseTimezoneProp = (...props) =>
-  convertIcsTimezoneProp(zVTimezoneProp, ...props);
+  convertIcsTimezoneProp(zIcsTimezoneProp, ...props);
 
-export const zVTimezone: z.ZodType<VTimezone> = z.object({
+export const zIcsTimezone: z.ZodType<IcsTimezone> = z.object({
   id: z.string(),
   lastModified: z.date().optional(),
   url: z.string().url().optional(),
-  props: z.array(zVTimezoneProp),
+  props: z.array(zIcsTimezoneProp),
 });
 
 export const parseIcsTimezone: ParseTimezone = (...props) =>
-  convertIcsTimezone(zVTimezone, ...props);
+  convertIcsTimezone(zIcsTimezone, ...props);

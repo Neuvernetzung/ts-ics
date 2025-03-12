@@ -1,7 +1,7 @@
-import type { DateObject } from "./date";
+import type { IcsDateObject } from "./date";
 import type { ConvertLineType, ParseLineType } from "./parse";
-import type { VTimezone } from "./timezone";
-import type { WeekDay, WeekdayNumberObject } from "./weekday";
+import type { IcsTimezone } from "./timezone";
+import type { IcsWeekDay, IcsWeekdayNumber } from "./weekday";
 
 export const recurrenceRuleFrequencies = [
   "SECONDLY",
@@ -13,36 +13,36 @@ export const recurrenceRuleFrequencies = [
   "YEARLY",
 ] as const;
 
-export type RecurrenceRuleFrequencies = typeof recurrenceRuleFrequencies;
-export type RecurrenceRuleFrequency = RecurrenceRuleFrequencies[number];
+export type IcsRecurrenceRuleFrequencies = typeof recurrenceRuleFrequencies;
+export type IcsRecurrenceRuleFrequency = IcsRecurrenceRuleFrequencies[number];
 
-export type RecurrenceRule = {
-  frequency: RecurrenceRuleFrequency;
-  until?: DateObject;
+export type IcsRecurrenceRule = {
+  frequency: IcsRecurrenceRuleFrequency;
+  until?: IcsDateObject;
   count?: number;
   interval?: number;
   bySecond?: number[];
   byMinute?: number[];
   byHour?: number[];
-  byDay?: WeekdayNumberObject[];
+  byDay?: IcsWeekdayNumber[];
   byMonthday?: number[];
   byYearday?: number[];
   byWeekNo?: number[];
   byMonth?: number[];
   bySetPos?: number[];
-  workweekStart?: WeekDay;
+  workweekStart?: IcsWeekDay;
 };
 
 export type ParseRecurrenceRuleOptions = {
-  timezones?: VTimezone[];
+  timezones?: IcsTimezone[];
 };
 
 export type ConvertRecurrenceRule = ConvertLineType<
-  RecurrenceRule,
+  IcsRecurrenceRule,
   ParseRecurrenceRuleOptions
 >;
 
 export type ParseRecurrenceRule = ParseLineType<
-  RecurrenceRule,
+  IcsRecurrenceRule,
   ParseRecurrenceRuleOptions
 >;

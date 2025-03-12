@@ -4,9 +4,9 @@ import {
 } from "@/constants";
 import {
   VTIMEZONE_PROP_TO_OBJECT_KEYS,
-  type VTimezonePropKey,
+  type IcsTimezonePropKey,
 } from "@/constants/keys/timezoneProp";
-import type { ConvertTimezoneProp, VTimezoneProp } from "@/types/timezone";
+import type { ConvertTimezoneProp, IcsTimezoneProp } from "@/types/timezone";
 
 import { convertIcsDateTime } from "./date";
 import { convertIcsRecurrenceRule } from "./recurrenceRule";
@@ -26,12 +26,12 @@ export const convertIcsTimezoneProp: ConvertTimezoneProp = (
 
   const lineStrings = splitLines(timezonePropString);
 
-  const timezoneProp: Partial<VTimezoneProp> = {
+  const timezoneProp: Partial<IcsTimezoneProp> = {
     type: timezonePropOptions?.type || "STANDARD",
   };
 
   lineStrings.forEach((lineString) => {
-    const { property, line } = getLine<VTimezonePropKey>(lineString);
+    const { property, line } = getLine<IcsTimezonePropKey>(lineString);
 
     const objectKey = VTIMEZONE_PROP_TO_OBJECT_KEYS[property];
 
@@ -62,5 +62,5 @@ export const convertIcsTimezoneProp: ConvertTimezoneProp = (
     timezoneProp[objectKey] = line.value;
   });
 
-  return standardValidate(schema, timezoneProp as VTimezoneProp);
+  return standardValidate(schema, timezoneProp as IcsTimezoneProp);
 };

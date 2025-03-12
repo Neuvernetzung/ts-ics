@@ -26,8 +26,8 @@ export const VEVENT_KEYS = [
   "ATTENDEE",
   "COMMENT",
 ] as const;
-export type VEventKeys = typeof VEVENT_KEYS;
-export type VEventKey = VEventKeys[number];
+export type IcsEventKeys = typeof VEVENT_KEYS;
+export type IcsEventKey = IcsEventKeys[number];
 
 export const VEVENT_OBJECT_KEYS = [
   "summary",
@@ -58,10 +58,10 @@ export const VEVENT_OBJECT_KEYS = [
   "comment",
 ] as const;
 
-export type VEventObjectKeys = typeof VEVENT_OBJECT_KEYS;
-export type VEventObjectKey = VEventObjectKeys[number];
+export type IcsEventObjectKeys = typeof VEVENT_OBJECT_KEYS;
+export type IcsEventObjectKey = IcsEventObjectKeys[number];
 
-export const VEVENT_TO_OBJECT_KEYS: Record<VEventKey, VEventObjectKey> = {
+export const VEVENT_TO_OBJECT_KEYS: Record<IcsEventKey, IcsEventObjectKey> = {
   "LAST-MODIFIED": "lastModified",
   ALARM: "alarm",
   CATEGORIES: "categories",
@@ -90,7 +90,7 @@ export const VEVENT_TO_OBJECT_KEYS: Record<VEventKey, VEventObjectKey> = {
   COMMENT: "comment",
 };
 
-export const VEVENT_TO_KEYS: Record<VEventObjectKey, VEventKey> = {
+export const VEVENT_TO_KEYS: Record<IcsEventObjectKey, IcsEventKey> = {
   alarm: "ALARM",
   categories: "CATEGORIES",
   created: "CREATED",

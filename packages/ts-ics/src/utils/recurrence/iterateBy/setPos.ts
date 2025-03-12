@@ -1,11 +1,11 @@
 import { compareAsc } from "date-fns";
 
-import type { RecurrenceRule } from "@/types";
+import type { IcsRecurrenceRule } from "@/types";
 
 export const iterateBySetPos = (
-  rule: RecurrenceRule,
+  rule: IcsRecurrenceRule,
   dateGroups: Date[][],
-  bySetPos: NonNullable<RecurrenceRule["bySetPos"]>
+  bySetPos: NonNullable<IcsRecurrenceRule["bySetPos"]>
 ): Date[][] => {
   if (
     !rule.byYearday &&

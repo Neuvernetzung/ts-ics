@@ -1,25 +1,25 @@
-import type { DateObject } from "./date";
-import type { Duration } from "./duration";
+import type { IcsDateObject } from "./date";
+import type { IcsDuration } from "./duration";
 import type { ConvertLineType, ParseLineType } from "./parse";
-import type { VTimezone } from "./timezone";
+import type { IcsTimezone } from "./timezone";
 
 export const triggerRelations = ["START", "END"] as const;
 
-export type TriggerRelations = typeof triggerRelations;
-export type TriggerRelation = TriggerRelations[number];
+export type IcsTriggerRelations = typeof triggerRelations;
+export type IcsTriggerRelation = IcsTriggerRelations[number];
 
-export type TriggerUnion =
-  | { type: "absolute"; value: DateObject }
-  | { type: "relative"; value: Duration };
+export type IcsTriggerUnion =
+  | { type: "absolute"; value: IcsDateObject }
+  | { type: "relative"; value: IcsDuration };
 
-export type TriggerOptions = { related?: TriggerRelation };
+export type IcsTriggerOptions = { related?: IcsTriggerRelation };
 
-export type TriggerBase = { options?: TriggerOptions };
+export type IcsTriggerBase = { options?: IcsTriggerOptions };
 
-export type Trigger = TriggerBase & TriggerUnion;
+export type IcsTrigger = IcsTriggerBase & IcsTriggerUnion;
 
-export type ParseTriggerOptions = { timezones?: VTimezone[] };
+export type ParseTriggerOptions = { timezones?: IcsTimezone[] };
 
-export type ConvertTrigger = ConvertLineType<Trigger, ParseTriggerOptions>;
+export type ConvertTrigger = ConvertLineType<IcsTrigger, ParseTriggerOptions>;
 
-export type ParseTrigger = ParseLineType<Trigger, ParseTriggerOptions>;
+export type ParseTrigger = ParseLineType<IcsTrigger, ParseTriggerOptions>;

@@ -2,16 +2,16 @@ import {
   convertIcsTrigger,
   type ParseTrigger,
   triggerRelations,
-  type Trigger,
-  type TriggerBase,
-  type TriggerOptions,
-  type TriggerUnion,
+  type IcsTrigger,
+  type IcsTriggerBase,
+  type IcsTriggerOptions,
+  type IcsTriggerUnion,
 } from "ts-ics";
 import { z } from "zod";
 import { zDateObject } from "./date";
 import { zDuration } from "./duration";
 
-export const zTriggerUnion: z.ZodType<TriggerUnion> = z.discriminatedUnion(
+export const zTriggerUnion: z.ZodType<IcsTriggerUnion> = z.discriminatedUnion(
   "type",
   [
     z.object({ type: z.literal("absolute"), value: zDateObject }),
@@ -19,15 +19,15 @@ export const zTriggerUnion: z.ZodType<TriggerUnion> = z.discriminatedUnion(
   ]
 );
 
-export const zTriggerOptions: z.ZodType<TriggerOptions> = z.object({
+export const zTriggerOptions: z.ZodType<IcsTriggerOptions> = z.object({
   related: z.enum(triggerRelations).optional(),
 });
 
-export const zTriggerBase: z.ZodType<TriggerBase> = z.object({
+export const zTriggerBase: z.ZodType<IcsTriggerBase> = z.object({
   options: zTriggerOptions.optional(),
 });
 
-export const zTrigger: z.ZodType<Trigger> = z.intersection(
+export const zTrigger: z.ZodType<IcsTrigger> = z.intersection(
   zTriggerBase,
   zTriggerUnion
 );

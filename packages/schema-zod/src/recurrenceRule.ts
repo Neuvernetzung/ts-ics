@@ -1,14 +1,14 @@
 import {
   convertIcsRecurrenceRule,
   type ParseRecurrenceRule,
-  type RecurrenceRule,
+  type IcsRecurrenceRule,
   recurrenceRuleFrequencies,
 } from "ts-ics";
 import { z } from "zod";
 import { zDateObject } from "./date";
 import { zWeekDay, zWeekdayNumberObject } from "./weekDay";
 
-export const zRecurrenceRule: z.ZodType<RecurrenceRule> = z.object({
+export const zRecurrenceRule: z.ZodType<IcsRecurrenceRule> = z.object({
   frequency: z.enum(recurrenceRuleFrequencies),
   until: zDateObject.optional(),
   count: z.number().optional(),

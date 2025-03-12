@@ -1,7 +1,11 @@
-import { convertIcsDuration, type Duration, type ParseDuration } from "ts-ics";
+import {
+  convertIcsDuration,
+  type IcsDuration,
+  type ParseDuration,
+} from "ts-ics";
 import { z } from "zod";
 
-export const zDuration: z.ZodType<Duration> = z.object({
+export const zDuration: z.ZodType<IcsDuration> = z.object({
   before: z.boolean().optional(),
   weeks: z.number().optional(),
   days: z.number().optional(),

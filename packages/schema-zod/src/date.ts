@@ -1,5 +1,5 @@
 import {
-  type DateObject,
+  type IcsDateObject,
   dateObjectTypes,
   convertIcsDateTime,
   convertIcsDate,
@@ -13,7 +13,7 @@ export const zDateObjectTzProps = z.object({
   tzoffset: z.string(),
 });
 
-export const zDateObject: z.ZodType<DateObject> = z.object({
+export const zDateObject: z.ZodType<IcsDateObject> = z.object({
   date: z.date(),
   type: z.enum(dateObjectTypes).optional(),
   local: zDateObjectTzProps.optional(),

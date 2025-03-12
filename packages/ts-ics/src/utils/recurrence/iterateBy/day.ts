@@ -13,12 +13,12 @@ import {
   subWeeks,
 } from "date-fns";
 
-import { type RecurrenceRule, type WeekDayNumber, weekDays } from "@/types";
+import { type IcsRecurrenceRule, type WeekDayNumber, weekDays } from "@/types";
 
 export const iterateByDay = (
-  rule: RecurrenceRule,
+  rule: IcsRecurrenceRule,
   dateGroups: Date[][],
-  byDay: NonNullable<RecurrenceRule["byDay"]>,
+  byDay: NonNullable<IcsRecurrenceRule["byDay"]>,
   weekStartsOn: WeekDayNumber
 ): Date[][] => {
   const dayIndeces = byDay.map(({ day, occurence }) => ({
@@ -37,45 +37,40 @@ export const iterateByDay = (
 
     if (rule.byWeekNo) {
       return dateGroups.map((dates) =>
-        dates
-          .flatMap((date) =>
-            dayIndeces.map(({ day }) => setDay(date, day, { weekStartsOn }))
-          )
+        dates.flatMap((date) =>
+          dayIndeces.map(({ day }) => setDay(date, day, { weekStartsOn }))
+        )
       );
     }
 
     if (rule.byMonth) {
       return dateGroups.map((dates) =>
-        dates
-          .flatMap((date) =>
-            dayIndeces
-              .flatMap(({ day, occurence }) =>
-                expandByOccurence(
-                  ignoreLocalTz(startOfMonth(date)),
-                  ignoreLocalTz(endOfMonth(date)),
-                  day,
-                  weekStartsOn,
-                  occurence
-                )
-              )
+        dates.flatMap((date) =>
+          dayIndeces.flatMap(({ day, occurence }) =>
+            expandByOccurence(
+              ignoreLocalTz(startOfMonth(date)),
+              ignoreLocalTz(endOfMonth(date)),
+              day,
+              weekStartsOn,
+              occurence
+            )
           )
+        )
       );
     }
 
     return dateGroups.map((dates) =>
-      dates
-        .flatMap((date) =>
-          dayIndeces
-            .flatMap(({ day, occurence }) =>
-              expandByOccurence(
-                ignoreLocalTz(startOfYear(date)),
-                ignoreLocalTz(endOfYear(date)),
-                day,
-                weekStartsOn,
-                occurence
-              )
-            )
+      dates.flatMap((date) =>
+        dayIndeces.flatMap(({ day, occurence }) =>
+          expandByOccurence(
+            ignoreLocalTz(startOfYear(date)),
+            ignoreLocalTz(endOfYear(date)),
+            day,
+            weekStartsOn,
+            occurence
+          )
         )
+      )
     );
   }
 
@@ -89,28 +84,25 @@ export const iterateByDay = (
     }
 
     return dateGroups.map((dates) =>
-      dates
-        .flatMap((date) =>
-          dayIndeces
-            .flatMap(({ day, occurence }) =>
-              expandByOccurence(
-                ignoreLocalTz(startOfMonth(date)),
-                ignoreLocalTz(endOfMonth(date)),
-                day,
-                weekStartsOn,
-                occurence
-              )
-            )
+      dates.flatMap((date) =>
+        dayIndeces.flatMap(({ day, occurence }) =>
+          expandByOccurence(
+            ignoreLocalTz(startOfMonth(date)),
+            ignoreLocalTz(endOfMonth(date)),
+            day,
+            weekStartsOn,
+            occurence
+          )
         )
+      )
     );
   }
 
   if (rule.frequency === "WEEKLY") {
     return dateGroups.map((dates) =>
-      dates
-        .flatMap((date) =>
-          dayIndeces.map(({ day }) => setDay(date, day, { weekStartsOn }))
-        )
+      dates.flatMap((date) =>
+        dayIndeces.map(({ day }) => setDay(date, day, { weekStartsOn }))
+      )
     );
   }
 

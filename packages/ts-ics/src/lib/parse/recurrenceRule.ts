@@ -1,13 +1,13 @@
 import { COMMA, SEMICOLON } from "@/constants";
 import {
   RRULE_TO_OBJECT_KEYS,
-  type RRuleKey,
-  type RRuleObjectKey,
+  type IcsRecurrenceRuleKey,
+  type IcsRecurrenceRuleObjectKey,
 } from "@/constants/keys/recurrenceRule";
 import {
-  type RecurrenceRule,
+  type IcsRecurrenceRule,
   recurrenceRuleFrequencies,
-  type RecurrenceRuleFrequency,
+  type IcsRecurrenceRuleFrequency,
   type ConvertRecurrenceRule,
 } from "@/types";
 
@@ -17,12 +17,14 @@ import { convertIcsWeekDayNumber } from "./weekDayNumber";
 import { convertIcsWeekDay } from "./weekDay";
 import { standardValidate } from "./utils/standardValidate";
 
-const recurrenceTimestampKeys = ["until"] satisfies RRuleObjectKey[];
+const recurrenceTimestampKeys = [
+  "until",
+] satisfies IcsRecurrenceRuleObjectKey[];
 
 type RecurrenceTimeStampKey = (typeof recurrenceTimestampKeys)[number];
 
 export const recurrenceObjectKeyIsTimeStamp = (
-  objectKey: RRuleObjectKey
+  objectKey: IcsRecurrenceRuleObjectKey
 ): objectKey is RecurrenceTimeStampKey =>
   recurrenceTimestampKeys.includes(objectKey as RecurrenceTimeStampKey);
 
@@ -34,33 +36,38 @@ const recurrenceNumberArrayKeys = [
   "byYearday",
   "byWeekNo",
   "bySetPos",
-] satisfies RRuleObjectKey[];
+] satisfies IcsRecurrenceRuleObjectKey[];
 
 type RecurrenceNumberArrayKey = (typeof recurrenceNumberArrayKeys)[number];
 
 export const recurrenceObjectKeyIsNumberArray = (
-  objectKey: RRuleObjectKey
+  objectKey: IcsRecurrenceRuleObjectKey
 ): objectKey is RecurrenceNumberArrayKey =>
   recurrenceNumberArrayKeys.includes(objectKey as RecurrenceNumberArrayKey);
 
-const recurrenceWeekdayNumberArrayKeys = ["byDay"] satisfies RRuleObjectKey[];
+const recurrenceWeekdayNumberArrayKeys = [
+  "byDay",
+] satisfies IcsRecurrenceRuleObjectKey[];
 
 type RecurrenceWeekDayNumberArrayKey =
   (typeof recurrenceWeekdayNumberArrayKeys)[number];
 
 export const recurrenceObjectKeyIsWeekdayNumberArray = (
-  objectKey: RRuleObjectKey
+  objectKey: IcsRecurrenceRuleObjectKey
 ): objectKey is RecurrenceWeekDayNumberArrayKey =>
   recurrenceWeekdayNumberArrayKeys.includes(
     objectKey as RecurrenceWeekDayNumberArrayKey
   );
 
-const recurrenceNumberKeys = ["count", "interval"] satisfies RRuleObjectKey[];
+const recurrenceNumberKeys = [
+  "count",
+  "interval",
+] satisfies IcsRecurrenceRuleObjectKey[];
 
 type RecurrenceNumberKey = (typeof recurrenceNumberKeys)[number];
 
 export const recurrenceObjectKeyIsNumber = (
-  objectKey: RRuleObjectKey
+  objectKey: IcsRecurrenceRuleObjectKey
 ): objectKey is RecurrenceNumberKey =>
   recurrenceNumberKeys.includes(objectKey as RecurrenceNumberKey);
 
@@ -69,9 +76,9 @@ export const convertIcsRecurrenceRule: ConvertRecurrenceRule = (
   line,
   recurrenceRuleOptions
 ) => {
-  const rule: Partial<RecurrenceRule> = {};
+  const rule: Partial<IcsRecurrenceRule> = {};
 
-  const options = getOptions<RRuleKey>(line.value.split(SEMICOLON));
+  const options = getOptions<IcsRecurrenceRuleKey>(line.value.split(SEMICOLON));
 
   options.forEach((r) => {
     const { property, value } = r;
@@ -119,11 +126,11 @@ export const convertIcsRecurrenceRule: ConvertRecurrenceRule = (
     if (objectKey === "frequency") {
       if (
         !value ||
-        !recurrenceRuleFrequencies.includes(value as RecurrenceRuleFrequency)
+        !recurrenceRuleFrequencies.includes(value as IcsRecurrenceRuleFrequency)
       )
         return;
 
-      rule[objectKey] = value as RecurrenceRuleFrequency;
+      rule[objectKey] = value as IcsRecurrenceRuleFrequency;
       return;
     }
 
@@ -133,5 +140,5 @@ export const convertIcsRecurrenceRule: ConvertRecurrenceRule = (
     }
   });
 
-  return standardValidate(schema, rule as RecurrenceRule);
+  return standardValidate(schema, rule as IcsRecurrenceRule);
 };

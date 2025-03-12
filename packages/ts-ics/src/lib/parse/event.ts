@@ -1,7 +1,10 @@
 import { COMMA, getAlarmRegex, replaceEventRegex } from "@/constants";
-import { VEVENT_TO_OBJECT_KEYS, type VEventKey } from "@/constants/keys/event";
-import type { VEvent, DateObject, ConvertEvent } from "@/types";
-import type { Attendee } from "@/types/attendee";
+import {
+  VEVENT_TO_OBJECT_KEYS,
+  type IcsEventKey,
+} from "@/constants/keys/event";
+import type { IcsEvent, IcsDateObject, ConvertEvent } from "@/types";
+import type { IcsAttendee } from "@/types/attendee";
 
 import {
   objectKeyIsArrayOfStrings,
@@ -33,13 +36,13 @@ export const convertIcsEvent: ConvertEvent = (
 
   const lineStrings = splitLines(eventString.replace(getAlarmRegex, ""));
 
-  const event: Partial<VEvent> = {};
+  const event: Partial<IcsEvent> = {};
 
-  const attendees: Attendee[] = [];
-  const exceptionDates: DateObject[] = [];
+  const attendees: IcsAttendee[] = [];
+  const exceptionDates: IcsDateObject[] = [];
 
   lineStrings.forEach((lineString) => {
-    const { property, line } = getLine<VEventKey>(lineString);
+    const { property, line } = getLine<IcsEventKey>(lineString);
 
     const objectKey = VEVENT_TO_OBJECT_KEYS[property];
 
@@ -146,5 +149,5 @@ export const convertIcsEvent: ConvertEvent = (
     event.exceptionDates = exceptionDates;
   }
 
-  return standardValidate(schema, event as VEvent);
+  return standardValidate(schema, event as IcsEvent);
 };

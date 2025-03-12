@@ -1,52 +1,52 @@
-import type { VAlarm } from "./alarm";
-import type { Attendee } from "./attendee";
-import type { DateObject } from "./date";
-import type { Duration } from "./duration";
-import type { Organizer } from "./organizer";
-import type { RecurrenceRule } from "./recurrenceRule";
-import type { RecurrenceId } from "./recurrenceId";
-import type { StatusType } from "./status";
-import type { ExceptionDates } from "./exceptionDate";
-import type { ClassType } from "./class";
-import type { TimeTransparentType } from "./timeTransparent";
-import type { VTimezone } from "./timezone";
+import type { IcsAlarm } from "./alarm";
+import type { IcsAttendee } from "./attendee";
+import type { IcsDateObject } from "./date";
+import type { IcsDuration } from "./duration";
+import type { IcsOrganizer } from "./organizer";
+import type { IcsRecurrenceRule } from "./recurrenceRule";
+import type { IcsRecurrenceId } from "./recurrenceId";
+import type { IcsStatusType } from "./status";
+import type { IcsExceptionDates } from "./exceptionDate";
+import type { IcsClassType } from "./class";
+import type { IcsTimeTransparentType } from "./timeTransparent";
+import type { IcsTimezone } from "./timezone";
 import type { ConvertLinesType, ParseLinesType } from "./parse";
 
-export type DurationOrEnd =
-  | { duration: Duration; end?: never }
-  | { duration?: never; end: DateObject };
+export type IcsEventDurationOrEnd =
+  | { duration: IcsDuration; end?: never }
+  | { duration?: never; end: IcsDateObject };
 
-export type VEventBase = {
+export type IcsEventBase = {
   summary: string;
   uid: string;
-  created?: DateObject;
-  lastModified?: DateObject;
-  stamp: DateObject;
-  start: DateObject;
+  created?: IcsDateObject;
+  lastModified?: IcsDateObject;
+  stamp: IcsDateObject;
+  start: IcsDateObject;
   location?: string;
   description?: string;
   categories?: string[];
-  exceptionDates?: ExceptionDates;
-  recurrenceRule?: RecurrenceRule;
-  alarms?: VAlarm[];
-  timeTransparent?: TimeTransparentType;
+  exceptionDates?: IcsExceptionDates;
+  recurrenceRule?: IcsRecurrenceRule;
+  alarms?: IcsAlarm[];
+  timeTransparent?: IcsTimeTransparentType;
   url?: string;
   geo?: string;
-  class?: ClassType;
-  organizer?: Organizer;
+  class?: IcsClassType;
+  organizer?: IcsOrganizer;
   priority?: string;
   sequence?: number;
-  status?: StatusType;
+  status?: IcsStatusType;
   attach?: string;
-  recurrenceId?: RecurrenceId;
-  attendees?: Attendee[];
+  recurrenceId?: IcsRecurrenceId;
+  attendees?: IcsAttendee[];
   comment?: string;
 };
 
-export type VEvent = VEventBase & DurationOrEnd;
+export type IcsEvent = IcsEventBase & IcsEventDurationOrEnd;
 
-export type ParseEventOptions = { timezones?: VTimezone[] };
+export type ParseEventOptions = { timezones?: IcsTimezone[] };
 
-export type ConvertEvent = ConvertLinesType<VEvent, ParseEventOptions>;
+export type ConvertEvent = ConvertLinesType<IcsEvent, ParseEventOptions>;
 
-export type ParseEvent = ParseLinesType<VEvent, ParseEventOptions>;
+export type ParseEvent = ParseLinesType<IcsEvent, ParseEventOptions>;

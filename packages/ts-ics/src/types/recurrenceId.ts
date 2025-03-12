@@ -1,20 +1,20 @@
-import type { DateObject } from "./date";
+import type { IcsDateObject } from "./date";
 import type { ConvertLineType, ParseLineType } from "./parse";
-import type { VTimezone } from "./timezone";
+import type { IcsTimezone } from "./timezone";
 
-export type RecurrenceId = {
+export type IcsRecurrenceId = {
   range?: "THISANDFUTURE";
-  value: DateObject;
+  value: IcsDateObject;
 };
 
-export type ParseRecurrenceIdOptions = { timezones?: VTimezone[] };
+export type ParseRecurrenceIdOptions = { timezones?: IcsTimezone[] };
 
 export type ConvertRecurrenceId = ConvertLineType<
-  RecurrenceId,
+  IcsRecurrenceId,
   ParseRecurrenceIdOptions
 >;
 
 export type ParseRecurrenceId = ParseLineType<
-  RecurrenceId,
+  IcsRecurrenceId,
   ParseRecurrenceIdOptions
 >;

@@ -4,23 +4,26 @@ import {
   calendarVersions,
   convertIcsCalendar,
   type ParseCalendar,
-  type VCalendar,
+  type IcsCalendar,
 } from "ts-ics";
-import { zVTimezone } from "./timezone";
-import { zVEvent } from "./event";
+import { zIcsTimezone } from "./timezone";
+import { zIcsEvent } from "./event";
 
 export const zVCalenderVersion = z.enum(calendarVersions);
 
-export const zVCalendarMethod = z.union([z.enum(calendarMethods), z.string()]);
+export const zIcsCalendarMethod = z.union([
+  z.enum(calendarMethods),
+  z.string(),
+]);
 
-export const zVCalendar: z.ZodType<VCalendar> = z.object({
+export const zIcsCalendar: z.ZodType<IcsCalendar> = z.object({
   version: zVCalenderVersion,
   prodId: z.string(),
-  method: zVCalendarMethod.optional(),
-  timezones: z.array(zVTimezone).optional(),
-  events: z.array(zVEvent).optional(),
+  method: zIcsCalendarMethod.optional(),
+  timezones: z.array(zIcsTimezone).optional(),
+  events: z.array(zIcsEvent).optional(),
   name: z.string().optional(),
 });
 
 export const parseIcsCalendar: ParseCalendar = (...props) =>
-  convertIcsCalendar(zVCalendar, ...props);
+  convertIcsCalendar(zIcsCalendar, ...props);

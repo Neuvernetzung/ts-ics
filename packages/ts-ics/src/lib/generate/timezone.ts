@@ -1,5 +1,5 @@
 import { VTIMEZONE_TO_KEYS } from "@/constants/keys/timezone";
-import type { VTimezone } from "@/types/timezone";
+import type { IcsTimezone } from "@/types/timezone";
 
 import { generateIcsDateTime } from "./date";
 import { generateIcsTimezoneProp } from "./timezoneProp";
@@ -10,7 +10,7 @@ import {
 } from "./utils/addLine";
 import { getKeys } from "./utils/getKeys";
 
-export const generateIcsTimezone = (timezone: VTimezone) => {
+export const generateIcsTimezone = (timezone: IcsTimezone) => {
   const timezoneKeys = getKeys(timezone);
 
   let icsString = "";

@@ -1,6 +1,6 @@
 import { generateIcsEvent } from "@/lib";
 import { convertIcsEvent } from "@/lib/parse/event";
-import type { VEvent } from "@/types";
+import type { IcsEvent } from "@/types";
 import { readFile } from "node:fs/promises";
 import { icsTestData } from "../utils";
 
@@ -78,7 +78,7 @@ it("Test ICS Event With Long Description Parse", async () => {
 });
 
 it("Expect 'formatLines' to handle multiple line breaks correctly", async () => {
-  const event: VEvent = {
+  const event: IcsEvent = {
     start: { date: new Date("2024-08-23T22:00:00Z") },
     stamp: { date: new Date("2024-08-23T22:00:00Z") },
     summary: "Holiday",

@@ -1,4 +1,4 @@
-import type { RecurrenceId } from "@/types/recurrenceId";
+import type { IcsRecurrenceId } from "@/types/recurrenceId";
 
 import { convertIcsTimeStamp } from "./timeStamp";
 import type { ConvertRecurrenceId } from "@/types";
@@ -11,5 +11,5 @@ export const convertIcsRecurrenceId: ConvertRecurrenceId = (
 ) =>
   standardValidate(schema, {
     value: convertIcsTimeStamp(undefined, line, options),
-    range: line.options?.RANGE as RecurrenceId["range"],
+    range: line.options?.RANGE as IcsRecurrenceId["range"],
   });

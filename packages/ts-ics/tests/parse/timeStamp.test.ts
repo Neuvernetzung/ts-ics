@@ -46,7 +46,7 @@ it("Test Ics Timestamp Parse - UTC", async () => {
   expect(() => parsed).not.toThrow();
 });
 
-it("Test Ics Timestamp Parse - VTimezones - Standard", async () => {
+it("Test Ics Timestamp Parse - IcsTimezones - Standard", async () => {
   const timestamp = "DTSTART;TZID=Europe/Berlin:20231106T140000";
 
   const timezoneString = readFileSync(
@@ -73,7 +73,7 @@ it("Test Ics Timestamp Parse - VTimezones - Standard", async () => {
   expect(() => parsed).not.toThrow();
 });
 
-it("Test Ics Timestamp Parse - VTimezones - Daylight", async () => {
+it("Test Ics Timestamp Parse - IcsTimezones - Daylight", async () => {
   const timestamp = "DTSTART;TZID=Europe/Berlin:20230906T140000";
 
   const timezoneString = readFileSync(

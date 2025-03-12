@@ -1,6 +1,6 @@
-import type { Duration } from "@/types";
+import type { IcsDuration } from "@/types";
 
-export const generateIcsDuration = (duration: Duration) => {
+export const generateIcsDuration = (duration: IcsDuration) => {
   let icsString = "";
 
   if (duration.before) {

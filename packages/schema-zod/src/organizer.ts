@@ -1,11 +1,11 @@
 import {
   convertIcsOrganizer,
-  type Organizer,
+  type IcsOrganizer,
   type ParseOrganizer,
 } from "ts-ics";
 import { z } from "zod";
 
-export const zOrganizer: z.ZodType<Organizer> = z.object({
+export const zOrganizer: z.ZodType<IcsOrganizer> = z.object({
   name: z.string().optional(),
   email: z.string().email(),
   dir: z.string().optional(),

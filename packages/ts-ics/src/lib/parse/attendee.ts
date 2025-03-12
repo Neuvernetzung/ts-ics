@@ -1,4 +1,7 @@
-import type { ConvertAttendee, AttendeePartStatusType } from "@/types/attendee";
+import type {
+  ConvertAttendee,
+  IcsAttendeePartStatusType,
+} from "@/types/attendee";
 
 import { replaceMailTo } from "./utils/replaceMailTo";
 import { standardValidate } from "./utils/standardValidate";
@@ -14,7 +17,7 @@ export const convertIcsAttendee: ConvertAttendee = (schema, line) =>
       ? replaceMailTo(line.options.MEMBER)
       : undefined,
     name: line.options?.CN,
-    partstat: line.options?.PARTSTAT as AttendeePartStatusType,
+    partstat: line.options?.PARTSTAT as IcsAttendeePartStatusType,
     role: line.options?.ROLE,
     sentBy: line.options?.["SENT-BY"]
       ? replaceMailTo(line.options["SENT-BY"])

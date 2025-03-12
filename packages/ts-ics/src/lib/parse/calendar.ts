@@ -3,8 +3,11 @@ import {
   getTimezoneRegex,
   replaceCalendarRegex,
 } from "@/constants";
-import { VCALENDAR_TO_OBJECT_KEYS, type VCalendarKey } from "@/constants/keys";
-import type { ConvertCalendar, VCalendarVersion, VCalendar } from "@/types";
+import {
+  VCALENDAR_TO_OBJECT_KEYS,
+  type IcsCalendarKey,
+} from "@/constants/keys";
+import type { ConvertCalendar, IcsCalendarVersion, IcsCalendar } from "@/types";
 
 import { convertIcsEvent } from "./event";
 import { convertIcsTimezone } from "./timezone";
@@ -19,17 +22,17 @@ export const convertIcsCalendar: ConvertCalendar = (schema, calendarString) => {
     cleanedFileString.replace(getEventRegex, "").replace(getTimezoneRegex, "")
   );
 
-  const calendar: Partial<VCalendar> = {};
+  const calendar: Partial<IcsCalendar> = {};
 
   lineStrings.forEach((lineString) => {
-    const { property, line } = getLine<VCalendarKey>(lineString);
+    const { property, line } = getLine<IcsCalendarKey>(lineString);
 
     const objectKey = VCALENDAR_TO_OBJECT_KEYS[property];
 
     if (!objectKey) return; // unknown Object key
 
     if (objectKey === "version") {
-      calendar[objectKey] = line.value as VCalendarVersion;
+      calendar[objectKey] = line.value as IcsCalendarVersion;
       return;
     }
 
@@ -60,5 +63,5 @@ export const convertIcsCalendar: ConvertCalendar = (schema, calendarString) => {
     calendar.events = events;
   }
 
-  return standardValidate(schema, calendar as VCalendar);
+  return standardValidate(schema, calendar as IcsCalendar);
 };

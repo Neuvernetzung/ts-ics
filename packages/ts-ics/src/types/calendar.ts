@@ -1,26 +1,26 @@
-import type { VEvent } from "./event";
+import type { IcsEvent } from "./event";
 import type { ConvertLinesType, ParseLinesType } from "./parse";
-import type { VTimezone } from "./timezone";
+import type { IcsTimezone } from "./timezone";
 
 export const calendarMethods = ["PUBLISH"] as const;
 
-export type VCalendarMethods = typeof calendarMethods;
-export type VCalenderMethod = VCalendarMethods[number];
+export type IcsCalendarMethods = typeof calendarMethods;
+export type IcsCalenderMethod = IcsCalendarMethods[number];
 
 export const calendarVersions = ["2.0"] as const;
 
-export type VCalendarVersions = typeof calendarVersions;
-export type VCalendarVersion = VCalendarVersions[number];
+export type IcsCalendarVersions = typeof calendarVersions;
+export type IcsCalendarVersion = IcsCalendarVersions[number];
 
-export type VCalendar = {
-  version: VCalendarVersion;
+export type IcsCalendar = {
+  version: IcsCalendarVersion;
   prodId: string;
-  method?: VCalenderMethod | string;
-  timezones?: VTimezone[];
-  events?: VEvent[];
+  method?: IcsCalenderMethod | string;
+  timezones?: IcsTimezone[];
+  events?: IcsEvent[];
   name?: string;
 };
 
-export type ConvertCalendar = ConvertLinesType<VCalendar>;
+export type ConvertCalendar = ConvertLinesType<IcsCalendar>;
 
-export type ParseCalendar = ParseLinesType<VCalendar>;
+export type ParseCalendar = ParseLinesType<IcsCalendar>;

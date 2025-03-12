@@ -1,45 +1,45 @@
-import type { DateObject } from "./date";
+import type { IcsDateObject } from "./date";
 import type { ConvertLinesType, ParseLinesType } from "./parse";
-import type { RecurrenceRule } from "./recurrenceRule";
+import type { IcsRecurrenceRule } from "./recurrenceRule";
 
 export const timezonePropTypes = ["STANDARD", "DAYLIGHT"] as const;
 
-export type VTimezonePropTypes = typeof timezonePropTypes;
-export type VTimezonePropType = VTimezonePropTypes[number];
+export type IcsTimezonePropTypes = typeof timezonePropTypes;
+export type IcsTimezonePropType = IcsTimezonePropTypes[number];
 
-export type VTimezoneProp = {
-  type: VTimezonePropType;
+export type IcsTimezoneProp = {
+  type: IcsTimezonePropType;
   start: Date;
   offsetTo: string;
   offsetFrom: string;
-  recurrenceRule?: RecurrenceRule;
+  recurrenceRule?: IcsRecurrenceRule;
   comment?: string;
-  recurrenceDate?: DateObject;
+  recurrenceDate?: IcsDateObject;
   name?: string;
 };
 
 export type ParseTimezonePropOptions = {
-  type?: VTimezonePropType;
-  timezones?: VTimezone[];
+  type?: IcsTimezonePropType;
+  timezones?: IcsTimezone[];
 };
 
 export type ConvertTimezoneProp = ConvertLinesType<
-  VTimezoneProp,
+  IcsTimezoneProp,
   ParseTimezonePropOptions
 >;
 
 export type ParseTimezoneProp = ParseLinesType<
-  VTimezoneProp,
+  IcsTimezoneProp,
   ParseTimezonePropOptions
 >;
 
-export type VTimezone = {
+export type IcsTimezone = {
   id: string;
   lastModified?: Date;
   url?: string;
-  props: VTimezoneProp[];
+  props: IcsTimezoneProp[];
 };
 
-export type ConvertTimezone = ConvertLinesType<VTimezone>;
+export type ConvertTimezone = ConvertLinesType<IcsTimezone>;
 
-export type ParseTimezone = ParseLinesType<VTimezone>;
+export type ParseTimezone = ParseLinesType<IcsTimezone>;

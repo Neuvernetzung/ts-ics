@@ -1,10 +1,10 @@
-import type { Attendee } from "@/types/attendee";
+import type { IcsAttendee } from "@/types/attendee";
 
 import { generateIcsMail } from "./mail";
 import { generateIcsLine } from "./utils/addLine";
 import { generateIcsOptions } from "./utils/generateOptions";
 
-export const generateIcsAttendee = (attendee: Attendee, key: string) => {
+export const generateIcsAttendee = (attendee: IcsAttendee, key: string) => {
   const options = generateIcsOptions(
     [
       attendee.dir && { key: "DIR", value: `"${attendee.dir}"` },

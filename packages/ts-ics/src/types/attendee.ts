@@ -8,20 +8,20 @@ export const attendeePartStatusTypes = [
   "DELEGATED",
 ] as const;
 
-export type AttendeePartStatusTypes = typeof attendeePartStatusTypes;
-export type AttendeePartStatusType = AttendeePartStatusTypes[number];
+export type IcsAttendeePartStatusTypes = typeof attendeePartStatusTypes;
+export type IcsAttendeePartStatusType = IcsAttendeePartStatusTypes[number];
 
-export type Attendee = {
+export type IcsAttendee = {
   email: string;
   name?: string;
   member?: string;
   delegatedFrom?: string;
   role?: string;
-  partstat?: AttendeePartStatusType;
+  partstat?: IcsAttendeePartStatusType;
   dir?: string;
   sentBy?: string;
 };
 
-export type ConvertAttendee = ConvertLineType<Attendee>;
+export type ConvertAttendee = ConvertLineType<IcsAttendee>;
 
-export type ParseAttendee = ParseLineType<Attendee>;
+export type ParseAttendee = ParseLineType<IcsAttendee>;

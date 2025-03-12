@@ -1,12 +1,12 @@
 import {
-  type Attendee,
+  type IcsAttendee,
   attendeePartStatusTypes,
   convertIcsAttendee,
   type ParseAttendee,
 } from "ts-ics";
 import { z } from "zod";
 
-export const zAttendee: z.ZodType<Attendee> = z.object({
+export const zAttendee: z.ZodType<IcsAttendee> = z.object({
   email: z.string().email(),
   name: z.string().optional(),
   member: z.string().email().optional(),

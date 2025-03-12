@@ -19,9 +19,9 @@ Many of the Ics packages provide good functionality, however none of these are t
 ### generateIcsCalendar
 
 ```ts
-import { generateIcsCalendar, type VCalendar } from "ts-ics";
+import { generateIcsCalendar, type IcsCalendar } from "ts-ics";
 
-const calendar: VCalendar = {...}
+const calendar: IcsCalendar = {...}
 
 const icsCalendarString = generateIcsCalendar(calendar);
 ```
@@ -29,9 +29,9 @@ const icsCalendarString = generateIcsCalendar(calendar);
 ### generateIcsEvent
 
 ```ts
-import { generateIcsEvent, type VEvent } from "ts-ics";
+import { generateIcsEvent, type IcsEvent } from "ts-ics";
 
-const event: VEvent = {...}
+const event: IcsEvent = {...}
 
 const icsEventString = generateIcsEvent(event);
 ```
@@ -43,17 +43,17 @@ const icsEventString = generateIcsEvent(event);
 #### parse with zod
 
 ```ts
-import { parseIcsCalendar, type VCalendar } from "ts-ics";
+import { parseIcsCalendar, type IcsCalendar } from "ts-ics";
 
-const calendarParsed: VCalendar = parseIcsCalendar(icsCalendarString);
+const calendarParsed: IcsCalendar = parseIcsCalendar(icsCalendarString);
 ```
 
 #### without zod parsing
 
 ```ts
-import { convertIcsCalendar, type VCalendar } from "ts-ics";
+import { convertIcsCalendar, type IcsCalendar } from "ts-ics";
 
-const calendar: VCalendar = convertIcsCalendar(icsCalendarString);
+const calendar: IcsCalendar = convertIcsCalendar(icsCalendarString);
 ```
 
 ### parseIcsEvent
@@ -61,17 +61,17 @@ const calendar: VCalendar = convertIcsCalendar(icsCalendarString);
 #### parse with zod
 
 ```ts
-import { parseIcsEvent, type VEvent } from "ts-ics";
+import { parseIcsEvent, type IcsEvent } from "ts-ics";
 
-const eventParsed: VEvent = parseIcsEvent(icsEventString);
+const eventParsed: IcsEvent = parseIcsEvent(icsEventString);
 ```
 
 #### without zod parsing
 
 ```ts
-import { convertIcsEvent, type VEvent } from "ts-ics";
+import { convertIcsEvent, type IcsEvent } from "ts-ics";
 
-const event: VEvent = convertIcsEvent(icsEventString);
+const event: IcsEvent = convertIcsEvent(icsEventString);
 ```
 
 ## utils

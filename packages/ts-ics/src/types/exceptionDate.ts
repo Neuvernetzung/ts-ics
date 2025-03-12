@@ -1,19 +1,19 @@
-import type { DateObject } from "./date";
+import type { IcsDateObject } from "./date";
 import type { ConvertLineType, ParseLineType } from "./parse";
-import type { VTimezone } from "./timezone";
+import type { IcsTimezone } from "./timezone";
 
-export type ExceptionDate = DateObject;
+export type IcsExceptionDate = IcsDateObject;
 
-export type ExceptionDates = ExceptionDate[];
+export type IcsExceptionDates = IcsExceptionDate[];
 
-export type ParseExceptionDatesOptions = { timezones?: VTimezone[] };
+export type ParseExceptionDatesOptions = { timezones?: IcsTimezone[] };
 
 export type ConvertExceptionDates = ConvertLineType<
-  ExceptionDates,
+  IcsExceptionDates,
   ParseExceptionDatesOptions
 >;
 
 export type ParseExceptionDates = ParseLineType<
-  ExceptionDates,
+  IcsExceptionDates,
   ParseExceptionDatesOptions
 >;

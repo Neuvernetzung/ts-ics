@@ -1,14 +1,14 @@
 import {
   convertIcsWeekDay,
   type ParseWeekDay,
-  type WeekdayNumberObject,
+  type IcsWeekdayNumber,
   weekDays,
 } from "ts-ics";
 import { z } from "zod";
 
 export const zWeekDay = z.enum(weekDays);
 
-export const zWeekdayNumberObject: z.ZodType<WeekdayNumberObject> = z.object({
+export const zWeekdayNumberObject: z.ZodType<IcsWeekdayNumber> = z.object({
   day: zWeekDay,
   occurence: z.number().optional(),
 });

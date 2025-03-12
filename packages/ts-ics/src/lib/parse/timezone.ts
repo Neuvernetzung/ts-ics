@@ -5,9 +5,9 @@ import {
 } from "@/constants";
 import {
   VTIMEZONE_TO_OBJECT_KEYS,
-  type VTimezoneKey,
+  type IcsTimezoneKey,
 } from "@/constants/keys/timezone";
-import type { ConvertTimezone, VTimezone } from "@/types/timezone";
+import type { ConvertTimezone, IcsTimezone } from "@/types/timezone";
 
 import { convertIcsDateTime } from "./date";
 import { convertIcsTimezoneProp } from "./timezoneProp";
@@ -27,12 +27,13 @@ export const convertIcsTimezone: ConvertTimezone = (
       .replace(getTimezoneDaylightRegex, "")
   );
 
-  const timezone: Partial<VTimezone> & Required<Pick<VTimezone, "props">> = {
-    props: [],
-  };
+  const timezone: Partial<IcsTimezone> & Required<Pick<IcsTimezone, "props">> =
+    {
+      props: [],
+    };
 
   lineStrings.forEach((lineString) => {
-    const { property, line } = getLine<VTimezoneKey>(lineString);
+    const { property, line } = getLine<IcsTimezoneKey>(lineString);
 
     const objectKey = VTIMEZONE_TO_OBJECT_KEYS[property];
 
@@ -75,5 +76,5 @@ export const convertIcsTimezone: ConvertTimezone = (
     });
   }
 
-  return standardValidate(schema, timezone as VTimezone);
+  return standardValidate(schema, timezone as IcsTimezone);
 };

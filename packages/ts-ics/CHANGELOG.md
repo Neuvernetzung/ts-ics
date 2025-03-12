@@ -23,7 +23,7 @@
 
 ### Patch Changes
 
-- 52f4f6a: RRule Until - Correctly parse date value #123
+- 52f4f6a: IcsRecurrenceRule Until - Correctly parse date value #123
 - f531823: Dont throw on apple values #126
 
 ## 1.6.3

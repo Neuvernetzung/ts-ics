@@ -1,8 +1,11 @@
 import { replaceAlarmRegex } from "@/constants";
-import { VALARM_TO_OBJECT_KEYS, type VAlarmKey } from "@/constants/keys/alarm";
-import type { ConvertAlarm, VAlarm } from "@/types";
-import type { Attachment } from "@/types/attachment";
-import type { Attendee } from "@/types/attendee";
+import {
+  VALARM_TO_OBJECT_KEYS,
+  type IcsAlarmKey,
+} from "@/constants/keys/alarm";
+import type { ConvertAlarm, IcsAlarm } from "@/types";
+import type { IcsAttachment } from "@/types/attachment";
+import type { IcsAttendee } from "@/types/attendee";
 
 import { convertIcsAttachment } from "./attachment";
 import { convertIcsAttendee } from "./attendee";
@@ -16,19 +19,19 @@ export const convertIcsAlarm: ConvertAlarm = (
   schema,
   rawAlarmString,
   alarmOptions
-): VAlarm => {
+): IcsAlarm => {
   const alarmString = rawAlarmString.replace(replaceAlarmRegex, "");
 
   const lineStrings = splitLines(alarmString);
 
-  const alarm: Partial<VAlarm> = {};
+  const alarm: Partial<IcsAlarm> = {};
 
-  const attachments: Attachment[] = [];
+  const attachments: IcsAttachment[] = [];
 
-  const attendees: Attendee[] = [];
+  const attendees: IcsAttendee[] = [];
 
   lineStrings.forEach((lineString) => {
-    const { property, line } = getLine<VAlarmKey>(lineString);
+    const { property, line } = getLine<IcsAlarmKey>(lineString);
 
     const objectKey = VALARM_TO_OBJECT_KEYS[property];
 
@@ -72,5 +75,5 @@ export const convertIcsAlarm: ConvertAlarm = (
     alarm.attendees = attendees;
   }
 
-  return standardValidate(schema, alarm as VAlarm);
+  return standardValidate(schema, alarm as IcsAlarm);
 };

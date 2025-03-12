@@ -1,6 +1,6 @@
 import type { ConvertLineType, ParseLineType } from "./parse";
 
-export type Duration = {
+export type IcsDuration = {
   before?: boolean;
   weeks?: number;
   days?: number;
@@ -9,6 +9,6 @@ export type Duration = {
   seconds?: number;
 };
 
-export type ConvertDuration = ConvertLineType<Duration>;
+export type ConvertDuration = ConvertLineType<IcsDuration>;
 
-export type ParseDuration = ParseLineType<Duration>;
+export type ParseDuration = ParseLineType<IcsDuration>;

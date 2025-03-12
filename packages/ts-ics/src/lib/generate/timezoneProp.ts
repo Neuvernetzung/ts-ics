@@ -1,6 +1,6 @@
 import { VTIMEZONE_PROP_TO_KEYS } from "@/constants/keys/timezoneProp";
-import type { DateObject, RecurrenceRule } from "@/types";
-import type { VTimezoneProp } from "@/types/timezone";
+import type { IcsDateObject, IcsRecurrenceRule } from "@/types";
+import type { IcsTimezoneProp } from "@/types/timezone";
 
 import { generateIcsDateTime } from "./date";
 import { generateIcsRecurrenceRule } from "./recurrenceRule";
@@ -12,7 +12,7 @@ import {
 } from "./utils/addLine";
 import { getKeys } from "./utils/getKeys";
 
-export const generateIcsTimezoneProp = (timezoneProp: VTimezoneProp) => {
+export const generateIcsTimezoneProp = (timezoneProp: IcsTimezoneProp) => {
   const timezonePropKeys = getKeys(timezoneProp);
 
   let icsString = "";
@@ -34,12 +34,12 @@ export const generateIcsTimezoneProp = (timezoneProp: VTimezoneProp) => {
     }
 
     if (key === "recurrenceRule") {
-      icsString += generateIcsRecurrenceRule(value as RecurrenceRule);
+      icsString += generateIcsRecurrenceRule(value as IcsRecurrenceRule);
       return;
     }
 
     if (key === "recurrenceDate") {
-      icsString += generateIcsTimeStamp(icsKey, value as DateObject);
+      icsString += generateIcsTimeStamp(icsKey, value as IcsDateObject);
       return;
     }
 

@@ -1,8 +1,8 @@
 import {
   convertIcsEvent,
-  type VEvent,
-  type VEventBase,
-  type DurationOrEnd,
+  type IcsEvent,
+  type IcsEventBase,
+  type IcsEventDurationOrEnd,
   type ParseEvent,
 } from "ts-ics";
 import { z } from "zod";
@@ -11,19 +11,19 @@ import { zExceptionDates } from "./exceptionDate";
 import { zAttendee } from "./attendee";
 import { zDuration } from "./duration";
 import { zRecurrenceRule } from "./recurrenceRule";
-import { zVAlarm } from "./alarm";
+import { zIcsAlarm } from "./alarm";
 import { zTimeTransparentType } from "./timeTransparent";
 import { zClassType } from "./class";
 import { zOrganizer } from "./organizer";
 import { zStatusType } from "./status";
 import { zRecurrenceId } from "./recurrenceId";
 
-export const zDurationOrEnd: z.ZodType<DurationOrEnd> = z.union([
+export const zDurationOrEnd: z.ZodType<IcsEventDurationOrEnd> = z.union([
   z.object({ duration: zDuration, end: z.never().optional() }),
   z.object({ duration: z.never().optional(), end: zDateObject }),
 ]);
 
-export const zVEventBase: z.ZodType<VEventBase> = z.object({
+export const zIcsEventBase: z.ZodType<IcsEventBase> = z.object({
   summary: z.string(),
   uid: z.string(),
   created: zDateObject.optional(),
@@ -35,7 +35,7 @@ export const zVEventBase: z.ZodType<VEventBase> = z.object({
   categories: z.array(z.string()).optional(),
   exceptionDates: zExceptionDates.optional(),
   recurrenceRule: zRecurrenceRule.optional(),
-  alarms: z.array(zVAlarm).optional(),
+  alarms: z.array(zIcsAlarm).optional(),
   timeTransparent: zTimeTransparentType.optional(),
   url: z.string().url().optional(),
   geo: z.string().optional(),
@@ -50,10 +50,10 @@ export const zVEventBase: z.ZodType<VEventBase> = z.object({
   comment: z.string().optional(),
 });
 
-export const zVEvent: z.ZodType<VEvent> = z.intersection(
-  zVEventBase,
+export const zIcsEvent: z.ZodType<IcsEvent> = z.intersection(
+  zIcsEventBase,
   zDurationOrEnd
 );
 
 export const parseIcsEvent: ParseEvent = (...props) =>
-  convertIcsEvent(zVEvent, ...props);
+  convertIcsEvent(zIcsEvent, ...props);

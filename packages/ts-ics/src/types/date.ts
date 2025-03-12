@@ -1,5 +1,5 @@
 import type { ConvertLineType, ParseLineType } from "./parse";
-import type { VTimezone } from "./timezone";
+import type { IcsTimezone } from "./timezone";
 
 export const dateObjectTypes = ["DATE", "DATE-TIME"] as const;
 
@@ -12,7 +12,7 @@ export type DateObjectTzProps = {
   tzoffset: string;
 };
 
-export type DateObject = {
+export type IcsDateObject = {
   date: Date;
   type?: DateObjectType;
   local?: DateObjectTzProps;
@@ -22,11 +22,14 @@ export type ConvertDate = ConvertLineType<Date>;
 
 export type ParseDate = ParseLineType<Date>;
 
-export type ParseTimeStampOptions = { timezones?: VTimezone[] };
+export type ParseTimeStampOptions = { timezones?: IcsTimezone[] };
 
 export type ConvertTimeStamp = ConvertLineType<
-  DateObject,
+  IcsDateObject,
   ParseTimeStampOptions
 >;
 
-export type ParseTimeStamp = ParseLineType<DateObject, ParseTimeStampOptions>;
+export type ParseTimeStamp = ParseLineType<
+  IcsDateObject,
+  ParseTimeStampOptions
+>;

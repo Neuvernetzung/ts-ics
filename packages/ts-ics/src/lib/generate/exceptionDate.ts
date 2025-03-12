@@ -1,7 +1,7 @@
-import type { ExceptionDate } from "@/types/exceptionDate";
+import type { IcsExceptionDate } from "@/types/exceptionDate";
 import { generateIcsTimeStamp } from "./timeStamp";
 
 export const generateIcsExceptionDate = (
-  exceptionDate: ExceptionDate,
+  exceptionDate: IcsExceptionDate,
   key: string
 ) => generateIcsTimeStamp(key, exceptionDate);

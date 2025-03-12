@@ -1,10 +1,10 @@
-import type { ConvertDuration, Duration } from "@/types";
+import type { ConvertDuration, IcsDuration } from "@/types";
 import { standardValidate } from "./utils/standardValidate";
 
 export const convertIcsDuration: ConvertDuration = (schema, line) => {
   let newString = line.value;
 
-  const duration: Partial<Duration> = {};
+  const duration: Partial<IcsDuration> = {};
 
   if (newString[0] === "-") {
     duration.before = true;
@@ -55,5 +55,5 @@ export const convertIcsDuration: ConvertDuration = (schema, line) => {
     }
   }
 
-  return standardValidate(schema, duration as Duration);
+  return standardValidate(schema, duration as IcsDuration);
 };
