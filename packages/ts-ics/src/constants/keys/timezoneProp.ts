@@ -1,3 +1,5 @@
+import { IcsTimezoneProp } from "@/types";
+
 export const VTIMEZONE_PROP_KEYS = [
   "DTSTART",
   "TZOFFSETTO",
@@ -18,7 +20,7 @@ export const VTIMEZONE_PROP_OBJECT_KEYS = [
   "comment",
   "recurrenceDate",
   "name",
-] as const;
+] as const satisfies (keyof IcsTimezoneProp)[];
 
 export type IcsTimezonePropObjectKeys = typeof VTIMEZONE_PROP_OBJECT_KEYS;
 export type IcsTimezonePropObjectKey = IcsTimezonePropObjectKeys[number];

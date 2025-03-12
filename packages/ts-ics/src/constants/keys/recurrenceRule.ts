@@ -1,3 +1,5 @@
+import { IcsRecurrenceRule } from "@/types";
+
 export const RRULE_KEYS = [
   "FREQ",
   "UNTIL",
@@ -14,6 +16,7 @@ export const RRULE_KEYS = [
   "BYSETPOS",
   "WKST",
 ] as const;
+
 export type IcsRecurrenceRuleKeys = typeof RRULE_KEYS;
 export type IcsRecurrenceRuleKey = IcsRecurrenceRuleKeys[number];
 
@@ -32,7 +35,7 @@ export const RRULE_OBJECT_KEYS = [
   "byMonth",
   "bySetPos",
   "workweekStart",
-] as const;
+] as const satisfies (keyof IcsRecurrenceRule)[];
 
 export type IcsRecurrenceRuleObjectKeys = typeof RRULE_OBJECT_KEYS;
 export type IcsRecurrenceRuleObjectKey = IcsRecurrenceRuleObjectKeys[number];

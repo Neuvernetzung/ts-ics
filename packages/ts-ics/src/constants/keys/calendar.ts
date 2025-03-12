@@ -1,3 +1,5 @@
+import { IcsCalendar } from "@/types";
+
 export const VCALENDAR_KEYS = [
   "VERSION",
   "METHOD",
@@ -12,7 +14,7 @@ export const VCALENDAR_OBJECT_KEYS = [
   "method",
   "prodId",
   "name",
-] as const;
+] as const satisfies (keyof IcsCalendar)[];
 
 export type IcsCalendarObjectKeys = typeof VCALENDAR_OBJECT_KEYS;
 export type IcsCalendarObjectKey = IcsCalendarObjectKeys[number];

@@ -21,3 +21,8 @@ export const ICS_COMPONENTS = [
 ] as const;
 
 export * from "./calendar";
+export * from "./alarm";
+export * from "./event";
+export * from "./timezone";
+export * from "./timezoneProp";
+export * from "./recurrenceRule";

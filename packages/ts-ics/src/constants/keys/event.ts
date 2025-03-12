@@ -1,3 +1,5 @@
+import { IcsEvent } from "@/types";
+
 export const VEVENT_KEYS = [
   "SUMMARY",
   "UID",
@@ -19,13 +21,14 @@ export const VEVENT_KEYS = [
   "CLASS",
   "ORGANIZER",
   "PRIORITY",
-  "SEQ",
+  "SEQUENCE",
   "STATUS",
   "ATTACH",
   "RECURRENCE-ID",
   "ATTENDEE",
   "COMMENT",
 ] as const;
+
 export type IcsEventKeys = typeof VEVENT_KEYS;
 export type IcsEventKey = IcsEventKeys[number];
 
@@ -41,7 +44,7 @@ export const VEVENT_OBJECT_KEYS = [
   "categories",
   "exceptionDates",
   "recurrenceRule",
-  "alarm",
+  "alarms",
   "timeTransparent",
   "url",
   "end",
@@ -54,16 +57,16 @@ export const VEVENT_OBJECT_KEYS = [
   "status",
   "attach",
   "recurrenceId",
-  "attendee",
+  "attendees",
   "comment",
-] as const;
+] as const satisfies (keyof IcsEvent)[];
 
 export type IcsEventObjectKeys = typeof VEVENT_OBJECT_KEYS;
 export type IcsEventObjectKey = IcsEventObjectKeys[number];
 
 export const VEVENT_TO_OBJECT_KEYS: Record<IcsEventKey, IcsEventObjectKey> = {
   "LAST-MODIFIED": "lastModified",
-  ALARM: "alarm",
+  ALARM: "alarms",
   CATEGORIES: "categories",
   CREATED: "created",
   DESCRIPTION: "description",
@@ -82,16 +85,16 @@ export const VEVENT_TO_OBJECT_KEYS: Record<IcsEventKey, IcsEventObjectKey> = {
   CLASS: "class",
   ORGANIZER: "organizer",
   PRIORITY: "priority",
-  SEQ: "sequence",
+  SEQUENCE: "sequence",
   STATUS: "status",
   ATTACH: "attach",
   "RECURRENCE-ID": "recurrenceId",
-  ATTENDEE: "attendee",
+  ATTENDEE: "attendees",
   COMMENT: "comment",
 };
 
 export const VEVENT_TO_KEYS: Record<IcsEventObjectKey, IcsEventKey> = {
-  alarm: "ALARM",
+  alarms: "ALARM",
   categories: "CATEGORIES",
   created: "CREATED",
   description: "DESCRIPTION",
@@ -111,10 +114,10 @@ export const VEVENT_TO_KEYS: Record<IcsEventObjectKey, IcsEventKey> = {
   class: "CLASS",
   organizer: "ORGANIZER",
   priority: "PRIORITY",
-  sequence: "SEQ",
+  sequence: "SEQUENCE",
   status: "STATUS",
   attach: "ATTACH",
   recurrenceId: "RECURRENCE-ID",
-  attendee: "ATTENDEE",
+  attendees: "ATTENDEE",
   comment: "COMMENT",
 };

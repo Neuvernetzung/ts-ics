@@ -88,7 +88,7 @@ export const convertIcsEvent: ConvertEvent = (
       return;
     }
 
-    if (objectKey === "attendee") {
+    if (objectKey === "attendees") {
       attendees.push(convertIcsAttendee(undefined, line));
       return;
     }
@@ -102,7 +102,7 @@ export const convertIcsEvent: ConvertEvent = (
       return;
     }
 
-    if (objectKey === "alarm") return;
+    if (objectKey === "alarms") return;
 
     if (objectKey === "class") {
       event[objectKey] = convertIcsClass(undefined, line);

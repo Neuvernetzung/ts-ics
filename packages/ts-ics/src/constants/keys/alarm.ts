@@ -1,3 +1,5 @@
+import type { IcsAlarm } from "@/types";
+
 export const VALARM_KEYS = [
   "ACTION",
   "TRIGGER",
@@ -18,9 +20,9 @@ export const VALARM_OBJECT_KEYS = [
   "summary",
   "description",
   "repeat",
-  "attachment",
-  "attendee",
-] as const;
+  "attachments",
+  "attendees",
+] as const satisfies (keyof IcsAlarm)[];
 
 export type IcsAlarmObjectKeys = typeof VALARM_OBJECT_KEYS;
 export type IcsAlarmObjectKey = IcsAlarmObjectKeys[number];
@@ -32,8 +34,8 @@ export const VALARM_TO_OBJECT_KEYS: Record<IcsAlarmKey, IcsAlarmObjectKey> = {
   REPEAT: "repeat",
   SUMMARY: "summary",
   TRIGGER: "trigger",
-  ATTACH: "attachment",
-  ATTENDEE: "attendee",
+  ATTACH: "attachments",
+  ATTENDEE: "attendees",
 };
 
 export const VALARM_TO_KEYS: Record<IcsAlarmObjectKey, IcsAlarmKey> = {
@@ -43,6 +45,6 @@ export const VALARM_TO_KEYS: Record<IcsAlarmObjectKey, IcsAlarmKey> = {
   repeat: "REPEAT",
   summary: "SUMMARY",
   trigger: "TRIGGER",
-  attachment: "ATTACH",
-  attendee: "ATTENDEE",
+  attachments: "ATTACH",
+  attendees: "ATTENDEE",
 };

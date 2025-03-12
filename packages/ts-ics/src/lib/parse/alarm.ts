@@ -54,12 +54,12 @@ export const convertIcsAlarm: ConvertAlarm = (
       return;
     }
 
-    if (objectKey === "attachment") {
+    if (objectKey === "attachments") {
       attachments.push(convertIcsAttachment(undefined, line));
       return;
     }
 
-    if (objectKey === "attendee") {
+    if (objectKey === "attendees") {
       attendees.push(convertIcsAttendee(undefined, line));
       return;
     }

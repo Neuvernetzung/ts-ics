@@ -1,8 +1,14 @@
+import { IcsTimezone } from "@/types";
+
 export const VTIMEZONE_KEYS = ["TZID", "LAST-MODIFIED", "TZURL"] as const;
 export type IcsTimezoneKeys = typeof VTIMEZONE_KEYS;
 export type IcsTimezoneKey = IcsTimezoneKeys[number];
 
-export const VTIMEZONE_OBJECT_KEYS = ["id", "lastModified", "url"] as const;
+export const VTIMEZONE_OBJECT_KEYS = [
+  "id",
+  "lastModified",
+  "url",
+] as const satisfies (keyof IcsTimezone)[];
 
 export type IcsTimezoneObjectKeys = typeof VTIMEZONE_OBJECT_KEYS;
 export type IcsTimezoneObjectKey = IcsTimezoneObjectKeys[number];
