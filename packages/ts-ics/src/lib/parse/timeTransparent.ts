@@ -1,8 +1,7 @@
-import type {
-  TimeTransparentTypeLineToObject,
-  TimeTransparentType,
-} from "@/types";
+import type { ConvertTimeTransparent, TimeTransparentType } from "@/types";
 import { standardValidate } from "./utils/standardValidate";
 
-export const icsTimeTransparentStringToTimeTransparent: TimeTransparentTypeLineToObject =
-  (schema, line) => standardValidate(schema, line.value as TimeTransparentType);
+export const convertIcsTimeTransparent: ConvertTimeTransparent = (
+  schema,
+  line
+) => standardValidate(schema, line.value as TimeTransparentType);

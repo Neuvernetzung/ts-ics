@@ -1,18 +1,18 @@
 import { replaceAlarmRegex } from "@/constants";
 import { VALARM_TO_OBJECT_KEYS, type VAlarmKey } from "@/constants/keys/alarm";
-import type { AlarmLinesToObject, VAlarm, } from "@/types";
+import type { ConvertAlarm, VAlarm } from "@/types";
 import type { Attachment } from "@/types/attachment";
 import type { Attendee } from "@/types/attendee";
 
-import { icsAttachmentToObject } from "./attachment";
-import { icsAttendeeToObject } from "./attendee";
-import { icsDurationToObject } from "./duration";
-import { icsTriggerToObject } from "./trigger";
+import { convertIcsAttachment } from "./attachment";
+import { convertIcsAttendee } from "./attendee";
+import { convertIcsDuration } from "./duration";
+import { convertIcsTrigger } from "./trigger";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 import { standardValidate } from "./utils/standardValidate";
 
-export const icsAlarmToObject: AlarmLinesToObject = (
+export const convertIcsAlarm: ConvertAlarm = (
   schema,
   rawAlarmString,
   alarmOptions
@@ -35,14 +35,14 @@ export const icsAlarmToObject: AlarmLinesToObject = (
     if (!objectKey) return; // unknown Object key
 
     if (objectKey === "trigger") {
-      alarm[objectKey] = icsTriggerToObject(undefined, line, {
+      alarm[objectKey] = convertIcsTrigger(undefined, line, {
         timezones: alarmOptions?.timezones,
       });
       return;
     }
 
     if (objectKey === "duration") {
-      alarm[objectKey] = icsDurationToObject(undefined, line);
+      alarm[objectKey] = convertIcsDuration(undefined, line);
       return;
     }
 
@@ -52,12 +52,12 @@ export const icsAlarmToObject: AlarmLinesToObject = (
     }
 
     if (objectKey === "attachment") {
-      attachments.push(icsAttachmentToObject(undefined, line));
+      attachments.push(convertIcsAttachment(undefined, line));
       return;
     }
 
     if (objectKey === "attendee") {
-      attendees.push(icsAttendeeToObject(undefined, line));
+      attendees.push(convertIcsAttendee(undefined, line));
       return;
     }
 

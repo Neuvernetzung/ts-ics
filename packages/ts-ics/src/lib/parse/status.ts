@@ -1,5 +1,5 @@
-import type { StatusTypeLineToObject, StatusType } from "@/types";
+import type { ConvertStatus, StatusType } from "@/types";
 import { standardValidate } from "./utils/standardValidate";
 
-export const icsStatusStringToStatus: StatusTypeLineToObject = (schema, line) =>
+export const convertIcsStatus: ConvertStatus = (schema, line) =>
   standardValidate(schema, line.value as StatusType);

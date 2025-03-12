@@ -1,4 +1,4 @@
-import type { LineToObject, ParseLineType } from "./parse";
+import type { ConvertLineType, ParseLineType } from "./parse";
 
 export type Organizer = {
   name?: string;
@@ -7,6 +7,6 @@ export type Organizer = {
   sentBy?: string;
 };
 
-export type OrganizerLineToObject = LineToObject<Organizer>;
+export type ConvertOrganizer = ConvertLineType<Organizer>;
 
 export type ParseOrganizer = ParseLineType<Organizer>;

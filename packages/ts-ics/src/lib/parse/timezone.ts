@@ -7,15 +7,15 @@ import {
   VTIMEZONE_TO_OBJECT_KEYS,
   type VTimezoneKey,
 } from "@/constants/keys/timezone";
-import type { TimezoneLinesToObject, VTimezone } from "@/types/timezone";
+import type { ConvertTimezone, VTimezone } from "@/types/timezone";
 
-import { icsDateTimeToDateTime } from "./date";
-import { icsTimezonePropToObject } from "./timezoneProp";
+import { convertIcsDateTime } from "./date";
+import { convertIcsTimezoneProp } from "./timezoneProp";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 import { standardValidate } from "./utils/standardValidate";
 
-export const icsTimezoneToObject: TimezoneLinesToObject = (
+export const convertIcsTimezone: ConvertTimezone = (
   schema,
   rawTimezoneString
 ) => {
@@ -39,7 +39,7 @@ export const icsTimezoneToObject: TimezoneLinesToObject = (
     if (!objectKey) return; // unknown Object key
 
     if (objectKey === "lastModified") {
-      timezone[objectKey] = icsDateTimeToDateTime(undefined, line);
+      timezone[objectKey] = convertIcsDateTime(undefined, line);
 
       return;
     }
@@ -54,7 +54,7 @@ export const icsTimezoneToObject: TimezoneLinesToObject = (
   if (timezoneStandardPropStrings.length > 0) {
     timezoneStandardPropStrings.forEach((timezonePropString) => {
       timezone.props.push(
-        icsTimezonePropToObject(undefined, timezonePropString, {
+        convertIcsTimezoneProp(undefined, timezonePropString, {
           type: "STANDARD",
         })
       );
@@ -68,7 +68,7 @@ export const icsTimezoneToObject: TimezoneLinesToObject = (
   if (timezoneDaylightPropStrings.length > 0) {
     timezoneDaylightPropStrings.forEach((timezonePropString) => {
       timezone.props.push(
-        icsTimezonePropToObject(undefined, timezonePropString, {
+        convertIcsTimezoneProp(undefined, timezonePropString, {
           type: "DAYLIGHT",
         })
       );

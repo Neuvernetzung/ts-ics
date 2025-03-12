@@ -1,6 +1,6 @@
 import {
-  icsTimezonePropToObject,
-  icsTimezoneToObject,
+  convertIcsTimezoneProp,
+  convertIcsTimezone,
   type ParseTimezone,
   type ParseTimezoneProp,
   timezonePropTypes,
@@ -23,7 +23,7 @@ export const zVTimezoneProp: z.ZodType<VTimezoneProp> = z.object({
 });
 
 export const parseIcsTimezoneProp: ParseTimezoneProp = (...props) =>
-  icsTimezonePropToObject(zVTimezoneProp, ...props);
+  convertIcsTimezoneProp(zVTimezoneProp, ...props);
 
 export const zVTimezone: z.ZodType<VTimezone> = z.object({
   id: z.string(),
@@ -33,4 +33,4 @@ export const zVTimezone: z.ZodType<VTimezone> = z.object({
 });
 
 export const parseIcsTimezone: ParseTimezone = (...props) =>
-  icsTimezoneToObject(zVTimezone, ...props);
+  convertIcsTimezone(zVTimezone, ...props);

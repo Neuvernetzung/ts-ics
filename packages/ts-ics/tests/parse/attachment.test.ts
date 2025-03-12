@@ -1,4 +1,4 @@
-import { icsAttachmentToObject } from "@/lib/parse/attachment";
+import { convertIcsAttachment } from "@/lib/parse/attachment";
 import { getLine } from "@/lib/parse/utils/line";
 
 it("Test Ics Attachment Parse", async () => {
@@ -6,7 +6,7 @@ it("Test Ics Attachment Parse", async () => {
 
   const { line } = getLine(attachment);
 
-  expect(() => icsAttachmentToObject(undefined, line)).not.toThrow();
+  expect(() => convertIcsAttachment(undefined, line)).not.toThrow();
 });
 
 it("Test Ics Attachment Parse", async () => {
@@ -14,5 +14,5 @@ it("Test Ics Attachment Parse", async () => {
 
   const { line } = getLine(attachment);
 
-  expect(() => icsAttachmentToObject(undefined, line)).not.toThrow();
+  expect(() => convertIcsAttachment(undefined, line)).not.toThrow();
 });

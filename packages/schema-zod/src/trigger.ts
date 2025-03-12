@@ -1,34 +1,36 @@
 import {
-  icsTriggerToObject,
+  convertIcsTrigger,
   type ParseTrigger,
   triggerRelations,
-  type VEventTrigger,
-  type VEventTriggerBase,
-  type VEventTriggerOptions,
-  type VEventTriggerUnion,
+  type Trigger,
+  type TriggerBase,
+  type TriggerOptions,
+  type TriggerUnion,
 } from "ts-ics";
 import { z } from "zod";
 import { zDateObject } from "./date";
 import { zDuration } from "./duration";
 
-export const zVEventTriggerUnion: z.ZodType<VEventTriggerUnion> =
-  z.discriminatedUnion("type", [
+export const zTriggerUnion: z.ZodType<TriggerUnion> = z.discriminatedUnion(
+  "type",
+  [
     z.object({ type: z.literal("absolute"), value: zDateObject }),
     z.object({ type: z.literal("relative"), value: zDuration }),
-  ]);
+  ]
+);
 
-export const zVEventTriggerOptions: z.ZodType<VEventTriggerOptions> = z.object({
+export const zTriggerOptions: z.ZodType<TriggerOptions> = z.object({
   related: z.enum(triggerRelations).optional(),
 });
 
-export const zVEventTriggerBase: z.ZodType<VEventTriggerBase> = z.object({
-  options: zVEventTriggerOptions.optional(),
+export const zTriggerBase: z.ZodType<TriggerBase> = z.object({
+  options: zTriggerOptions.optional(),
 });
 
-export const zVEventTrigger: z.ZodType<VEventTrigger> = z.intersection(
-  zVEventTriggerBase,
-  zVEventTriggerUnion
+export const zTrigger: z.ZodType<Trigger> = z.intersection(
+  zTriggerBase,
+  zTriggerUnion
 );
 
 export const parseIcsTrigger: ParseTrigger = (...props) =>
-  icsTriggerToObject(zVEventTrigger, ...props);
+  convertIcsTrigger(zTrigger, ...props);

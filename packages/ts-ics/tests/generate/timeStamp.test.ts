@@ -1,6 +1,6 @@
 import { addMilliseconds, compareDesc } from "date-fns";
 
-import { generateIcsTimeStamp, icsTimeStampToObject } from "@/lib";
+import { generateIcsTimeStamp, convertIcsTimeStamp } from "@/lib";
 import { getLine } from "@/lib/parse/utils/line";
 import { DateObject } from "@/types";
 
@@ -17,7 +17,7 @@ it("Test Ics Timestamp Generate - UTC", async () => {
 
   const { line } = getLine(dateTimeString);
 
-  const parsed = icsTimeStampToObject(undefined, line);
+  const parsed = convertIcsTimeStamp(undefined, line);
 
   expect(parsed.date).toEqual(dateObject.date);
 });
@@ -43,7 +43,7 @@ it("Test Ics Timestamp Generate - VTimezone", async () => {
 
   const { line } = getLine(dateTimeString);
 
-  const parsed = icsTimeStampToObject(undefined, line, {
+  const parsed = convertIcsTimeStamp(undefined, line, {
     timezones: [fictiveTimezone],
   });
 
@@ -70,7 +70,7 @@ it("Test Ics Timestamp Generate - IANA Timezone", async () => {
 
   const { line } = getLine(dateTimeString);
 
-  const parsed = icsTimeStampToObject(undefined, line);
+  const parsed = convertIcsTimeStamp(undefined, line);
 
   expect(parsed.date).toEqual(dateObject.date);
 });

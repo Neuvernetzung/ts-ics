@@ -1,5 +1,5 @@
 import type { VEvent } from "./event";
-import type { LinesToObject, ParseLinesType } from "./parse";
+import type { ConvertLinesType, ParseLinesType } from "./parse";
 import type { VTimezone } from "./timezone";
 
 export const calendarMethods = ["PUBLISH"] as const;
@@ -21,6 +21,6 @@ export type VCalendar = {
   name?: string;
 };
 
-export type CalendarLinesToObject = LinesToObject<VCalendar>;
+export type ConvertCalendar = ConvertLinesType<VCalendar>;
 
 export type ParseCalendar = ParseLinesType<VCalendar>;

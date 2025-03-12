@@ -1,7 +1,7 @@
 import {
   type Attendee,
   attendeePartStatusTypes,
-  icsAttendeeToObject,
+  convertIcsAttendee,
   type ParseAttendee,
 } from "ts-ics";
 import { z } from "zod";
@@ -18,4 +18,4 @@ export const zAttendee: z.ZodType<Attendee> = z.object({
 });
 
 export const parseIcsAttendee: ParseAttendee = (...props) =>
-  icsAttendeeToObject(zAttendee, ...props);
+  convertIcsAttendee(zAttendee, ...props);

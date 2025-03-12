@@ -1,11 +1,11 @@
-import { icsEventToObject } from "@/lib";
-import { icsExceptionDateToObject } from "@/lib/parse/exceptionDate";
+import { convertIcsEvent } from "@/lib";
+import { convertIcsExceptionDates } from "@/lib/parse/exceptionDate";
 import { icsTestData } from "../utils";
 
 it("Test Ics Event Parse - Exception Date-Times, comma separated", async () => {
   const value = "20070402T010000Z,20070403T010000Z,20070404T010000Z";
 
-  const parsed = icsExceptionDateToObject(undefined, { value });
+  const parsed = convertIcsExceptionDates(undefined, { value });
 
   expect(parsed?.length).toBe(3);
 });
@@ -24,7 +24,7 @@ it("Test Ics Event Parse - multiple Exception Date-Times", async () => {
     "TRANSP:TRANSPARENT",
     "END:VEVENT",
   ]);
-  const parsed = icsEventToObject(undefined, event);
+  const parsed = convertIcsEvent(undefined, event);
 
   expect(parsed.exceptionDates?.length).toBe(3);
 });

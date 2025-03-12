@@ -1,5 +1,5 @@
 import {
-  icsRecurrenceRuleToObject,
+  convertIcsRecurrenceRule,
   type ParseRecurrenceRule,
   type RecurrenceRule,
   recurrenceRuleFrequencies,
@@ -26,4 +26,4 @@ export const zRecurrenceRule: z.ZodType<RecurrenceRule> = z.object({
 });
 
 export const parseIcsRecurrenceRule: ParseRecurrenceRule = (...props) =>
-  icsRecurrenceRuleToObject(zRecurrenceRule, ...props);
+  convertIcsRecurrenceRule(zRecurrenceRule, ...props);

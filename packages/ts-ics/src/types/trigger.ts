@@ -1,6 +1,6 @@
 import type { DateObject } from "./date";
 import type { Duration } from "./duration";
-import type { LineToObject, ParseLineType } from "./parse";
+import type { ConvertLineType, ParseLineType } from "./parse";
 import type { VTimezone } from "./timezone";
 
 export const triggerRelations = ["START", "END"] as const;
@@ -8,21 +8,18 @@ export const triggerRelations = ["START", "END"] as const;
 export type TriggerRelations = typeof triggerRelations;
 export type TriggerRelation = TriggerRelations[number];
 
-export type VEventTriggerUnion =
+export type TriggerUnion =
   | { type: "absolute"; value: DateObject }
   | { type: "relative"; value: Duration };
 
-export type VEventTriggerOptions = { related?: TriggerRelation };
+export type TriggerOptions = { related?: TriggerRelation };
 
-export type VEventTriggerBase = { options?: VEventTriggerOptions };
+export type TriggerBase = { options?: TriggerOptions };
 
-export type VEventTrigger = VEventTriggerBase & VEventTriggerUnion;
+export type Trigger = TriggerBase & TriggerUnion;
 
 export type ParseTriggerOptions = { timezones?: VTimezone[] };
 
-export type TriggerLineToObject = LineToObject<
-  VEventTrigger,
-  ParseTriggerOptions
->;
+export type ConvertTrigger = ConvertLineType<Trigger, ParseTriggerOptions>;
 
-export type ParseTrigger = ParseLineType<VEventTrigger, ParseTriggerOptions>;
+export type ParseTrigger = ParseLineType<Trigger, ParseTriggerOptions>;

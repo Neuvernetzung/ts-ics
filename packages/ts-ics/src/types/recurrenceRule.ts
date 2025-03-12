@@ -1,5 +1,5 @@
 import type { DateObject } from "./date";
-import type { LineToObject, ParseLineType } from "./parse";
+import type { ConvertLineType, ParseLineType } from "./parse";
 import type { VTimezone } from "./timezone";
 import type { WeekDay, WeekdayNumberObject } from "./weekday";
 
@@ -37,7 +37,7 @@ export type ParseRecurrenceRuleOptions = {
   timezones?: VTimezone[];
 };
 
-export type RecurrenceRuleLineToObject = LineToObject<
+export type ConvertRecurrenceRule = ConvertLineType<
   RecurrenceRule,
   ParseRecurrenceRuleOptions
 >;

@@ -1,5 +1,5 @@
 import {
-  icsEventToObject,
+  convertIcsEvent,
   type VEvent,
   type VEventBase,
   type DurationOrEnd,
@@ -56,4 +56,4 @@ export const zVEvent: z.ZodType<VEvent> = z.intersection(
 );
 
 export const parseIcsEvent: ParseEvent = (...props) =>
-  icsEventToObject(zVEvent, ...props);
+  convertIcsEvent(zVEvent, ...props);

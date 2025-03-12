@@ -51,9 +51,9 @@ const calendarParsed: VCalendar = parseIcsCalendar(icsCalendarString);
 #### without zod parsing
 
 ```ts
-import { icsCalendarToObject, type VCalendar } from "ts-ics";
+import { convertIcsCalendar, type VCalendar } from "ts-ics";
 
-const calendar: VCalendar = icsCalendarToObject(icsCalendarString);
+const calendar: VCalendar = convertIcsCalendar(icsCalendarString);
 ```
 
 ### parseIcsEvent
@@ -69,9 +69,9 @@ const eventParsed: VEvent = parseIcsEvent(icsEventString);
 #### without zod parsing
 
 ```ts
-import { icsEventToObject, type VEvent } from "ts-ics";
+import { convertIcsEvent, type VEvent } from "ts-ics";
 
-const event: VEvent = icsEventToObject(icsEventString);
+const event: VEvent = convertIcsEvent(icsEventString);
 ```
 
 ## utils

@@ -12,7 +12,7 @@ export * from "./timeStamp";
 export * from "./timezone";
 export * from "./timezoneProp";
 export * from "./trigger";
-export * from "./weekdayNumber";
+export * from "./weekDayNumber";
 export * from "./class";
 export * from "./timeTransparent";
 export * from "./exceptionDate";

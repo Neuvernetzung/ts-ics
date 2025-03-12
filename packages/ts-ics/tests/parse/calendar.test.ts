@@ -1,4 +1,4 @@
-import { icsCalendarToObject } from "@/lib/parse/calendar";
+import { convertIcsCalendar } from "@/lib/parse/calendar";
 import { icsTestData } from "../utils";
 import { readFile } from "node:fs/promises";
 
@@ -16,7 +16,7 @@ it("Test Ics Calendar Parse", async () => {
     "END:VEVENT",
     "END:VCALENDAR",
   ]);
-  expect(() => icsCalendarToObject(undefined, calendar)).not.toThrow();
+  expect(() => convertIcsCalendar(undefined, calendar)).not.toThrow();
 });
 
 it("Test Ics Calendar Parse", async () => {
@@ -82,7 +82,7 @@ it("Test Ics Calendar Parse", async () => {
     "END:VEVENT",
     "END:VCALENDAR",
   ]);
-  expect(() => icsCalendarToObject(undefined, calendar)).not.toThrow();
+  expect(() => convertIcsCalendar(undefined, calendar)).not.toThrow();
 });
 
 it("Test Ics Calendar Parse", async () => {
@@ -177,14 +177,14 @@ it("Test Ics Calendar Parse", async () => {
     "END:VEVENT",
     "END:VCALENDAR",
   ]);
-  expect(() => icsCalendarToObject(undefined, calendar)).not.toThrow();
+  expect(() => convertIcsCalendar(undefined, calendar)).not.toThrow();
 });
 
 it("Parse Apple ICS Calendar", async () => {
   const buffer = await readFile(`${__dirname}/fixtures/apple.ics`, "utf8");
   const calendar = buffer.toString();
 
-  expect(() => icsCalendarToObject(undefined, calendar)).not.toThrow();
+  expect(() => convertIcsCalendar(undefined, calendar)).not.toThrow();
 });
 
 it("Leftover line breaks should not affect parsing - #130", async () => {
@@ -203,5 +203,5 @@ it("Leftover line breaks should not affect parsing - #130", async () => {
     "END:VCALENDAR",
   ]);
 
-  expect(() => icsCalendarToObject(undefined, calendar)).not.toThrow();
+  expect(() => convertIcsCalendar(undefined, calendar)).not.toThrow();
 });

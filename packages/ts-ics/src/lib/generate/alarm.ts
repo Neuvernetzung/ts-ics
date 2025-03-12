@@ -1,5 +1,5 @@
 import { VALARM_TO_KEYS } from "@/constants/keys/alarm";
-import type { VAlarm, Duration, VEventTrigger } from "@/types";
+import type { VAlarm, Duration, Trigger } from "@/types";
 
 import { generateIcsAttachment } from "./attachment";
 import { generateIcsAttendee } from "./attendee";
@@ -33,7 +33,7 @@ export const generateIcsAlarm = (alarm: VAlarm) => {
     if (value === undefined || value === null) return;
 
     if (key === "trigger") {
-      icsString += generateIcsTrigger(value as VEventTrigger);
+      icsString += generateIcsTrigger(value as Trigger);
       return;
     }
 

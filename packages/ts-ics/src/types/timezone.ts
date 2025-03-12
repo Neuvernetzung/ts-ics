@@ -1,5 +1,5 @@
 import type { DateObject } from "./date";
-import type { LinesToObject, ParseLinesType } from "./parse";
+import type { ConvertLinesType, ParseLinesType } from "./parse";
 import type { RecurrenceRule } from "./recurrenceRule";
 
 export const timezonePropTypes = ["STANDARD", "DAYLIGHT"] as const;
@@ -23,7 +23,7 @@ export type ParseTimezonePropOptions = {
   timezones?: VTimezone[];
 };
 
-export type TimezonePropLinesToObject = LinesToObject<
+export type ConvertTimezoneProp = ConvertLinesType<
   VTimezoneProp,
   ParseTimezonePropOptions
 >;
@@ -40,6 +40,6 @@ export type VTimezone = {
   props: VTimezoneProp[];
 };
 
-export type TimezoneLinesToObject = LinesToObject<VTimezone>;
+export type ConvertTimezone = ConvertLinesType<VTimezone>;
 
 export type ParseTimezone = ParseLinesType<VTimezone>;

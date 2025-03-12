@@ -1,7 +1,7 @@
 import type { StandardSchemaV1 } from "@standard-schema/spec";
 import type { Line } from "./line";
 
-export type LinesToObject<TType, TOptions = undefined> = (
+export type ConvertLinesType<TType, TOptions = undefined> = (
   schema: StandardSchemaV1<TType> | undefined,
   lines: string,
   options?: TOptions
@@ -12,7 +12,7 @@ export type ParseLinesType<TType, TOptions = undefined> = (
   options?: TOptions
 ) => TType;
 
-export type LineToObject<TType, TOptions = undefined> = (
+export type ConvertLineType<TType, TOptions = undefined> = (
   schema: StandardSchemaV1<TType> | undefined,
   line: Line,
   options?: TOptions

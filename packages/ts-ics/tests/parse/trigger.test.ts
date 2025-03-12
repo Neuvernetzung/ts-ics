@@ -1,13 +1,13 @@
 import { getLine } from "@/lib/parse/utils/line";
 
-import { icsTriggerToObject } from "@/lib/parse/trigger";
+import { convertIcsTrigger } from "@/lib/parse/trigger";
 
 it("Test Ics Trigger Parse", async () => {
   const trigger = `TRIGGER:-PT15M`;
 
   const { line } = getLine(trigger);
 
-  expect(() => icsTriggerToObject(undefined, line)).not.toThrow();
+  expect(() => convertIcsTrigger(undefined, line)).not.toThrow();
 });
 
 it("Test Ics Trigger Parse", async () => {
@@ -15,7 +15,7 @@ it("Test Ics Trigger Parse", async () => {
 
   const { line } = getLine(trigger);
 
-  expect(() => icsTriggerToObject(undefined, line)).not.toThrow();
+  expect(() => convertIcsTrigger(undefined, line)).not.toThrow();
 });
 
 it("Test Ics Trigger Parse", async () => {
@@ -23,5 +23,5 @@ it("Test Ics Trigger Parse", async () => {
 
   const { line } = getLine(trigger);
 
-  expect(() => icsTriggerToObject(undefined, line)).not.toThrow();
+  expect(() => convertIcsTrigger(undefined, line)).not.toThrow();
 });

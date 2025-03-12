@@ -1,8 +1,7 @@
-
 import { standardValidate } from "./utils/standardValidate";
-import type { DateLineToDate, } from "@/types";
+import type { ConvertDate } from "@/types";
 
-export const icsDateToDate: DateLineToDate = (schema, line) => {
+export const convertIcsDate: ConvertDate = (schema, line) => {
   const year = Number.parseInt(line.value.slice(0, 4), 10);
   const month = Number.parseInt(line.value.slice(4, 6), 10) - 1; // Monate in JavaScript sind 0-basiert
   const day = Number.parseInt(line.value.slice(6, 8), 10);
@@ -12,7 +11,7 @@ export const icsDateToDate: DateLineToDate = (schema, line) => {
   return standardValidate(schema, newDate);
 };
 
-export const icsDateTimeToDateTime: DateLineToDate = (schema, line) => {
+export const convertIcsDateTime: ConvertDate = (schema, line) => {
   const year = Number.parseInt(line.value.slice(0, 4), 10);
   const month = Number.parseInt(line.value.slice(4, 6), 10) - 1; // Monate in JavaScript sind 0-basiert
   const day = Number.parseInt(line.value.slice(6, 8), 10);

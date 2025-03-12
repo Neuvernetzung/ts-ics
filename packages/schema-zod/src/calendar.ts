@@ -2,7 +2,7 @@ import { z } from "zod";
 import {
   calendarMethods,
   calendarVersions,
-  icsCalendarToObject,
+  convertIcsCalendar,
   type ParseCalendar,
   type VCalendar,
 } from "ts-ics";
@@ -23,4 +23,4 @@ export const zVCalendar: z.ZodType<VCalendar> = z.object({
 });
 
 export const parseIcsCalendar: ParseCalendar = (...props) =>
-  icsCalendarToObject(zVCalendar, ...props);
+  convertIcsCalendar(zVCalendar, ...props);

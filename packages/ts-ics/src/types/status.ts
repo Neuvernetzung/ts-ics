@@ -1,10 +1,10 @@
-import type { LineToObject, ParseLineType } from "./parse";
+import type { ConvertLineType, ParseLineType } from "./parse";
 
 export const statusTypes = ["TENTATIVE", "CONFIRMED", "CANCELLED"] as const;
 
 export type StatusTypes = typeof statusTypes;
 export type StatusType = StatusTypes[number];
 
-export type StatusTypeLineToObject = LineToObject<StatusType>;
+export type ConvertStatus = ConvertLineType<StatusType>;
 
-export type ParseStatusType = ParseLineType<StatusType>;
+export type ParseStatus = ParseLineType<StatusType>;

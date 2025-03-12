@@ -15,7 +15,7 @@ import {
   getWeek,
 } from "date-fns";
 
-import { icsRecurrenceRuleToObject } from "@/lib";
+import { convertIcsRecurrenceRule } from "@/lib";
 
 import { extendByRecurrenceRule } from ".";
 
@@ -24,7 +24,7 @@ it("Test extendByRecurrenceRule - Daily for 10 occurrences", async () => {
 
   const ruleString = "FREQ=DAILY;COUNT=10";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -36,7 +36,7 @@ it("Test extendByRecurrenceRule - Daily until December 24, 2023", async () => {
 
   const ruleString = "FREQ=DAILY;UNTIL=20231224T000000Z";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -48,7 +48,7 @@ it("Test extendByRecurrenceRule - Every other day - forever", async () => {
 
   const ruleString = "FREQ=DAILY;INTERVAL=2";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -63,7 +63,7 @@ it("Test extendByRecurrenceRule - Every 10 days, 5 occurrences", async () => {
 
   const ruleString = "FREQ=DAILY;INTERVAL=10;COUNT=5";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -78,7 +78,7 @@ it("Test extendByRecurrenceRule - Every day in January, for 3 years - V1", async
 
   const ruleString = "FREQ=DAILY;UNTIL=20250131T140000Z;BYMONTH=1";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -94,7 +94,7 @@ it("Test extendByRecurrenceRule - Every day in January, for 3 years - V2", async
   const ruleString =
     "FREQ=YEARLY;UNTIL=20250131T140000Z;BYMONTH=1;BYDAY=SU,MO,TU,WE,TH,FR,SA";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -109,7 +109,7 @@ it("Test extendByRecurrenceRule - Weekly for 10 occurrences", async () => {
 
   const ruleString = "FREQ=WEEKLY;COUNT=10";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -124,7 +124,7 @@ it("Test extendByRecurrenceRule - Weekly until December 24, 2023", async () => {
 
   const ruleString = "FREQ=WEEKLY;UNTIL=20231224T000000Z";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -136,7 +136,7 @@ it("Test extendByRecurrenceRule - Every other week - forever", async () => {
 
   const ruleString = "FREQ=WEEKLY;INTERVAL=2;WKST=SU";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -148,7 +148,7 @@ it("Test extendByRecurrenceRule - Weekly on Tuesday and Thursday for five weeks 
 
   const ruleString = "FREQ=WEEKLY;UNTIL=20231007T000000Z;WKST=SU;BYDAY=TU,TH";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -161,7 +161,7 @@ it("Test extendByRecurrenceRule - Weekly on Tuesday and Thursday for five weeks 
 
   const ruleString = "FREQ=WEEKLY;COUNT=10;WKST=SU;BYDAY=TU,TH";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -175,7 +175,7 @@ it("Test extendByRecurrenceRule - Every other week on Monday, Wednesday, and Fri
   const ruleString =
     "FREQ=WEEKLY;INTERVAL=2;UNTIL=20231224T000000Z;WKST=SU;BYDAY=MO,WE,FR";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -188,7 +188,7 @@ it("Test extendByRecurrenceRule - Every other week on Tuesday and Thursday, for 
 
   const ruleString = "FREQ=WEEKLY;INTERVAL=2;COUNT=8;WKST=SU;BYDAY=TU,TH";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -201,7 +201,7 @@ it("Test extendByRecurrenceRule - Monthly on the first Friday for 10 occurrences
 
   const ruleString = "FREQ=MONTHLY;COUNT=10;BYDAY=1FR";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -219,7 +219,7 @@ it("Test extendByRecurrenceRule - Monthly on the first Friday until December 24,
 
   const ruleString = "FREQ=MONTHLY;UNTIL=20231224T000000Z;BYDAY=1FR";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -237,7 +237,7 @@ it("Test extendByRecurrenceRule - Every other month on the first and last Sunday
 
   const ruleString = "FREQ=MONTHLY;INTERVAL=2;COUNT=10;BYDAY=1SU,-1SU";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -252,7 +252,7 @@ it("Test extendByRecurrenceRule - Monthly on the second-to-last Monday of the mo
 
   const ruleString = "FREQ=MONTHLY;COUNT=6;BYDAY=-2MO";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -267,7 +267,7 @@ it("Test extendByRecurrenceRule - Monthly on the third-to-the-last day of the mo
 
   const ruleString = "FREQ=MONTHLY;BYMONTHDAY=-3";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -279,7 +279,7 @@ it("Test extendByRecurrenceRule - Monthly on the 2nd and 15th of the month for 1
 
   const ruleString = "FREQ=MONTHLY;COUNT=10;BYMONTHDAY=2,15";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -294,7 +294,7 @@ it("Test extendByRecurrenceRule - Monthly on the first and last day of the month
 
   const ruleString = "FREQ=MONTHLY;COUNT=10;BYMONTHDAY=1,-1";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -307,7 +307,7 @@ it("Test extendByRecurrenceRule - Every 18 months on the 10th thru 15th of the m
   const ruleString =
     "FREQ=MONTHLY;INTERVAL=18;COUNT=10;BYMONTHDAY=10,11,12,13,14,15";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -327,7 +327,7 @@ it("Test extendByRecurrenceRule - Every Tuesday, every other month", async () =>
 
   const ruleString = "FREQ=MONTHLY;INTERVAL=2;BYDAY=TU";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, { start });
 
@@ -342,7 +342,7 @@ it("Test extendByRecurrenceRule - Yearly in June and July for 10 occurrences", a
 
   const ruleString = "FREQ=YEARLY;COUNT=10;BYMONTH=6,7";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -360,7 +360,7 @@ it("Test extendByRecurrenceRule - Every other year on January, February, and Mar
 
   const ruleString = "FREQ=YEARLY;INTERVAL=2;COUNT=10;BYMONTH=1,2,3";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -378,7 +378,7 @@ it("Test extendByRecurrenceRule - Every third year on the 1st, 100th, and 200th 
 
   const ruleString = "FREQ=YEARLY;INTERVAL=3;COUNT=10;BYYEARDAY=1,100,200";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -396,7 +396,7 @@ it("Test extendByRecurrenceRule - Every 20th Monday of the year, forever - V1", 
 
   const ruleString = "FREQ=YEARLY;BYDAY=20MO";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -413,7 +413,7 @@ it("Test extendByRecurrenceRule - Every 20th Monday of the year, forever - V2", 
 
   const ruleString = "FREQ=YEARLY;BYWEEKNO=20;BYDAY=MO";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -430,7 +430,7 @@ it("Test extendByRecurrenceRule - Every Thursday in March, forever", async () =>
   const start = new Date(Date.UTC(2023, 1, 5));
   const ruleString = "FREQ=YEARLY;BYMONTH=3;BYDAY=TH";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -447,7 +447,7 @@ it("Test extendByRecurrenceRule - Every Thursday, but only during June, July, an
   const start = new Date(Date.UTC(2023, 1, 5));
   const ruleString = "FREQ=YEARLY;BYDAY=TH;BYMONTH=6,7,8";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -464,7 +464,7 @@ it("Test extendByRecurrenceRule - Every Friday the 13th, forever", async () => {
   const start = new Date(Date.UTC(2023, 1, 5));
   const ruleString = "FREQ=MONTHLY;BYDAY=FR;BYMONTHDAY=13";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -481,7 +481,7 @@ it("Test extendByRecurrenceRule - The first Saturday that follows the first Sund
   const start = new Date(Date.UTC(2023, 1, 5));
   const ruleString = "FREQ=MONTHLY;BYDAY=SA;BYMONTHDAY=7,8,9,10,11,12,13";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -499,7 +499,7 @@ it("Test extendByRecurrenceRule - Every 4 years, the first Tuesday after a Monda
   const ruleString =
     "FREQ=YEARLY;INTERVAL=4;BYMONTH=11;BYDAY=TU;BYMONTHDAY=2,3,4,5,6,7,8";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -518,7 +518,7 @@ it("Test extendByRecurrenceRule - The third instance into the month of one of Tu
   const start = new Date(Date.UTC(2023, 9, 5));
   const ruleString = "FREQ=MONTHLY;COUNT=3;BYDAY=TU,WE,TH;BYSETPOS=3";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -534,7 +534,7 @@ it("Test extendByRecurrenceRule - The second-to-last weekday of the month", asyn
   const start = new Date(Date.UTC(2023, 9, 5));
   const ruleString = "FREQ=MONTHLY;BYDAY=MO,TU,WE,TH,FR;BYSETPOS=-2";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -550,7 +550,7 @@ it("Test extendByRecurrenceRule - Every 3 hours from 9:00 AM to 5:00 PM on a spe
   const start = new Date(Date.UTC(2023, 9, 5, 9));
   const ruleString = "FREQ=HOURLY;INTERVAL=3;UNTIL=20231005T180000Z";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -566,7 +566,7 @@ it("Test extendByRecurrenceRule - Every 15 minutes for 6 occurrences", async () 
   const start = new Date(Date.UTC(2023, 9, 5));
   const ruleString = "FREQ=MINUTELY;INTERVAL=15;COUNT=6";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -580,7 +580,7 @@ it("Test extendByRecurrenceRule - Every hour and a half for 4 occurrences", asyn
   const start = new Date(Date.UTC(2023, 9, 5));
   const ruleString = "FREQ=MINUTELY;INTERVAL=90;COUNT=4";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -595,7 +595,7 @@ it("Test extendByRecurrenceRule - Every 20 minutes from 9:00 AM to 4:40 PM every
   const ruleString =
     "FREQ=DAILY;BYHOUR=9,10,11,12,13,14,15,16;BYMINUTE=0,20,40";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -613,7 +613,7 @@ it("Test extendByRecurrenceRule - Every 20 minutes from 9:00 AM to 4:40 PM every
   const start = new Date(Date.UTC(2023, 9, 5));
   const ruleString = "FREQ=MINUTELY;INTERVAL=20;BYHOUR=9,10,11,12,13,14,15,16";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -631,7 +631,7 @@ it("Test extendByRecurrenceRule - Every 20 seconds from 9:15 AM to 9:20 AM every
   const start = new Date(Date.UTC(2023, 9, 5));
   const ruleString = "FREQ=DAILY;BYMINUTE=15,16,17,18,19;BYSECOND=0,20,40";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -649,7 +649,7 @@ it("Test extendByRecurrenceRule - An example where the days generated makes a di
   const start = new Date(Date.UTC(2023, 9, 5));
   const ruleStringMo = "FREQ=WEEKLY;INTERVAL=2;COUNT=4;BYDAY=TU,SU;WKST=MO";
 
-  const ruleMo = icsRecurrenceRuleToObject(undefined, { value: ruleStringMo });
+  const ruleMo = convertIcsRecurrenceRule(undefined, { value: ruleStringMo });
 
   const datesMo = extendByRecurrenceRule(ruleMo, {
     start,
@@ -660,7 +660,7 @@ it("Test extendByRecurrenceRule - An example where the days generated makes a di
 
   const ruleStringSu = "FREQ=WEEKLY;INTERVAL=2;COUNT=4;BYDAY=TU,SU;WKST=SU";
 
-  const ruleSu = icsRecurrenceRuleToObject(undefined, { value: ruleStringSu });
+  const ruleSu = convertIcsRecurrenceRule(undefined, { value: ruleStringSu });
 
   const datesSu = extendByRecurrenceRule(ruleSu, {
     start,
@@ -676,7 +676,7 @@ it("Test extendByRecurrenceRule - An example where an invalid date (i.e., Februa
   const start = new Date(Date.UTC(2023, 1, 1));
   const ruleString = "FREQ=MONTHLY;BYMONTHDAY=15,30;COUNT=5";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value: ruleString });
+  const rule = convertIcsRecurrenceRule(undefined, { value: ruleString });
 
   const dates = extendByRecurrenceRule(rule, {
     start,
@@ -698,7 +698,7 @@ it("Test extendByRecurrenceRule - Every Friday the 13th except first and last", 
   const exceptions = [new Date(2024, 8, 13), new Date(2026, 10, 13)];
   const value = "FREQ=MONTHLY;BYDAY=FR;BYMONTHDAY=13";
 
-  const rule = icsRecurrenceRuleToObject(undefined, { value });
+  const rule = convertIcsRecurrenceRule(undefined, { value });
 
   const dates = extendByRecurrenceRule(rule, {
     start,

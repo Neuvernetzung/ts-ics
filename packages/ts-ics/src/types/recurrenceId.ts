@@ -1,5 +1,5 @@
 import type { DateObject } from "./date";
-import type { LineToObject, ParseLineType } from "./parse";
+import type { ConvertLineType, ParseLineType } from "./parse";
 import type { VTimezone } from "./timezone";
 
 export type RecurrenceId = {
@@ -9,7 +9,7 @@ export type RecurrenceId = {
 
 export type ParseRecurrenceIdOptions = { timezones?: VTimezone[] };
 
-export type RecurrenceIdLineToObject = LineToObject<
+export type ConvertRecurrenceId = ConvertLineType<
   RecurrenceId,
   ParseRecurrenceIdOptions
 >;

@@ -1,7 +1,7 @@
-import type { AttachmentLineToObject, Attachment } from "@/types/attachment";
+import type { ConvertAttachment, Attachment } from "@/types/attachment";
 import { standardValidate } from "./utils/standardValidate";
 
-export const icsAttachmentToObject: AttachmentLineToObject = (schema, line) => {
+export const convertIcsAttachment: ConvertAttachment = (schema, line) => {
   const attachment: Attachment =
     line.options?.VALUE === "BINARY"
       ? {

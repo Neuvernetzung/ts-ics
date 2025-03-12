@@ -1,28 +1,20 @@
-import type {
-  TriggerLineToObject,
-  TriggerRelation,
-  VEventTrigger,
-} from "@/types";
+import type { ConvertTrigger, TriggerRelation, Trigger } from "@/types";
 
-import { icsDurationToObject } from "./duration";
-import { icsTimeStampToObject } from "./timeStamp";
+import { convertIcsDuration } from "./duration";
+import { convertIcsTimeStamp } from "./timeStamp";
 import { standardValidate } from "./utils/standardValidate";
 
-export const icsTriggerToObject: TriggerLineToObject = (
-  schema,
-  line,
-  options
-) => {
-  const trigger: VEventTrigger =
+export const convertIcsTrigger: ConvertTrigger = (schema, line, options) => {
+  const trigger: Trigger =
     line.options?.VALUE === "DATE-TIME" || line.options?.VALUE === "DATE"
       ? {
           type: "absolute",
-          value: icsTimeStampToObject(undefined, line, options),
+          value: convertIcsTimeStamp(undefined, line, options),
           options: { related: line.options?.RELATED as TriggerRelation },
         }
       : {
           type: "relative",
-          value: icsDurationToObject(undefined, line),
+          value: convertIcsDuration(undefined, line),
           options: { related: line.options?.RELATED as TriggerRelation },
         };
 

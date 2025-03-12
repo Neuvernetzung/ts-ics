@@ -8,13 +8,13 @@ import {
   type RecurrenceRule,
   recurrenceRuleFrequencies,
   type RecurrenceRuleFrequency,
-  type RecurrenceRuleLineToObject,
+  type ConvertRecurrenceRule,
 } from "@/types";
 
-import { icsTimeStampToObject } from "./timeStamp";
+import { convertIcsTimeStamp } from "./timeStamp";
 import { getOptions } from "./utils/options";
-import { icsWeekdayNumberToObject } from "./weekdayNumber";
-import { icsWeekDayStringToWeekDay } from "./weekDay";
+import { convertIcsWeekDayNumber } from "./weekDayNumber";
+import { convertIcsWeekDay } from "./weekDay";
 import { standardValidate } from "./utils/standardValidate";
 
 const recurrenceTimestampKeys = ["until"] satisfies RRuleObjectKey[];
@@ -64,7 +64,7 @@ export const recurrenceObjectKeyIsNumber = (
 ): objectKey is RecurrenceNumberKey =>
   recurrenceNumberKeys.includes(objectKey as RecurrenceNumberKey);
 
-export const icsRecurrenceRuleToObject: RecurrenceRuleLineToObject = (
+export const convertIcsRecurrenceRule: ConvertRecurrenceRule = (
   schema,
   line,
   recurrenceRuleOptions
@@ -81,7 +81,7 @@ export const icsRecurrenceRuleToObject: RecurrenceRuleLineToObject = (
     if (!objectKey) return; // unknown Object key
 
     if (recurrenceObjectKeyIsTimeStamp(objectKey)) {
-      rule[objectKey] = icsTimeStampToObject(
+      rule[objectKey] = convertIcsTimeStamp(
         undefined,
         {
           value,
@@ -107,7 +107,7 @@ export const icsRecurrenceRuleToObject: RecurrenceRuleLineToObject = (
     if (recurrenceObjectKeyIsWeekdayNumberArray(objectKey)) {
       rule[objectKey] = value
         .split(COMMA)
-        .map((v) => icsWeekdayNumberToObject(undefined, { value: v }));
+        .map((v) => convertIcsWeekDayNumber(undefined, { value: v }));
       return;
     }
 
@@ -128,7 +128,7 @@ export const icsRecurrenceRuleToObject: RecurrenceRuleLineToObject = (
     }
 
     if (objectKey === "workweekStart") {
-      rule[objectKey] = icsWeekDayStringToWeekDay(undefined, { value });
+      rule[objectKey] = convertIcsWeekDay(undefined, { value });
       return;
     }
   });

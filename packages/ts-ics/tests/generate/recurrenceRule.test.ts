@@ -1,4 +1,4 @@
-import { generateIcsRecurrenceRule, icsRecurrenceRuleToObject } from "@/lib";
+import { generateIcsRecurrenceRule, convertIcsRecurrenceRule } from "@/lib";
 import { getLine } from "@/lib/parse/utils/line";
 import type { RecurrenceRule } from "@/types";
 
@@ -10,7 +10,7 @@ it("RecurrenceRule UNTIL is generated correctly - DATE-TIME", async () => {
 
   const ruleString = generateIcsRecurrenceRule(rule);
 
-  const parsed = icsRecurrenceRuleToObject(undefined, getLine(ruleString).line);
+  const parsed = convertIcsRecurrenceRule(undefined, getLine(ruleString).line);
 
   expect(rule).toEqual(parsed);
 });
@@ -47,7 +47,7 @@ it("RecurrenceRule UNTIL is not 'undefined' when left empty", async () => {
 
 //   const ruleString = generateIcsRecurrenceRule(rule);
 
-//   const parsed = icsRecurrenceRuleToObject(getLine(ruleString).value);
+//   const parsed = convertIcsRecurrenceRule(getLine(ruleString).value);
 
 //   expect(rule).toEqual(parsed);
 // });

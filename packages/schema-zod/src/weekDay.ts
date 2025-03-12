@@ -1,5 +1,5 @@
 import {
-  icsWeekDayStringToWeekDay,
+  convertIcsWeekDay,
   type ParseWeekDay,
   type WeekdayNumberObject,
   weekDays,
@@ -14,4 +14,4 @@ export const zWeekdayNumberObject: z.ZodType<WeekdayNumberObject> = z.object({
 });
 
 export const parseIcsWeekDay: ParseWeekDay = (...props) =>
-  icsWeekDayStringToWeekDay(zWeekDay, ...props);
+  convertIcsWeekDay(zWeekDay, ...props);

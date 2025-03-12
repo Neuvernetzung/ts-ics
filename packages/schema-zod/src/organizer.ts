@@ -1,4 +1,8 @@
-import { icsOrganizerToObject, type Organizer, type ParseOrganizer } from "ts-ics";
+import {
+  convertIcsOrganizer,
+  type Organizer,
+  type ParseOrganizer,
+} from "ts-ics";
 import { z } from "zod";
 
 export const zOrganizer: z.ZodType<Organizer> = z.object({
@@ -9,4 +13,4 @@ export const zOrganizer: z.ZodType<Organizer> = z.object({
 });
 
 export const parseIcsOrganizer: ParseOrganizer = (...props) =>
-  icsOrganizerToObject(zOrganizer, ...props);
+  convertIcsOrganizer(zOrganizer, ...props);

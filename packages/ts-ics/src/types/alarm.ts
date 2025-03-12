@@ -1,14 +1,14 @@
 import type { Attachment } from "./attachment";
 import type { Attendee } from "./attendee";
 import type { Duration } from "./duration";
-import type { LinesToObject, ParseLinesType } from "./parse";
+import type { ConvertLinesType, ParseLinesType } from "./parse";
 import type { VTimezone } from "./timezone";
-import type { VEventTrigger } from "./trigger";
+import type { Trigger } from "./trigger";
 
 export type VAlarm = {
   action?: string;
   description?: string;
-  trigger: VEventTrigger;
+  trigger: Trigger;
   attendees?: Attendee[];
   duration?: Duration;
   repeat?: number;
@@ -20,6 +20,6 @@ export type ParseAlarmOptions = {
   timezones?: VTimezone[];
 };
 
-export type AlarmLinesToObject = LinesToObject<VAlarm, ParseAlarmOptions>;
+export type ConvertAlarm = ConvertLinesType<VAlarm, ParseAlarmOptions>;
 
 export type ParseAlarm = ParseLinesType<VAlarm, ParseAlarmOptions>;

@@ -1,4 +1,4 @@
-import type { LineToObject, ParseLineType } from "./parse";
+import type { ConvertLineType, ParseLineType } from "./parse";
 
 export const attendeePartStatusTypes = [
   "NEEDS-ACTION",
@@ -22,6 +22,6 @@ export type Attendee = {
   sentBy?: string;
 };
 
-export type AttendeeLineToObject = LineToObject<Attendee>;
+export type ConvertAttendee = ConvertLineType<Attendee>;
 
 export type ParseAttendee = ParseLineType<Attendee>;

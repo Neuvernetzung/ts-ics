@@ -1,30 +1,23 @@
 import { addMilliseconds } from "date-fns";
 
-import type {
-  Line,
-  ParseTimeStampOptions,
-  TimeStampLineToObject,
-} from "@/types";
+import type { Line, ParseTimeStampOptions, ConvertTimeStamp } from "@/types";
 import type { DateObjectType } from "@/types/date";
 
-import { icsDateTimeToDateTime, icsDateToDate } from "./date";
+import { convertIcsDateTime, convertIcsDate } from "./date";
 import { getTimezoneObjectOffset } from "@/utils/timezone/getTimezone";
 import { standardValidate } from "./utils/standardValidate";
 
-const __icsTimeStampToObject = (
-  line: Line,
-  options?: ParseTimeStampOptions
-) => {
+const __convertIcsTimeStamp = (line: Line, options?: ParseTimeStampOptions) => {
   if (line.options?.VALUE === "DATE")
     return {
-      date: icsDateToDate(undefined, line),
+      date: convertIcsDate(undefined, line),
       type: line.options?.VALUE as DateObjectType,
     };
 
   const type: DateObjectType =
     (line.options?.VALUE as DateObjectType) || "DATE-TIME";
 
-  const dateTime = icsDateTimeToDateTime(undefined, line);
+  const dateTime = convertIcsDateTime(undefined, line);
 
   if (!line.options?.TZID)
     return {
@@ -57,10 +50,10 @@ const __icsTimeStampToObject = (
   };
 };
 
-export const icsTimeStampToObject: TimeStampLineToObject = (
+export const convertIcsTimeStamp: ConvertTimeStamp = (
   schema,
   line,
   options
 ) => {
-  return standardValidate(schema, __icsTimeStampToObject(line, options));
+  return standardValidate(schema, __convertIcsTimeStamp(line, options));
 };

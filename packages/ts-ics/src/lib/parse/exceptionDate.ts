@@ -1,8 +1,8 @@
-import type { ExceptionDatesLineToObject } from "@/types/exceptionDate";
-import { icsTimeStampToObject } from "./timeStamp";
+import type { ConvertExceptionDates } from "@/types/exceptionDate";
+import { convertIcsTimeStamp } from "./timeStamp";
 import { standardValidate } from "./utils/standardValidate";
 
-export const icsExceptionDateToObject: ExceptionDatesLineToObject = (
+export const convertIcsExceptionDates: ConvertExceptionDates = (
   schema,
   line,
   options
@@ -12,7 +12,7 @@ export const icsExceptionDateToObject: ExceptionDatesLineToObject = (
     line.value
       .split(",")
       .map((value) =>
-        icsTimeStampToObject(
+        convertIcsTimeStamp(
           undefined,
           { value, options: line.options },
           options

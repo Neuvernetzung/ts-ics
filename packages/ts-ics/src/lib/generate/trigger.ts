@@ -1,11 +1,11 @@
-import type { DateObject, Duration, VEventTrigger } from "@/types";
+import type { DateObject, Duration, Trigger } from "@/types";
 
 import { generateIcsDuration } from "./duration";
 import { generateIcsTimeStamp } from "./timeStamp";
 import { generateIcsLine } from "./utils/addLine";
 import { generateIcsOptions } from "./utils/generateOptions";
 
-export const generateIcsTrigger = (trigger: VEventTrigger) => {
+export const generateIcsTrigger = (trigger: Trigger) => {
   const options = generateIcsOptions(
     [
       trigger.options?.related && {

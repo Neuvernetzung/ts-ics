@@ -4,22 +4,15 @@ import {
   replaceCalendarRegex,
 } from "@/constants";
 import { VCALENDAR_TO_OBJECT_KEYS, type VCalendarKey } from "@/constants/keys";
-import type {
-  CalendarLinesToObject,
-  VCalendarVersion,
-  VCalendar,
-} from "@/types";
+import type { ConvertCalendar, VCalendarVersion, VCalendar } from "@/types";
 
-import { icsEventToObject } from "./event";
-import { icsTimezoneToObject } from "./timezone";
+import { convertIcsEvent } from "./event";
+import { convertIcsTimezone } from "./timezone";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 import { standardValidate } from "./utils/standardValidate";
 
-export const icsCalendarToObject: CalendarLinesToObject = (
-  schema,
-  calendarString
-) => {
+export const convertIcsCalendar: ConvertCalendar = (schema, calendarString) => {
   const cleanedFileString = calendarString.replace(replaceCalendarRegex, "");
 
   const lineStrings = splitLines(
@@ -49,7 +42,7 @@ export const icsCalendarToObject: CalendarLinesToObject = (
 
   if (timezoneStrings.length > 0) {
     const timezones = timezoneStrings.map((timezoneString) =>
-      icsTimezoneToObject(undefined, timezoneString)
+      convertIcsTimezone(undefined, timezoneString)
     );
     calendar.timezones = timezones;
   }
@@ -60,7 +53,7 @@ export const icsCalendarToObject: CalendarLinesToObject = (
 
   if (eventStrings.length > 0) {
     const events = eventStrings.map((eventString) =>
-      icsEventToObject(undefined, eventString, {
+      convertIcsEvent(undefined, eventString, {
         timezones: calendar.timezones,
       })
     );

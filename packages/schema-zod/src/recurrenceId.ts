@@ -1,5 +1,5 @@
 import {
-  icsRecurrenceIdToObject,
+  convertIcsRecurrenceId,
   type ParseRecurrenceId,
   type RecurrenceId,
 } from "ts-ics";
@@ -12,4 +12,4 @@ export const zRecurrenceId: z.ZodType<RecurrenceId> = z.object({
 });
 
 export const parseIcsRecurrenceId: ParseRecurrenceId = (...props) =>
-  icsRecurrenceIdToObject(zRecurrenceId, ...props);
+  convertIcsRecurrenceId(zRecurrenceId, ...props);

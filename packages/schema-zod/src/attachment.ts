@@ -1,7 +1,7 @@
 import {
   type Attachment,
   encodingTypes,
-  icsAttachmentToObject,
+  convertIcsAttachment,
   type ParseAttachment,
 } from "ts-ics";
 import { z } from "zod";
@@ -26,4 +26,4 @@ export const zAttachment: z.ZodType<Attachment> = z.discriminatedUnion("type", [
 ]);
 
 export const parseIcsAttachment: ParseAttachment = (...props) =>
-  icsAttachmentToObject(zAttachment, ...props);
+  convertIcsAttachment(zAttachment, ...props);

@@ -1,8 +1,8 @@
 import {
   type DateObject,
   dateObjectTypes,
-  icsDateTimeToDateTime,
-  icsDateToDate,
+  convertIcsDateTime,
+  convertIcsDate,
   type ParseDate,
 } from "ts-ics";
 import { z } from "zod";
@@ -20,7 +20,7 @@ export const zDateObject: z.ZodType<DateObject> = z.object({
 });
 
 export const parseIcsDate: ParseDate = (...props) =>
-  icsDateToDate(z.date(), ...props);
+  convertIcsDate(z.date(), ...props);
 
 export const parseIcsDateTime: ParseDate = (...props) =>
-  icsDateTimeToDateTime(z.date(), ...props);
+  convertIcsDateTime(z.date(), ...props);

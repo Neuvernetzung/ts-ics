@@ -1,4 +1,4 @@
-import type { LineToObject, ParseLineType } from "./parse";
+import type { ConvertLineType, ParseLineType } from "./parse";
 
 export type Duration = {
   before?: boolean;
@@ -9,6 +9,6 @@ export type Duration = {
   seconds?: number;
 };
 
-export type DurationLineToObject = LineToObject<Duration>;
+export type ConvertDuration = ConvertLineType<Duration>;
 
 export type ParseDuration = ParseLineType<Duration>;
