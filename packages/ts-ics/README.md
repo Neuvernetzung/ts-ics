@@ -8,7 +8,7 @@ This package can parse and create Ics files and provides TypeScript types for ea
 
 ## Motivation
 
-Many of the Ics packages provide good functionality, however none of these are type safe. This package can parse Ics strings with Zod. Also, many packages are not actively maintained.
+Many of the Ics packages provide good functionality, but none of them are type safe. This package can parse Ics strings with Zod. Also, many packages are not actively maintained.
 
 ## Installation
 
@@ -38,40 +38,67 @@ const icsEventString = generateIcsEvent(event);
 
 ## parse
 
-### parseIcsCalendar
+### IcsCalendar
 
-#### parse with zod
-
-```ts
-import { parseIcsCalendar, type IcsCalendar } from "ts-ics";
-
-const calendarParsed: IcsCalendar = parseIcsCalendar(icsCalendarString);
-```
-
-#### without zod parsing
+#### without parsing
 
 ```ts
 import { convertIcsCalendar, type IcsCalendar } from "ts-ics";
 
-const calendar: IcsCalendar = convertIcsCalendar(icsCalendarString);
+const calendar: IcsCalendar = convertIcsCalendar(undefined, icsCalendarString);
 ```
-
-### parseIcsEvent
 
 #### parse with zod
 
 ```ts
-import { parseIcsEvent, type IcsEvent } from "ts-ics";
+import { type IcsCalendar } from "ts-ics";
+import { parseIcsCalendar } from "@ts-ics/schema-zod";
 
-const eventParsed: IcsEvent = parseIcsEvent(icsEventString);
+const calendarParsed: IcsCalendar = parseIcsCalendar(icsCalendarString);
 ```
 
-#### without zod parsing
+#### provide your own validator
+
+This library uses [Standard-Schema](https://github.com/standard-schema/standard-schema) under the hood, so every schema library that implements the spec can be used.
+
+```ts
+import { convertIcsCalendar, type IcsCalendar } from "ts-ics";
+import { zIcsCalendar } from "@ts-ics/schema-zod";
+
+const calendar: IcsCalendar = convertIcsCalendar(
+  zIcsCalendar,
+  icsCalendarString
+);
+```
+
+### IcsEvent
+
+#### without parsing
 
 ```ts
 import { convertIcsEvent, type IcsEvent } from "ts-ics";
 
-const event: IcsEvent = convertIcsEvent(icsEventString);
+const event: IcsEvent = convertIcsEvent(undefined, icsEventString);
+```
+
+#### parse with zod
+
+```ts
+import { type IcsEvent } from "ts-ics";
+import { parseIcsEvent } from "@ts-ics/schema-zod";
+
+const eventParsed: IcsEvent = parseIcsEvent(icsEventString);
+```
+
+#### provide your own validator
+
+This library uses [Standard-Schema](https://github.com/standard-schema/standard-schema) under the hood, so every schema library that implements the spec can be used.
+
+```ts
+import { convertIcsEvent, type IcsEvent } from "ts-ics";
+import { zIcsEvent } from "@ts-ics/schema-zod";
+
+const calendar: IcsEvent = convertIcsEvent(zIcsEvent, icsEventString);
 ```
 
 ## utils
