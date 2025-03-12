@@ -7,21 +7,17 @@
   ],
   "private": true,
   "scripts": {
-    "type-check": "turbo run type-check --filter=ts-ics",
-    "lint": "turbo run lint --filter=ts-ics",
-    "dev": "turbo run dev --filter=ts-ics",
-    "build": "turbo run build --filter=ts-ics",
-    "test": "turbo run test --filter=ts-ics",
-    "dev/docs": "turbo run start --filter=docs",
-    "build/docs": "turbo run build --filter=docs",
+    "type-check": "turbo run type-check",
+    "lint": "turbo run lint",
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
     "benchmark": "node benchmark/index.js"
   },
   "author": "Neuvernetzung Medienagentur UG",
   "packageManager": "npm@11.2.0",
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
     "@changesets/cli": "^2.28.1",
-    "@neuvernetzung/tsconfig": "^1.0.2",
     "@types/node": "^22.13.10",
     "tinybench": "^3.1.1",
     "turbo": "^2.4.4"

@@ -1,3 +1,5 @@
+import { IcsRecurrenceRule } from "@/types";
+
 export const RRULE_KEYS = [
   "FREQ",
   "UNTIL",
@@ -14,8 +16,9 @@ export const RRULE_KEYS = [
   "BYSETPOS",
   "WKST",
 ] as const;
-export type RRuleKeys = typeof RRULE_KEYS;
-export type RRuleKey = RRuleKeys[number];
+
+export type IcsRecurrenceRuleKeys = typeof RRULE_KEYS;
+export type IcsRecurrenceRuleKey = IcsRecurrenceRuleKeys[number];
 
 export const RRULE_OBJECT_KEYS = [
   "frequency",
@@ -32,12 +35,15 @@ export const RRULE_OBJECT_KEYS = [
   "byMonth",
   "bySetPos",
   "workweekStart",
-] as const;
+] as const satisfies (keyof IcsRecurrenceRule)[];
 
-export type RRuleObjectKeys = typeof RRULE_OBJECT_KEYS;
-export type RRuleObjectKey = RRuleObjectKeys[number];
+export type IcsRecurrenceRuleObjectKeys = typeof RRULE_OBJECT_KEYS;
+export type IcsRecurrenceRuleObjectKey = IcsRecurrenceRuleObjectKeys[number];
 
-export const RRULE_TO_OBJECT_KEYS: Record<RRuleKey, RRuleObjectKey> = {
+export const RRULE_TO_OBJECT_KEYS: Record<
+  IcsRecurrenceRuleKey,
+  IcsRecurrenceRuleObjectKey
+> = {
   BYDAY: "byDay",
   BYHOUR: "byHour",
   BYMINUTE: "byMinute",
@@ -54,7 +60,10 @@ export const RRULE_TO_OBJECT_KEYS: Record<RRuleKey, RRuleObjectKey> = {
   WKST: "workweekStart",
 };
 
-export const RRULE_TO_KEYS: Record<RRuleObjectKey, RRuleKey> = {
+export const RRULE_TO_KEYS: Record<
+  IcsRecurrenceRuleObjectKey,
+  IcsRecurrenceRuleKey
+> = {
   byDay: "BYDAY",
   byHour: "BYHOUR",
   byMinute: "BYMINUTE",

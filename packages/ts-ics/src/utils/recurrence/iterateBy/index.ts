@@ -1,6 +1,6 @@
 import { compareAsc, isWithinInterval, isEqual } from "date-fns";
 
-import type { RecurrenceRule, WeekDayNumber } from "@/types";
+import type { IcsRecurrenceRule, WeekDayNumber } from "@/types";
 
 import type { ExtendByRecurrenceRuleOptions } from "..";
 import { iterateByDay } from "./day";
@@ -14,7 +14,7 @@ import { iterateByWeekNo } from "./weekNo";
 import { iterateByYearDay } from "./yearDay";
 
 export const iterateBy = (
-  rule: RecurrenceRule,
+  rule: IcsRecurrenceRule,
   options: Required<ExtendByRecurrenceRuleOptions> & {
     weekStartsOn: WeekDayNumber;
   },

@@ -9,7 +9,7 @@ import {
 } from "date-fns";
 
 import type { ExtendByRecurrenceRuleOptions } from ".";
-import type { RecurrenceRule } from "@/types";
+import type { IcsRecurrenceRule } from "@/types";
 
 const limitReached = (length: number, limit?: number) => {
   if (limit === undefined) return false;
@@ -17,7 +17,7 @@ const limitReached = (length: number, limit?: number) => {
 };
 
 export const iterateBase = (
-  rule: RecurrenceRule,
+  rule: IcsRecurrenceRule,
   { start, end }: Required<Omit<ExtendByRecurrenceRuleOptions, "exceptions">>,
   dateGroups: Date[][]
 ) => {

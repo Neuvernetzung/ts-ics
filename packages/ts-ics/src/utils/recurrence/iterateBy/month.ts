@@ -1,11 +1,11 @@
 import { getMonth, setMonth } from "date-fns";
 
-import type { RecurrenceRule } from "@/types";
+import type { IcsRecurrenceRule } from "@/types";
 
 export const iterateByMonth = (
-  rule: RecurrenceRule,
+  rule: IcsRecurrenceRule,
   dateGroups: Date[][],
-  byMonth: NonNullable<RecurrenceRule["byMonth"]>
+  byMonth: NonNullable<IcsRecurrenceRule["byMonth"]>
 ): Date[][] => {
   if (rule.frequency === "YEARLY") {
     return dateGroups.map((dates) =>

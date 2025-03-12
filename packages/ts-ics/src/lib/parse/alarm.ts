@@ -1,65 +1,70 @@
 import { replaceAlarmRegex } from "@/constants";
-import { VALARM_TO_OBJECT_KEYS, type VAlarmKey } from "@/constants/keys/alarm";
-import { type VAlarm, type VTimezone, zVAlarm } from "@/types";
-import type { Attachment } from "@/types/attachment";
-import type { Attendee } from "@/types/attendee";
+import {
+  VALARM_TO_OBJECT_KEYS,
+  type IcsAlarmKey,
+} from "@/constants/keys/alarm";
+import type { ConvertAlarm, IcsAlarm } from "@/types";
+import type { IcsAttachment } from "@/types/attachment";
+import type { IcsAttendee } from "@/types/attendee";
 
-import { icsAttachmentToObject } from "./attachment";
-import { icsAttendeeToObject } from "./attendee";
-import { icsDurationToObject } from "./duration";
-import { icsTriggerToObject } from "./trigger";
+import { convertIcsAttachment } from "./attachment";
+import { convertIcsAttendee } from "./attendee";
+import { convertIcsDuration } from "./duration";
+import { convertIcsTrigger } from "./trigger";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
+import { standardValidate } from "./utils/standardValidate";
 
-export type ParseIcsAlarm = (
-  rawAlarmString: string,
-  timezones?: VTimezone[]
-) => VAlarm;
-
-export const icsAlarmToObject: ParseIcsAlarm = (rawAlarmString, timezones) => {
+export const convertIcsAlarm: ConvertAlarm = (
+  schema,
+  rawAlarmString,
+  alarmOptions
+): IcsAlarm => {
   const alarmString = rawAlarmString.replace(replaceAlarmRegex, "");
 
-  const lines = splitLines(alarmString);
+  const lineStrings = splitLines(alarmString);
 
-  const alarm: Partial<VAlarm> = {};
+  const alarm: Partial<IcsAlarm> = {};
 
-  const attachments: Attachment[] = [];
+  const attachments: IcsAttachment[] = [];
 
-  const attendees: Attendee[] = [];
+  const attendees: IcsAttendee[] = [];
 
-  lines.forEach((line) => {
-    const { property, options, value } = getLine<VAlarmKey>(line);
+  lineStrings.forEach((lineString) => {
+    const { property, line } = getLine<IcsAlarmKey>(lineString);
 
     const objectKey = VALARM_TO_OBJECT_KEYS[property];
 
     if (!objectKey) return; // unknown Object key
 
     if (objectKey === "trigger") {
-      alarm[objectKey] = icsTriggerToObject(value, options, timezones);
+      alarm[objectKey] = convertIcsTrigger(undefined, line, {
+        timezones: alarmOptions?.timezones,
+      });
       return;
     }
 
     if (objectKey === "duration") {
-      alarm[objectKey] = icsDurationToObject(value);
+      alarm[objectKey] = convertIcsDuration(undefined, line);
       return;
     }
 
     if (objectKey === "repeat") {
-      alarm[objectKey] = Number(value);
+      alarm[objectKey] = Number(line.value);
       return;
     }
 
-    if (objectKey === "attachment") {
-      attachments.push(icsAttachmentToObject(value, options));
+    if (objectKey === "attachments") {
+      attachments.push(convertIcsAttachment(undefined, line));
       return;
     }
 
-    if (objectKey === "attendee") {
-      attendees.push(icsAttendeeToObject(value, options));
+    if (objectKey === "attendees") {
+      attendees.push(convertIcsAttendee(undefined, line));
       return;
     }
 
-    alarm[objectKey] = value; // Set string value
+    alarm[objectKey] = line.value; // Set string value
   });
 
   if (attachments.length > 0) {
@@ -70,8 +75,5 @@ export const icsAlarmToObject: ParseIcsAlarm = (rawAlarmString, timezones) => {
     alarm.attendees = attendees;
   }
 
-  return alarm as VAlarm;
+  return standardValidate(schema, alarm as IcsAlarm);
 };
-
-export const parseIcsAlarm: ParseIcsAlarm = (rawAlarmString, timezones) =>
-  zVAlarm.parse(icsAlarmToObject(rawAlarmString, timezones));

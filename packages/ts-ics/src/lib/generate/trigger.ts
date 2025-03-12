@@ -1,11 +1,11 @@
-import type { DateObject, VEventDuration, VEventTrigger } from "@/types";
+import type { IcsDateObject, IcsDuration, IcsTrigger } from "@/types";
 
 import { generateIcsDuration } from "./duration";
 import { generateIcsTimeStamp } from "./timeStamp";
 import { generateIcsLine } from "./utils/addLine";
 import { generateIcsOptions } from "./utils/generateOptions";
 
-export const generateIcsTrigger = (trigger: VEventTrigger) => {
+export const generateIcsTrigger = (trigger: IcsTrigger) => {
   const options = generateIcsOptions(
     [
       trigger.options?.related && {
@@ -16,13 +16,13 @@ export const generateIcsTrigger = (trigger: VEventTrigger) => {
   );
 
   if (trigger.type === "absolute") {
-    return generateIcsTimeStamp("TRIGGER", trigger.value as DateObject);
+    return generateIcsTimeStamp("TRIGGER", trigger.value as IcsDateObject);
   }
 
   if (trigger.type === "relative") {
     return generateIcsLine(
       "TRIGGER",
-      generateIcsDuration(trigger.value as VEventDuration),
+      generateIcsDuration(trigger.value as IcsDuration),
       options
     );
   }

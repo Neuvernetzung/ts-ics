@@ -1,28 +1,25 @@
-import { z } from "zod";
+import type { IcsAttachment } from "./attachment";
+import type { IcsAttendee } from "./attendee";
+import type { IcsDuration } from "./duration";
+import type { ConvertLinesType, ParseLinesType } from "./parse";
+import type { IcsTimezone } from "./timezone";
+import type { IcsTrigger } from "./trigger";
 
-import { type Attachment, zAttachment } from "./attachment";
-import { type Attendee, zAttendee } from "./attendee";
-import { type VEventDuration, zVEventDuration } from "./duration";
-import { type VEventTrigger, zVEventTrigger } from "./trigger";
-
-export type VAlarm = {
+export type IcsAlarm = {
   action?: string;
   description?: string;
-  trigger: VEventTrigger;
-  attendees?: Attendee[];
-  duration?: VEventDuration;
+  trigger: IcsTrigger;
+  attendees?: IcsAttendee[];
+  duration?: IcsDuration;
   repeat?: number;
   summary?: string;
-  attachments?: Attachment[];
+  attachments?: IcsAttachment[];
 };
 
-export const zVAlarm: z.ZodType<VAlarm> = z.object({
-  action: z.string().default("DISPLAY"),
-  description: z.string().optional(),
-  trigger: zVEventTrigger,
-  attendees: z.array(zAttendee).optional(),
-  duration: zVEventDuration.optional(),
-  repeat: z.number().optional(),
-  summary: z.string().optional(),
-  attachments: z.array(zAttachment).optional(),
-});
+export type ParseAlarmOptions = {
+  timezones?: IcsTimezone[];
+};
+
+export type ConvertAlarm = ConvertLinesType<IcsAlarm, ParseAlarmOptions>;
+
+export type ParseAlarm = ParseLinesType<IcsAlarm, ParseAlarmOptions>;

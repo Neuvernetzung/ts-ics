@@ -1,15 +1,5 @@
-import { weekDays, zWeekDay, type WeekDay } from "@/types";
+import type { ConvertWeekDay, IcsWeekDay } from "@/types";
+import { standardValidate } from "./utils/standardValidate";
 
-export type ParseIcsWeekDay = (weekDayString: string) => WeekDay | undefined;
-
-export const icsWeekDayStringToWeekDay: ParseIcsWeekDay = (weekDayString) => {
-  if (!weekDayString) return;
-
-  if (weekDays.includes(weekDayString as WeekDay))
-    return weekDayString as WeekDay;
-
-  return;
-};
-
-export const parseIcsWeekDay: ParseIcsWeekDay = (WeekDayString) =>
-  zWeekDay.parse(icsWeekDayStringToWeekDay(WeekDayString));
+export const convertIcsWeekDay: ConvertWeekDay = (schema, line) =>
+  standardValidate(schema, line.value as IcsWeekDay);

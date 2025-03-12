@@ -1,5 +1,5 @@
 import { VCALENDAR_TO_KEYS } from "@/constants/keys";
-import type { VCalendar } from "@/types";
+import type { IcsCalendar } from "@/types";
 
 import { generateIcsEvent } from "./event";
 import { generateIcsTimezone } from "./timezone";
@@ -11,7 +11,7 @@ import {
 import { formatLines } from "./utils/formatLines";
 import { getKeys } from "./utils/getKeys";
 
-export const generateIcsCalendar = (calendar: VCalendar) => {
+export const generateIcsCalendar = (calendar: IcsCalendar) => {
   const calendarKeys = getKeys(calendar);
 
   let icsString = "";

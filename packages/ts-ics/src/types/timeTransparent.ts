@@ -1,8 +1,10 @@
-import { z } from "zod";
+import type { ConvertLineType, ParseLineType } from "./parse";
 
 export const timeTransparentTypes = ["TRANSPARENT", "OPAQUE"] as const;
 
-export type TimeTransparentTypes = typeof timeTransparentTypes;
-export type TimeTransparentType = TimeTransparentTypes[number];
+export type IcsTimeTransparentTypes = typeof timeTransparentTypes;
+export type IcsTimeTransparentType = IcsTimeTransparentTypes[number];
 
-export const zTimeTransparentType = z.enum(timeTransparentTypes);
+export type ConvertTimeTransparent = ConvertLineType<IcsTimeTransparentType>;
+
+export type ParseTimeTransparent = ParseLineType<IcsTimeTransparentType>;

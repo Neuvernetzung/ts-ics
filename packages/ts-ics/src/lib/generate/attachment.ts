@@ -1,9 +1,9 @@
-import type { Attachment } from "@/types/attachment";
+import type { IcsAttachment } from "@/types/attachment";
 
 import { generateIcsLine } from "./utils/addLine";
 import { generateIcsOptions } from "./utils/generateOptions";
 
-export const generateIcsAttachment = (attachment: Attachment) => {
+export const generateIcsAttachment = (attachment: IcsAttachment) => {
   if (attachment.type === "uri") {
     const options = generateIcsOptions(
       [
@@ -28,5 +28,5 @@ export const generateIcsAttachment = (attachment: Attachment) => {
     return generateIcsLine("ATTACH", attachment.binary, options);
   }
 
-  throw Error(`Attachment has no type! ${JSON.stringify(attachment)}`);
+  throw Error(`IcsAttachment has no type! ${JSON.stringify(attachment)}`);
 };

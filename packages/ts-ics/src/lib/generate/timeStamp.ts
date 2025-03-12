@@ -1,4 +1,4 @@
-import type { DateObject } from "@/types";
+import type { IcsDateObject } from "@/types";
 
 import { generateIcsDate, generateIcsDateTime } from "./date";
 import { generateIcsLine } from "./utils/addLine";
@@ -6,7 +6,7 @@ import { generateIcsOptions } from "./utils/generateOptions";
 
 export const generateIcsTimeStamp = (
   icsKey: string,
-  dateObject: DateObject
+  dateObject: IcsDateObject
 ) => {
   const value =
     dateObject.type === "DATE"

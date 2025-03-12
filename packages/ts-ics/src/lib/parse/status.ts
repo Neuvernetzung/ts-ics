@@ -1,15 +1,5 @@
-import { statusTypes, zStatusType, type StatusType } from "@/types";
+import type { ConvertStatus, IcsStatusType } from "@/types";
+import { standardValidate } from "./utils/standardValidate";
 
-export type ParseIcsStatus = (StatusString: string) => StatusType | undefined;
-
-export const icsStatusStringToStatus: ParseIcsStatus = (StatusString) => {
-  if (!StatusString) return;
-
-  if (statusTypes.includes(StatusString as StatusType))
-    return StatusString as StatusType;
-
-  return;
-};
-
-export const parseIcsStatus: ParseIcsStatus = (StatusString) =>
-  zStatusType.parse(icsStatusStringToStatus(StatusString));
+export const convertIcsStatus: ConvertStatus = (schema, line) =>
+  standardValidate(schema, line.value as IcsStatusType);

@@ -1,9 +1,10 @@
-import { type VEventDuration, zVEventDuration } from "@/types";
+import type { ConvertDuration, IcsDuration } from "@/types";
+import { standardValidate } from "./utils/standardValidate";
 
-export const icsDurationToObject = (durationString: string): VEventDuration => {
-  let newString = durationString;
+export const convertIcsDuration: ConvertDuration = (schema, line) => {
+  let newString = line.value;
 
-  const duration: Partial<VEventDuration> = {};
+  const duration: Partial<IcsDuration> = {};
 
   if (newString[0] === "-") {
     duration.before = true;
@@ -54,8 +55,5 @@ export const icsDurationToObject = (durationString: string): VEventDuration => {
     }
   }
 
-  return duration as VEventDuration;
+  return standardValidate(schema, duration as IcsDuration);
 };
-
-export const parseIcsDuration = (durationString: string): VEventDuration =>
-  zVEventDuration.parse(icsDurationToObject(durationString));

@@ -1,23 +1,21 @@
-import { type Attachment, zAttachment } from "@/types/attachment";
+import type { ConvertAttachment, IcsAttachment } from "@/types/attachment";
+import { standardValidate } from "./utils/standardValidate";
 
-export const icsAttachmentToObject = (
-  attachmentString: string,
-  options?: Record<string, string>
-): Attachment => {
-  if (options?.VALUE === "BINARY") {
-    return {
-      type: "binary",
-      encoding: (options?.ENCODING as Attachment["encoding"]) || "BASE64",
-      binary: attachmentString,
-      value: options?.VALUE,
-    };
-  }
+export const convertIcsAttachment: ConvertAttachment = (schema, line) => {
+  const attachment: IcsAttachment =
+    line.options?.VALUE === "BINARY"
+      ? {
+          type: "binary",
+          encoding:
+            (line.options?.ENCODING as IcsAttachment["encoding"]) || "BASE64",
+          binary: line.value,
+          value: line.options?.VALUE,
+        }
+      : {
+          type: "uri",
+          url: line.value,
+          formatType: line.options?.FMTTYPE,
+        };
 
-  return { type: "uri", url: attachmentString, formatType: options?.FMTTYPE };
+  return standardValidate(schema, attachment);
 };
-
-export const parseIcsAttachment = (
-  attachmentString: string,
-  options?: Record<string, string>
-): Attachment =>
-  zAttachment.parse(icsAttachmentToObject(attachmentString, options));

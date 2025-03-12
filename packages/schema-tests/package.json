@@ -1,0 +1,39 @@
+{
+  "name": "@ts-ics/schema-tests",
+  "author": "Neuvernetzung Medienagentur UG",
+  "version": "1.6.7",
+  "description": "Zod schema validators for ts-ics",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "private": true,
+  "scripts": {
+    "lint": "npx @biomejs/biome lint ./src --write",
+    "type-check": "tsc --noEmit",
+    "test": "jest"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@ts-ics/schema-zod": "^1.6.7",
+    "ts-ics": "^1.6.7"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@biomejs/biome": "^1.9.4",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^22.13.10",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-environment-node": "^29.7.0",
+    "ts-jest": "^29.2.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Neuvernetzung/ts-ics.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

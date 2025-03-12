@@ -1,11 +1,11 @@
 import { getSeconds, setSeconds } from "date-fns";
 
-import type { RecurrenceRule } from "@/types";
+import type { IcsRecurrenceRule } from "@/types";
 
 export const iterateBySecond = (
-  rule: RecurrenceRule,
+  rule: IcsRecurrenceRule,
   dateGroups: Date[][],
-  bySecond: NonNullable<RecurrenceRule["bySecond"]>
+  bySecond: NonNullable<IcsRecurrenceRule["bySecond"]>
 ): Date[][] => {
   if (
     rule.frequency === "YEARLY" ||

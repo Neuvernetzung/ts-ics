@@ -1,11 +1,11 @@
 import { generateIcsExceptionDate } from "@/lib/generate/exceptionDate";
-import { parseIcsExceptionDate } from "@/lib/parse/exceptionDate";
+import { convertIcsExceptionDates } from "@/lib/parse/exceptionDate";
 import { getLine } from "@/lib/parse/utils/line";
 import { splitLines } from "@/lib/parse/utils/splitLines";
-import type { ExceptionDates } from "@/types/exceptionDate";
+import type { IcsExceptionDates } from "@/types/exceptionDate";
 
 it("Test Ics Exception Date Generate", async () => {
-  const exceptions: ExceptionDates = [
+  const exceptions: IcsExceptionDates = [
     { date: new Date("2007-04-02T01:00:00.000Z"), type: "DATE-TIME" },
     { date: new Date("2007-04-03T01:00:00.000Z"), type: "DATE-TIME" },
   ];
@@ -16,12 +16,12 @@ it("Test Ics Exception Date Generate", async () => {
     exceptionsString += generateIcsExceptionDate(exception, "EXDATE");
   });
 
-  const lines = splitLines(exceptionsString);
+  const lineStrings = splitLines(exceptionsString);
 
-  lines.forEach((line, i) => {
-    const { options, value } = getLine(line);
+  lineStrings.forEach((lineString, i) => {
+    const { line } = getLine(lineString);
 
-    const parsed = parseIcsExceptionDate(value, options);
+    const parsed = convertIcsExceptionDates(undefined, line);
 
     expect(parsed[0].date).toEqual(exceptions[i].date);
   });

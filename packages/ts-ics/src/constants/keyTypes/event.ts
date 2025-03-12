@@ -1,4 +1,4 @@
-import type { VEventObjectKey } from "@/constants/keys/event";
+import type { IcsEventObjectKey } from "@/constants/keys/event";
 
 const timeStampKeys = [
   "stamp",
@@ -6,21 +6,21 @@ const timeStampKeys = [
   "end",
   "created",
   "lastModified",
-] satisfies VEventObjectKey[];
+] satisfies IcsEventObjectKey[];
 
 type TimeStampKey = (typeof timeStampKeys)[number];
 
 export const objectKeyIsTimeStamp = (
-  objectKey: VEventObjectKey
+  objectKey: IcsEventObjectKey
 ): objectKey is TimeStampKey =>
   timeStampKeys.includes(objectKey as TimeStampKey);
 
-const arrayOfStringKeys = ["categories"] satisfies VEventObjectKey[];
+const arrayOfStringKeys = ["categories"] satisfies IcsEventObjectKey[];
 
 type ArrayOfStringKey = (typeof arrayOfStringKeys)[number];
 
 export const objectKeyIsArrayOfStrings = (
-  objectKey: VEventObjectKey
+  objectKey: IcsEventObjectKey
 ): objectKey is ArrayOfStringKey =>
   arrayOfStringKeys.includes(objectKey as ArrayOfStringKey);
 
@@ -29,11 +29,11 @@ const textStringKeys = [
   "location",
   "comment",
   "summary",
-] satisfies VEventObjectKey[];
+] satisfies IcsEventObjectKey[];
 
 type TextStringKey = (typeof textStringKeys)[number];
 
 export const objectKeyIsTextString = (
-  objectKey: VEventObjectKey
+  objectKey: IcsEventObjectKey
 ): objectKey is TextStringKey =>
   textStringKeys.includes(objectKey as TextStringKey);

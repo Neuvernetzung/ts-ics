@@ -1,11 +1,19 @@
-import { z } from "zod";
-import { type DateObject, zDateObject } from "./date";
+import type { IcsDateObject } from "./date";
+import type { ConvertLineType, ParseLineType } from "./parse";
+import type { IcsTimezone } from "./timezone";
 
-export type ExceptionDate = DateObject;
+export type IcsExceptionDate = IcsDateObject;
 
-export type ExceptionDates = ExceptionDate[];
+export type IcsExceptionDates = IcsExceptionDate[];
 
-export const zExceptionDate: z.ZodType<ExceptionDate> = zDateObject;
+export type ParseExceptionDatesOptions = { timezones?: IcsTimezone[] };
 
-export const zExceptionDates: z.ZodType<ExceptionDates> =
-  z.array(zExceptionDate);
+export type ConvertExceptionDates = ConvertLineType<
+  IcsExceptionDates,
+  ParseExceptionDatesOptions
+>;
+
+export type ParseExceptionDates = ParseLineType<
+  IcsExceptionDates,
+  ParseExceptionDatesOptions
+>;

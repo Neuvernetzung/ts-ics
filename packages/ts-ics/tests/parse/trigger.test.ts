@@ -1,27 +1,27 @@
 import { getLine } from "@/lib/parse/utils/line";
 
-import { parseIcsTrigger } from "@/lib/parse/trigger";
+import { convertIcsTrigger } from "@/lib/parse/trigger";
 
-it("Test Ics Trigger Parse", async () => {
+it("Test Ics IcsTrigger Parse", async () => {
   const trigger = `TRIGGER:-PT15M`;
 
-  const { value, options } = getLine(trigger);
+  const { line } = getLine(trigger);
 
-  expect(() => parseIcsTrigger(value, options)).not.toThrow();
+  expect(() => convertIcsTrigger(undefined, line)).not.toThrow();
 });
 
-it("Test Ics Trigger Parse", async () => {
+it("Test Ics IcsTrigger Parse", async () => {
   const trigger = `TRIGGER;RELATED=END:PT5M`;
 
-  const { value, options } = getLine(trigger);
+  const { line } = getLine(trigger);
 
-  expect(() => parseIcsTrigger(value, options)).not.toThrow();
+  expect(() => convertIcsTrigger(undefined, line)).not.toThrow();
 });
 
-it("Test Ics Trigger Parse", async () => {
+it("Test Ics IcsTrigger Parse", async () => {
   const trigger = `TRIGGER;VALUE=DATE-TIME:19980101T050000Z`;
 
-  const { value, options } = getLine(trigger);
+  const { line } = getLine(trigger);
 
-  expect(() => parseIcsTrigger(value, options)).not.toThrow();
+  expect(() => convertIcsTrigger(undefined, line)).not.toThrow();
 });

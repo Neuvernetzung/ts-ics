@@ -1,10 +1,10 @@
-import type { Organizer } from "@/types/organizer";
+import type { IcsOrganizer } from "@/types/organizer";
 
 import { generateIcsMail } from "./mail";
 import { generateIcsLine } from "./utils/addLine";
 import { generateIcsOptions } from "./utils/generateOptions";
 
-export const generateIcsOrganizer = (organizer: Organizer) => {
+export const generateIcsOrganizer = (organizer: IcsOrganizer) => {
   const options = generateIcsOptions(
     [
       organizer.dir && { key: "DIR", value: `"${organizer.dir}"` },

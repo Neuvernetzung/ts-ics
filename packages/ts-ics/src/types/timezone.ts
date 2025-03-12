@@ -1,45 +1,45 @@
-import { z } from "zod";
-
-import { type DateObject, zDateObject } from "./date";
-import { type RecurrenceRule, zRecurrenceRule } from "./recurrence";
+import type { IcsDateObject } from "./date";
+import type { ConvertLinesType, ParseLinesType } from "./parse";
+import type { IcsRecurrenceRule } from "./recurrenceRule";
 
 export const timezonePropTypes = ["STANDARD", "DAYLIGHT"] as const;
 
-export type VTimezonePropTypes = typeof timezonePropTypes;
-export type VTimezonePropType = VTimezonePropTypes[number];
+export type IcsTimezonePropTypes = typeof timezonePropTypes;
+export type IcsTimezonePropType = IcsTimezonePropTypes[number];
 
-export type VTimezoneProp = {
-  type: VTimezonePropType;
+export type IcsTimezoneProp = {
+  type: IcsTimezonePropType;
   start: Date;
   offsetTo: string;
   offsetFrom: string;
-  recurrenceRule?: RecurrenceRule;
+  recurrenceRule?: IcsRecurrenceRule;
   comment?: string;
-  recurrenceDate?: DateObject;
+  recurrenceDate?: IcsDateObject;
   name?: string;
 };
 
-export const zVTimezoneProp: z.ZodType<VTimezoneProp> = z.object({
-  type: z.enum(timezonePropTypes),
-  start: z.date(),
-  offsetTo: z.string(),
-  offsetFrom: z.string(),
-  recurrenceRule: zRecurrenceRule.optional(),
-  comment: z.string().optional(),
-  recurrenceDate: zDateObject.optional(),
-  name: z.string().optional(),
-});
+export type ParseTimezonePropOptions = {
+  type?: IcsTimezonePropType;
+  timezones?: IcsTimezone[];
+};
 
-export type VTimezone = {
+export type ConvertTimezoneProp = ConvertLinesType<
+  IcsTimezoneProp,
+  ParseTimezonePropOptions
+>;
+
+export type ParseTimezoneProp = ParseLinesType<
+  IcsTimezoneProp,
+  ParseTimezonePropOptions
+>;
+
+export type IcsTimezone = {
   id: string;
   lastModified?: Date;
   url?: string;
-  props: VTimezoneProp[];
+  props: IcsTimezoneProp[];
 };
 
-export const zVTimezone: z.ZodType<VTimezone> = z.object({
-  id: z.string(),
-  lastModified: z.date().optional(),
-  url: z.string().url().optional(),
-  props: z.array(zVTimezoneProp),
-});
+export type ConvertTimezone = ConvertLinesType<IcsTimezone>;
+
+export type ParseTimezone = ParseLinesType<IcsTimezone>;

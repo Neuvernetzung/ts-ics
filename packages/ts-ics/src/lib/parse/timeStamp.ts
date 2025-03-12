@@ -1,44 +1,35 @@
 import { addMilliseconds } from "date-fns";
 
-import type { VTimezone } from "@/types";
-import {
-  type DateObject,
-  type DateObjectType,
-  zDateObject,
-} from "@/types/date";
+import type { Line, ParseTimeStampOptions, ConvertTimeStamp } from "@/types";
+import type { DateObjectType } from "@/types/date";
 
-import { icsDateTimeToDateTime, icsDateToDate } from "./date";
+import { convertIcsDateTime, convertIcsDate } from "./date";
 import { getTimezoneObjectOffset } from "@/utils/timezone/getTimezone";
+import { standardValidate } from "./utils/standardValidate";
 
-export type ParseIcsTimeStamp = (
-  timestamp: string,
-  options?: Record<string, string>,
-  timezones?: VTimezone[]
-) => DateObject;
-
-export const icsTimeStampToObject: ParseIcsTimeStamp = (
-  timestamp,
-  options,
-  timezones
-) => {
-  if (options?.VALUE === "DATE")
+const __convertIcsTimeStamp = (line: Line, options?: ParseTimeStampOptions) => {
+  if (line.options?.VALUE === "DATE")
     return {
-      date: icsDateToDate(timestamp),
-      type: options?.VALUE as DateObjectType,
+      date: convertIcsDate(undefined, line),
+      type: line.options?.VALUE as DateObjectType,
     };
 
   const type: DateObjectType =
-    (options?.VALUE as DateObjectType) || "DATE-TIME";
+    (line.options?.VALUE as DateObjectType) || "DATE-TIME";
 
-  const dateTime = icsDateTimeToDateTime(timestamp);
+  const dateTime = convertIcsDateTime(undefined, line);
 
-  if (!options?.TZID)
+  if (!line.options?.TZID)
     return {
       date: dateTime,
       type,
     };
 
-  const timezone = getTimezoneObjectOffset(dateTime, options.TZID, timezones);
+  const timezone = getTimezoneObjectOffset(
+    dateTime,
+    line.options.TZID,
+    options?.timezones
+  );
 
   if (!timezone)
     return {
@@ -49,15 +40,20 @@ export const icsTimeStampToObject: ParseIcsTimeStamp = (
   return {
     date: addMilliseconds(dateTime, -timezone.milliseconds),
     type,
-    local: options?.TZID
-      ? { date: dateTime, timezone: options?.TZID, tzoffset: timezone.offset }
+    local: line.options?.TZID
+      ? {
+          date: dateTime,
+          timezone: line.options?.TZID,
+          tzoffset: timezone.offset,
+        }
       : undefined,
   };
 };
 
-export const parseicsTimeStamp: ParseIcsTimeStamp = (
-  timestamp,
-  options,
-  timezones
-): DateObject =>
-  zDateObject.parse(icsTimeStampToObject(timestamp, options, timezones));
+export const convertIcsTimeStamp: ConvertTimeStamp = (
+  schema,
+  line,
+  options
+) => {
+  return standardValidate(schema, __convertIcsTimeStamp(line, options));
+};

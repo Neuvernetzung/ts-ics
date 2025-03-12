@@ -3,36 +3,40 @@ import {
   getTimezoneRegex,
   replaceCalendarRegex,
 } from "@/constants";
-import { VCALENDAR_TO_OBJECT_KEYS, type VCalendarKey } from "@/constants/keys";
-import { type VCalendar, zVCalendar } from "@/types";
+import {
+  VCALENDAR_TO_OBJECT_KEYS,
+  type IcsCalendarKey,
+} from "@/constants/keys";
+import type { ConvertCalendar, IcsCalendarVersion, IcsCalendar } from "@/types";
 
-import { icsEventToObject } from "./event";
-import { icsTimezoneToObject } from "./timezone";
+import { convertIcsEvent } from "./event";
+import { convertIcsTimezone } from "./timezone";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
+import { standardValidate } from "./utils/standardValidate";
 
-export const icsCalendarToObject = (calendarString: string): VCalendar => {
+export const convertIcsCalendar: ConvertCalendar = (schema, calendarString) => {
   const cleanedFileString = calendarString.replace(replaceCalendarRegex, "");
 
-  const lines = splitLines(
+  const lineStrings = splitLines(
     cleanedFileString.replace(getEventRegex, "").replace(getTimezoneRegex, "")
   );
 
-  const calendar: Partial<VCalendar> = {};
+  const calendar: Partial<IcsCalendar> = {};
 
-  lines.forEach((line) => {
-    const { property, value } = getLine<VCalendarKey>(line);
+  lineStrings.forEach((lineString) => {
+    const { property, line } = getLine<IcsCalendarKey>(lineString);
 
     const objectKey = VCALENDAR_TO_OBJECT_KEYS[property];
 
     if (!objectKey) return; // unknown Object key
 
     if (objectKey === "version") {
-      calendar[objectKey] = "2.0";
+      calendar[objectKey] = line.value as IcsCalendarVersion;
       return;
     }
 
-    calendar[objectKey] = value;
+    calendar[objectKey] = line.value;
   });
 
   const timezoneStrings = [...cleanedFileString.matchAll(getTimezoneRegex)].map(
@@ -41,7 +45,7 @@ export const icsCalendarToObject = (calendarString: string): VCalendar => {
 
   if (timezoneStrings.length > 0) {
     const timezones = timezoneStrings.map((timezoneString) =>
-      icsTimezoneToObject(timezoneString)
+      convertIcsTimezone(undefined, timezoneString)
     );
     calendar.timezones = timezones;
   }
@@ -52,13 +56,12 @@ export const icsCalendarToObject = (calendarString: string): VCalendar => {
 
   if (eventStrings.length > 0) {
     const events = eventStrings.map((eventString) =>
-      icsEventToObject(eventString, calendar.timezones)
+      convertIcsEvent(undefined, eventString, {
+        timezones: calendar.timezones,
+      })
     );
     calendar.events = events;
   }
 
-  return calendar as VCalendar;
+  return standardValidate(schema, calendar as IcsCalendar);
 };
-
-export const parseIcsCalendar = (calendarString: string): VCalendar =>
-  zVCalendar.parse(icsCalendarToObject(calendarString));

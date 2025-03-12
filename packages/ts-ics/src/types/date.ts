@@ -1,5 +1,5 @@
-import { setMilliseconds } from "date-fns";
-import { z } from "zod";
+import type { ConvertLineType, ParseLineType } from "./parse";
+import type { IcsTimezone } from "./timezone";
 
 export const dateObjectTypes = ["DATE", "DATE-TIME"] as const;
 
@@ -12,22 +12,24 @@ export type DateObjectTzProps = {
   tzoffset: string;
 };
 
-export const zDateObjectTzProps = z.object({
-  date: z.date(),
-  timezone: z.string(),
-  tzoffset: z.string(),
-});
-
-export type DateObject = {
+export type IcsDateObject = {
   date: Date;
   type?: DateObjectType;
   local?: DateObjectTzProps;
 };
 
-const zIcsDate = z.date().transform((date) => setMilliseconds(date, 0)); // Millisekunden sind nicht erlaubt bei Ics
+export type ConvertDate = ConvertLineType<Date>;
 
-export const zDateObject: z.ZodType<DateObject> = z.object({
-  date: zIcsDate,
-  type: z.enum(dateObjectTypes).optional(),
-  local: zDateObjectTzProps.optional(),
-});
+export type ParseDate = ParseLineType<Date>;
+
+export type ParseTimeStampOptions = { timezones?: IcsTimezone[] };
+
+export type ConvertTimeStamp = ConvertLineType<
+  IcsDateObject,
+  ParseTimeStampOptions
+>;
+
+export type ParseTimeStamp = ParseLineType<
+  IcsDateObject,
+  ParseTimeStampOptions
+>;

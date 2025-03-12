@@ -16,12 +16,9 @@ import {
   subWeeks,
 } from "date-fns";
 
-import type { VEventDuration } from "../types";
+import type { IcsDuration } from "../types";
 
-export const getEventEndFromDuration = (
-  start: Date,
-  duration: VEventDuration
-) =>
+export const getEventEndFromDuration = (start: Date, duration: IcsDuration) =>
   duration.before
     ? subWeeks(
         subDays(
@@ -53,7 +50,7 @@ export const getEventEndFromDuration = (
 export const getDurationFromInterval = (
   start: Date,
   end: Date
-): VEventDuration => {
+): IcsDuration => {
   const weeks = Math.abs(differenceInWeeks(end, start));
   const rawDays = Math.abs(differenceInDays(end, start));
   const days = rawDays - weeks * 7;

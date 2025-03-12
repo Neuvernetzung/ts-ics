@@ -1,19 +1,14 @@
-import { type Organizer, zOrganizer } from "@/types/organizer";
+import type { ConvertOrganizer } from "@/types/organizer";
 
 import { replaceMailTo } from "./utils/replaceMailTo";
+import { standardValidate } from "./utils/standardValidate";
 
-export const icsOrganizerToObject = (
-  organizerString: string,
-  options?: Record<string, string>
-): Organizer => ({
-  name: options?.CN,
-  dir: options?.DIR,
-  sentBy: options?.["SENT-BY"] ? replaceMailTo(options["SENT-BY"]) : undefined,
-  email: replaceMailTo(organizerString),
-});
-
-export const parseIcsOrganizer = (
-  organizerString: string,
-  options?: Record<string, string>
-): Organizer =>
-  zOrganizer.parse(icsOrganizerToObject(organizerString, options));
+export const convertIcsOrganizer: ConvertOrganizer = (schema, line) =>
+  standardValidate(schema, {
+    name: line.options?.CN,
+    dir: line.options?.DIR,
+    sentBy: line.options?.["SENT-BY"]
+      ? replaceMailTo(line.options["SENT-BY"])
+      : undefined,
+    email: replaceMailTo(line.value),
+  });

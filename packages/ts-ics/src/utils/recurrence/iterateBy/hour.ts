@@ -1,11 +1,11 @@
 import { getHours, setHours } from "date-fns";
 
-import type { RecurrenceRule } from "@/types";
+import type { IcsRecurrenceRule } from "@/types";
 
 export const iterateByHour = (
-  rule: RecurrenceRule,
+  rule: IcsRecurrenceRule,
   dateGroups: Date[][],
-  byHour: NonNullable<RecurrenceRule["byHour"]>
+  byHour: NonNullable<IcsRecurrenceRule["byHour"]>
 ): Date[][] => {
   if (
     rule.frequency === "YEARLY" ||

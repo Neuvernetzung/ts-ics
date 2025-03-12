@@ -1,3 +1,5 @@
+import { IcsTimezoneProp } from "@/types";
+
 export const VTIMEZONE_PROP_KEYS = [
   "DTSTART",
   "TZOFFSETTO",
@@ -7,8 +9,8 @@ export const VTIMEZONE_PROP_KEYS = [
   "RDATE",
   "TZNAME",
 ] as const;
-export type VTimezonePropKeys = typeof VTIMEZONE_PROP_KEYS;
-export type VTimezonePropKey = VTimezonePropKeys[number];
+export type IcsTimezonePropKeys = typeof VTIMEZONE_PROP_KEYS;
+export type IcsTimezonePropKey = IcsTimezonePropKeys[number];
 
 export const VTIMEZONE_PROP_OBJECT_KEYS = [
   "start",
@@ -18,14 +20,14 @@ export const VTIMEZONE_PROP_OBJECT_KEYS = [
   "comment",
   "recurrenceDate",
   "name",
-] as const;
+] as const satisfies (keyof IcsTimezoneProp)[];
 
-export type VTimezonePropObjectKeys = typeof VTIMEZONE_PROP_OBJECT_KEYS;
-export type VTimezonePropObjectKey = VTimezonePropObjectKeys[number];
+export type IcsTimezonePropObjectKeys = typeof VTIMEZONE_PROP_OBJECT_KEYS;
+export type IcsTimezonePropObjectKey = IcsTimezonePropObjectKeys[number];
 
 export const VTIMEZONE_PROP_TO_OBJECT_KEYS: Record<
-  VTimezonePropKey,
-  VTimezonePropObjectKey
+  IcsTimezonePropKey,
+  IcsTimezonePropObjectKey
 > = {
   COMMENT: "comment",
   DTSTART: "start",
@@ -37,8 +39,8 @@ export const VTIMEZONE_PROP_TO_OBJECT_KEYS: Record<
 };
 
 export const VTIMEZONE_PROP_TO_KEYS: Record<
-  VTimezonePropObjectKey,
-  VTimezonePropKey
+  IcsTimezonePropObjectKey,
+  IcsTimezonePropKey
 > = {
   comment: "COMMENT",
   name: "TZNAME",

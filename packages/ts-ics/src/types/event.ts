@@ -1,86 +1,52 @@
-import { z } from "zod";
+import type { IcsAlarm } from "./alarm";
+import type { IcsAttendee } from "./attendee";
+import type { IcsDateObject } from "./date";
+import type { IcsDuration } from "./duration";
+import type { IcsOrganizer } from "./organizer";
+import type { IcsRecurrenceRule } from "./recurrenceRule";
+import type { IcsRecurrenceId } from "./recurrenceId";
+import type { IcsStatusType } from "./status";
+import type { IcsExceptionDates } from "./exceptionDate";
+import type { IcsClassType } from "./class";
+import type { IcsTimeTransparentType } from "./timeTransparent";
+import type { IcsTimezone } from "./timezone";
+import type { ConvertLinesType, ParseLinesType } from "./parse";
 
-import { type VAlarm, zVAlarm } from "./alarm";
-import { type Attendee, zAttendee } from "./attendee";
-import { type DateObject, zDateObject } from "./date";
-import { type VEventDuration, zVEventDuration } from "./duration";
-import { type Organizer, zOrganizer } from "./organizer";
-import { type RecurrenceRule, zRecurrenceRule } from "./recurrence";
-import { type RecurrenceId, zRecurrenceId } from "./recurrenceId";
-import { zStatusType, type StatusType } from "./status";
-import { type ExceptionDates, zExceptionDates } from "./exceptionDate";
-import { zClassType, type ClassType } from "./class";
-import {
-  zTimeTransparentType,
-  type TimeTransparentType,
-} from "./timeTransparent";
+export type IcsEventDurationOrEnd =
+  | { duration: IcsDuration; end?: never }
+  | { duration?: never; end: IcsDateObject };
 
-export type VEventDurationOrEnd =
-  | { duration: VEventDuration; end?: never }
-  | { duration?: never; end: DateObject };
-
-export const zVEventDurationOrEnd: z.ZodType<VEventDurationOrEnd> = z.union([
-  z.object({ duration: zVEventDuration, end: z.never().optional() }),
-  z.object({ duration: z.never().optional(), end: zDateObject }),
-]);
-
-export type VEventBase = {
+export type IcsEventBase = {
   summary: string;
   uid: string;
-  created?: DateObject;
-  lastModified?: DateObject;
-  stamp: DateObject;
-  start: DateObject;
+  created?: IcsDateObject;
+  lastModified?: IcsDateObject;
+  stamp: IcsDateObject;
+  start: IcsDateObject;
   location?: string;
   description?: string;
   categories?: string[];
-  exceptionDates?: ExceptionDates;
-  recurrenceRule?: RecurrenceRule;
-  alarms?: VAlarm[];
-  timeTransparent?: TimeTransparentType;
+  exceptionDates?: IcsExceptionDates;
+  recurrenceRule?: IcsRecurrenceRule;
+  alarms?: IcsAlarm[];
+  timeTransparent?: IcsTimeTransparentType;
   url?: string;
   geo?: string;
-  class?: ClassType;
-  organizer?: Organizer;
+  class?: IcsClassType;
+  organizer?: IcsOrganizer;
   priority?: string;
   sequence?: number;
-  status?: StatusType;
+  status?: IcsStatusType;
   attach?: string;
-  recurrenceId?: RecurrenceId;
-  attendees?: Attendee[];
+  recurrenceId?: IcsRecurrenceId;
+  attendees?: IcsAttendee[];
   comment?: string;
 };
 
-export const zVEventBase: z.ZodType<VEventBase> = z.object({
-  summary: z.string(),
-  uid: z.string(),
-  created: zDateObject.optional(),
-  lastModified: zDateObject.optional(),
-  stamp: zDateObject,
-  start: zDateObject,
-  location: z.string().optional(),
-  description: z.string().optional(),
-  categories: z.array(z.string()).optional(),
-  exceptionDates: zExceptionDates.optional(),
-  recurrenceRule: zRecurrenceRule.optional(),
-  alarms: z.array(zVAlarm).optional(),
-  timeTransparent: zTimeTransparentType.optional(),
-  url: z.string().url().optional(),
-  geo: z.string().optional(),
-  class: zClassType.optional(),
-  organizer: zOrganizer.optional(),
-  priority: z.string().optional(),
-  sequence: z.number().optional(),
-  status: zStatusType.optional(),
-  attach: z.string().optional(),
-  recurrenceId: zRecurrenceId.optional(),
-  attendees: z.array(zAttendee).optional(),
-  comment: z.string().optional(),
-});
+export type IcsEvent = IcsEventBase & IcsEventDurationOrEnd;
 
-export type VEvent = VEventBase & VEventDurationOrEnd;
+export type ParseEventOptions = { timezones?: IcsTimezone[] };
 
-export const zVEvent: z.ZodType<VEvent> = z.intersection(
-  zVEventBase,
-  zVEventDurationOrEnd
-);
+export type ConvertEvent = ConvertLinesType<IcsEvent, ParseEventOptions>;
+
+export type ParseEvent = ParseLinesType<IcsEvent, ParseEventOptions>;

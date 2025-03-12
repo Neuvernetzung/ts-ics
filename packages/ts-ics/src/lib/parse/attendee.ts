@@ -1,24 +1,25 @@
-import { type Attendee, type AttendeePartStatusType, zAttendee } from "@/types/attendee";
+import type {
+  ConvertAttendee,
+  IcsAttendeePartStatusType,
+} from "@/types/attendee";
 
 import { replaceMailTo } from "./utils/replaceMailTo";
+import { standardValidate } from "./utils/standardValidate";
 
-export const icsAttendeeToObject = (
-  attendeeString: string,
-  options?: Record<string, string>
-): Attendee => ({
-  email: replaceMailTo(attendeeString),
-  delegatedFrom: options?.["DELEGATED-FROM"]
-    ? replaceMailTo(options["DELEGATED-FROM"])
-    : undefined,
-  dir: options?.DIR,
-  member: options?.MEMBER ? replaceMailTo(options.MEMBER) : undefined,
-  name: options?.CN,
-  partstat: options?.PARTSTAT as AttendeePartStatusType,
-  role: options?.ROLE,
-  sentBy: options?.["SENT-BY"] ? replaceMailTo(options["SENT-BY"]) : undefined,
-});
-
-export const parseIcsAttendee = (
-  attendeeString: string,
-  options?: Record<string, string>
-): Attendee => zAttendee.parse(icsAttendeeToObject(attendeeString, options));
+export const convertIcsAttendee: ConvertAttendee = (schema, line) =>
+  standardValidate(schema, {
+    email: replaceMailTo(line.value),
+    delegatedFrom: line.options?.["DELEGATED-FROM"]
+      ? replaceMailTo(line.options?.["DELEGATED-FROM"])
+      : undefined,
+    dir: line.options?.DIR,
+    member: line.options?.MEMBER
+      ? replaceMailTo(line.options.MEMBER)
+      : undefined,
+    name: line.options?.CN,
+    partstat: line.options?.PARTSTAT as IcsAttendeePartStatusType,
+    role: line.options?.ROLE,
+    sentBy: line.options?.["SENT-BY"]
+      ? replaceMailTo(line.options["SENT-BY"])
+      : undefined,
+  });

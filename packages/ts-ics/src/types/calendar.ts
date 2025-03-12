@@ -1,27 +1,26 @@
-import { z } from "zod";
+import type { IcsEvent } from "./event";
+import type { ConvertLinesType, ParseLinesType } from "./parse";
+import type { IcsTimezone } from "./timezone";
 
-import { type VEvent, zVEvent } from "./event";
-import { type VTimezone, zVTimezone } from "./timezone";
+export const calendarMethods = ["PUBLISH"] as const;
 
-export const zVCalendarMethods = ["PUBLISH"] as const;
+export type IcsCalendarMethods = typeof calendarMethods;
+export type IcsCalenderMethod = IcsCalendarMethods[number];
 
-export type VCalendarMethods = typeof zVCalendarMethods;
-export type VCalenderMethod = VCalendarMethods[number];
+export const calendarVersions = ["2.0"] as const;
 
-export type VCalendar = {
-	version: "2.0";
-	prodId: string;
-	method?: VCalenderMethod | string;
-	timezones?: VTimezone[];
-	events?: VEvent[];
-	name?: string;
+export type IcsCalendarVersions = typeof calendarVersions;
+export type IcsCalendarVersion = IcsCalendarVersions[number];
+
+export type IcsCalendar = {
+  version: IcsCalendarVersion;
+  prodId: string;
+  method?: IcsCalenderMethod | string;
+  timezones?: IcsTimezone[];
+  events?: IcsEvent[];
+  name?: string;
 };
 
-export const zVCalendar: z.ZodType<VCalendar> = z.object({
-	version: z.literal("2.0"),
-	prodId: z.string(),
-	method: z.union([z.enum(zVCalendarMethods), z.string()]).optional(),
-	timezones: z.array(zVTimezone).optional(),
-	events: z.array(zVEvent).optional(),
-	name: z.string().optional(),
-});
+export type ConvertCalendar = ConvertLinesType<IcsCalendar>;
+
+export type ParseCalendar = ParseLinesType<IcsCalendar>;
