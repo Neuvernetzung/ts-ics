@@ -1,4 +1,4 @@
-import { DurationLineToObject, type Duration } from "@/types";
+import type { DurationLineToObject, Duration } from "@/types";
 import { standardValidate } from "./utils/standardValidate";
 
 export const icsDurationToObject: DurationLineToObject = (schema, line) => {

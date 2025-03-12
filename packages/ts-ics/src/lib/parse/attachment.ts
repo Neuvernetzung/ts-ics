@@ -1,4 +1,4 @@
-import { AttachmentLineToObject, type Attachment } from "@/types/attachment";
+import type { AttachmentLineToObject, Attachment } from "@/types/attachment";
 import { standardValidate } from "./utils/standardValidate";
 
 export const icsAttachmentToObject: AttachmentLineToObject = (schema, line) => {

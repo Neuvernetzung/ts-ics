@@ -1,4 +1,4 @@
-import { icsStatusStringToStatus, ParseStatusType, statusTypes } from "ts-ics";
+import { icsStatusStringToStatus, type ParseStatusType, statusTypes } from "ts-ics";
 import { z } from "zod";
 
 export const zStatusType = z.enum(statusTypes);

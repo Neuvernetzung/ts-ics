@@ -1,6 +1,6 @@
-import { type DateObject } from "./date";
-import { LineToObject, ParseLineType } from "./parse";
-import { VTimezone } from "./timezone";
+import type { DateObject } from "./date";
+import type { LineToObject, ParseLineType } from "./parse";
+import type { VTimezone } from "./timezone";
 
 export type ExceptionDate = DateObject;
 

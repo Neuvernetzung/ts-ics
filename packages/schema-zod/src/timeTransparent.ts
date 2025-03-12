@@ -1,7 +1,6 @@
 import {
   icsTimeTransparentStringToTimeTransparent,
-  Line,
-  ParseTimeTransparentType,
+  type ParseTimeTransparentType,
   timeTransparentTypes,
 } from "ts-ics";
 import { z } from "zod";

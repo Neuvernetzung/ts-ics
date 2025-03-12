@@ -7,7 +7,7 @@ import {
   VTIMEZONE_TO_OBJECT_KEYS,
   type VTimezoneKey,
 } from "@/constants/keys/timezone";
-import { TimezoneLinesToObject, type VTimezone } from "@/types/timezone";
+import type { TimezoneLinesToObject, VTimezone } from "@/types/timezone";
 
 import { icsDateTimeToDateTime } from "./date";
 import { icsTimezonePropToObject } from "./timezoneProp";

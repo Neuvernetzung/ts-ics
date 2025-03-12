@@ -1,5 +1,5 @@
 import type { StandardSchemaV1 } from "@standard-schema/spec";
-import { Line } from "./line";
+import type { Line } from "./line";
 
 export type LinesToObject<TType, TOptions = undefined> = (
   schema: StandardSchemaV1<TType> | undefined,

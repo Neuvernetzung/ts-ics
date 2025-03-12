@@ -5,7 +5,7 @@ import type {
   ParseTimeStampOptions,
   TimeStampLineToObject,
 } from "@/types";
-import { type DateObjectType } from "@/types/date";
+import type { DateObjectType } from "@/types/date";
 
 import { icsDateTimeToDateTime, icsDateToDate } from "./date";
 import { getTimezoneObjectOffset } from "@/utils/timezone/getTimezone";

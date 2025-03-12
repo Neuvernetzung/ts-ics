@@ -1,7 +1,7 @@
-import {
+import type {
   TriggerLineToObject,
-  type TriggerRelation,
-  type VEventTrigger,
+  TriggerRelation,
+  VEventTrigger,
 } from "@/types";
 
 import { icsDurationToObject } from "./duration";

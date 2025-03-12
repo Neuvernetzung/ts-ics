@@ -1,6 +1,6 @@
-import {
+import type {
   AttendeeLineToObject,
-  type AttendeePartStatusType,
+  AttendeePartStatusType,
 } from "@/types/attendee";
 
 import { replaceMailTo } from "./utils/replaceMailTo";

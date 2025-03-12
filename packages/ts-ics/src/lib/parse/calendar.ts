@@ -4,10 +4,10 @@ import {
   replaceCalendarRegex,
 } from "@/constants";
 import { VCALENDAR_TO_OBJECT_KEYS, type VCalendarKey } from "@/constants/keys";
-import {
+import type {
   CalendarLinesToObject,
   VCalendarVersion,
-  type VCalendar,
+  VCalendar,
 } from "@/types";
 
 import { icsEventToObject } from "./event";

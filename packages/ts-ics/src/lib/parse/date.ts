@@ -1,6 +1,6 @@
-import type { StandardSchemaV1 } from "@standard-schema/spec";
+
 import { standardValidate } from "./utils/standardValidate";
-import { DateLineToDate, Line } from "@/types";
+import type { DateLineToDate, } from "@/types";
 
 export const icsDateToDate: DateLineToDate = (schema, line) => {
   const year = Number.parseInt(line.value.slice(0, 4), 10);

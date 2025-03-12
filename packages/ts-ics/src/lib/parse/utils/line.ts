@@ -1,7 +1,7 @@
 import { QUOTE, SEMICOLON, SEPARATOR } from "@/constants";
 
 import { splitOptions } from "./options";
-import { Line } from "@/types";
+import type { Line } from "@/types";
 
 type GetLineProps<TKey extends string> = {
   property: TKey;

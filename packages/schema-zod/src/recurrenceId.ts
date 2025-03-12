@@ -1,7 +1,7 @@
 import {
   icsRecurrenceIdToObject,
-  ParseRecurrenceId,
-  RecurrenceId,
+  type ParseRecurrenceId,
+  type RecurrenceId,
 } from "ts-ics";
 import { z } from "zod";
 import { zDateObject } from "./date";

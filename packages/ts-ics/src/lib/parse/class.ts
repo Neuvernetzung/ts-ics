@@ -1,4 +1,4 @@
-import { ClassTypeLineToObject, type ClassType } from "@/types";
+import type { ClassTypeLineToObject, ClassType } from "@/types";
 import { standardValidate } from "./utils/standardValidate";
 
 export const icsClassStringToClass: ClassTypeLineToObject = (schema, line) =>

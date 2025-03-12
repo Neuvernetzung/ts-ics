@@ -3,7 +3,6 @@ import type { Organizer } from "@/types/organizer";
 import { generateIcsMail } from "./mail";
 import { generateIcsLine } from "./utils/addLine";
 import { generateIcsOptions } from "./utils/generateOptions";
-import { StandardSchemaV1 } from "@standard-schema/spec";
 
 export const generateIcsOrganizer = (organizer: Organizer) => {
   const options = generateIcsOptions(

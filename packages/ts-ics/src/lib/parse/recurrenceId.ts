@@ -1,4 +1,4 @@
-import { type RecurrenceId } from "@/types/recurrenceId";
+import type { RecurrenceId } from "@/types/recurrenceId";
 
 import { icsTimeStampToObject } from "./timeStamp";
 import type { RecurrenceIdLineToObject } from "@/types";

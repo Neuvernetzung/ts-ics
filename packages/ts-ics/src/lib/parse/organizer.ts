@@ -1,4 +1,4 @@
-import { OrganizerLineToObject } from "@/types/organizer";
+import type { OrganizerLineToObject } from "@/types/organizer";
 
 import { replaceMailTo } from "./utils/replaceMailTo";
 import { standardValidate } from "./utils/standardValidate";

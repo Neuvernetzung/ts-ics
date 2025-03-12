@@ -1,6 +1,6 @@
-import { type VEvent } from "./event";
-import { LinesToObject, ParseLinesType } from "./parse";
-import { type VTimezone } from "./timezone";
+import type { VEvent } from "./event";
+import type { LinesToObject, ParseLinesType } from "./parse";
+import type { VTimezone } from "./timezone";
 
 export const calendarMethods = ["PUBLISH"] as const;
 

@@ -1,9 +1,8 @@
 import {
-  Attendee,
+  type Attendee,
   attendeePartStatusTypes,
   icsAttendeeToObject,
-  Line,
-  ParseAttendee,
+  type ParseAttendee,
 } from "ts-ics";
 import { z } from "zod";
 

@@ -1,16 +1,16 @@
-import { type VAlarm } from "./alarm";
-import { type Attendee } from "./attendee";
-import { type DateObject } from "./date";
-import { type Duration } from "./duration";
-import { type Organizer } from "./organizer";
-import { type RecurrenceRule } from "./recurrenceRule";
-import { type RecurrenceId } from "./recurrenceId";
-import { type StatusType } from "./status";
-import { type ExceptionDates } from "./exceptionDate";
-import { type ClassType } from "./class";
-import { type TimeTransparentType } from "./timeTransparent";
-import { VTimezone } from "./timezone";
-import { LinesToObject, ParseLinesType } from "./parse";
+import type { VAlarm } from "./alarm";
+import type { Attendee } from "./attendee";
+import type { DateObject } from "./date";
+import type { Duration } from "./duration";
+import type { Organizer } from "./organizer";
+import type { RecurrenceRule } from "./recurrenceRule";
+import type { RecurrenceId } from "./recurrenceId";
+import type { StatusType } from "./status";
+import type { ExceptionDates } from "./exceptionDate";
+import type { ClassType } from "./class";
+import type { TimeTransparentType } from "./timeTransparent";
+import type { VTimezone } from "./timezone";
+import type { LinesToObject, ParseLinesType } from "./parse";
 
 export type DurationOrEnd =
   | { duration: Duration; end?: never }

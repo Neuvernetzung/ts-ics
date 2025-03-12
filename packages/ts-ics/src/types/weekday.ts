@@ -1,4 +1,4 @@
-import { LineToObject, ParseLineType } from "./parse";
+import type { LineToObject, ParseLineType } from "./parse";
 
 export const weekDays = ["SU", "MO", "TU", "WE", "TH", "FR", "SA"] as const;
 

@@ -1,7 +1,7 @@
-import { type DateObject } from "./date";
-import { LineToObject, ParseLineType } from "./parse";
-import { VTimezone } from "./timezone";
-import { type WeekDay, type WeekdayNumberObject } from "./weekday";
+import type { DateObject } from "./date";
+import type { LineToObject, ParseLineType } from "./parse";
+import type { VTimezone } from "./timezone";
+import type { WeekDay, WeekdayNumberObject } from "./weekday";
 
 export const recurrenceRuleFrequencies = [
   "SECONDLY",

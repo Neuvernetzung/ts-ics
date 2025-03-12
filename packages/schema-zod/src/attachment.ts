@@ -1,9 +1,8 @@
 import {
-  Attachment,
+  type Attachment,
   encodingTypes,
   icsAttachmentToObject,
-  Line,
-  ParseAttachment,
+  type ParseAttachment,
 } from "ts-ics";
 import { z } from "zod";
 

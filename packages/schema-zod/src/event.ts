@@ -1,9 +1,9 @@
 import {
   icsEventToObject,
-  VEvent,
-  VEventBase,
-  DurationOrEnd,
-  ParseEvent,
+  type VEvent,
+  type VEventBase,
+  type DurationOrEnd,
+  type ParseEvent,
 } from "ts-ics";
 import { z } from "zod";
 import { zDateObject } from "./date";

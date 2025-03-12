@@ -1,4 +1,4 @@
-import { LineToObject, ParseLineType } from "./parse";
+import type { LineToObject, ParseLineType } from "./parse";
 
 export type Duration = {
   before?: boolean;

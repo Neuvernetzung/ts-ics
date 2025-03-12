@@ -1,5 +1,5 @@
-import { LineToObject, ParseLineType } from "./parse";
-import { VTimezone } from "./timezone";
+import type { LineToObject, ParseLineType } from "./parse";
+import type { VTimezone } from "./timezone";
 
 export const dateObjectTypes = ["DATE", "DATE-TIME"] as const;
 

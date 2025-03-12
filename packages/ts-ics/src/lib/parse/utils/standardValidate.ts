@@ -6,7 +6,7 @@ export const standardValidate = <T extends StandardSchemaV1>(
 ): StandardSchemaV1.InferOutput<T> => {
   if (schema === undefined) return input;
 
-  let result = schema["~standard"].validate(input);
+  const result = schema["~standard"].validate(input);
   if (result instanceof Promise) {
     throw new TypeError("Schema validation must be synchronous");
   }

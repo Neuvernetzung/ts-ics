@@ -1,6 +1,6 @@
-import { type DateObject } from "./date";
-import { LinesToObject, ParseLinesType } from "./parse";
-import { type RecurrenceRule } from "./recurrenceRule";
+import type { DateObject } from "./date";
+import type { LinesToObject, ParseLinesType } from "./parse";
+import type { RecurrenceRule } from "./recurrenceRule";
 
 export const timezonePropTypes = ["STANDARD", "DAYLIGHT"] as const;
 

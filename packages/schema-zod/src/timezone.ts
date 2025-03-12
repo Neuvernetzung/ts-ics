@@ -1,12 +1,11 @@
 import {
   icsTimezonePropToObject,
   icsTimezoneToObject,
-  ParseTimezone,
-  ParseTimezoneProp,
-  ParseTimezonePropOptions,
+  type ParseTimezone,
+  type ParseTimezoneProp,
   timezonePropTypes,
-  VTimezone,
-  VTimezoneProp,
+  type VTimezone,
+  type VTimezoneProp,
 } from "ts-ics";
 import { z } from "zod";
 import { zRecurrenceRule } from "./recurrenceRule";

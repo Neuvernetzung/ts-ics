@@ -8,7 +8,7 @@ import {
   type RecurrenceRule,
   recurrenceRuleFrequencies,
   type RecurrenceRuleFrequency,
-  RecurrenceRuleLineToObject,
+  type RecurrenceRuleLineToObject,
 } from "@/types";
 
 import { icsTimeStampToObject } from "./timeStamp";

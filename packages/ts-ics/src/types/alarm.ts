@@ -1,9 +1,9 @@
-import { type Attachment } from "./attachment";
-import { type Attendee } from "./attendee";
-import { type Duration } from "./duration";
-import { LinesToObject, ParseLinesType } from "./parse";
-import { VTimezone } from "./timezone";
-import { type VEventTrigger } from "./trigger";
+import type { Attachment } from "./attachment";
+import type { Attendee } from "./attendee";
+import type { Duration } from "./duration";
+import type { LinesToObject, ParseLinesType } from "./parse";
+import type { VTimezone } from "./timezone";
+import type { VEventTrigger } from "./trigger";
 
 export type VAlarm = {
   action?: string;

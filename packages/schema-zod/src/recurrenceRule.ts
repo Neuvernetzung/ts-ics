@@ -1,7 +1,7 @@
 import {
   icsRecurrenceRuleToObject,
-  ParseRecurrenceRule,
-  RecurrenceRule,
+  type ParseRecurrenceRule,
+  type RecurrenceRule,
   recurrenceRuleFrequencies,
 } from "ts-ics";
 import { z } from "zod";

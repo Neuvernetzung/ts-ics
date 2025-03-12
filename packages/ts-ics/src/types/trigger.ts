@@ -1,7 +1,7 @@
-import { type DateObject } from "./date";
-import { type Duration } from "./duration";
-import { LineToObject, ParseLineType } from "./parse";
-import { VTimezone } from "./timezone";
+import type { DateObject } from "./date";
+import type { Duration } from "./duration";
+import type { LineToObject, ParseLineType } from "./parse";
+import type { VTimezone } from "./timezone";
 
 export const triggerRelations = ["START", "END"] as const;
 

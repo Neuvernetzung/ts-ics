@@ -1,4 +1,4 @@
-import { ExceptionDatesLineToObject } from "@/types/exceptionDate";
+import type { ExceptionDatesLineToObject } from "@/types/exceptionDate";
 import { icsTimeStampToObject } from "./timeStamp";
 import { standardValidate } from "./utils/standardValidate";
 

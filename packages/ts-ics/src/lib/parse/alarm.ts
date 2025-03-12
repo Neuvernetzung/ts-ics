@@ -1,6 +1,6 @@
 import { replaceAlarmRegex } from "@/constants";
 import { VALARM_TO_OBJECT_KEYS, type VAlarmKey } from "@/constants/keys/alarm";
-import { AlarmLinesToObject, type VAlarm, type VTimezone } from "@/types";
+import type { AlarmLinesToObject, VAlarm, } from "@/types";
 import type { Attachment } from "@/types/attachment";
 import type { Attendee } from "@/types/attendee";
 

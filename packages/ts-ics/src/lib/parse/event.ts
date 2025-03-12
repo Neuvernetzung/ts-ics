@@ -1,6 +1,6 @@
 import { COMMA, getAlarmRegex, replaceEventRegex } from "@/constants";
 import { VEVENT_TO_OBJECT_KEYS, type VEventKey } from "@/constants/keys/event";
-import { type VEvent, type DateObject, EventLinesToObject } from "@/types";
+import type { VEvent, DateObject, EventLinesToObject } from "@/types";
 import type { Attendee } from "@/types/attendee";
 
 import {

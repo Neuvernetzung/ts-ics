@@ -1,4 +1,4 @@
-import { StatusTypeLineToObject, type StatusType } from "@/types";
+import type { StatusTypeLineToObject, StatusType } from "@/types";
 import { standardValidate } from "./utils/standardValidate";
 
 export const icsStatusStringToStatus: StatusTypeLineToObject = (schema, line) =>

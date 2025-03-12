@@ -7,7 +7,7 @@
   "main": "dist/index.cjs",
   "module": "dist/index.js",
   "scripts": {
-    "lint": "npx @biomejs/biome lint ./src --apply",
+    "lint": "npx @biomejs/biome lint ./src --write",
     "type-check": "tsc --noEmit",
     "dev": "tsup --watch",
     "build": "tsup"

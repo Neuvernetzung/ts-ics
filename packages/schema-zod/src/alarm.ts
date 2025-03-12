@@ -1,8 +1,7 @@
 import {
   icsAlarmToObject,
-  ParseAlarm,
-  ParseAlarmOptions,
-  VAlarm,
+  type ParseAlarm,
+  type VAlarm,
 } from "ts-ics";
 import { z } from "zod";
 import { zVEventTrigger } from "./trigger";

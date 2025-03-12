@@ -1,4 +1,4 @@
-import { LineToObject, ParseLineType } from "./parse";
+import type { LineToObject, ParseLineType } from "./parse";
 
 export const timeTransparentTypes = ["TRANSPARENT", "OPAQUE"] as const;
 

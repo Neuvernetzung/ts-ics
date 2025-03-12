@@ -1,6 +1,6 @@
-import { WeekDayNumberLineToObject, type WeekDay } from "@/types/weekday";
+import type { WeekDayNumberLineToObject, WeekDay } from "@/types/weekday";
 import { standardValidate } from "./utils/standardValidate";
-import { Line } from "@/types";
+import type { Line } from "@/types";
 
 const __icsWeekdayNumberToObject = (value: Line["value"]) => {
   const isWeekdayOnly = value.length === 2;

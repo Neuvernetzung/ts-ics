@@ -1,6 +1,6 @@
-import {
+import type {
   TimeTransparentTypeLineToObject,
-  type TimeTransparentType,
+  TimeTransparentType,
 } from "@/types";
 import { standardValidate } from "./utils/standardValidate";
 

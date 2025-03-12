@@ -1,7 +1,7 @@
 import {
   icsWeekDayStringToWeekDay,
-  ParseWeekDay,
-  WeekdayNumberObject,
+  type ParseWeekDay,
+  type WeekdayNumberObject,
   weekDays,
 } from "ts-ics";
 import { z } from "zod";
