@@ -4,11 +4,11 @@
 
 [![NPM](https://nodei.co/npm/ts-ics.png)](https://nodei.co/npm/ts-ics/)
 
-This package can parse and create Ics files and provides TypeScript types for easy handling.
+This library can parse and create Ics files and provides TypeScript types for easy handling and aims to be fully [RFC 5545](https://www.rfc-editor.org/rfc/rfc5545.html) compliant.
 
 ## Motivation
 
-Many of the Ics packages provide good functionality, but none of them are type safe. This package can parse Ics strings with Zod. Also, many packages are not actively maintained.
+Many of the Ics libraries provide good functionality, but none of them are type safe. This library can parse Ics strings with any validator, thanks to [Standard-Schema](https://github.com/standard-schema/standard-schema).
 
 ## Installation
 
