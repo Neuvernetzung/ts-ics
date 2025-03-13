@@ -12,7 +12,7 @@ import {
 } from "./utils/addLine";
 import { getKeys } from "./utils/getKeys";
 import { generateNonStandardValues } from "./nonStandardValues";
-import {
+import type {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,
 } from "@/types/nonStandardValues";

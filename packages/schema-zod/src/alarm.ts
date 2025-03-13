@@ -2,7 +2,7 @@ import {
   convertIcsAlarm,
   type ParseAlarm,
   type IcsAlarm,
-  NonStandardValuesGeneric,
+  type NonStandardValuesGeneric,
 } from "ts-ics";
 import { z } from "zod";
 import { zIcsTrigger } from "./trigger";

@@ -1,5 +1,5 @@
 import type { IcsEvent } from "./event";
-import {
+import type {
   NonStandardValuesGeneric,
   ParseNonStandardValues,
 } from "./nonStandardValues";

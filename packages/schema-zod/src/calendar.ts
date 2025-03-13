@@ -5,7 +5,7 @@ import {
   convertIcsCalendar,
   type ParseCalendar,
   type IcsCalendar,
-  NonStandardValuesGeneric,
+  type NonStandardValuesGeneric,
 } from "ts-ics";
 import { zIcsTimezone } from "./timezone";
 import { zIcsEvent } from "./event";

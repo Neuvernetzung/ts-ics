@@ -1,4 +1,4 @@
-import {
+import type {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,
 } from "@/types/nonStandardValues";

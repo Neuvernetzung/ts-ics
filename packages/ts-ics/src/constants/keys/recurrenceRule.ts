@@ -1,4 +1,4 @@
-import { IcsRecurrenceRule } from "@/types";
+import type { IcsRecurrenceRule } from "@/types";
 import { invertKeys, keysFromObject } from "./utils";
 
 export type IcsRecurrenceRuleObjectKey = keyof IcsRecurrenceRule;

@@ -1,5 +1,5 @@
-import { Line } from "@/types";
-import {
+import type { Line } from "@/types";
+import type {
   NonStandardValuesGeneric,
   ParseNonStandardValue,
   ParseNonStandardValues,

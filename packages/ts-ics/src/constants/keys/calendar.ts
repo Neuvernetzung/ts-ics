@@ -1,4 +1,4 @@
-import { IcsCalendar } from "@/types";
+import type { IcsCalendar } from "@/types";
 import { invertKeys, keysFromObject } from "./utils";
 
 export type IcsCalendarObjectKey = Exclude<

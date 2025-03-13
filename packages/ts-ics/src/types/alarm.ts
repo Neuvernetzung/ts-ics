@@ -1,7 +1,7 @@
 import type { IcsAttachment } from "./attachment";
 import type { IcsAttendee } from "./attendee";
 import type { IcsDuration } from "./duration";
-import {
+import type {
   NonStandardValuesGeneric,
   ParseNonStandardValues,
 } from "./nonStandardValues";

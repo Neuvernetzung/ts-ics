@@ -1,6 +1,6 @@
 import {
   convertIcsEvent,
-  NonStandardValuesGeneric,
+  type NonStandardValuesGeneric,
   type IcsEvent,
   type IcsEventBase,
   type IcsEventDurationOrEnd,

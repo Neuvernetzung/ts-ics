@@ -1,5 +1,5 @@
-import { StandardSchemaV1 } from "@standard-schema/spec";
-import { Line } from "./line";
+import type { StandardSchemaV1 } from "@standard-schema/spec";
+import type { Line } from "./line";
 
 export type NonStandardValueName = `X-${string}`;
 

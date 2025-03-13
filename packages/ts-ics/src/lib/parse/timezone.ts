@@ -14,9 +14,9 @@ import { convertIcsTimezoneProp } from "./timezoneProp";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 import { standardValidate } from "./utils/standardValidate";
-import { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
 import { convertNonStandardValues } from "./nonStandardValues";
-import { Line } from "@/types";
+import type { Line } from "@/types";
 import { valueIsNonStandard } from "@/utils/nonStandardValue";
 
 export const convertIcsTimezone = <T extends NonStandardValuesGeneric>(

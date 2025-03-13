@@ -1,8 +1,8 @@
 import {
   convertIcsTimezoneProp,
-  IcsTimezoneProp,
-  NonStandardValuesGeneric,
-  ParseTimezoneProp,
+  type IcsTimezoneProp,
+  type NonStandardValuesGeneric,
+  type ParseTimezoneProp,
   timezonePropTypes,
 } from "ts-ics";
 import { z } from "zod";

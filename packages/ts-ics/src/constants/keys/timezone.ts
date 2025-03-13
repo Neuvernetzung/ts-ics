@@ -1,4 +1,4 @@
-import { IcsTimezone } from "@/types";
+import type { IcsTimezone } from "@/types";
 import { invertKeys, keysFromObject } from "./utils";
 
 export type IcsTimezoneObjectKey = Exclude<

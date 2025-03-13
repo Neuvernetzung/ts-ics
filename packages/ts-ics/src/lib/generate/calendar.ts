@@ -11,7 +11,7 @@ import {
 import { formatLines } from "./utils/formatLines";
 import { getKeys } from "./utils/getKeys";
 import { generateNonStandardValues } from "./nonStandardValues";
-import {
+import type {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,
 } from "@/types/nonStandardValues";

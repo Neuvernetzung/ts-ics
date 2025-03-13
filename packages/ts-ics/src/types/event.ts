@@ -11,7 +11,7 @@ import type { IcsClassType } from "./class";
 import type { IcsTimeTransparentType } from "./timeTransparent";
 import type { IcsTimezone } from "./timezone";
 import type { ConvertComponentType, ParseComponentType } from "./parse";
-import {
+import type {
   NonStandardValuesGeneric,
   ParseNonStandardValues,
 } from "./nonStandardValues";

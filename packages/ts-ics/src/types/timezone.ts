@@ -1,9 +1,9 @@
-import {
+import type {
   NonStandardValuesGeneric,
   ParseNonStandardValues,
 } from "./nonStandardValues";
 import type { ConvertComponentType, ParseComponentType } from "./parse";
-import { IcsTimezoneProp } from "./timezoneProp";
+import type { IcsTimezoneProp } from "./timezoneProp";
 
 export type IcsTimezone<
   TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric

@@ -1,11 +1,11 @@
-import { IcsDateObject } from "./date";
-import {
+import type { IcsDateObject } from "./date";
+import type {
   NonStandardValuesGeneric,
   ParseNonStandardValues,
 } from "./nonStandardValues";
-import { ConvertComponentType, ParseComponentType } from "./parse";
-import { IcsRecurrenceRule } from "./recurrenceRule";
-import { IcsTimezone } from "./timezone";
+import type { ConvertComponentType, ParseComponentType } from "./parse";
+import type { IcsRecurrenceRule } from "./recurrenceRule";
+import type { IcsTimezone } from "./timezone";
 
 export const timezonePropTypes = ["STANDARD", "DAYLIGHT"] as const;
 
