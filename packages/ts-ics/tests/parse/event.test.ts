@@ -67,6 +67,21 @@ it("Test Ics Event Parse", async () => {
   expect(() => convertIcsEvent(undefined, event)).not.toThrow();
 });
 
+it("Test Ics Event Parse - recurrenceId gh#140", async () => {
+  const event = icsTestData([
+    "BEGIN:VEVENT",
+    "UID:20070423T123432Z-541111@example.com",
+    "DTSTAMP:20070423T123432Z",
+    "DTSTART;VALUE=DATE:20070628",
+    "DTEND;VALUE=DATE:20070709",
+    "SUMMARY:Festival International de Jazz de Montreal",
+    "RECURRENCE-ID:19970903T163000Z",
+    "END:VEVENT",
+  ]);
+
+  expect(() => convertIcsEvent(undefined, event)).not.toThrow();
+});
+
 it("Test ICS Event With Long Description Parse", async () => {
   const buffer = await readFile(
     `${__dirname}/fixtures/longDescriptionEvent.ics`,
