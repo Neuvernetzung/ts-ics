@@ -3,7 +3,7 @@ import {
   VEVENT_TO_OBJECT_KEYS,
   type IcsEventKey,
 } from "@/constants/keys/event";
-import type { IcsEvent, IcsDateObject, ConvertEvent } from "@/types";
+import type { IcsEvent, IcsDateObject, ConvertEvent, Line } from "@/types";
 import type { IcsAttendee } from "@/types/attendee";
 
 import {
@@ -26,12 +26,15 @@ import { convertIcsClass } from "./class";
 import { convertIcsStatus } from "./status";
 import { convertIcsTimeTransparent } from "./timeTransparent";
 import { standardValidate } from "./utils/standardValidate";
+import { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import { convertNonStandardValues } from "./utils/nonStandardValues";
+import { valueIsNonStandard } from "@/utils/nonStandardValue";
 
-export const convertIcsEvent: ConvertEvent = (
-  schema,
-  rawEventString,
-  eventOptions
-) => {
+export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
+  ...args: Parameters<ConvertEvent<T>>
+): ReturnType<ConvertEvent<T>> => {
+  const [schema, rawEventString, options] = args;
+
   const eventString = rawEventString.replace(replaceEventRegex, "");
 
   const lineStrings = splitLines(eventString.replace(getAlarmRegex, ""));
@@ -41,8 +44,15 @@ export const convertIcsEvent: ConvertEvent = (
   const attendees: IcsAttendee[] = [];
   const exceptionDates: IcsDateObject[] = [];
 
+  const nonStandardValues: Record<string, Line> = {};
+
   lineStrings.forEach((lineString) => {
     const { property, line } = getLine<IcsEventKey>(lineString);
+
+    if (valueIsNonStandard(property)) {
+      nonStandardValues[property] = line;
+      return;
+    }
 
     const objectKey = VEVENT_TO_OBJECT_KEYS[property];
 
@@ -50,7 +60,7 @@ export const convertIcsEvent: ConvertEvent = (
 
     if (objectKeyIsTimeStamp(objectKey)) {
       event[objectKey] = convertIcsTimeStamp(undefined, line, {
-        timezones: eventOptions?.timezones,
+        timezones: options?.timezones,
       });
       return;
     }
@@ -68,7 +78,7 @@ export const convertIcsEvent: ConvertEvent = (
 
     if (objectKey === "recurrenceRule") {
       event[objectKey] = convertIcsRecurrenceRule(undefined, line, {
-        timezones: eventOptions?.timezones,
+        timezones: options?.timezones,
       });
       return;
     }
@@ -96,7 +106,7 @@ export const convertIcsEvent: ConvertEvent = (
     if (objectKey === "exceptionDates") {
       exceptionDates.push(
         ...convertIcsExceptionDates(undefined, line, {
-          timezones: eventOptions?.timezones,
+          timezones: options?.timezones,
         })
       );
       return;
@@ -111,7 +121,7 @@ export const convertIcsEvent: ConvertEvent = (
 
     if (objectKey === "recurrenceId") {
       event[objectKey] = convertIcsRecurrenceId(undefined, line, {
-        timezones: eventOptions?.timezones,
+        timezones: options?.timezones,
       });
       return;
     }
@@ -135,7 +145,7 @@ export const convertIcsEvent: ConvertEvent = (
 
   if (alarmStrings.length > 0) {
     const alarms = alarmStrings.map((alarmString) =>
-      convertIcsAlarm(undefined, alarmString, eventOptions)
+      convertIcsAlarm(undefined, alarmString, options)
     );
 
     event.alarms = alarms;
@@ -149,5 +159,13 @@ export const convertIcsEvent: ConvertEvent = (
     event.exceptionDates = exceptionDates;
   }
 
-  return standardValidate(schema, event as IcsEvent);
+  const validatedEvent = standardValidate(schema, event as IcsEvent<T>);
+
+  if (!options?.nonStandard) return validatedEvent;
+
+  return convertNonStandardValues(
+    validatedEvent,
+    nonStandardValues,
+    options?.nonStandard
+  );
 };

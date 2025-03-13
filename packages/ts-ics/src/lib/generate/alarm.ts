@@ -11,8 +11,16 @@ import {
   getIcsStartLine,
 } from "./utils/addLine";
 import { getKeys } from "./utils/getKeys";
+import { generateNonStandardValues } from "./utils/nonStandardValues";
+import {
+  GenerateNonStandardValues,
+  NonStandardValuesGeneric,
+} from "@/types/nonStandardValues";
 
-export const generateIcsAlarm = (alarm: IcsAlarm) => {
+export const generateIcsAlarm = <T extends NonStandardValuesGeneric>(
+  alarm: IcsAlarm,
+  options?: { nonStandard?: GenerateNonStandardValues<T> }
+) => {
   const alarmKeys = getKeys(alarm);
 
   let icsString = "";
@@ -21,6 +29,11 @@ export const generateIcsAlarm = (alarm: IcsAlarm) => {
 
   alarmKeys.forEach((key) => {
     if (key === "attachments" || key === "attendees") return;
+
+    if (key === "nonStandard") {
+      icsString += generateNonStandardValues(alarm[key], options?.nonStandard);
+      return;
+    }
 
     const icsKey = VALARM_TO_KEYS[key];
 

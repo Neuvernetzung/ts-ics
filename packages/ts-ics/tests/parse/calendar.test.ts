@@ -208,7 +208,7 @@ it("Leftover line breaks should not affect parsing - #130", async () => {
 });
 
 it("Test non standard value", async () => {
-  const nonStandardValue = "year";
+  const nonStandardValue = "yeah";
 
   const calendarString = icsTestData([
     "BEGIN:VCALENDAR",

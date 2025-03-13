@@ -1,5 +1,8 @@
 import type { IcsEvent } from "./event";
-import { ParseNonStandardValue } from "./nonStandardValues";
+import {
+  NonStandardValuesGeneric,
+  ParseNonStandardValues,
+} from "./nonStandardValues";
 import type { ConvertComponentType, ParseComponentType } from "./parse";
 import type { IcsTimezone } from "./timezone";
 
@@ -14,7 +17,7 @@ export type IcsCalendarVersions = typeof calendarVersions;
 export type IcsCalendarVersion = IcsCalendarVersions[number];
 
 export type IcsCalendar<
-  TNonStandardValues extends Record<string, any> = Record<string, any>
+  TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric
 > = {
   version: IcsCalendarVersion;
   prodId: string;
@@ -22,22 +25,24 @@ export type IcsCalendar<
   timezones?: IcsTimezone[];
   events?: IcsEvent[];
   name?: string;
-  nonStandard?: TNonStandardValues;
+  nonStandard?: Partial<TNonStandardValues>;
 };
 
-export type ParseCalendarProps<TNonStandardValues extends Record<string, any>> =
-  {
-    nonStandard: {
-      [K in keyof TNonStandardValues]: ParseNonStandardValue<
-        TNonStandardValues[K]
-      >;
-    };
-  };
+export type ParseCalendarOptions<
+  TNonStandardValues extends NonStandardValuesGeneric
+> = {
+  nonStandard?: ParseNonStandardValues<TNonStandardValues>;
+};
 
-export type ConvertCalendar<TNonStandardValues extends Record<string, any>> =
-  ConvertComponentType<
+export type ConvertCalendar<
+  TNonStandardValues extends NonStandardValuesGeneric
+> = ConvertComponentType<
+  IcsCalendar<TNonStandardValues>,
+  ParseCalendarOptions<TNonStandardValues>
+>;
+
+export type ParseCalendar<TNonStandardValues extends NonStandardValuesGeneric> =
+  ParseComponentType<
     IcsCalendar<TNonStandardValues>,
-    ParseCalendarProps<TNonStandardValues>
+    ParseCalendarOptions<TNonStandardValues>
   >;
-
-export type ParseCalendar = ParseComponentType<IcsCalendar>;

@@ -1,22 +1,22 @@
 import { Line } from "@/types";
-import { ParseNonStandardValue } from "@/types/nonStandardValues";
+import {
+  NonStandardValuesGeneric,
+  ParseNonStandardValue,
+  ParseNonStandardValues,
+} from "@/types/nonStandardValues";
 import { standardValidate } from "./standardValidate";
 
 export const convertNonStandardValues = <
-  T extends { nonStandard?: Record<string, any> },
-  TNonStandardValues extends Record<string, any>
+  T extends { nonStandard?: NonStandardValuesGeneric },
+  TNonStandardValues extends NonStandardValuesGeneric
 >(
   base: T,
   nonStandardValues: Record<string, Line>,
-  nonStandardOptions: {
-    [K in keyof TNonStandardValues]: ParseNonStandardValue<
-      TNonStandardValues[K]
-    >;
-  }
+  nonStandardOptions?: ParseNonStandardValues<TNonStandardValues>
 ) => {
   if (!nonStandardOptions || !nonStandardValues) return base;
 
-  const finalNonStandardValues: Record<string, any> = {};
+  const finalNonStandardValues: NonStandardValuesGeneric = {};
 
   Object.entries(nonStandardValues).forEach(([property, line]) => {
     const nonStandardOption: [string, ParseNonStandardValue] | undefined =

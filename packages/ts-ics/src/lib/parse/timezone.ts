@@ -14,11 +14,16 @@ import { convertIcsTimezoneProp } from "./timezoneProp";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 import { standardValidate } from "./utils/standardValidate";
+import { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import { convertNonStandardValues } from "./utils/nonStandardValues";
+import { Line } from "@/types";
+import { valueIsNonStandard } from "@/utils/nonStandardValue";
 
-export const convertIcsTimezone: ConvertTimezone = (
-  schema,
-  rawTimezoneString
-) => {
+export const convertIcsTimezone = <T extends NonStandardValuesGeneric>(
+  ...args: Parameters<ConvertTimezone<T>>
+): ReturnType<ConvertTimezone<T>> => {
+  const [schema, rawTimezoneString, options] = args;
+
   const timezoneString = rawTimezoneString.replace(replaceTimezoneRegex, "");
 
   const lineStrings = splitLines(
@@ -27,6 +32,8 @@ export const convertIcsTimezone: ConvertTimezone = (
       .replace(getTimezoneDaylightRegex, "")
   );
 
+  const nonStandardValues: Record<string, Line> = {};
+
   const timezone: Partial<IcsTimezone> & Required<Pick<IcsTimezone, "props">> =
     {
       props: [],
@@ -34,6 +41,11 @@ export const convertIcsTimezone: ConvertTimezone = (
 
   lineStrings.forEach((lineString) => {
     const { property, line } = getLine<IcsTimezoneKey>(lineString);
+
+    if (valueIsNonStandard(property)) {
+      nonStandardValues[property] = line;
+      return;
+    }
 
     const objectKey = VTIMEZONE_TO_OBJECT_KEYS[property];
 
@@ -76,5 +88,16 @@ export const convertIcsTimezone: ConvertTimezone = (
     });
   }
 
-  return standardValidate(schema, timezone as IcsTimezone);
+  const validatedTimezone = standardValidate(
+    schema,
+    timezone as IcsTimezone<T>
+  );
+
+  if (!options?.nonStandard) return validatedTimezone;
+
+  return convertNonStandardValues(
+    validatedTimezone,
+    nonStandardValues,
+    options?.nonStandard
+  );
 };

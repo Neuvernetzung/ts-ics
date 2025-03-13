@@ -1,6 +1,7 @@
 import { convertIcsEvent } from "@/lib";
 import { convertIcsTimezone } from "@/lib/parse/timezone";
 import { icsTestData } from "../utils";
+import { z } from "zod";
 
 it("Test Ics Timezone Parse", async () => {
   const timezone = icsTestData([
@@ -177,4 +178,40 @@ it("Test Ics custom not provided Timezone", async () => {
     "END:VEVENT",
   ]);
   expect(() => convertIcsEvent(undefined, event)).not.toThrow();
+});
+
+it("Test non standard value", async () => {
+  const nonStandardValue = "yeah";
+
+  const timeZoneString = icsTestData([
+    "BEGIN:VTIMEZONE",
+    "TZID:America/New_York",
+    "LAST-MODIFIED:20050809T050000Z",
+    `X-WTF:${nonStandardValue}`,
+    "BEGIN:STANDARD",
+    "DTSTART:20071104T020000",
+    "TZOFFSETFROM:-0400",
+    "TZOFFSETTO:-0500",
+    "TZNAME:EST",
+    "END:STANDARD",
+    "BEGIN:DAYLIGHT",
+    "DTSTART:20070311T020000",
+    "TZOFFSETFROM:-0500",
+    "TZOFFSETTO:-0400",
+    "TZNAME:EDT",
+    "END:DAYLIGHT",
+    "END:VTIMEZONE",
+  ]);
+
+  const timeZone = convertIcsTimezone(undefined, timeZoneString, {
+    nonStandard: {
+      wtf: {
+        name: "X-WTF",
+        convert: (line) => line.value,
+        schema: z.string(),
+      },
+    },
+  });
+
+  expect(timeZone.nonStandard?.wtf).toBe(nonStandardValue);
 });

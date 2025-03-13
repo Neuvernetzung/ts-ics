@@ -1,5 +1,6 @@
 import {
   convertIcsEvent,
+  NonStandardValuesGeneric,
   type IcsEvent,
   type IcsEventBase,
   type IcsEventDurationOrEnd,
@@ -50,10 +51,11 @@ export const zIcsEventBase: z.ZodType<IcsEventBase> = z.object({
   comment: z.string().optional(),
 });
 
-export const zIcsEvent: z.ZodType<IcsEvent> = z.intersection(
+export const zIcsEvent: z.ZodType<IcsEvent<any>> = z.intersection(
   zIcsEventBase,
   zIcsDurationOrEnd
 );
 
-export const parseIcsEvent: ParseEvent = (...props) =>
-  convertIcsEvent(zIcsEvent, ...props);
+export const parseIcsEvent = <T extends NonStandardValuesGeneric>(
+  ...props: Parameters<ParseEvent<T>>
+): ReturnType<ParseEvent<T>> => convertIcsEvent(zIcsEvent, ...props);

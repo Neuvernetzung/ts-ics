@@ -21,8 +21,9 @@ import { splitLines } from "./utils/splitLines";
 import { standardValidate } from "./utils/standardValidate";
 import { convertNonStandardValues } from "./utils/nonStandardValues";
 import { valueIsNonStandard } from "@/utils/nonStandardValue";
+import { NonStandardValuesGeneric } from "@/types/nonStandardValues";
 
-export const convertIcsCalendar = <T extends Record<string, any>>(
+export const convertIcsCalendar = <T extends NonStandardValuesGeneric>(
   ...args: Parameters<ConvertCalendar<T>>
 ): ReturnType<ConvertCalendar<T>> => {
   const [schema, calendarString, options] = args;

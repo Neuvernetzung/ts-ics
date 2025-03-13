@@ -30,3 +30,19 @@ it("Long descriptions are correctly folded - gh#141", async () => {
     )
   ).toBeTruthy();
 });
+
+it("Generate non standard value", () => {
+  const calendar: IcsCalendar = {
+    prodId: "abc",
+    version: "2.0",
+    nonStandard: { wtf: "yeah" },
+  };
+
+  const calendarString = generateIcsCalendar<{ wtf: string }>(calendar, {
+    nonStandard: {
+      wtf: { name: "X-WTF", generate: (v) => ({ value: v.toString() }) },
+    },
+  });
+
+  expect(calendarString).toContain("X-WTF:yeah");
+});

@@ -1,7 +1,10 @@
 import { IcsTimezoneProp } from "@/types";
 import { invertKeys, keysFromObject } from "./utils";
 
-export type IcsTimezonePropObjectKey = Exclude<keyof IcsTimezoneProp, "type">;
+export type IcsTimezonePropObjectKey = Exclude<
+  keyof IcsTimezoneProp,
+  "type" | "nonStandard"
+>;
 export type IcsTimezonePropObjectKeys = IcsTimezonePropObjectKey[];
 
 export const VTIMEZONE_PROP_TO_KEYS = {

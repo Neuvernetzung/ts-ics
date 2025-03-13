@@ -5,6 +5,7 @@ import {
   convertIcsCalendar,
   type ParseCalendar,
   type IcsCalendar,
+  NonStandardValuesGeneric,
 } from "ts-ics";
 import { zIcsTimezone } from "./timezone";
 import { zIcsEvent } from "./event";
@@ -16,7 +17,7 @@ export const zIcsCalendarMethod = z.union([
   z.string(),
 ]);
 
-export const zIcsCalendar: z.ZodType<IcsCalendar> = z.object({
+export const zIcsCalendar: z.ZodType<IcsCalendar<any>> = z.object({
   version: zIcsCalenderVersion,
   prodId: z.string(),
   method: zIcsCalendarMethod.optional(),
@@ -25,5 +26,6 @@ export const zIcsCalendar: z.ZodType<IcsCalendar> = z.object({
   name: z.string().optional(),
 });
 
-export const parseIcsCalendar: ParseCalendar = (...props) =>
-  convertIcsCalendar(zIcsCalendar, ...props);
+export const parseIcsCalendar = <T extends NonStandardValuesGeneric>(
+  ...props: Parameters<ParseCalendar<T>>
+): ReturnType<ParseCalendar<T>> => convertIcsCalendar(zIcsCalendar, ...props);

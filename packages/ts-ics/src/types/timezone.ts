@@ -1,45 +1,35 @@
-import type { IcsDateObject } from "./date";
+import {
+  NonStandardValuesGeneric,
+  ParseNonStandardValues,
+} from "./nonStandardValues";
 import type { ConvertComponentType, ParseComponentType } from "./parse";
-import type { IcsRecurrenceRule } from "./recurrenceRule";
+import { IcsTimezoneProp } from "./timezoneProp";
 
-export const timezonePropTypes = ["STANDARD", "DAYLIGHT"] as const;
-
-export type IcsTimezonePropTypes = typeof timezonePropTypes;
-export type IcsTimezonePropType = IcsTimezonePropTypes[number];
-
-export type IcsTimezoneProp = {
-  type: IcsTimezonePropType;
-  start: Date;
-  offsetTo: string;
-  offsetFrom: string;
-  recurrenceRule?: IcsRecurrenceRule;
-  comment?: string;
-  recurrenceDate?: IcsDateObject;
-  name?: string;
-};
-
-export type ParseTimezonePropOptions = {
-  type?: IcsTimezonePropType;
-  timezones?: IcsTimezone[];
-};
-
-export type ConvertTimezoneProp = ConvertComponentType<
-  IcsTimezoneProp,
-  ParseTimezonePropOptions
->;
-
-export type ParseTimezoneProp = ParseComponentType<
-  IcsTimezoneProp,
-  ParseTimezonePropOptions
->;
-
-export type IcsTimezone = {
+export type IcsTimezone<
+  TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric
+> = {
   id: string;
   lastModified?: Date;
   url?: string;
   props: IcsTimezoneProp[];
+  nonStandard?: Partial<TNonStandardValues>;
 };
 
-export type ConvertTimezone = ConvertComponentType<IcsTimezone>;
+export type ParseTimezoneOptions<
+  TNonStandardValues extends NonStandardValuesGeneric
+> = {
+  nonStandard?: ParseNonStandardValues<TNonStandardValues>;
+};
 
-export type ParseTimezone = ParseComponentType<IcsTimezone>;
+export type ConvertTimezone<
+  TNonStandardValues extends NonStandardValuesGeneric
+> = ConvertComponentType<
+  IcsTimezone<TNonStandardValues>,
+  ParseTimezoneOptions<TNonStandardValues>
+>;
+
+export type ParseTimezone<TNonStandardValues extends NonStandardValuesGeneric> =
+  ParseComponentType<
+    IcsTimezone<TNonStandardValues>,
+    ParseTimezoneOptions<TNonStandardValues>
+  >;
