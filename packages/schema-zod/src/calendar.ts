@@ -24,6 +24,7 @@ export const zIcsCalendar: z.ZodType<IcsCalendar<any>> = z.object({
   timezones: z.array(zIcsTimezone).optional(),
   events: z.array(zIcsEvent).optional(),
   name: z.string().optional(),
+  nonStandard: z.record(z.any()),
 });
 
 export const parseIcsCalendar = <T extends NonStandardValuesGeneric>(

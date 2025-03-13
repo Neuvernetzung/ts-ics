@@ -18,6 +18,7 @@ export const zIcsTimezoneProp: z.ZodType<IcsTimezoneProp<any>> = z.object({
   comment: z.string().optional(),
   recurrenceDate: zIcsDateObject.optional(),
   name: z.string().optional(),
+  nonStandard: z.record(z.any()),
 });
 
 export const parseIcsTimezoneProp = <T extends NonStandardValuesGeneric>(

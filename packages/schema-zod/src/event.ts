@@ -49,6 +49,7 @@ export const zIcsEventBase: z.ZodType<IcsEventBase> = z.object({
   recurrenceId: zIcsRecurrenceId.optional(),
   attendees: z.array(zIcsAttendee).optional(),
   comment: z.string().optional(),
+  nonStandard: z.record(z.any()),
 });
 
 export const zIcsEvent: z.ZodType<IcsEvent<any>> = z.intersection(

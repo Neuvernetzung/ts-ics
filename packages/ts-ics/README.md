@@ -36,6 +36,25 @@ const event: IcsEvent = {...}
 const icsEventString = generateIcsEvent(event);
 ```
 
+### generate non standard values
+
+Non-standard values must be prefixed with `X-`. Unhandled non-standard values are automatically prefixed and converted to upper case, and the value is converted to a string.
+
+```ts
+type NonStandard = { isCustomer: string }
+
+const calendar: IcsCalendar<NonStandard> = {
+  nonStandard: { isCustomer: "yeah" },
+  ...
+};
+
+const calendarString = generateIcsCalendar<NonStandard>(calendar, {
+  nonStandard: {
+    isCustomer: { name: "X-IS-CUSTOMER", generate: (v) => ({ value: v }) },
+  },
+});
+```
+
 ## parse
 
 ### IcsCalendar
@@ -99,6 +118,26 @@ import { convertIcsEvent, type IcsEvent } from "ts-ics";
 import { zIcsEvent } from "@ts-ics/schema-zod";
 
 const calendar: IcsEvent = convertIcsEvent(zIcsEvent, icsEventString);
+```
+
+### parse non standard values
+
+Non-standard values must be prefixed with `X-`. Unhandled non-standard values are automatically un-prefixed and converted to camel case, and the value is converted to a string.
+
+```ts
+const calendarString = `...
+  X-IS-CUSTOMER:yeah
+  ...`;
+
+const calendar = convertIcsCalendar(undefined, calendarString, {
+  nonStandard: {
+    isCustomer: {
+      name: "X-IS-CUSTOMER",
+      convert: (line) => line.value,
+      schema: z.string(), // optionally provide any validator
+    },
+  },
+});
 ```
 
 ## utils

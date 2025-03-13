@@ -19,6 +19,7 @@ export const zIcsAlarm: z.ZodType<IcsAlarm<any>> = z.object({
   repeat: z.number().optional(),
   summary: z.string().optional(),
   attachments: z.array(zIcsAttachment).optional(),
+  nonStandard: z.record(z.any()),
 });
 
 export const parseIcsAlarm = <T extends NonStandardValuesGeneric>(
