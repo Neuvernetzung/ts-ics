@@ -19,7 +19,7 @@ import { convertIcsTimezone } from "./timezone";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 import { standardValidate } from "./utils/standardValidate";
-import { convertNonStandardValues } from "./utils/nonStandardValues";
+import { convertNonStandardValues } from "./nonStandardValues";
 import { valueIsNonStandard } from "@/utils/nonStandardValue";
 import { NonStandardValuesGeneric } from "@/types/nonStandardValues";
 
@@ -43,7 +43,6 @@ export const convertIcsCalendar = <T extends NonStandardValuesGeneric>(
 
     if (valueIsNonStandard(property)) {
       nonStandardValues[property] = line;
-      return;
     }
 
     const objectKey = VCALENDAR_TO_OBJECT_KEYS[property];

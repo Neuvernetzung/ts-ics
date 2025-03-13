@@ -15,7 +15,7 @@ import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 import { standardValidate } from "./utils/standardValidate";
 import { NonStandardValuesGeneric } from "@/types/nonStandardValues";
-import { convertNonStandardValues } from "./utils/nonStandardValues";
+import { convertNonStandardValues } from "./nonStandardValues";
 import { valueIsNonStandard } from "@/utils/nonStandardValue";
 
 export const convertIcsAlarm = <T extends NonStandardValuesGeneric>(
@@ -40,7 +40,6 @@ export const convertIcsAlarm = <T extends NonStandardValuesGeneric>(
 
     if (valueIsNonStandard(property)) {
       nonStandardValues[property] = line;
-      return;
     }
 
     const objectKey = VALARM_TO_OBJECT_KEYS[property];

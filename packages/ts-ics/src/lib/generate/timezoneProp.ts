@@ -11,7 +11,7 @@ import {
   getIcsStartLine,
 } from "./utils/addLine";
 import { getKeys } from "./utils/getKeys";
-import { generateNonStandardValues } from "./utils/nonStandardValues";
+import { generateNonStandardValues } from "./nonStandardValues";
 import {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,

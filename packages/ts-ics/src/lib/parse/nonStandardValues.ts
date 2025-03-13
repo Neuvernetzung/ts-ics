@@ -4,7 +4,7 @@ import {
   ParseNonStandardValue,
   ParseNonStandardValues,
 } from "@/types/nonStandardValues";
-import { standardValidate } from "./standardValidate";
+import { standardValidate } from "./utils/standardValidate";
 
 export const convertNonStandardValues = <
   T extends { nonStandard?: NonStandardValuesGeneric },
@@ -24,7 +24,10 @@ export const convertNonStandardValues = <
         ([_, option]) => option.name === property
       );
 
-    if (!nonStandardOption) return;
+    if (!nonStandardOption) {
+      finalNonStandardValues[toCamelCase(property)] = line.value;
+      return;
+    }
 
     const value = nonStandardOption[1].convert(line);
 
@@ -44,4 +47,13 @@ export const convertNonStandardValues = <
   base.nonStandard = finalNonStandardValues;
 
   return base as T & { nonStandard: TNonStandardValues };
+};
+
+const toCamelCase = (prop: string): string => {
+  const propWithoutPrefix = prop.startsWith("X-") ? prop.slice(2) : prop;
+
+  return propWithoutPrefix
+    .split("-")
+    .map((str, i) => (i === 0 ? str.toLowerCase() : str.toUpperCase()))
+    .join("");
 };

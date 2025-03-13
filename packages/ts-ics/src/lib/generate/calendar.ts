@@ -10,7 +10,7 @@ import {
 } from "./utils/addLine";
 import { formatLines } from "./utils/formatLines";
 import { getKeys } from "./utils/getKeys";
-import { generateNonStandardValues } from "./utils/nonStandardValues";
+import { generateNonStandardValues } from "./nonStandardValues";
 import {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,

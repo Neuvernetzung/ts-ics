@@ -27,7 +27,7 @@ import { convertIcsStatus } from "./status";
 import { convertIcsTimeTransparent } from "./timeTransparent";
 import { standardValidate } from "./utils/standardValidate";
 import { NonStandardValuesGeneric } from "@/types/nonStandardValues";
-import { convertNonStandardValues } from "./utils/nonStandardValues";
+import { convertNonStandardValues } from "./nonStandardValues";
 import { valueIsNonStandard } from "@/utils/nonStandardValue";
 
 export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
@@ -51,7 +51,6 @@ export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
 
     if (valueIsNonStandard(property)) {
       nonStandardValues[property] = line;
-      return;
     }
 
     const objectKey = VEVENT_TO_OBJECT_KEYS[property];

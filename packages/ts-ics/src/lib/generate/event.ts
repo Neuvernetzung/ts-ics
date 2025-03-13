@@ -27,7 +27,7 @@ import {
 import { getKeys } from "./utils/getKeys";
 import { formatLines } from "./utils/formatLines";
 import { escapeTextString } from "./utils/escapeText";
-import { generateNonStandardValues } from "./utils/nonStandardValues";
+import { generateNonStandardValues } from "./nonStandardValues";
 import {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,

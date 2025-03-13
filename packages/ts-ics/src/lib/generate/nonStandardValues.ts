@@ -3,8 +3,8 @@ import {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,
 } from "@/types/nonStandardValues";
-import { generateIcsLine } from "./addLine";
-import { generateIcsOptions } from "./generateOptions";
+import { generateIcsLine } from "./utils/addLine";
+import { generateIcsOptions } from "./utils/generateOptions";
 
 export const generateNonStandardValues = <
   TNonStandardValues extends NonStandardValuesGeneric
@@ -19,7 +19,13 @@ export const generateNonStandardValues = <
   Object.entries(nonStandardValues).map(([key, value]) => {
     const option = nonStandardOptions?.[key];
 
-    if (!option) return;
+    if (!option) {
+      nonStandardValuesString += generateIcsLine(
+        toUpperCase(key),
+        value?.toString()
+      );
+      return;
+    }
 
     const line = option.generate(value);
 
@@ -37,4 +43,17 @@ export const generateNonStandardValues = <
   });
 
   return nonStandardValuesString;
+};
+
+const toUpperCase = (prop: string): string => {
+  let result = "X-";
+
+  for (const char of prop) {
+    if (char === char.toUpperCase()) {
+      result += "-";
+    }
+    result += char.toUpperCase();
+  }
+
+  return result;
 };
