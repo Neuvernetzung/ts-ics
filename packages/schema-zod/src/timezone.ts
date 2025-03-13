@@ -13,7 +13,7 @@ export const zIcsTimezone: z.ZodType<IcsTimezone<any>> = z.object({
   lastModified: z.date().optional(),
   url: z.string().url().optional(),
   props: z.array(zIcsTimezoneProp),
-  nonStandard: z.record(z.any()),
+  nonStandard: z.record(z.any()).optional(),
 });
 
 export const parseIcsTimezone = <T extends NonStandardValuesGeneric>(

@@ -49,7 +49,7 @@ export const zIcsEventBase: z.ZodType<IcsEventBase> = z.object({
   recurrenceId: zIcsRecurrenceId.optional(),
   attendees: z.array(zIcsAttendee).optional(),
   comment: z.string().optional(),
-  nonStandard: z.record(z.any()),
+  nonStandard: z.record(z.any()).optional(),
 });
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
