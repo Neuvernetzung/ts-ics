@@ -1,6 +1,6 @@
 import type { IcsEvent } from "./event";
 import { ParseNonStandardValue } from "./nonStandardValues";
-import type { ConvertLinesType, ParseLinesType } from "./parse";
+import type { ConvertComponentType, ParseComponentType } from "./parse";
 import type { IcsTimezone } from "./timezone";
 
 export const calendarMethods = ["PUBLISH"] as const;
@@ -35,9 +35,9 @@ export type ParseCalendarProps<TNonStandardValues extends Record<string, any>> =
   };
 
 export type ConvertCalendar<TNonStandardValues extends Record<string, any>> =
-  ConvertLinesType<
+  ConvertComponentType<
     IcsCalendar<TNonStandardValues>,
     ParseCalendarProps<TNonStandardValues>
   >;
 
-export type ParseCalendar = ParseLinesType<IcsCalendar>;
+export type ParseCalendar = ParseComponentType<IcsCalendar>;

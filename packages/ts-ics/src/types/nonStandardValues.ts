@@ -1,7 +1,10 @@
+import { StandardSchemaV1 } from "@standard-schema/spec";
 import { Line } from "./line";
 
+export type NonStandardValueName = `X-${string}`;
+
 export type ParseNonStandardValue<TValue = unknown> = {
-  name: `X-${string}`;
+  name: NonStandardValueName;
   convert: (line: Line) => TValue;
-  parse?: (value: TValue) => TValue;
+  schema?: StandardSchemaV1<NoInfer<TValue>>;
 };

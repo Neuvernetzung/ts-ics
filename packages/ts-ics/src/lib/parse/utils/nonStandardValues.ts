@@ -1,5 +1,6 @@
 import { Line } from "@/types";
 import { ParseNonStandardValue } from "@/types/nonStandardValues";
+import { standardValidate } from "./standardValidate";
 
 export const convertNonStandardValues = <
   T extends { nonStandard?: Record<string, any> },
@@ -27,14 +28,17 @@ export const convertNonStandardValues = <
 
     const value = nonStandardOption[1].convert(line);
 
-    const parse = nonStandardOption[1].parse;
+    const schema = nonStandardOption[1].schema;
 
-    if (!parse) {
+    if (!schema) {
       finalNonStandardValues[nonStandardOption[0]] = value;
       return;
     }
 
-    finalNonStandardValues[nonStandardOption[0]] = parse(value);
+    finalNonStandardValues[nonStandardOption[0]] = standardValidate(
+      schema,
+      value
+    );
   });
 
   base.nonStandard = finalNonStandardValues;

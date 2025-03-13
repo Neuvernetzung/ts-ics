@@ -10,7 +10,7 @@ import type { IcsExceptionDates } from "./exceptionDate";
 import type { IcsClassType } from "./class";
 import type { IcsTimeTransparentType } from "./timeTransparent";
 import type { IcsTimezone } from "./timezone";
-import type { ConvertLinesType, ParseLinesType } from "./parse";
+import type { ConvertComponentType, ParseComponentType } from "./parse";
 
 export type IcsEventDurationOrEnd =
   | { duration: IcsDuration; end?: never }
@@ -47,6 +47,6 @@ export type IcsEvent = IcsEventBase & IcsEventDurationOrEnd;
 
 export type ParseEventOptions = { timezones?: IcsTimezone[] };
 
-export type ConvertEvent = ConvertLinesType<IcsEvent, ParseEventOptions>;
+export type ConvertEvent = ConvertComponentType<IcsEvent, ParseEventOptions>;
 
-export type ParseEvent = ParseLinesType<IcsEvent, ParseEventOptions>;
+export type ParseEvent = ParseComponentType<IcsEvent, ParseEventOptions>;

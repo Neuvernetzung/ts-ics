@@ -1,5 +1,5 @@
 import type { IcsDateObject } from "./date";
-import type { ConvertLinesType, ParseLinesType } from "./parse";
+import type { ConvertComponentType, ParseComponentType } from "./parse";
 import type { IcsRecurrenceRule } from "./recurrenceRule";
 
 export const timezonePropTypes = ["STANDARD", "DAYLIGHT"] as const;
@@ -23,12 +23,12 @@ export type ParseTimezonePropOptions = {
   timezones?: IcsTimezone[];
 };
 
-export type ConvertTimezoneProp = ConvertLinesType<
+export type ConvertTimezoneProp = ConvertComponentType<
   IcsTimezoneProp,
   ParseTimezonePropOptions
 >;
 
-export type ParseTimezoneProp = ParseLinesType<
+export type ParseTimezoneProp = ParseComponentType<
   IcsTimezoneProp,
   ParseTimezonePropOptions
 >;
@@ -40,6 +40,6 @@ export type IcsTimezone = {
   props: IcsTimezoneProp[];
 };
 
-export type ConvertTimezone = ConvertLinesType<IcsTimezone>;
+export type ConvertTimezone = ConvertComponentType<IcsTimezone>;
 
-export type ParseTimezone = ParseLinesType<IcsTimezone>;
+export type ParseTimezone = ParseComponentType<IcsTimezone>;

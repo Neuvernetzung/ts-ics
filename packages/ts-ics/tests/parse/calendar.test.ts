@@ -1,6 +1,7 @@
 import { convertIcsCalendar } from "@/lib/parse/calendar";
 import { icsTestData } from "../utils";
 import { readFile } from "node:fs/promises";
+import { z } from "zod";
 
 it("Test Ics Calendar Parse", async () => {
   const calendar = icsTestData([
@@ -206,12 +207,14 @@ it("Leftover line breaks should not affect parsing - #130", async () => {
   expect(() => convertIcsCalendar(undefined, calendar)).not.toThrow();
 });
 
-it("Test non standard values", async () => {
+it("Test non standard value", async () => {
+  const nonStandardValue = "year";
+
   const calendarString = icsTestData([
     "BEGIN:VCALENDAR",
     "PRODID:ID",
     "VERSION:2.0",
-    "X-WTF:yeah",
+    `X-WTF:${nonStandardValue}`,
     "BEGIN:VEVENT",
     "CREATED:20240112T095511Z",
     "DTEND:20240112T105511Z",
@@ -228,11 +231,10 @@ it("Test non standard values", async () => {
       wtf: {
         name: "X-WTF",
         convert: (line) => line.value,
-        // parse: (v) => v <-- verursacht unknown aktuell
+        schema: z.string(),
       },
     },
   });
 
-  console.log(calendar);
-  console.log(calendar.nonStandard?.wtf);
+  expect(calendar.nonStandard?.wtf).toBe(nonStandardValue);
 });
