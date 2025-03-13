@@ -1,5 +1,11 @@
 # ts-ics
 
+## 1.6.8
+
+### Patch Changes
+
+- 4666c8d: parse recurrenceId when parsing event #153
+
 ## 1.6.7
 
 ### Patch Changes
