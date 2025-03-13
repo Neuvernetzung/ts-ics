@@ -20,6 +20,7 @@ import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 import { icsExceptionDateToObject } from "./exceptionDate";
 import { unescapeTextString } from "./utils/unescapeText";
+import { icsRecurrenceIdToObject } from "./recurrenceId";
 
 export type ParseIcsEvent = (
   rawEventString: string,
@@ -60,6 +61,11 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
 
     if (objectKey === "recurrenceRule") {
       set(event, objectKey, icsRecurrenceRuleToObject(value, timezones));
+      return;
+    }
+
+    if (objectKey === "recurrenceId") {
+      set(event, objectKey, icsRecurrenceIdToObject(value, options, timezones));
       return;
     }
 
