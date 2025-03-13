@@ -8,7 +8,7 @@ export type NonStandardValuesGeneric = Record<string, any>;
 export type ParseNonStandardValue<TValue = unknown> = {
   name: NonStandardValueName;
   convert: (line: Line) => TValue;
-  schema?: StandardSchemaV1<NoInfer<TValue>>;
+  schema?: StandardSchemaV1<TValue>;
 };
 
 export type ParseNonStandardValues<

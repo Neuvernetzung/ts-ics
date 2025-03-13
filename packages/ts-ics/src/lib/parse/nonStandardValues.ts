@@ -14,13 +14,13 @@ export const convertNonStandardValues = <
   nonStandardValues: Record<string, Line>,
   nonStandardOptions?: ParseNonStandardValues<TNonStandardValues>
 ) => {
-  if (!nonStandardOptions || !nonStandardValues) return base;
+  if (!nonStandardValues) return base;
 
   const finalNonStandardValues: NonStandardValuesGeneric = {};
 
   Object.entries(nonStandardValues).forEach(([property, line]) => {
     const nonStandardOption: [string, ParseNonStandardValue] | undefined =
-      Object.entries(nonStandardOptions).find(
+      Object.entries(nonStandardOptions || {}).find(
         ([_, option]) => option.name === property
       );
 
@@ -50,10 +50,17 @@ export const convertNonStandardValues = <
 };
 
 const toCamelCase = (prop: string): string => {
-  const propWithoutPrefix = prop.startsWith("X-") ? prop.slice(2) : prop;
+  let result = "";
+  let capitalizeNext = false;
 
-  return propWithoutPrefix
-    .split("-")
-    .map((str, i) => (i === 0 ? str.toLowerCase() : str.toUpperCase()))
-    .join("");
+  for (const char of prop) {
+    if (char === "-") {
+      capitalizeNext = true;
+    } else {
+      result += capitalizeNext ? char.toUpperCase() : char.toLowerCase();
+      capitalizeNext = false;
+    }
+  }
+
+  return result;
 };
