@@ -7,6 +7,7 @@ import {
 import { z } from "zod";
 import { zIcsTimezoneProp } from "./timezoneProp";
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const zIcsTimezone: z.ZodType<IcsTimezone<any>> = z.object({
   id: z.string(),
   lastModified: z.date().optional(),

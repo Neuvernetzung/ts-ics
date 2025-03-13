@@ -17,6 +17,7 @@ export const zIcsCalendarMethod = z.union([
   z.string(),
 ]);
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const zIcsCalendar: z.ZodType<IcsCalendar<any>> = z.object({
   version: zIcsCalenderVersion,
   prodId: z.string(),

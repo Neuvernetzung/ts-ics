@@ -52,6 +52,7 @@ export const zIcsEventBase: z.ZodType<IcsEventBase> = z.object({
   nonStandard: z.record(z.any()),
 });
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const zIcsEvent: z.ZodType<IcsEvent<any>> = z.intersection(
   zIcsEventBase,
   zIcsDurationOrEnd

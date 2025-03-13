@@ -10,6 +10,7 @@ import { zIcsAttendee } from "./attendee";
 import { zIcsDuration } from "./duration";
 import { zIcsAttachment } from "./attachment";
 
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const zIcsAlarm: z.ZodType<IcsAlarm<any>> = z.object({
   action: z.string().default("DISPLAY"),
   description: z.string().optional(),

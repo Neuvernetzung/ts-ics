@@ -5,11 +5,9 @@ import type {
 import { generateIcsLine } from "./utils/addLine";
 import { generateIcsOptions } from "./utils/generateOptions";
 
-export const generateNonStandardValues = <
-  TNonStandardValues extends NonStandardValuesGeneric
->(
-  nonStandardValues?: TNonStandardValues,
-  nonStandardOptions?: GenerateNonStandardValues<TNonStandardValues>
+export const generateNonStandardValues = <T extends NonStandardValuesGeneric>(
+  nonStandardValues?: T,
+  nonStandardOptions?: GenerateNonStandardValues<T>
 ): string => {
   if (!nonStandardValues) return "";
 
