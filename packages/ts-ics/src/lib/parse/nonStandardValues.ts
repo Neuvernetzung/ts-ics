@@ -50,10 +50,12 @@ export const convertNonStandardValues = <
 };
 
 const toCamelCase = (prop: string): string => {
+  const propWithoutPrefix = prop.startsWith("X-") ? prop.slice(2) : prop;
+
   let result = "";
   let capitalizeNext = false;
 
-  for (const char of prop) {
+  for (const char of propWithoutPrefix) {
     if (char === "-") {
       capitalizeNext = true;
     } else {

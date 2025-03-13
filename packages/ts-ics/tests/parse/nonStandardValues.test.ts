@@ -1,5 +1,5 @@
 import { convertNonStandardValues } from "@/lib/parse/nonStandardValues";
-import { Line, NonStandardValuesGeneric } from "@/types";
+import type { Line, NonStandardValuesGeneric } from "@/types";
 import { z } from "zod";
 
 it("Parse non standard values", () => {
@@ -36,6 +36,7 @@ it("Parse unhandled non standard values", () => {
   const base: { nonStandard?: NonStandardValuesGeneric } = { nonStandard: {} };
 
   const result = convertNonStandardValues(base, nonStandard);
+  console.log(result);
 
   expect(result.nonStandard?.[keyName]).toBe(nonStandardValue);
 });
