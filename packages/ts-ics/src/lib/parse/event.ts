@@ -82,11 +82,6 @@ export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
       return;
     }
 
-    if (objectKey === "recurrenceId") {
-      set(event, objectKey, icsRecurrenceIdToObject(value, options, timezones));
-      return;
-    }
-
     if (objectKey === "duration") {
       event[objectKey] = convertIcsDuration(undefined, line);
       return;
