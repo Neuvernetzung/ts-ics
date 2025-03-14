@@ -14,8 +14,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@ts-ics/schema-zod": "^1.6.7",
-    "ts-ics": "^1.6.7"
+    "@ts-ics/schema-zod": "^2.0.0",
+    "ts-ics": "^2.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",

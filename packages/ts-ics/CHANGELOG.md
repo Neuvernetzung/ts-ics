@@ -1,5 +1,26 @@
 # ts-ics
 
+## 2.0.0
+
+### Major Changes
+
+- 08ee37f: # Use standard schema in core library
+
+  2.0 of ts-ics introduces standard-schema in core library and drops zod. Now you can bring in your own validation library or use one of the provided schema packages e.g. `@ts-ics/schema-zod`.
+
+  Naming conventions have been restructured, e.g. type `VCalendar` has been renamed to `IcsCalendar` and `icsCalendarToObject` has been renamed to `convertIcsCalendar`.
+  Parsing functions have been removed from the core library. These can now be imported from the schema libraries e.g. `import { parseIcsCalendar } from "@ts-ics/schema-zod"`.
+
+### Minor Changes
+
+- 0ac8dc8: Add support for non-standard properties #152
+- d101b4c: Remove lodash as peer dependency #145
+
+### Patch Changes
+
+- 7643615: Add test for recurrenceId #140
+- 60501a4: Reduce bundle size by 2kb by inverting Ics object keys instead of hardcoding them.
+
 ## 1.6.8
 
 ### Patch Changes
