@@ -36,7 +36,6 @@ it("Parse unhandled non standard values", () => {
   const base: { nonStandard?: NonStandardValuesGeneric } = { nonStandard: {} };
 
   const result = convertNonStandardValues(base, nonStandard);
-  console.log(result);
 
   expect(result.nonStandard?.[keyName]).toBe(nonStandardValue);
 });
