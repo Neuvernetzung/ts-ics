@@ -1,5 +1,6 @@
 import {
   convertIcsEvent,
+  type NonStandardValuesGeneric,
   type IcsEvent,
   type IcsEventBase,
   type IcsEventDurationOrEnd,
@@ -48,12 +49,15 @@ export const zIcsEventBase: z.ZodType<IcsEventBase> = z.object({
   recurrenceId: zIcsRecurrenceId.optional(),
   attendees: z.array(zIcsAttendee).optional(),
   comment: z.string().optional(),
+  nonStandard: z.record(z.any()).optional(),
 });
 
-export const zIcsEvent: z.ZodType<IcsEvent> = z.intersection(
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export const zIcsEvent: z.ZodType<IcsEvent<any>> = z.intersection(
   zIcsEventBase,
   zIcsDurationOrEnd
 );
 
-export const parseIcsEvent: ParseEvent = (...props) =>
-  convertIcsEvent(zIcsEvent, ...props);
+export const parseIcsEvent = <T extends NonStandardValuesGeneric>(
+  ...props: Parameters<ParseEvent<T>>
+): ReturnType<ParseEvent<T>> => convertIcsEvent(zIcsEvent, ...props);

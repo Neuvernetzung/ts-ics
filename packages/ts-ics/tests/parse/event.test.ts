@@ -3,6 +3,7 @@ import { convertIcsEvent } from "@/lib/parse/event";
 import type { IcsEvent } from "@/types";
 import { readFile } from "node:fs/promises";
 import { icsTestData } from "../utils";
+import { z } from "zod";
 
 it("Test Ics Event Parse", async () => {
   const event = icsTestData([
@@ -110,4 +111,33 @@ it("Expect 'formatLines' to handle multiple line breaks correctly", async () => 
   const parsed = convertIcsEvent(undefined, generatedEvent);
 
   expect(parsed.description).toEqual(event.description);
+});
+
+it("Test non standard value", async () => {
+  const nonStandardValue = "yeah";
+
+  const eventString = icsTestData([
+    "BEGIN:VEVENT",
+    "UID:19970901T130000Z-123401@example.com",
+    "DTSTAMP:19970901T130000Z",
+    "DTSTART:19970903T163000Z",
+    "DTEND:19970903T190000Z",
+    "SUMMARY:Annual Employee Review",
+    "CLASS:PRIVATE",
+    `X-WTF:${nonStandardValue}`,
+    "CATEGORIES:BUSINESS,HUMAN RESOURCES",
+    "END:VEVENT",
+  ]);
+
+  const event = convertIcsEvent(undefined, eventString, {
+    nonStandard: {
+      wtf: {
+        name: "X-WTF",
+        convert: (line) => line.value,
+        schema: z.string(),
+      },
+    },
+  });
+
+  expect(event.nonStandard?.wtf).toBe(nonStandardValue);
 });

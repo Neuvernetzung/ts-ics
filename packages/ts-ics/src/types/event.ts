@@ -10,13 +10,19 @@ import type { IcsExceptionDates } from "./exceptionDate";
 import type { IcsClassType } from "./class";
 import type { IcsTimeTransparentType } from "./timeTransparent";
 import type { IcsTimezone } from "./timezone";
-import type { ConvertLinesType, ParseLinesType } from "./parse";
+import type { ConvertComponentType, ParseComponentType } from "./parse";
+import type {
+  NonStandardValuesGeneric,
+  ParseNonStandardValues,
+} from "./nonStandardValues";
 
 export type IcsEventDurationOrEnd =
   | { duration: IcsDuration; end?: never }
   | { duration?: never; end: IcsDateObject };
 
-export type IcsEventBase = {
+export type IcsEventBase<
+  TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric
+> = {
   summary: string;
   uid: string;
   created?: IcsDateObject;
@@ -41,12 +47,28 @@ export type IcsEventBase = {
   recurrenceId?: IcsRecurrenceId;
   attendees?: IcsAttendee[];
   comment?: string;
+  nonStandard?: Partial<TNonStandardValues>;
 };
 
-export type IcsEvent = IcsEventBase & IcsEventDurationOrEnd;
+export type IcsEvent<
+  TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric
+> = IcsEventBase<TNonStandardValues> & IcsEventDurationOrEnd;
 
-export type ParseEventOptions = { timezones?: IcsTimezone[] };
+export type ParseEventOptions<
+  TNonStandardValues extends NonStandardValuesGeneric
+> = {
+  timezones?: IcsTimezone[];
+  nonStandard?: ParseNonStandardValues<TNonStandardValues>;
+};
 
-export type ConvertEvent = ConvertLinesType<IcsEvent, ParseEventOptions>;
+export type ConvertEvent<TNonStandardValues extends NonStandardValuesGeneric> =
+  ConvertComponentType<
+    IcsEvent<TNonStandardValues>,
+    ParseEventOptions<TNonStandardValues>
+  >;
 
-export type ParseEvent = ParseLinesType<IcsEvent, ParseEventOptions>;
+export type ParseEvent<TNonStandardValues extends NonStandardValuesGeneric> =
+  ParseComponentType<
+    IcsEvent<TNonStandardValues>,
+    ParseEventOptions<TNonStandardValues>
+  >;

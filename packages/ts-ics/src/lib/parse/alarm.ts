@@ -3,7 +3,7 @@ import {
   VALARM_TO_OBJECT_KEYS,
   type IcsAlarmKey,
 } from "@/constants/keys/alarm";
-import type { ConvertAlarm, IcsAlarm } from "@/types";
+import type { ConvertAlarm, IcsAlarm, Line } from "@/types";
 import type { IcsAttachment } from "@/types/attachment";
 import type { IcsAttendee } from "@/types/attendee";
 
@@ -14,12 +14,15 @@ import { convertIcsTrigger } from "./trigger";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
 import { standardValidate } from "./utils/standardValidate";
+import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import { convertNonStandardValues } from "./nonStandardValues";
+import { valueIsNonStandard } from "@/utils/nonStandardValue";
 
-export const convertIcsAlarm: ConvertAlarm = (
-  schema,
-  rawAlarmString,
-  alarmOptions
-): IcsAlarm => {
+export const convertIcsAlarm = <T extends NonStandardValuesGeneric>(
+  ...args: Parameters<ConvertAlarm<T>>
+): ReturnType<ConvertAlarm<T>> => {
+  const [schema, rawAlarmString, options] = args;
+
   const alarmString = rawAlarmString.replace(replaceAlarmRegex, "");
 
   const lineStrings = splitLines(alarmString);
@@ -30,8 +33,14 @@ export const convertIcsAlarm: ConvertAlarm = (
 
   const attendees: IcsAttendee[] = [];
 
+  const nonStandardValues: Record<string, Line> = {};
+
   lineStrings.forEach((lineString) => {
     const { property, line } = getLine<IcsAlarmKey>(lineString);
+
+    if (valueIsNonStandard(property)) {
+      nonStandardValues[property] = line;
+    }
 
     const objectKey = VALARM_TO_OBJECT_KEYS[property];
 
@@ -39,7 +48,7 @@ export const convertIcsAlarm: ConvertAlarm = (
 
     if (objectKey === "trigger") {
       alarm[objectKey] = convertIcsTrigger(undefined, line, {
-        timezones: alarmOptions?.timezones,
+        timezones: options?.timezones,
       });
       return;
     }
@@ -75,5 +84,13 @@ export const convertIcsAlarm: ConvertAlarm = (
     alarm.attendees = attendees;
   }
 
-  return standardValidate(schema, alarm as IcsAlarm);
+  const validatedAlarm = standardValidate(schema, alarm as IcsAlarm<T>);
+
+  if (!options?.nonStandard) return validatedAlarm;
+
+  return convertNonStandardValues(
+    validatedAlarm,
+    nonStandardValues,
+    options?.nonStandard
+  );
 };

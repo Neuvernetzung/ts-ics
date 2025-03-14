@@ -1,7 +1,7 @@
 import type { IcsAlarm } from "@/types";
 import { invertKeys, keysFromObject } from "./utils";
 
-export type IcsAlarmObjectKey = keyof IcsAlarm;
+export type IcsAlarmObjectKey = Exclude<keyof IcsAlarm, "nonStandard">;
 export type IcsAlarmObjectKeys = IcsAlarmObjectKey[];
 
 export const VALARM_TO_KEYS = {

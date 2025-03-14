@@ -9,8 +9,16 @@ import {
   getIcsStartLine,
 } from "./utils/addLine";
 import { getKeys } from "./utils/getKeys";
+import { generateNonStandardValues } from "./nonStandardValues";
+import type {
+  GenerateNonStandardValues,
+  NonStandardValuesGeneric,
+} from "@/types/nonStandardValues";
 
-export const generateIcsTimezone = (timezone: IcsTimezone) => {
+export const generateIcsTimezone = <T extends NonStandardValuesGeneric>(
+  timezone: IcsTimezone,
+  options?: { nonStandard?: GenerateNonStandardValues<T> }
+) => {
   const timezoneKeys = getKeys(timezone);
 
   let icsString = "";
@@ -19,6 +27,14 @@ export const generateIcsTimezone = (timezone: IcsTimezone) => {
 
   timezoneKeys.forEach((key) => {
     if (key === "props") return;
+
+    if (key === "nonStandard") {
+      icsString += generateNonStandardValues(
+        timezone[key],
+        options?.nonStandard
+      );
+      return;
+    }
 
     const icsKey = VTIMEZONE_TO_KEYS[key];
 

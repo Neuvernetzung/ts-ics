@@ -1,5 +1,9 @@
 import type { IcsEvent } from "./event";
-import type { ConvertLinesType, ParseLinesType } from "./parse";
+import type {
+  NonStandardValuesGeneric,
+  ParseNonStandardValues,
+} from "./nonStandardValues";
+import type { ConvertComponentType, ParseComponentType } from "./parse";
 import type { IcsTimezone } from "./timezone";
 
 export const calendarMethods = ["PUBLISH"] as const;
@@ -12,15 +16,33 @@ export const calendarVersions = ["2.0"] as const;
 export type IcsCalendarVersions = typeof calendarVersions;
 export type IcsCalendarVersion = IcsCalendarVersions[number];
 
-export type IcsCalendar = {
+export type IcsCalendar<
+  TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric
+> = {
   version: IcsCalendarVersion;
   prodId: string;
   method?: IcsCalenderMethod | string;
   timezones?: IcsTimezone[];
   events?: IcsEvent[];
   name?: string;
+  nonStandard?: Partial<TNonStandardValues>;
 };
 
-export type ConvertCalendar = ConvertLinesType<IcsCalendar>;
+export type ParseCalendarOptions<
+  TNonStandardValues extends NonStandardValuesGeneric
+> = {
+  nonStandard?: ParseNonStandardValues<TNonStandardValues>;
+};
 
-export type ParseCalendar = ParseLinesType<IcsCalendar>;
+export type ConvertCalendar<
+  TNonStandardValues extends NonStandardValuesGeneric
+> = ConvertComponentType<
+  IcsCalendar<TNonStandardValues>,
+  ParseCalendarOptions<TNonStandardValues>
+>;
+
+export type ParseCalendar<TNonStandardValues extends NonStandardValuesGeneric> =
+  ParseComponentType<
+    IcsCalendar<TNonStandardValues>,
+    ParseCalendarOptions<TNonStandardValues>
+  >;

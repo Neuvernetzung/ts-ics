@@ -18,3 +18,4 @@ export * from "./timeTransparent";
 export * from "./trigger";
 export * from "./weekDay";
 export * from "./weekDayNumber";
+export * from "./timezoneProp";

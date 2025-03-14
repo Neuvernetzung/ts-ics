@@ -27,12 +27,20 @@ import {
 import { getKeys } from "./utils/getKeys";
 import { formatLines } from "./utils/formatLines";
 import { escapeTextString } from "./utils/escapeText";
+import { generateNonStandardValues } from "./nonStandardValues";
+import type {
+  GenerateNonStandardValues,
+  NonStandardValuesGeneric,
+} from "@/types/nonStandardValues";
 
-type GenerateIcsEventOptions = { skipFormatLines?: boolean };
+type GenerateIcsEventOptions<T extends NonStandardValuesGeneric> = {
+  skipFormatLines?: boolean;
+  nonStandard?: GenerateNonStandardValues<T>;
+};
 
-export const generateIcsEvent = (
+export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
   event: IcsEvent,
-  options?: GenerateIcsEventOptions
+  options?: GenerateIcsEventOptions<T>
 ) => {
   const eventKeys = getKeys(event);
 
@@ -43,6 +51,11 @@ export const generateIcsEvent = (
   eventKeys.forEach((key) => {
     if (key === "alarms" || key === "attendees" || key === "exceptionDates")
       return;
+
+    if (key === "nonStandard") {
+      icsString += generateNonStandardValues(event[key], options?.nonStandard);
+      return;
+    }
 
     const icsKey = VEVENT_TO_KEYS[key];
 

@@ -1,11 +1,17 @@
-import { convertIcsAlarm, type ParseAlarm, type IcsAlarm } from "ts-ics";
+import {
+  convertIcsAlarm,
+  type ParseAlarm,
+  type IcsAlarm,
+  type NonStandardValuesGeneric,
+} from "ts-ics";
 import { z } from "zod";
 import { zIcsTrigger } from "./trigger";
 import { zIcsAttendee } from "./attendee";
 import { zIcsDuration } from "./duration";
 import { zIcsAttachment } from "./attachment";
 
-export const zIcsAlarm: z.ZodType<IcsAlarm> = z.object({
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export const zIcsAlarm: z.ZodType<IcsAlarm<any>> = z.object({
   action: z.string().default("DISPLAY"),
   description: z.string().optional(),
   trigger: zIcsTrigger,
@@ -14,7 +20,9 @@ export const zIcsAlarm: z.ZodType<IcsAlarm> = z.object({
   repeat: z.number().optional(),
   summary: z.string().optional(),
   attachments: z.array(zIcsAttachment).optional(),
+  nonStandard: z.record(z.any()).optional(),
 });
 
-export const parseIcsAlarm: ParseAlarm = (...props) =>
-  convertIcsAlarm(zIcsAlarm, ...props);
+export const parseIcsAlarm = <T extends NonStandardValuesGeneric>(
+  ...props: Parameters<ParseAlarm<T>>
+): ReturnType<ParseAlarm<T>> => convertIcsAlarm(zIcsAlarm, ...props);

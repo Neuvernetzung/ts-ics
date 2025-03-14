@@ -1,9 +1,9 @@
-import { IcsCalendar } from "@/types";
+import type { IcsCalendar } from "@/types";
 import { invertKeys, keysFromObject } from "./utils";
 
 export type IcsCalendarObjectKey = Exclude<
   keyof IcsCalendar,
-  "events" | "timezones"
+  "events" | "timezones" | "nonStandard"
 >;
 export type IcsCalendarObjectKeys = IcsCalendarObjectKey[];
 
