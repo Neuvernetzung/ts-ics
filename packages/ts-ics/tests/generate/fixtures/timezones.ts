@@ -1,6 +1,6 @@
-import type { VTimezone } from "@/types";
+import type { IcsTimezone } from "@/types";
 
-export const fictiveTimezone: VTimezone = {
+export const fictiveTimezone: IcsTimezone = {
   id: "Fictive/Timezone",
   props: [
     {

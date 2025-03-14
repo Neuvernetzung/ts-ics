@@ -1,35 +1,60 @@
-import set from "lodash/set";
-
 import {
   getEventRegex,
   getTimezoneRegex,
   replaceCalendarRegex,
 } from "@/constants";
-import { VCALENDAR_TO_OBJECT_KEYS, type VCalendarKey } from "@/constants/keys";
-import { type VCalendar, zVCalendar } from "@/types";
+import {
+  VCALENDAR_TO_OBJECT_KEYS,
+  type IcsCalendarKey,
+} from "@/constants/keys";
+import type {
+  ConvertCalendar,
+  IcsCalendarVersion,
+  IcsCalendar,
+  Line,
+} from "@/types";
 
-import { icsEventToObject } from "./event";
-import { icsTimezoneToObject } from "./timezone";
+import { convertIcsEvent } from "./event";
+import { convertIcsTimezone } from "./timezone";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
+import { standardValidate } from "./utils/standardValidate";
+import { convertNonStandardValues } from "./nonStandardValues";
+import { valueIsNonStandard } from "@/utils/nonStandardValue";
+import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
 
-export const icsCalendarToObject = (calendarString: string): VCalendar => {
+export const convertIcsCalendar = <T extends NonStandardValuesGeneric>(
+  ...args: Parameters<ConvertCalendar<T>>
+): ReturnType<ConvertCalendar<T>> => {
+  const [schema, calendarString, options] = args;
+
   const cleanedFileString = calendarString.replace(replaceCalendarRegex, "");
 
-  const lines = splitLines(
+  const lineStrings = splitLines(
     cleanedFileString.replace(getEventRegex, "").replace(getTimezoneRegex, "")
   );
 
-  const calendar: Partial<VCalendar> = {};
+  const calendar: Partial<IcsCalendar> = {};
 
-  lines.forEach((line) => {
-    const { property, value } = getLine<VCalendarKey>(line);
+  const nonStandardValues: Record<string, Line> = {};
+
+  lineStrings.forEach((lineString) => {
+    const { property, line } = getLine<IcsCalendarKey>(lineString);
+
+    if (valueIsNonStandard(property)) {
+      nonStandardValues[property] = line;
+    }
 
     const objectKey = VCALENDAR_TO_OBJECT_KEYS[property];
 
     if (!objectKey) return; // unknown Object key
 
-    set(calendar, objectKey, value);
+    if (objectKey === "version") {
+      calendar[objectKey] = line.value as IcsCalendarVersion;
+      return;
+    }
+
+    calendar[objectKey] = line.value;
   });
 
   const timezoneStrings = [...cleanedFileString.matchAll(getTimezoneRegex)].map(
@@ -38,9 +63,9 @@ export const icsCalendarToObject = (calendarString: string): VCalendar => {
 
   if (timezoneStrings.length > 0) {
     const timezones = timezoneStrings.map((timezoneString) =>
-      icsTimezoneToObject(timezoneString)
+      convertIcsTimezone(undefined, timezoneString)
     );
-    set(calendar, "timezones", timezones);
+    calendar.timezones = timezones;
   }
 
   const eventStrings = [...cleanedFileString.matchAll(getEventRegex)].map(
@@ -49,13 +74,23 @@ export const icsCalendarToObject = (calendarString: string): VCalendar => {
 
   if (eventStrings.length > 0) {
     const events = eventStrings.map((eventString) =>
-      icsEventToObject(eventString, calendar.timezones)
+      convertIcsEvent(undefined, eventString, {
+        timezones: calendar.timezones,
+      })
     );
-    set(calendar, "events", events);
+    calendar.events = events;
   }
 
-  return calendar as VCalendar;
-};
+  const validatedCalendar = standardValidate(
+    schema,
+    calendar as IcsCalendar<T>
+  );
 
-export const parseIcsCalendar = (calendarString: string): VCalendar =>
-  zVCalendar.parse(icsCalendarToObject(calendarString));
+  if (!options?.nonStandard) return validatedCalendar;
+
+  return convertNonStandardValues(
+    validatedCalendar,
+    nonStandardValues,
+    options?.nonStandard
+  );
+};

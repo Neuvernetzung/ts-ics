@@ -1,19 +1,23 @@
-export const VTIMEZONE_KEYS = ["TZID", "LAST-MODIFIED", "TZURL"] as const;
-export type VTimezoneKeys = typeof VTIMEZONE_KEYS;
-export type VTimezoneKey = VTimezoneKeys[number];
+import type { IcsTimezone } from "@/types";
+import { invertKeys, keysFromObject } from "./utils";
 
-export const VTIMEZONE_OBJECT_KEYS = ["id", "lastModified", "url"] as const;
+export type IcsTimezoneObjectKey = Exclude<
+  keyof IcsTimezone,
+  "props" | "nonStandard"
+>;
+export type IcsTimezoneObjectKeys = IcsTimezoneObjectKey[];
 
-export type VTimezoneObjectKeys = typeof VTIMEZONE_OBJECT_KEYS;
-export type VTimezoneObjectKey = VTimezoneObjectKeys[number];
-
-export const VTIMEZONE_TO_OBJECT_KEYS: Record<
-  VTimezoneKey,
-  VTimezoneObjectKey
-> = { "LAST-MODIFIED": "lastModified", TZID: "id", TZURL: "url" };
-
-export const VTIMEZONE_TO_KEYS: Record<VTimezoneObjectKey, VTimezoneKey> = {
+export const VTIMEZONE_TO_KEYS = {
   id: "TZID",
   lastModified: "LAST-MODIFIED",
   url: "TZURL",
-};
+} as const satisfies Record<IcsTimezoneObjectKey, string>;
+
+export const VTIMEZONE_TO_OBJECT_KEYS = invertKeys(VTIMEZONE_TO_KEYS);
+
+export type IcsTimezoneKey = keyof typeof VTIMEZONE_TO_OBJECT_KEYS;
+export type IcsTimezoneKeys = IcsTimezoneKey[];
+
+export const VTIMEZONE_KEYS = keysFromObject(VTIMEZONE_TO_OBJECT_KEYS);
+
+export const VTIMEZONE_OBJECT_KEYS = keysFromObject(VTIMEZONE_TO_KEYS);

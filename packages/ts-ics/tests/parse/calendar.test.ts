@@ -1,6 +1,7 @@
-import { parseIcsCalendar } from "@/lib/parse/calendar";
+import { convertIcsCalendar } from "@/lib/parse/calendar";
 import { icsTestData } from "../utils";
 import { readFile } from "node:fs/promises";
+import { z } from "zod";
 
 it("Test Ics Calendar Parse", async () => {
   const calendar = icsTestData([
@@ -16,7 +17,7 @@ it("Test Ics Calendar Parse", async () => {
     "END:VEVENT",
     "END:VCALENDAR",
   ]);
-  expect(() => parseIcsCalendar(calendar)).not.toThrow();
+  expect(() => convertIcsCalendar(undefined, calendar)).not.toThrow();
 });
 
 it("Test Ics Calendar Parse", async () => {
@@ -82,7 +83,7 @@ it("Test Ics Calendar Parse", async () => {
     "END:VEVENT",
     "END:VCALENDAR",
   ]);
-  expect(() => parseIcsCalendar(calendar)).not.toThrow();
+  expect(() => convertIcsCalendar(undefined, calendar)).not.toThrow();
 });
 
 it("Test Ics Calendar Parse", async () => {
@@ -177,14 +178,14 @@ it("Test Ics Calendar Parse", async () => {
     "END:VEVENT",
     "END:VCALENDAR",
   ]);
-  expect(() => parseIcsCalendar(calendar)).not.toThrow();
+  expect(() => convertIcsCalendar(undefined, calendar)).not.toThrow();
 });
 
 it("Parse Apple ICS Calendar", async () => {
   const buffer = await readFile(`${__dirname}/fixtures/apple.ics`, "utf8");
   const calendar = buffer.toString();
 
-  expect(() => parseIcsCalendar(calendar)).not.toThrow();
+  expect(() => convertIcsCalendar(undefined, calendar)).not.toThrow();
 });
 
 it("Leftover line breaks should not affect parsing - #130", async () => {
@@ -203,5 +204,37 @@ it("Leftover line breaks should not affect parsing - #130", async () => {
     "END:VCALENDAR",
   ]);
 
-  expect(() => parseIcsCalendar(calendar)).not.toThrow();
+  expect(() => convertIcsCalendar(undefined, calendar)).not.toThrow();
+});
+
+it("Test non standard value", async () => {
+  const nonStandardValue = "yeah";
+
+  const calendarString = icsTestData([
+    "BEGIN:VCALENDAR",
+    "PRODID:ID",
+    "VERSION:2.0",
+    `X-WTF:${nonStandardValue}`,
+    "BEGIN:VEVENT",
+    "CREATED:20240112T095511Z",
+    "DTEND:20240112T105511Z",
+    "DTSTAMP:20240112T095511Z",
+    "DTSTART:20240112T095511Z",
+    "SUMMARY:Test",
+    "UID:d908f270-64fa-4916-9f72-b48eb7222a63",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ]);
+
+  const calendar = convertIcsCalendar(undefined, calendarString, {
+    nonStandard: {
+      wtf: {
+        name: "X-WTF",
+        convert: (line) => line.value,
+        schema: z.string(),
+      },
+    },
+  });
+
+  expect(calendar.nonStandard?.wtf).toBe(nonStandardValue);
 });

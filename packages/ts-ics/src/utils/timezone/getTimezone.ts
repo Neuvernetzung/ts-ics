@@ -4,7 +4,7 @@ import {
   millisecondsToMinutes,
 } from "date-fns";
 
-import type { DateObjectTzProps, VTimezone } from "@/types";
+import type { DateObjectTzProps, IcsTimezone } from "@/types";
 
 import { extendTimezoneProps } from "./extendProps";
 import { timeZoneOffsetToMilliseconds } from "./offsetToMilliseconds";
@@ -13,7 +13,7 @@ import { getOffsetFromTimezoneId } from "./getOffsetFromTimezoneId";
 export const getTimezoneObjectOffset = (
   date: Date,
   tzid: string,
-  timezones?: VTimezone[]
+  timezones?: IcsTimezone[]
 ):
   | { offset: DateObjectTzProps["tzoffset"]; milliseconds: number }
   | undefined => {

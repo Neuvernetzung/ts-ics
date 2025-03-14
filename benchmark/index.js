@@ -4,10 +4,8 @@ import { Bench } from "tinybench";
 
 const bench = new Bench({ name: "Calendar Benchmark", time: 100 });
 
-import {
-  generateIcsCalendar,
-  parseIcsCalendar,
-} from "../packages/ts-ics/dist/index.cjs";
+import { generateIcsCalendar } from "../packages/ts-ics/dist/index.cjs";
+import { parseIcsCalendar } from "../packages/schema-zod/dist/index.cjs";
 
 const file = readFileSync("benchmark/calendar.ics", "utf-8");
 

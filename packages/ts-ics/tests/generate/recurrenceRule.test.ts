@@ -1,22 +1,22 @@
-import { generateIcsRecurrenceRule, parseIcsRecurrenceRule } from "@/lib";
+import { generateIcsRecurrenceRule, convertIcsRecurrenceRule } from "@/lib";
 import { getLine } from "@/lib/parse/utils/line";
-import type { RecurrenceRule } from "@/types";
+import type { IcsRecurrenceRule } from "@/types";
 
-it("RecurrenceRule UNTIL is generated correctly - DATE-TIME", async () => {
-  const rule: RecurrenceRule = {
+it("IcsRecurrenceRule UNTIL is generated correctly - DATE-TIME", async () => {
+  const rule: IcsRecurrenceRule = {
     frequency: "WEEKLY",
     until: { date: new Date(2024, 10, 3), type: "DATE-TIME" },
   };
 
   const ruleString = generateIcsRecurrenceRule(rule);
 
-  const parsed = parseIcsRecurrenceRule(getLine(ruleString).value);
+  const parsed = convertIcsRecurrenceRule(undefined, getLine(ruleString).line);
 
   expect(rule).toEqual(parsed);
 });
 
-it("RecurrenceRule UNTIL is not 'undefined' when left empty", async () => {
-  const rule: RecurrenceRule = {
+it("IcsRecurrenceRule UNTIL is not 'undefined' when left empty", async () => {
+  const rule: IcsRecurrenceRule = {
     frequency: "WEEKLY",
     until: { date: new Date(2024, 10, 3) },
   };
@@ -26,10 +26,10 @@ it("RecurrenceRule UNTIL is not 'undefined' when left empty", async () => {
   expect(ruleString).not.toContain("undefined");
 });
 
-// it("RecurrenceRule UNTIL is generated correctly - with local", async () => { // Dont works because cant find example of how UNTIL with Timezone string is created
+// it("IcsRecurrenceRule UNTIL is generated correctly - with local", async () => { // Dont works because cant find example of how UNTIL with Timezone string is created
 //   const date = new Date(2023, 6, 2, 14, 30);
 
-//   const rule: RecurrenceRule = {
+//   const rule: IcsRecurrenceRule = {
 //     frequency: "WEEKLY",
 //     until: {
 //       date,
@@ -47,7 +47,7 @@ it("RecurrenceRule UNTIL is not 'undefined' when left empty", async () => {
 
 //   const ruleString = generateIcsRecurrenceRule(rule);
 
-//   const parsed = parseIcsRecurrenceRule(getLine(ruleString).value);
+//   const parsed = convertIcsRecurrenceRule(getLine(ruleString).value);
 
 //   expect(rule).toEqual(parsed);
 // });

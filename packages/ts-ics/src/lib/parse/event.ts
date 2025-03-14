@@ -1,100 +1,141 @@
-import set from "lodash/set";
-
 import { COMMA, getAlarmRegex, replaceEventRegex } from "@/constants";
-import { VEVENT_TO_OBJECT_KEYS, type VEventKey } from "@/constants/keys/event";
-import { type VEvent, type VTimezone, zVEvent, type DateObject } from "@/types";
-import type { Attendee } from "@/types/attendee";
+import {
+  VEVENT_TO_OBJECT_KEYS,
+  type IcsEventKey,
+} from "@/constants/keys/event";
+import type { IcsEvent, IcsDateObject, ConvertEvent, Line } from "@/types";
+import type { IcsAttendee } from "@/types/attendee";
 
 import {
   objectKeyIsArrayOfStrings,
   objectKeyIsTextString,
   objectKeyIsTimeStamp,
 } from "../../constants/keyTypes/event";
-import { icsAlarmToObject } from "./alarm";
-import { icsAttendeeToObject } from "./attendee";
-import { icsDurationToObject } from "./duration";
-import { icsOrganizerToObject } from "./organizer";
-import { icsRecurrenceRuleToObject } from "./recurrenceRule";
-import { icsTimeStampToObject } from "./timeStamp";
+import { convertIcsAlarm } from "./alarm";
+import { convertIcsAttendee } from "./attendee";
+import { convertIcsDuration } from "./duration";
+import { convertIcsOrganizer } from "./organizer";
+import { convertIcsRecurrenceRule } from "./recurrenceRule";
+import { convertIcsTimeStamp } from "./timeStamp";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
-import { icsExceptionDateToObject } from "./exceptionDate";
+import { convertIcsExceptionDates } from "./exceptionDate";
 import { unescapeTextString } from "./utils/unescapeText";
-import { icsRecurrenceIdToObject } from "./recurrenceId";
+import { convertIcsRecurrenceId } from "./recurrenceId";
+import { convertIcsClass } from "./class";
+import { convertIcsStatus } from "./status";
+import { convertIcsTimeTransparent } from "./timeTransparent";
+import { standardValidate } from "./utils/standardValidate";
+import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import { convertNonStandardValues } from "./nonStandardValues";
+import { valueIsNonStandard } from "@/utils/nonStandardValue";
 
-export type ParseIcsEvent = (
-  rawEventString: string,
-  timezones?: VTimezone[]
-) => VEvent;
+export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
+  ...args: Parameters<ConvertEvent<T>>
+): ReturnType<ConvertEvent<T>> => {
+  const [schema, rawEventString, options] = args;
 
-export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
   const eventString = rawEventString.replace(replaceEventRegex, "");
 
-  const lines = splitLines(eventString.replace(getAlarmRegex, ""));
+  const lineStrings = splitLines(eventString.replace(getAlarmRegex, ""));
 
-  const event = {};
+  const event: Partial<IcsEvent> = {};
 
-  const attendees: Attendee[] = [];
-  const exceptionDates: DateObject[] = [];
+  const attendees: IcsAttendee[] = [];
+  const exceptionDates: IcsDateObject[] = [];
 
-  lines.forEach((line) => {
-    const { property, options, value } = getLine<VEventKey>(line);
+  const nonStandardValues: Record<string, Line> = {};
+
+  lineStrings.forEach((lineString) => {
+    const { property, line } = getLine<IcsEventKey>(lineString);
+
+    if (valueIsNonStandard(property)) {
+      nonStandardValues[property] = line;
+    }
 
     const objectKey = VEVENT_TO_OBJECT_KEYS[property];
 
     if (!objectKey) return; // unknown Object key
 
     if (objectKeyIsTimeStamp(objectKey)) {
-      set(event, objectKey, icsTimeStampToObject(value, options, timezones));
+      event[objectKey] = convertIcsTimeStamp(undefined, line, {
+        timezones: options?.timezones,
+      });
       return;
     }
 
     if (objectKeyIsArrayOfStrings(objectKey)) {
-      set(event, objectKey, value.split(COMMA));
+      event[objectKey] = line.value.split(COMMA);
+
       return;
     }
 
     if (objectKeyIsTextString(objectKey)) {
-      set(event, objectKey, unescapeTextString(value));
+      event[objectKey] = unescapeTextString(line.value);
       return;
     }
 
     if (objectKey === "recurrenceRule") {
-      set(event, objectKey, icsRecurrenceRuleToObject(value, timezones));
-      return;
-    }
-
-    if (objectKey === "recurrenceId") {
-      set(event, objectKey, icsRecurrenceIdToObject(value, options, timezones));
+      event[objectKey] = convertIcsRecurrenceRule(undefined, line, {
+        timezones: options?.timezones,
+      });
       return;
     }
 
     if (objectKey === "duration") {
-      set(event, objectKey, icsDurationToObject(value));
+      event[objectKey] = convertIcsDuration(undefined, line);
       return;
     }
 
     if (objectKey === "organizer") {
-      set(event, objectKey, icsOrganizerToObject(value, options));
+      event[objectKey] = convertIcsOrganizer(undefined, line);
       return;
     }
 
     if (objectKey === "sequence") {
-      set(event, objectKey, Number(value));
+      event[objectKey] = Number(line.value);
       return;
     }
 
-    if (objectKey === "attendee") {
-      attendees.push(icsAttendeeToObject(value, options));
+    if (objectKey === "attendees") {
+      attendees.push(convertIcsAttendee(undefined, line));
       return;
     }
 
     if (objectKey === "exceptionDates") {
-      exceptionDates.push(...icsExceptionDateToObject(value, options));
+      exceptionDates.push(
+        ...convertIcsExceptionDates(undefined, line, {
+          timezones: options?.timezones,
+        })
+      );
       return;
     }
 
-    set(event, objectKey, value); // Set string value
+    if (objectKey === "alarms") return;
+
+    if (objectKey === "class") {
+      event[objectKey] = convertIcsClass(undefined, line);
+      return;
+    }
+
+    if (objectKey === "recurrenceId") {
+      event[objectKey] = convertIcsRecurrenceId(undefined, line, {
+        timezones: options?.timezones,
+      });
+      return;
+    }
+
+    if (objectKey === "status") {
+      event[objectKey] = convertIcsStatus(undefined, line);
+      return;
+    }
+
+    if (objectKey === "timeTransparent") {
+      event[objectKey] = convertIcsTimeTransparent(undefined, line);
+      return;
+    }
+
+    event[objectKey] = line.value; // Set string value
   });
 
   const alarmStrings = [...rawEventString.matchAll(getAlarmRegex)].map(
@@ -103,21 +144,27 @@ export const icsEventToObject: ParseIcsEvent = (rawEventString, timezones) => {
 
   if (alarmStrings.length > 0) {
     const alarms = alarmStrings.map((alarmString) =>
-      icsAlarmToObject(alarmString, timezones)
+      convertIcsAlarm(undefined, alarmString, options)
     );
-    set(event, "alarms", alarms);
+
+    event.alarms = alarms;
   }
 
   if (attendees.length > 0) {
-    set(event, "attendees", attendees);
+    event.attendees = attendees;
   }
 
   if (exceptionDates.length > 0) {
-    set(event, "exceptionDates", exceptionDates);
+    event.exceptionDates = exceptionDates;
   }
 
-  return event as VEvent;
-};
+  const validatedEvent = standardValidate(schema, event as IcsEvent<T>);
 
-export const parseIcsEvent: ParseIcsEvent = (file, timezones) =>
-  zVEvent.parse(icsEventToObject(file, timezones));
+  if (!options?.nonStandard) return validatedEvent;
+
+  return convertNonStandardValues(
+    validatedEvent,
+    nonStandardValues,
+    options?.nonStandard
+  );
+};

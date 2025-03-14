@@ -1,5 +1,6 @@
-import { parseIcsAlarm } from "@/lib/parse/alarm";
+import { convertIcsAlarm } from "@/lib/parse/alarm";
 import { icsTestData } from "../utils";
+import { z } from "zod";
 
 it("Test Ics Alarm Parse", async () => {
   const alarm = icsTestData([
@@ -11,7 +12,7 @@ it("Test Ics Alarm Parse", async () => {
     "ATTACH;FMTTYPE=audio/basic:ftp://example.com/pub/sounds/bell-01.aud",
     "END:VALARM",
   ]);
-  expect(() => parseIcsAlarm(alarm)).not.toThrow();
+  expect(() => convertIcsAlarm(undefined, alarm)).not.toThrow();
 });
 
 it("Test Ics Alarm Parse", async () => {
@@ -25,7 +26,7 @@ it("Test Ics Alarm Parse", async () => {
     "  team at 8:30 AM EST.",
     "END:VALARM",
   ]);
-  expect(() => parseIcsAlarm(alarm)).not.toThrow();
+  expect(() => convertIcsAlarm(undefined, alarm)).not.toThrow();
 });
 
 it("Test Ics Alarm Parse", async () => {
@@ -41,5 +42,32 @@ it("Test Ics Alarm Parse", async () => {
     "ATTACH;FMTTYPE=application/msword:http://example.com/templates/agenda.doc",
     "END:VALARM",
   ]);
-  expect(() => parseIcsAlarm(alarm)).not.toThrow();
+  expect(() => convertIcsAlarm(undefined, alarm)).not.toThrow();
+});
+
+it("Test non standard value", async () => {
+  const nonStandardValue = "yeah";
+
+  const alarmString = icsTestData([
+    "BEGIN:VALARM",
+    "TRIGGER;VALUE=DATE-TIME:19970317T133000Z",
+    "REPEAT:4",
+    "DURATION:PT15M",
+    "ACTION:AUDIO",
+    `X-WTF:${nonStandardValue}`,
+    "ATTACH;FMTTYPE=audio/basic:ftp://example.com/pub/sounds/bell-01.aud",
+    "END:VALARM",
+  ]);
+
+  const alarm = convertIcsAlarm(undefined, alarmString, {
+    nonStandard: {
+      wtf: {
+        name: "X-WTF",
+        convert: (line) => line.value,
+        schema: z.string(),
+      },
+    },
+  });
+
+  expect(alarm.nonStandard?.wtf).toBe(nonStandardValue);
 });

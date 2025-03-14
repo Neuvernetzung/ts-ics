@@ -1,8 +1,9 @@
 import { generateIcsEvent } from "@/lib";
-import { parseIcsEvent } from "@/lib/parse/event";
-import type { VEvent } from "@/types";
+import { convertIcsEvent } from "@/lib/parse/event";
+import type { IcsEvent } from "@/types";
 import { readFile } from "node:fs/promises";
 import { icsTestData } from "../utils";
+import { z } from "zod";
 
 it("Test Ics Event Parse", async () => {
   const event = icsTestData([
@@ -17,7 +18,7 @@ it("Test Ics Event Parse", async () => {
     "CATEGORIES:BUSINESS,HUMAN RESOURCES",
     "END:VEVENT",
   ]);
-  expect(() => parseIcsEvent(event)).not.toThrow();
+  expect(() => convertIcsEvent(undefined, event)).not.toThrow();
 });
 
 it("Test Ics Event Parse", async () => {
@@ -33,7 +34,7 @@ it("Test Ics Event Parse", async () => {
     "TRANSP:TRANSPARENT",
     "END:VEVENT",
   ]);
-  expect(() => parseIcsEvent(event)).not.toThrow();
+  expect(() => convertIcsEvent(undefined, event)).not.toThrow();
 });
 
 it("Test Ics Event Parse", async () => {
@@ -50,7 +51,7 @@ it("Test Ics Event Parse", async () => {
     "RRULE:FREQ=YEARLY",
     "END:VEVENT",
   ]);
-  expect(() => parseIcsEvent(event)).not.toThrow();
+  expect(() => convertIcsEvent(undefined, event)).not.toThrow();
 });
 
 it("Test Ics Event Parse", async () => {
@@ -65,7 +66,22 @@ it("Test Ics Event Parse", async () => {
     "END:VEVENT",
   ]);
 
-  expect(() => parseIcsEvent(event)).not.toThrow();
+  expect(() => convertIcsEvent(undefined, event)).not.toThrow();
+});
+
+it("Test Ics Event Parse - recurrenceId gh#140", async () => {
+  const event = icsTestData([
+    "BEGIN:VEVENT",
+    "UID:20070423T123432Z-541111@example.com",
+    "DTSTAMP:20070423T123432Z",
+    "DTSTART;VALUE=DATE:20070628",
+    "DTEND;VALUE=DATE:20070709",
+    "SUMMARY:Festival International de Jazz de Montreal",
+    "RECURRENCE-ID:19970903T163000Z",
+    "END:VEVENT",
+  ]);
+
+  expect(() => convertIcsEvent(undefined, event)).not.toThrow();
 });
 
 it("Test ICS Event With Long Description Parse", async () => {
@@ -75,11 +91,11 @@ it("Test ICS Event With Long Description Parse", async () => {
   );
   const event = buffer.toString();
 
-  expect(() => parseIcsEvent(event)).not.toThrow();
+  expect(() => convertIcsEvent(undefined, event)).not.toThrow();
 });
 
 it("Expect 'formatLines' to handle multiple line breaks correctly", async () => {
-  const event: VEvent = {
+  const event: IcsEvent = {
     start: { date: new Date("2024-08-23T22:00:00Z") },
     stamp: { date: new Date("2024-08-23T22:00:00Z") },
     summary: "Holiday",
@@ -91,9 +107,38 @@ it("Expect 'formatLines' to handle multiple line breaks correctly", async () => 
 
   const generatedEvent = generateIcsEvent(event);
 
-  expect(() => parseIcsEvent(generatedEvent)).not.toThrow();
+  expect(() => convertIcsEvent(undefined, generatedEvent)).not.toThrow();
 
-  const parsed = parseIcsEvent(generatedEvent);
+  const parsed = convertIcsEvent(undefined, generatedEvent);
 
   expect(parsed.description).toEqual(event.description);
+});
+
+it("Test non standard value", async () => {
+  const nonStandardValue = "yeah";
+
+  const eventString = icsTestData([
+    "BEGIN:VEVENT",
+    "UID:19970901T130000Z-123401@example.com",
+    "DTSTAMP:19970901T130000Z",
+    "DTSTART:19970903T163000Z",
+    "DTEND:19970903T190000Z",
+    "SUMMARY:Annual Employee Review",
+    "CLASS:PRIVATE",
+    `X-WTF:${nonStandardValue}`,
+    "CATEGORIES:BUSINESS,HUMAN RESOURCES",
+    "END:VEVENT",
+  ]);
+
+  const event = convertIcsEvent(undefined, eventString, {
+    nonStandard: {
+      wtf: {
+        name: "X-WTF",
+        convert: (line) => line.value,
+        schema: z.string(),
+      },
+    },
+  });
+
+  expect(event.nonStandard?.wtf).toBe(nonStandardValue);
 });

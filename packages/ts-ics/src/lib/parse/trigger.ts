@@ -1,38 +1,22 @@
-import {
-  type TriggerRelation,
-  type VEventTrigger,
-  zVEventTrigger,
-  type VTimezone,
-} from "@/types";
+import type { ConvertTrigger, IcsTriggerRelation, IcsTrigger } from "@/types";
 
-import { icsDurationToObject } from "./duration";
-import { icsTimeStampToObject } from "./timeStamp";
+import { convertIcsDuration } from "./duration";
+import { convertIcsTimeStamp } from "./timeStamp";
+import { standardValidate } from "./utils/standardValidate";
 
-export type ParseIcsTrigger = (
-  value: string,
-  options?: Record<string, string>,
-  timezones?: VTimezone[]
-) => VEventTrigger;
+export const convertIcsTrigger: ConvertTrigger = (schema, line, options) => {
+  const trigger: IcsTrigger =
+    line.options?.VALUE === "DATE-TIME" || line.options?.VALUE === "DATE"
+      ? {
+          type: "absolute",
+          value: convertIcsTimeStamp(undefined, line, options),
+          options: { related: line.options?.RELATED as IcsTriggerRelation },
+        }
+      : {
+          type: "relative",
+          value: convertIcsDuration(undefined, line),
+          options: { related: line.options?.RELATED as IcsTriggerRelation },
+        };
 
-export const icsTriggerToObject: ParseIcsTrigger = (
-  value,
-  options,
-  timezones
-) => {
-  if (options?.VALUE === "DATE-TIME" || options?.VALUE === "DATE") {
-    return {
-      type: "absolute",
-      value: icsTimeStampToObject(value, options, timezones),
-      options: { related: options?.RELATED as TriggerRelation },
-    };
-  }
-
-  return {
-    type: "relative",
-    value: icsDurationToObject(value),
-    options: { related: options?.RELATED as TriggerRelation },
-  };
+  return standardValidate(schema, trigger);
 };
-
-export const parseIcsTrigger: ParseIcsTrigger = (value, options, timezones) =>
-  zVEventTrigger.parse(icsTriggerToObject(value, options, timezones));

@@ -1,6 +1,6 @@
-import type { WeekdayNumberObject } from "@/types/weekday";
+import type { IcsWeekdayNumber } from "@/types/weekday";
 
-export const generateIcsWeekdayNumber = (value: WeekdayNumberObject) => {
+export const generateIcsWeekdayNumber = (value: IcsWeekdayNumber) => {
   if (value.occurence) {
     return `${value.occurence}${value.day}`;
   }

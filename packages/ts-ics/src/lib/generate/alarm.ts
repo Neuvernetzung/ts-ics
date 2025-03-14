@@ -1,5 +1,5 @@
 import { VALARM_TO_KEYS } from "@/constants/keys/alarm";
-import type { VAlarm, VEventDuration, VEventTrigger } from "@/types";
+import type { IcsAlarm, IcsDuration, IcsTrigger } from "@/types";
 
 import { generateIcsAttachment } from "./attachment";
 import { generateIcsAttendee } from "./attendee";
@@ -11,8 +11,16 @@ import {
   getIcsStartLine,
 } from "./utils/addLine";
 import { getKeys } from "./utils/getKeys";
+import { generateNonStandardValues } from "./nonStandardValues";
+import type {
+  GenerateNonStandardValues,
+  NonStandardValuesGeneric,
+} from "@/types/nonStandardValues";
 
-export const generateIcsAlarm = (alarm: VAlarm) => {
+export const generateIcsAlarm = <T extends NonStandardValuesGeneric>(
+  alarm: IcsAlarm,
+  options?: { nonStandard?: GenerateNonStandardValues<T> }
+) => {
   const alarmKeys = getKeys(alarm);
 
   let icsString = "";
@@ -21,6 +29,11 @@ export const generateIcsAlarm = (alarm: VAlarm) => {
 
   alarmKeys.forEach((key) => {
     if (key === "attachments" || key === "attendees") return;
+
+    if (key === "nonStandard") {
+      icsString += generateNonStandardValues(alarm[key], options?.nonStandard);
+      return;
+    }
 
     const icsKey = VALARM_TO_KEYS[key];
 
@@ -33,14 +46,14 @@ export const generateIcsAlarm = (alarm: VAlarm) => {
     if (value === undefined || value === null) return;
 
     if (key === "trigger") {
-      icsString += generateIcsTrigger(value as VEventTrigger);
+      icsString += generateIcsTrigger(value as IcsTrigger);
       return;
     }
 
     if (key === "duration") {
       icsString += generateIcsLine(
         icsKey,
-        generateIcsDuration(value as VEventDuration)
+        generateIcsDuration(value as IcsDuration)
       );
       return;
     }

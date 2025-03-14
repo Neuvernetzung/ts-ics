@@ -1,16 +1,15 @@
 import { getYear, setDayOfYear } from "date-fns";
 
-import type { RecurrenceRule } from "@/types";
+import type { IcsRecurrenceRule } from "@/types";
 
 export const iterateByYearDay = (
-  rule: RecurrenceRule,
+  rule: IcsRecurrenceRule,
   dateGroups: Date[][],
-  byYearday: NonNullable<RecurrenceRule["byYearday"]>
+  byYearday: NonNullable<IcsRecurrenceRule["byYearday"]>
 ): Date[][] => {
   if (rule.frequency === "YEARLY") {
     return dateGroups.map((dates) =>
-      dates
-        .flatMap((date) => byYearday.map((year) => setDayOfYear(date, year)))
+      dates.flatMap((date) => byYearday.map((year) => setDayOfYear(date, year)))
     );
   }
 

@@ -1,22 +1,24 @@
-export const VCALENDAR_KEYS = ["VERSION", "METHOD", "PRODID", "X-WR-CALNAME"] as const;
-export type VCalendarKeys = typeof VCALENDAR_KEYS;
-export type VCalendarKey = VCalendarKeys[number];
+import type { IcsCalendar } from "@/types";
+import { invertKeys, keysFromObject } from "./utils";
 
-export const VCALENDAR_OBJECT_KEYS = ["version", "method", "prodId", "name"] as const;
+export type IcsCalendarObjectKey = Exclude<
+  keyof IcsCalendar,
+  "events" | "timezones" | "nonStandard"
+>;
+export type IcsCalendarObjectKeys = IcsCalendarObjectKey[];
 
-export type VCalendarObjectKeys = typeof VCALENDAR_OBJECT_KEYS;
-export type VCalendarObjectKey = VCalendarObjectKeys[number];
+export const VCALENDAR_TO_KEYS = {
+  method: "METHOD",
+  prodId: "PRODID",
+  version: "VERSION",
+  name: "X-WR-CALNAME",
+} as const satisfies Record<IcsCalendarObjectKey, string>;
 
-export const VCALENDAR_TO_OBJECT_KEYS: Record<VCalendarKey, VCalendarObjectKey> = {
-	METHOD: "method",
-	PRODID: "prodId",
-	VERSION: "version",
-	"X-WR-CALNAME": "name",
-};
+export const VCALENDAR_TO_OBJECT_KEYS = invertKeys(VCALENDAR_TO_KEYS);
 
-export const VCALENDAR_TO_KEYS: Record<VCalendarObjectKey, VCalendarKey> = {
-	method: "METHOD",
-	prodId: "PRODID",
-	version: "VERSION",
-	name: "X-WR-CALNAME",
-};
+export type IcsCalendarKey = keyof typeof VCALENDAR_TO_OBJECT_KEYS;
+export type IcsCalendarKeys = IcsCalendarKey[];
+
+export const VCALENDAR_KEYS = keysFromObject(VCALENDAR_TO_OBJECT_KEYS);
+
+export const VCALENDAR_OBJECT_KEYS = keysFromObject(VCALENDAR_TO_KEYS);

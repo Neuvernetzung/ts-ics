@@ -1,13 +1,13 @@
-import { parseIcsDuration } from "@/lib/parse/duration";
+import { convertIcsDuration } from "@/lib/parse/duration";
 
-it("Test Ics Duration Parse", async () => {
-  const duration = "P15DT5H0M20S";
+it("Test Ics IcsDuration Parse", async () => {
+  const value = "P15DT5H0M20S";
 
-  expect(() => parseIcsDuration(duration)).not.toThrow();
+  expect(() => convertIcsDuration(undefined, { value })).not.toThrow();
 });
 
-it("Test Ics Duration Parse", async () => {
-  const duration = "P7W";
+it("Test Ics IcsDuration Parse", async () => {
+  const value = "P7W";
 
-  expect(() => parseIcsDuration(duration)).not.toThrow();
+  expect(() => convertIcsDuration(undefined, { value })).not.toThrow();
 });

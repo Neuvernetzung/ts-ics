@@ -1,28 +1,15 @@
-import { type RecurrenceId, zRecurrenceId } from "@/types/recurrenceId";
+import type { IcsRecurrenceId } from "@/types/recurrenceId";
 
-import { icsTimeStampToObject } from "./timeStamp";
-import type { VTimezone } from "@/types";
+import { convertIcsTimeStamp } from "./timeStamp";
+import type { ConvertRecurrenceId } from "@/types";
+import { standardValidate } from "./utils/standardValidate";
 
-export type ParseIcsRecurrenceId = (
-  recurrenceIdString: string,
-  options?: Record<string, string>,
-  timezones?: VTimezone[]
-) => RecurrenceId;
-
-export const icsRecurrenceIdToObject: ParseIcsRecurrenceId = (
-  recurrenceIdString,
-  options,
-  timezones
-): RecurrenceId => ({
-  value: icsTimeStampToObject(recurrenceIdString, options, timezones),
-  range: options?.RANGE as RecurrenceId["range"],
-});
-
-export const parseIcsRecurrenceId: ParseIcsRecurrenceId = (
-  recurrenceIdString,
-  options,
-  timezones
+export const convertIcsRecurrenceId: ConvertRecurrenceId = (
+  schema,
+  line,
+  options
 ) =>
-  zRecurrenceId.parse(
-    icsRecurrenceIdToObject(recurrenceIdString, options, timezones)
-  );
+  standardValidate(schema, {
+    value: convertIcsTimeStamp(undefined, line, options),
+    range: line.options?.RANGE as IcsRecurrenceId["range"],
+  });

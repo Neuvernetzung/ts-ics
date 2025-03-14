@@ -1,11 +1,11 @@
 import { getMinutes, setMinutes } from "date-fns";
 
-import type { RecurrenceRule } from "@/types";
+import type { IcsRecurrenceRule } from "@/types";
 
 export const iterateByMinute = (
-  rule: RecurrenceRule,
+  rule: IcsRecurrenceRule,
   dateGroups: Date[][],
-  byMinute: NonNullable<RecurrenceRule["byMinute"]>
+  byMinute: NonNullable<IcsRecurrenceRule["byMinute"]>
 ): Date[][] => {
   if (
     rule.frequency === "YEARLY" ||

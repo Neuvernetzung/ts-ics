@@ -1,6 +1,6 @@
-import { z } from "zod";
+import type { ConvertLineType, ParseLineType } from "./parse";
 
-export type VEventDuration = {
+export type IcsDuration = {
   before?: boolean;
   weeks?: number;
   days?: number;
@@ -9,11 +9,6 @@ export type VEventDuration = {
   seconds?: number;
 };
 
-export const zVEventDuration: z.ZodType<VEventDuration> = z.object({
-  before: z.boolean().optional(),
-  weeks: z.number().optional(),
-  days: z.number().optional(),
-  hours: z.number().optional(),
-  minutes: z.number().optional(),
-  seconds: z.number().optional(),
-});
+export type ConvertDuration = ConvertLineType<IcsDuration>;
+
+export type ParseDuration = ParseLineType<IcsDuration>;

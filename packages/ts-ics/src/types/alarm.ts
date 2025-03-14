@@ -1,28 +1,43 @@
-import { z } from "zod";
+import type { IcsAttachment } from "./attachment";
+import type { IcsAttendee } from "./attendee";
+import type { IcsDuration } from "./duration";
+import type {
+  NonStandardValuesGeneric,
+  ParseNonStandardValues,
+} from "./nonStandardValues";
+import type { ConvertComponentType, ParseComponentType } from "./parse";
+import type { IcsTimezone } from "./timezone";
+import type { IcsTrigger } from "./trigger";
 
-import { type Attachment, zAttachment } from "./attachment";
-import { type Attendee, zAttendee } from "./attendee";
-import { type VEventDuration, zVEventDuration } from "./duration";
-import { type VEventTrigger, zVEventTrigger } from "./trigger";
-
-export type VAlarm = {
+export type IcsAlarm<
+  TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric
+> = {
   action?: string;
   description?: string;
-  trigger: VEventTrigger;
-  attendees?: Attendee[];
-  duration?: VEventDuration;
+  trigger: IcsTrigger;
+  attendees?: IcsAttendee[];
+  duration?: IcsDuration;
   repeat?: number;
   summary?: string;
-  attachments?: Attachment[];
+  attachments?: IcsAttachment[];
+  nonStandard?: Partial<TNonStandardValues>;
 };
 
-export const zVAlarm: z.ZodType<VAlarm> = z.object({
-  action: z.string().default("DISPLAY"),
-  description: z.string().optional(),
-  trigger: zVEventTrigger,
-  attendees: z.array(zAttendee).optional(),
-  duration: zVEventDuration.optional(),
-  repeat: z.number().optional(),
-  summary: z.string().optional(),
-  attachments: z.array(zAttachment).optional(),
-});
+export type ParseAlarmOptions<
+  TNonStandardValues extends NonStandardValuesGeneric
+> = {
+  timezones?: IcsTimezone[];
+  nonStandard?: ParseNonStandardValues<TNonStandardValues>;
+};
+
+export type ConvertAlarm<TNonStandardValues extends NonStandardValuesGeneric> =
+  ConvertComponentType<
+    IcsAlarm<TNonStandardValues>,
+    ParseAlarmOptions<TNonStandardValues>
+  >;
+
+export type ParseAlarm<TNonStandardValues extends NonStandardValuesGeneric> =
+  ParseComponentType<
+    IcsAlarm<TNonStandardValues>,
+    ParseAlarmOptions<TNonStandardValues>
+  >;

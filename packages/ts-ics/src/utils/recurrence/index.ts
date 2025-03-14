@@ -1,6 +1,6 @@
 import { addYears } from "date-fns";
 
-import type { RecurrenceRule, WeekDayNumber } from "@/types";
+import type { IcsRecurrenceRule, WeekDayNumber } from "@/types";
 import { weekDays } from "@/types";
 
 import { iterateBase } from "./iterate";
@@ -15,7 +15,7 @@ export type ExtendByRecurrenceRuleOptions = {
 export const DEFAULT_END_IN_YEARS = 2;
 
 export const extendByRecurrenceRule = (
-  rule: RecurrenceRule,
+  rule: IcsRecurrenceRule,
   options: ExtendByRecurrenceRuleOptions
 ): Date[] => {
   const start: Date = options.start;

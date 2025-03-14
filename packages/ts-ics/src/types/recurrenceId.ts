@@ -1,13 +1,20 @@
-import { z } from "zod";
+import type { IcsDateObject } from "./date";
+import type { ConvertLineType, ParseLineType } from "./parse";
+import type { IcsTimezone } from "./timezone";
 
-import { type DateObject, zDateObject } from "./date";
-
-export type RecurrenceId = {
+export type IcsRecurrenceId = {
   range?: "THISANDFUTURE";
-  value: DateObject;
+  value: IcsDateObject;
 };
 
-export const zRecurrenceId: z.ZodType<RecurrenceId> = z.object({
-  range: z.literal("THISANDFUTURE").optional(),
-  value: zDateObject,
-});
+export type ParseRecurrenceIdOptions = { timezones?: IcsTimezone[] };
+
+export type ConvertRecurrenceId = ConvertLineType<
+  IcsRecurrenceId,
+  ParseRecurrenceIdOptions
+>;
+
+export type ParseRecurrenceId = ParseLineType<
+  IcsRecurrenceId,
+  ParseRecurrenceIdOptions
+>;

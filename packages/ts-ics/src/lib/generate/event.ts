@@ -5,12 +5,12 @@ import {
   objectKeyIsTimeStamp,
 } from "@/constants/keyTypes";
 import type {
-  DateObject,
-  VEvent,
-  VEventDuration,
-  RecurrenceRule,
+  IcsDateObject,
+  IcsEvent,
+  IcsDuration,
+  IcsRecurrenceRule,
 } from "@/types";
-import type { Organizer } from "@/types/organizer";
+import type { IcsOrganizer } from "@/types/organizer";
 
 import { generateIcsAlarm } from "./alarm";
 import { generateIcsAttendee } from "./attendee";
@@ -27,12 +27,20 @@ import {
 import { getKeys } from "./utils/getKeys";
 import { formatLines } from "./utils/formatLines";
 import { escapeTextString } from "./utils/escapeText";
+import { generateNonStandardValues } from "./nonStandardValues";
+import type {
+  GenerateNonStandardValues,
+  NonStandardValuesGeneric,
+} from "@/types/nonStandardValues";
 
-type GenerateIcsEventOptions = { skipFormatLines?: boolean };
+type GenerateIcsEventOptions<T extends NonStandardValuesGeneric> = {
+  skipFormatLines?: boolean;
+  nonStandard?: GenerateNonStandardValues<T>;
+};
 
-export const generateIcsEvent = (
-  event: VEvent,
-  options?: GenerateIcsEventOptions
+export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
+  event: IcsEvent,
+  options?: GenerateIcsEventOptions<T>
 ) => {
   const eventKeys = getKeys(event);
 
@@ -44,6 +52,11 @@ export const generateIcsEvent = (
     if (key === "alarms" || key === "attendees" || key === "exceptionDates")
       return;
 
+    if (key === "nonStandard") {
+      icsString += generateNonStandardValues(event[key], options?.nonStandard);
+      return;
+    }
+
     const icsKey = VEVENT_TO_KEYS[key];
 
     if (!icsKey) return;
@@ -53,7 +66,7 @@ export const generateIcsEvent = (
     if (value === undefined || value === null) return;
 
     if (objectKeyIsTimeStamp(key)) {
-      icsString += generateIcsTimeStamp(icsKey, value as DateObject);
+      icsString += generateIcsTimeStamp(icsKey, value as IcsDateObject);
       return;
     }
 
@@ -68,20 +81,20 @@ export const generateIcsEvent = (
     }
 
     if (key === "recurrenceRule") {
-      icsString += generateIcsRecurrenceRule(value as RecurrenceRule);
+      icsString += generateIcsRecurrenceRule(value as IcsRecurrenceRule);
       return;
     }
 
     if (key === "duration") {
       icsString += generateIcsLine(
         icsKey,
-        generateIcsDuration(value as VEventDuration)
+        generateIcsDuration(value as IcsDuration)
       );
       return;
     }
 
     if (key === "organizer") {
-      icsString += generateIcsOrganizer(value as Organizer);
+      icsString += generateIcsOrganizer(value as IcsOrganizer);
       return;
     }
 

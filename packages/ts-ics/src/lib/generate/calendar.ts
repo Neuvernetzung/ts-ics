@@ -1,5 +1,5 @@
 import { VCALENDAR_TO_KEYS } from "@/constants/keys";
-import type { VCalendar } from "@/types";
+import type { IcsCalendar } from "@/types";
 
 import { generateIcsEvent } from "./event";
 import { generateIcsTimezone } from "./timezone";
@@ -10,8 +10,16 @@ import {
 } from "./utils/addLine";
 import { formatLines } from "./utils/formatLines";
 import { getKeys } from "./utils/getKeys";
+import { generateNonStandardValues } from "./nonStandardValues";
+import type {
+  GenerateNonStandardValues,
+  NonStandardValuesGeneric,
+} from "@/types/nonStandardValues";
 
-export const generateIcsCalendar = (calendar: VCalendar) => {
+export const generateIcsCalendar = <T extends NonStandardValuesGeneric>(
+  calendar: IcsCalendar,
+  options?: { nonStandard?: GenerateNonStandardValues<T> }
+) => {
   const calendarKeys = getKeys(calendar);
 
   let icsString = "";
@@ -20,6 +28,14 @@ export const generateIcsCalendar = (calendar: VCalendar) => {
 
   calendarKeys.forEach((key) => {
     if (key === "events" || key === "timezones") return;
+
+    if (key === "nonStandard") {
+      icsString += generateNonStandardValues(
+        calendar[key],
+        options?.nonStandard
+      );
+      return;
+    }
 
     const icsKey = VCALENDAR_TO_KEYS[key];
 

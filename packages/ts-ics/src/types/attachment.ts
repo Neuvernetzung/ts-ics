@@ -1,16 +1,16 @@
-import { z } from "zod";
+import type { ConvertLineType, ParseLineType } from "./parse";
 
-export const encodingTypes = ["BASE64"] as const;
+export const attachmentEncodingTypes = ["BASE64"] as const;
 
-export type EncodingTypes = typeof encodingTypes;
-export type EncodingType = EncodingTypes[number];
+export type IcsAttachmentEncodingTypes = typeof attachmentEncodingTypes;
+export type IcsAttachmentEncodingType = IcsAttachmentEncodingTypes[number];
 
-export const valueTypes = ["BINARY"] as const;
+export const attachmentValueTypes = ["BINARY"] as const;
 
-export type ValueTypes = typeof valueTypes;
-export type ValueType = ValueTypes[number];
+export type IcsAttachmentValueTypes = typeof attachmentValueTypes;
+export type IcsAttachmentValueType = IcsAttachmentValueTypes[number];
 
-export type Attachment =
+export type IcsAttachment =
   | {
       type: "uri";
       url: string;
@@ -23,26 +23,11 @@ export type Attachment =
       type: "binary";
       url?: never;
       formatType?: never;
-      encoding?: EncodingType;
-      value?: ValueType;
+      encoding?: IcsAttachmentEncodingType;
+      value?: IcsAttachmentValueType;
       binary: string;
     };
 
-export const zAttachment: z.ZodType<Attachment> = z.discriminatedUnion("type", [
-  z.object({
-    type: z.literal("uri"),
-    url: z.string().url(),
-    formatType: z.string().optional(),
-    encoding: z.never().optional(),
-    value: z.never().optional(),
-    binary: z.never().optional(),
-  }),
-  z.object({
-    type: z.literal("binary"),
-    url: z.never().optional(),
-    formatType: z.never().optional(),
-    encoding: z.enum(encodingTypes),
-    value: z.enum(["BINARY"]),
-    binary: z.string(),
-  }),
-]);
+export type ConvertAttachment = ConvertLineType<IcsAttachment>;
+
+export type ParseAttachment = ParseLineType<IcsAttachment>;

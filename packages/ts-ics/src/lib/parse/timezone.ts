@@ -1,5 +1,3 @@
-import set from "lodash/set";
-
 import {
   getTimezoneDaylightRegex,
   getTimezoneStandardRegex,
@@ -7,39 +5,58 @@ import {
 } from "@/constants";
 import {
   VTIMEZONE_TO_OBJECT_KEYS,
-  type VTimezoneKey,
+  type IcsTimezoneKey,
 } from "@/constants/keys/timezone";
-import { type VTimezoneProp, zVTimezone, type VTimezone } from "@/types/timezone";
+import type { ConvertTimezone, IcsTimezone } from "@/types/timezone";
 
-import { icsDateTimeToDateTime } from "./date";
-import { icsTimezonePropToObject } from "./timezoneProp";
+import { convertIcsDateTime } from "./date";
+import { convertIcsTimezoneProp } from "./timezoneProp";
 import { getLine } from "./utils/line";
 import { splitLines } from "./utils/splitLines";
+import { standardValidate } from "./utils/standardValidate";
+import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import { convertNonStandardValues } from "./nonStandardValues";
+import type { Line } from "@/types";
+import { valueIsNonStandard } from "@/utils/nonStandardValue";
 
-export const icsTimezoneToObject = (rawTimezoneString: string): VTimezone => {
+export const convertIcsTimezone = <T extends NonStandardValuesGeneric>(
+  ...args: Parameters<ConvertTimezone<T>>
+): ReturnType<ConvertTimezone<T>> => {
+  const [schema, rawTimezoneString, options] = args;
+
   const timezoneString = rawTimezoneString.replace(replaceTimezoneRegex, "");
 
-  const lines = splitLines(
+  const lineStrings = splitLines(
     timezoneString
       .replace(getTimezoneStandardRegex, "")
       .replace(getTimezoneDaylightRegex, "")
   );
 
-  const timezone = { props: [] as VTimezoneProp[] };
+  const nonStandardValues: Record<string, Line> = {};
 
-  lines.forEach((line) => {
-    const { property, value } = getLine<VTimezoneKey>(line);
+  const timezone: Partial<IcsTimezone> & Required<Pick<IcsTimezone, "props">> =
+    {
+      props: [],
+    };
+
+  lineStrings.forEach((lineString) => {
+    const { property, line } = getLine<IcsTimezoneKey>(lineString);
+
+    if (valueIsNonStandard(property)) {
+      nonStandardValues[property] = line;
+    }
 
     const objectKey = VTIMEZONE_TO_OBJECT_KEYS[property];
 
     if (!objectKey) return; // unknown Object key
 
     if (objectKey === "lastModified") {
-      set(timezone, objectKey, icsDateTimeToDateTime(value));
+      timezone[objectKey] = convertIcsDateTime(undefined, line);
+
       return;
     }
 
-    set(timezone, objectKey, value); // Set string value
+    timezone[objectKey] = line.value; // Set string value
   });
 
   const timezoneStandardPropStrings = [
@@ -49,7 +66,9 @@ export const icsTimezoneToObject = (rawTimezoneString: string): VTimezone => {
   if (timezoneStandardPropStrings.length > 0) {
     timezoneStandardPropStrings.forEach((timezonePropString) => {
       timezone.props.push(
-        icsTimezonePropToObject(timezonePropString, "STANDARD")
+        convertIcsTimezoneProp(undefined, timezonePropString, {
+          type: "STANDARD",
+        })
       );
     });
   }
@@ -61,13 +80,23 @@ export const icsTimezoneToObject = (rawTimezoneString: string): VTimezone => {
   if (timezoneDaylightPropStrings.length > 0) {
     timezoneDaylightPropStrings.forEach((timezonePropString) => {
       timezone.props.push(
-        icsTimezonePropToObject(timezonePropString, "DAYLIGHT")
+        convertIcsTimezoneProp(undefined, timezonePropString, {
+          type: "DAYLIGHT",
+        })
       );
     });
   }
 
-  return timezone as VTimezone;
-};
+  const validatedTimezone = standardValidate(
+    schema,
+    timezone as IcsTimezone<T>
+  );
 
-export const parseIcsTimezone = (timezoneString: string): VTimezone =>
-  zVTimezone.parse(icsTimezoneToObject(timezoneString));
+  if (!options?.nonStandard) return validatedTimezone;
+
+  return convertNonStandardValues(
+    validatedTimezone,
+    nonStandardValues,
+    options?.nonStandard
+  );
+};

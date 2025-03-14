@@ -1,5 +1,5 @@
 import { VTIMEZONE_TO_KEYS } from "@/constants/keys/timezone";
-import type { VTimezone } from "@/types/timezone";
+import type { IcsTimezone } from "@/types/timezone";
 
 import { generateIcsDateTime } from "./date";
 import { generateIcsTimezoneProp } from "./timezoneProp";
@@ -9,8 +9,16 @@ import {
   getIcsStartLine,
 } from "./utils/addLine";
 import { getKeys } from "./utils/getKeys";
+import { generateNonStandardValues } from "./nonStandardValues";
+import type {
+  GenerateNonStandardValues,
+  NonStandardValuesGeneric,
+} from "@/types/nonStandardValues";
 
-export const generateIcsTimezone = (timezone: VTimezone) => {
+export const generateIcsTimezone = <T extends NonStandardValuesGeneric>(
+  timezone: IcsTimezone,
+  options?: { nonStandard?: GenerateNonStandardValues<T> }
+) => {
   const timezoneKeys = getKeys(timezone);
 
   let icsString = "";
@@ -19,6 +27,14 @@ export const generateIcsTimezone = (timezone: VTimezone) => {
 
   timezoneKeys.forEach((key) => {
     if (key === "props") return;
+
+    if (key === "nonStandard") {
+      icsString += generateNonStandardValues(
+        timezone[key],
+        options?.nonStandard
+      );
+      return;
+    }
 
     const icsKey = VTIMEZONE_TO_KEYS[key];
 

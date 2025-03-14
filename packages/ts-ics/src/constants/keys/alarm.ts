@@ -1,48 +1,25 @@
-export const VALARM_KEYS = [
-  "ACTION",
-  "TRIGGER",
-  "DURATION",
-  "SUMMARY",
-  "DESCRIPTION",
-  "REPEAT",
-  "ATTACH",
-  "ATTENDEE",
-] as const;
-export type VAlarmKeys = typeof VALARM_KEYS;
-export type VAlarmKey = VAlarmKeys[number];
+import type { IcsAlarm } from "@/types";
+import { invertKeys, keysFromObject } from "./utils";
 
-export const VALARM_OBJECT_KEYS = [
-  "action",
-  "trigger",
-  "duration",
-  "summary",
-  "description",
-  "repeat",
-  "attachment",
-  "attendee",
-] as const;
+export type IcsAlarmObjectKey = Exclude<keyof IcsAlarm, "nonStandard">;
+export type IcsAlarmObjectKeys = IcsAlarmObjectKey[];
 
-export type VAlarmObjectKeys = typeof VALARM_OBJECT_KEYS;
-export type VAlarmObjectKey = VAlarmObjectKeys[number];
-
-export const VALARM_TO_OBJECT_KEYS: Record<VAlarmKey, VAlarmObjectKey> = {
-  ACTION: "action",
-  DESCRIPTION: "description",
-  DURATION: "duration",
-  REPEAT: "repeat",
-  SUMMARY: "summary",
-  TRIGGER: "trigger",
-  ATTACH: "attachment",
-  ATTENDEE: "attendee",
-};
-
-export const VALARM_TO_KEYS: Record<VAlarmObjectKey, VAlarmKey> = {
+export const VALARM_TO_KEYS = {
   action: "ACTION",
   description: "DESCRIPTION",
   duration: "DURATION",
   repeat: "REPEAT",
   summary: "SUMMARY",
   trigger: "TRIGGER",
-  attachment: "ATTACH",
-  attendee: "ATTENDEE",
-};
+  attachments: "ATTACH",
+  attendees: "ATTENDEE",
+} as const satisfies Record<IcsAlarmObjectKey, string>;
+
+export const VALARM_TO_OBJECT_KEYS = invertKeys(VALARM_TO_KEYS);
+
+export type IcsAlarmKey = keyof typeof VALARM_TO_OBJECT_KEYS;
+export type IcsAlarmKeys = IcsAlarmKey[];
+
+export const VALARM_KEYS = keysFromObject(VALARM_TO_OBJECT_KEYS);
+
+export const VALARM_OBJECT_KEYS = keysFromObject(VALARM_TO_KEYS);

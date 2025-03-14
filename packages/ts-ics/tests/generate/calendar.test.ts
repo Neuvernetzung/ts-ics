@@ -1,11 +1,11 @@
 import { CRLF_BREAK } from "@/constants";
 import { generateIcsCalendar } from "@/lib";
-import type { VCalendar, VEvent } from "@/types";
+import type { IcsCalendar, IcsEvent } from "@/types";
 
 it("Long descriptions are correctly folded - gh#141", async () => {
   const date = new Date(2025, 0, 19);
 
-  const event: VEvent = {
+  const event: IcsEvent = {
     start: { date },
     stamp: { date },
     end: { date },
@@ -15,7 +15,7 @@ it("Long descriptions are correctly folded - gh#141", async () => {
       "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
   };
 
-  const calendar: VCalendar = {
+  const calendar: IcsCalendar = {
     prodId: "1",
     version: "2.0",
     events: [event],
@@ -29,4 +29,20 @@ it("Long descriptions are correctly folded - gh#141", async () => {
       `DESCRIPTION:WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW${CRLF_BREAK} WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW${CRLF_BREAK} WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW${CRLF_BREAK}`
     )
   ).toBeTruthy();
+});
+
+it("Generate non standard value", () => {
+  const calendar: IcsCalendar = {
+    prodId: "abc",
+    version: "2.0",
+    nonStandard: { wtf: "yeah" },
+  };
+
+  const calendarString = generateIcsCalendar<{ wtf: string }>(calendar, {
+    nonStandard: {
+      wtf: { name: "X-WTF", generate: (v) => ({ value: v.toString() }) },
+    },
+  });
+
+  expect(calendarString).toContain("X-WTF:yeah");
 });

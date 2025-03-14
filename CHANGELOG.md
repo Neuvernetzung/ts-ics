@@ -27,7 +27,7 @@
 
 ### Minor Changes
 
-- 24e423f: parseTimestamp and parseIcsEvent should accept VTimezone[] | undefined #42
+- 24e423f: parseTimestamp and parseIcsEvent should accept IcsTimezone[] | undefined #42
 
 ## 1.0.12
 
@@ -58,7 +58,7 @@
 
 ### Patch Changes
 
-- 3cb10fb: Attendee korrekt parsen (CN) #25
+- 3cb10fb: IcsAttendee korrekt parsen (CN) #25
 
 ## 1.0.7
 
@@ -70,13 +70,13 @@
 
 ### Patch Changes
 
-- d155057: Attendee Partstat Type anpassen #19
+- d155057: IcsAttendee Partstat Type anpassen #19
 
 ## 1.0.5
 
 ### Patch Changes
 
-- 771e773: Funktion um Duration zu berechnen zwischen 2 Dates #16
+- 771e773: Funktion um IcsDuration zu berechnen zwischen 2 Dates #16
 
 ## 1.0.4
 
@@ -88,7 +88,7 @@
 
 ### Patch Changes
 
-- 2621304: Funktionen für Duration bereitstellen #8
+- 2621304: Funktionen für IcsDuration bereitstellen #8
 
 ## 1.0.2
 

@@ -4,11 +4,11 @@
 
 [![NPM](https://nodei.co/npm/ts-ics.png)](https://nodei.co/npm/ts-ics/)
 
-This package can parse and create Ics files and provides TypeScript types for easy handling.
+This library can parse and create Ics files and provides TypeScript types for easy handling and aims to be fully [RFC 5545](https://www.rfc-editor.org/rfc/rfc5545.html) compliant.
 
 ## Motivation
 
-Many of the Ics packages provide good functionality, however none of these are type safe. This package can parse Ics strings with Zod. Also, many packages are not actively maintained.
+Many of the Ics libraries provide good functionality, but none of them are type safe. This library can parse Ics strings with any validator, thanks to [Standard-Schema](https://github.com/standard-schema/standard-schema).
 
 ## Installation
 
@@ -19,9 +19,9 @@ Many of the Ics packages provide good functionality, however none of these are t
 ### generateIcsCalendar
 
 ```ts
-import { generateIcsCalendar, type VCalendar } from "ts-ics";
+import { generateIcsCalendar, type IcsCalendar } from "ts-ics";
 
-const calendar: VCalendar = {...}
+const calendar: IcsCalendar = {...}
 
 const icsCalendarString = generateIcsCalendar(calendar);
 ```
@@ -29,49 +29,115 @@ const icsCalendarString = generateIcsCalendar(calendar);
 ### generateIcsEvent
 
 ```ts
-import { generateIcsEvent, type VEvent } from "ts-ics";
+import { generateIcsEvent, type IcsEvent } from "ts-ics";
 
-const event: VEvent = {...}
+const event: IcsEvent = {...}
 
 const icsEventString = generateIcsEvent(event);
 ```
 
+### generate non standard values
+
+Non-standard values must be prefixed with `X-`. Unhandled non-standard values are automatically prefixed and converted to upper case, and the value is converted to a string.
+
+```ts
+type NonStandard = { isCustomer: string }
+
+const calendar: IcsCalendar<NonStandard> = {
+  nonStandard: { isCustomer: "yeah" },
+  ...
+};
+
+const calendarString = generateIcsCalendar<NonStandard>(calendar, {
+  nonStandard: {
+    isCustomer: { name: "X-IS-CUSTOMER", generate: (v) => ({ value: v }) },
+  },
+});
+```
+
 ## parse
 
-### parseIcsCalendar
+### IcsCalendar
+
+#### without parsing
+
+```ts
+import { convertIcsCalendar, type IcsCalendar } from "ts-ics";
+
+const calendar: IcsCalendar = convertIcsCalendar(undefined, icsCalendarString);
+```
 
 #### parse with zod
 
 ```ts
-import { parseIcsCalendar, type VCalendar } from "ts-ics";
+import { type IcsCalendar } from "ts-ics";
+import { parseIcsCalendar } from "@ts-ics/schema-zod";
 
-const calendarParsed: VCalendar = parseIcsCalendar(icsCalendarString);
+const calendarParsed: IcsCalendar = parseIcsCalendar(icsCalendarString);
 ```
 
-#### without zod parsing
+#### provide your own validator
+
+This library uses [Standard-Schema](https://github.com/standard-schema/standard-schema) under the hood, so every schema library that implements the spec can be used.
 
 ```ts
-import { icsCalendarToObject, type VCalendar } from "ts-ics";
+import { convertIcsCalendar, type IcsCalendar } from "ts-ics";
+import { zIcsCalendar } from "@ts-ics/schema-zod";
 
-const calendar: VCalendar = icsCalendarToObject(icsCalendarString);
+const calendar: IcsCalendar = convertIcsCalendar(
+  zIcsCalendar,
+  icsCalendarString
+);
 ```
 
-### parseIcsEvent
+### IcsEvent
+
+#### without parsing
+
+```ts
+import { convertIcsEvent, type IcsEvent } from "ts-ics";
+
+const event: IcsEvent = convertIcsEvent(undefined, icsEventString);
+```
 
 #### parse with zod
 
 ```ts
-import { parseIcsEvent, type VEvent } from "ts-ics";
+import { type IcsEvent } from "ts-ics";
+import { parseIcsEvent } from "@ts-ics/schema-zod";
 
-const eventParsed: VEvent = parseIcsEvent(icsEventString);
+const eventParsed: IcsEvent = parseIcsEvent(icsEventString);
 ```
 
-#### without zod parsing
+#### provide your own validator
+
+This library uses [Standard-Schema](https://github.com/standard-schema/standard-schema) under the hood, so every schema library that implements the spec can be used.
 
 ```ts
-import { icsEventToObject, type VEvent } from "ts-ics";
+import { convertIcsEvent, type IcsEvent } from "ts-ics";
+import { zIcsEvent } from "@ts-ics/schema-zod";
 
-const event: VEvent = icsEventToObject(icsEventString);
+const calendar: IcsEvent = convertIcsEvent(zIcsEvent, icsEventString);
+```
+
+### parse non standard values
+
+Non-standard values must be prefixed with `X-`. Unhandled non-standard values are automatically un-prefixed and converted to camel case, and the value is converted to a string.
+
+```ts
+const calendarString = `...
+  X-IS-CUSTOMER:yeah
+  ...`;
+
+const calendar = convertIcsCalendar(undefined, calendarString, {
+  nonStandard: {
+    isCustomer: {
+      name: "X-IS-CUSTOMER",
+      convert: (line) => line.value,
+      schema: z.string(), // optionally provide any validator
+    },
+  },
+});
 ```
 
 ## utils

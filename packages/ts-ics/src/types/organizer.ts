@@ -1,15 +1,12 @@
-import { z } from "zod";
+import type { ConvertLineType, ParseLineType } from "./parse";
 
-export type Organizer = {
+export type IcsOrganizer = {
   name?: string;
   email: string;
   dir?: string;
   sentBy?: string;
 };
 
-export const zOrganizer: z.ZodType<Organizer> = z.object({
-  name: z.string().optional(),
-  email: z.string().email(),
-  dir: z.string().optional(),
-  sentBy: z.string().email().optional(),
-});
+export type ConvertOrganizer = ConvertLineType<IcsOrganizer>;
+
+export type ParseOrganizer = ParseLineType<IcsOrganizer>;
