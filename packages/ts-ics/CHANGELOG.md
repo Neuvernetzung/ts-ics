@@ -1,5 +1,11 @@
 # ts-ics
 
+## 2.0.1
+
+### Patch Changes
+
+- 2488a4d: Correctly handle RECURRENCE-ID #159
+
 ## 2.0.0
 
 ### Major Changes
