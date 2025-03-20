@@ -9,6 +9,7 @@ import type {
   IcsEvent,
   IcsDuration,
   IcsRecurrenceRule,
+  IcsRecurrenceId,
 } from "@/types";
 import type { IcsOrganizer } from "@/types/organizer";
 
@@ -32,6 +33,7 @@ import type {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,
 } from "@/types/nonStandardValues";
+import { generateIcsRecurrenceId } from "./recurrenceId";
 
 type GenerateIcsEventOptions<T extends NonStandardValuesGeneric> = {
   skipFormatLines?: boolean;
@@ -100,6 +102,11 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
 
     if (key === "sequence") {
       icsString += (value as number).toString();
+      return;
+    }
+
+    if (key === "recurrenceId") {
+      icsString += generateIcsRecurrenceId(value as IcsRecurrenceId);
       return;
     }
 
