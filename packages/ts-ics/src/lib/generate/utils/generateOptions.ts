@@ -1,6 +1,6 @@
 import { EQUAL_SIGN, SEMICOLON } from "@/constants";
 
-type GenerateIcsOptionsProps = { key: string; value: string }[];
+export type GenerateIcsOptionsProps = { key: string; value: string }[];
 
 export const generateIcsOptions = (options: GenerateIcsOptionsProps) => {
   if (options.length < 1) return;
