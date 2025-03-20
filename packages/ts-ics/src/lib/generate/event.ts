@@ -9,6 +9,7 @@ import type {
   IcsEvent,
   IcsDuration,
   IcsRecurrenceRule,
+  IcsRecurrenceId,
 } from "@/types";
 import type { IcsOrganizer } from "@/types/organizer";
 
@@ -82,6 +83,11 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
 
     if (key === "recurrenceRule") {
       icsString += generateIcsRecurrenceRule(value as IcsRecurrenceRule);
+      return;
+    }
+
+    if (key === "recurrenceId") {
+      icsString += generateIcsTimeStamp("RECURRENCE-ID", (value as IcsRecurrenceId).value);
       return;
     }
 
