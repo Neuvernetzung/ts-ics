@@ -7,7 +7,7 @@ import {
   addWeeks,
   addYears,
 } from "date-fns";
-import { getDurationFromInterval } from "./duration";
+import { getDurationFromInterval } from "./durationFromInterval";
 
 const weeks = 1;
 const days = 2;
