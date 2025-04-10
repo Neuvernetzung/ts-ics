@@ -1,5 +1,12 @@
 # ts-ics
 
+## 2.0.2
+
+### Patch Changes
+
+- 4473fd0: Include date-fns in bundle to prevent peer-dependency conflicts
+- 56a7c29: Add tests to generate event end from duration
+
 ## 2.0.1
 
 ### Patch Changes
