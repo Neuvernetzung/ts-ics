@@ -1,43 +1,21 @@
-import {
-  addDays,
-  addHours,
-  addMinutes,
-  addSeconds,
-  addWeeks,
-  subDays,
-  subHours,
-  subMinutes,
-  subSeconds,
-  subWeeks,
-} from "date-fns";
+import { addDays, addHours, addMinutes, addSeconds, addWeeks } from "date-fns";
 
 import type { IcsDuration } from "../../types";
 
-export const getEventEndFromDuration = (start: Date, duration: IcsDuration) =>
-  duration.before
-    ? subWeeks(
-        subDays(
-          subHours(
-            subMinutes(
-              subSeconds(start, duration.seconds || 0),
-              duration.minutes || 0
-            ),
-            duration.hours || 0
-          ),
-          duration.days || 0
-        ),
-        duration.weeks || 0
-      )
-    : addWeeks(
-        addDays(
-          addHours(
-            addMinutes(
-              addSeconds(start, duration.seconds || 0),
-              duration.minutes || 0
-            ),
-            duration.hours || 0
-          ),
-          duration.days || 0
-        ),
-        duration.weeks || 0
-      );
+export const getEventEndFromDuration = (start: Date, duration: IcsDuration) => {
+  const directionMultiplier = duration.before ? -1 : 1;
+
+  const seconds = (duration.seconds || 0) * directionMultiplier;
+  const minutes = (duration.minutes || 0) * directionMultiplier;
+  const hours = (duration.hours || 0) * directionMultiplier;
+  const days = (duration.days || 0) * directionMultiplier;
+  const weeks = (duration.weeks || 0) * directionMultiplier;
+
+  return addWeeks(
+    addDays(
+      addHours(addMinutes(addSeconds(start, seconds), minutes), hours),
+      days
+    ),
+    weeks
+  );
+};
