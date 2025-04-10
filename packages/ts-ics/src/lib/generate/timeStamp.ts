@@ -1,29 +1,40 @@
-import type { IcsDateObject } from "@/types";
+import type { IcsDateObject, IcsTimezone } from "@/types";
 
-import { generateIcsDate, generateIcsDateTime } from "./date";
+import {
+  generateIcsDate,
+  generateIcsLocalDateTime,
+  generateIcsUtcDateTime,
+} from "./date";
 import { generateIcsLine } from "./utils/addLine";
 import {
   generateIcsOptions,
   type GenerateIcsOptionsProps,
 } from "./utils/generateOptions";
 
+type GenerateIcsTimeStampOptions = {
+  timezones?: IcsTimezone[];
+};
+
 export const generateIcsTimeStamp = (
   icsKey: string,
   dateObject: IcsDateObject,
-  options: GenerateIcsOptionsProps = []
+  lineOptions: GenerateIcsOptionsProps = [],
+  options?: GenerateIcsTimeStampOptions
 ) => {
-  const value =
-    dateObject.type === "DATE"
-      ? generateIcsDate(dateObject.date)
-      : generateIcsDateTime(dateObject.local?.date || dateObject.date);
-
   const icsOptions = generateIcsOptions(
     [
       dateObject.type && { key: "VALUE", value: dateObject.type },
       dateObject.local && { key: "TZID", value: dateObject.local.timezone },
-      ...options,
+      ...lineOptions,
     ].filter((v) => !!v)
   );
+
+  const value =
+    dateObject.type === "DATE"
+      ? generateIcsDate(dateObject.date)
+      : dateObject.local
+      ? generateIcsLocalDateTime(dateObject.local, options?.timezones)
+      : generateIcsUtcDateTime(dateObject.date);
 
   return generateIcsLine(icsKey, value, icsOptions);
 };

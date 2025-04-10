@@ -1,8 +1,15 @@
-import type { IcsRecurrenceId } from "@/types";
+import type { IcsRecurrenceId, IcsTimezone } from "@/types";
 
 import { generateIcsTimeStamp } from "./timeStamp";
 
-export const generateIcsRecurrenceId = (value: IcsRecurrenceId) => {
+type GenerateIcsExceptionDateOptions = {
+  timezones?: IcsTimezone[];
+};
+
+export const generateIcsRecurrenceId = (
+  value: IcsRecurrenceId,
+  options?: GenerateIcsExceptionDateOptions
+) => {
   let icsString = "";
 
   icsString += generateIcsTimeStamp(
@@ -15,7 +22,8 @@ export const generateIcsRecurrenceId = (value: IcsRecurrenceId) => {
             value: value.range,
           },
         ]
-      : undefined
+      : undefined,
+    options
   );
 
   return icsString;

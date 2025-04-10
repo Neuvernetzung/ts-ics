@@ -10,6 +10,7 @@ import type {
   IcsDuration,
   IcsRecurrenceRule,
   IcsRecurrenceId,
+  IcsTimezone,
 } from "@/types";
 import type { IcsOrganizer } from "@/types/organizer";
 
@@ -38,6 +39,7 @@ import { generateIcsRecurrenceId } from "./recurrenceId";
 type GenerateIcsEventOptions<T extends NonStandardValuesGeneric> = {
   skipFormatLines?: boolean;
   nonStandard?: GenerateNonStandardValues<T>;
+  timezones?: IcsTimezone[];
 };
 
 export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
@@ -68,7 +70,12 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
     if (value === undefined || value === null) return;
 
     if (objectKeyIsTimeStamp(key)) {
-      icsString += generateIcsTimeStamp(icsKey, value as IcsDateObject);
+      icsString += generateIcsTimeStamp(
+        icsKey,
+        value as IcsDateObject,
+        undefined,
+        { timezones: options?.timezones }
+      );
       return;
     }
 
@@ -106,7 +113,9 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
     }
 
     if (key === "recurrenceId") {
-      icsString += generateIcsRecurrenceId(value as IcsRecurrenceId);
+      icsString += generateIcsRecurrenceId(value as IcsRecurrenceId, {
+        timezones: options?.timezones,
+      });
       return;
     }
 
@@ -127,7 +136,9 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
 
   if (event.exceptionDates && event.exceptionDates.length > 0) {
     event.exceptionDates.forEach((exceptionDate) => {
-      icsString += generateIcsExceptionDate(exceptionDate, "EXDATE");
+      icsString += generateIcsExceptionDate(exceptionDate, "EXDATE", {
+        timezones: options?.timezones,
+      });
     });
   }
 

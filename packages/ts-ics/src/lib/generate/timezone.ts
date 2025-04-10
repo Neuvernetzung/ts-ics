@@ -1,7 +1,7 @@
 import { VTIMEZONE_TO_KEYS } from "@/constants/keys/timezone";
 import type { IcsTimezone } from "@/types/timezone";
 
-import { generateIcsDateTime } from "./date";
+import { generateIcsUtcDateTime } from "./date";
 import { generateIcsTimezoneProp } from "./timezoneProp";
 import {
   generateIcsLine,
@@ -43,7 +43,10 @@ export const generateIcsTimezone = <T extends NonStandardValuesGeneric>(
     const value = timezone[key];
 
     if (key === "lastModified") {
-      icsString += generateIcsLine(icsKey, generateIcsDateTime(value as Date));
+      icsString += generateIcsLine(
+        icsKey,
+        generateIcsUtcDateTime(value as Date)
+      );
       return;
     }
 
