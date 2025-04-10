@@ -2,7 +2,7 @@ import { VTIMEZONE_PROP_TO_KEYS } from "@/constants/keys/timezoneProp";
 import type { IcsDateObject, IcsRecurrenceRule } from "@/types";
 import type { IcsTimezoneProp } from "@/types/timezoneProp";
 
-import { generateIcsDateTime } from "./date";
+import { generateIcsUtcDateTime } from "./date";
 import { generateIcsRecurrenceRule } from "./recurrenceRule";
 import { generateIcsTimeStamp } from "./timeStamp";
 import {
@@ -45,7 +45,10 @@ export const generateIcsTimezoneProp = <T extends NonStandardValuesGeneric>(
     const value = timezoneProp[key];
 
     if (key === "start") {
-      icsString += generateIcsLine(icsKey, generateIcsDateTime(value as Date));
+      icsString += generateIcsLine(
+        icsKey,
+        generateIcsUtcDateTime(value as Date)
+      );
       return;
     }
 
