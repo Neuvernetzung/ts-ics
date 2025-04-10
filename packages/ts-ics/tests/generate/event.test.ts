@@ -24,7 +24,6 @@ it("Generate non standard value", () => {
 
 it("Generate event - handle RECURRENCE-ID correctly gh#159", () => {
   const date = new Date("2025-02-20T00:00:00Z");
-  console.log(date);
 
   const event: IcsEvent = {
     stamp: { date },

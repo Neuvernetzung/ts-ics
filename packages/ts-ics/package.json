@@ -14,9 +14,6 @@
     "test": "jest"
   },
   "license": "MIT",
-  "peerDependencies": {
-    "date-fns": "^4"
-  },
   "dependencies": {
     "@standard-schema/spec": "^1.0.0"
   },

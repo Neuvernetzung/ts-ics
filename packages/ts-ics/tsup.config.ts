@@ -9,4 +9,5 @@ export default defineConfig({
   platform: "node",
   target: "node16",
   skipNodeModulesBundle: true,
+  noExternal: ["date-fns"],
 });
