@@ -124,7 +124,9 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
 
   if (event.alarms && event.alarms.length > 0) {
     event.alarms.forEach((alarm) => {
-      icsString += generateIcsAlarm(alarm);
+      icsString += generateIcsAlarm(alarm, {
+        nonStandard: options?.nonStandard,
+      });
     });
   }
 

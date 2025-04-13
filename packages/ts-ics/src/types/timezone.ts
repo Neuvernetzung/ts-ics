@@ -11,7 +11,7 @@ export type IcsTimezone<
   id: string;
   lastModified?: Date;
   url?: string;
-  props: IcsTimezoneProp[];
+  props: IcsTimezoneProp<TNonStandardValues>[];
   nonStandard?: Partial<TNonStandardValues>;
 };
 

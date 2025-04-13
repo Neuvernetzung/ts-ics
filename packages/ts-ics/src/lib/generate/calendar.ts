@@ -48,7 +48,9 @@ export const generateIcsCalendar = <T extends NonStandardValuesGeneric>(
 
   if (calendar.timezones && calendar.timezones.length > 0) {
     calendar.timezones.forEach((timezone) => {
-      icsString += generateIcsTimezone(timezone);
+      icsString += generateIcsTimezone(timezone, {
+        nonStandard: options?.nonStandard,
+      });
     });
   }
 
@@ -57,6 +59,7 @@ export const generateIcsCalendar = <T extends NonStandardValuesGeneric>(
       icsString += generateIcsEvent(event, {
         skipFormatLines: true,
         timezones: calendar.timezones,
+        nonStandard: options?.nonStandard,
       });
     });
   }
