@@ -1,5 +1,11 @@
 # ts-ics
 
+## 2.0.4
+
+### Patch Changes
+
+- 327c1a1: Propagate non standard values to child components
+
 ## 2.0.3
 
 ### Patch Changes
