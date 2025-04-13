@@ -76,6 +76,7 @@ export const convertIcsCalendar = <T extends NonStandardValuesGeneric>(
     const events = eventStrings.map((eventString) =>
       convertIcsEvent(undefined, eventString, {
         timezones: calendar.timezones,
+        nonStandard: options?.nonStandard,
       })
     );
     calendar.events = events;
