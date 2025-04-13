@@ -13,6 +13,7 @@ import {
 
 type GenerateIcsTimeStampOptions = {
   timezones?: IcsTimezone[];
+  forceUtc?: boolean;
 };
 
 export const generateIcsTimeStamp = (
@@ -24,7 +25,8 @@ export const generateIcsTimeStamp = (
   const icsOptions = generateIcsOptions(
     [
       dateObject.type && { key: "VALUE", value: dateObject.type },
-      dateObject.local && { key: "TZID", value: dateObject.local.timezone },
+      dateObject.local &&
+        !options?.forceUtc && { key: "TZID", value: dateObject.local.timezone },
       ...lineOptions,
     ].filter((v) => !!v)
   );
@@ -32,7 +34,7 @@ export const generateIcsTimeStamp = (
   const value =
     dateObject.type === "DATE"
       ? generateIcsDate(dateObject.date)
-      : dateObject.local
+      : dateObject.local && !options?.forceUtc
       ? generateIcsLocalDateTime(dateObject.local, options?.timezones)
       : generateIcsUtcDateTime(dateObject.date);
 

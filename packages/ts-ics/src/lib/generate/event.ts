@@ -74,7 +74,7 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
         icsKey,
         value as IcsDateObject,
         undefined,
-        { timezones: options?.timezones }
+        { timezones: options?.timezones, forceUtc: key === "stamp" }
       );
       return;
     }
