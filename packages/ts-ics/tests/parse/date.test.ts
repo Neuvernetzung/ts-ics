@@ -1,4 +1,4 @@
-import { generateIcsDateTime } from "@/lib";
+import { generateIcsUtcDateTime } from "@/lib";
 import { convertIcsDate, convertIcsDateTime } from "@/lib/parse/date";
 import { setMilliseconds } from "date-fns";
 
@@ -17,7 +17,7 @@ it("Test Ics Date Parse", async () => {
 it("Strip Milliseconds - Milliseconds are not allowed in Ics", async () => {
   const date = new Date("2023-01-18T07:30:00.123Z");
 
-  const icsDate = generateIcsDateTime(date);
+  const icsDate = generateIcsUtcDateTime(date);
 
   expect(convertIcsDateTime(undefined, { value: icsDate })).toEqual(
     setMilliseconds(date, 0)

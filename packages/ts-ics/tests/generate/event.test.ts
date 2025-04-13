@@ -41,3 +41,58 @@ it("Generate event - handle RECURRENCE-ID correctly gh#159", () => {
     "RECURRENCE-ID;RANGE=THISANDFUTURE:20250220T000000Z"
   );
 });
+
+describe("Ensure Stamp is always generated in UTC Format", () => {
+  // DTSTAMP MUST be in UTC - https://www.rfc-editor.org/rfc/rfc5545#section-3.8.7.2
+  const utcDate = new Date("2025-02-20T00:00:00Z");
+  const localDate = new Date("2025-02-20T12:00:00+0200");
+
+  it("utc date", () => {
+    const event: IcsEvent = {
+      stamp: { date: utcDate },
+      start: { date: utcDate },
+      summary: "123",
+      uid: "123",
+      duration: { days: 2 },
+    };
+
+    const eventString = generateIcsEvent(event);
+
+    expect(eventString).toContain("DTSTAMP:20250220T000000Z");
+  });
+
+  it("local date", () => {
+    const event: IcsEvent = {
+      stamp: { date: localDate },
+      start: { date: utcDate },
+      summary: "123",
+      uid: "123",
+      duration: { days: 2 },
+    };
+
+    const eventString = generateIcsEvent(event);
+
+    expect(eventString).toContain("DTSTAMP:20250220T100000Z");
+  });
+
+  it("specified in local date", () => {
+    const event: IcsEvent = {
+      stamp: {
+        date: utcDate,
+        local: {
+          date: localDate,
+          timezone: "Europe/Berlin",
+          tzoffset: "+0200",
+        },
+      },
+      start: { date: utcDate },
+      summary: "123",
+      uid: "123",
+      duration: { days: 2 },
+    };
+
+    const eventString = generateIcsEvent(event);
+
+    expect(eventString).toContain("DTSTAMP:20250220T000000Z");
+  });
+});
