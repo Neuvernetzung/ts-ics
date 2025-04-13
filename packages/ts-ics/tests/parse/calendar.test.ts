@@ -2,6 +2,8 @@ import { convertIcsCalendar } from "@/lib/parse/calendar";
 import { icsTestData } from "../utils";
 import { readFile } from "node:fs/promises";
 import { z } from "zod";
+import { describe } from "node:test";
+import { ParseNonStandardValues } from "@/types";
 
 it("Test Ics Calendar Parse", async () => {
   const calendar = icsTestData([
@@ -207,64 +209,168 @@ it("Leftover line breaks should not affect parsing - #130", async () => {
   expect(() => convertIcsCalendar(undefined, calendar)).not.toThrow();
 });
 
-it("Test non standard value", async () => {
+describe("Parse non standard values", async () => {
   const nonStandardValue = "yeah";
 
-  const calendarString = icsTestData([
-    "BEGIN:VCALENDAR",
-    "PRODID:ID",
-    "VERSION:2.0",
-    `X-WTF:${nonStandardValue}`,
-    "BEGIN:VEVENT",
-    "CREATED:20240112T095511Z",
-    "DTEND:20240112T105511Z",
-    "DTSTAMP:20240112T095511Z",
-    "DTSTART:20240112T095511Z",
-    "SUMMARY:Test",
-    "UID:d908f270-64fa-4916-9f72-b48eb7222a63",
-    "END:VEVENT",
-    "END:VCALENDAR",
-  ]);
-
-  const calendar = convertIcsCalendar(undefined, calendarString, {
-    nonStandard: {
-      wtf: {
-        name: "X-WTF",
-        convert: (line) => line.value,
-        schema: z.string(),
-      },
+  const nonStandard = {
+    wtf: {
+      name: "X-WTF",
+      convert: (line) => line.value,
+      schema: z.string(),
     },
+  } satisfies ParseNonStandardValues<{ wtf: string }>;
+
+  it("in calendar", async () => {
+    const calendarString = icsTestData([
+      "BEGIN:VCALENDAR",
+      "PRODID:ID",
+      "VERSION:2.0",
+      `X-WTF:${nonStandardValue}`,
+      "BEGIN:VEVENT",
+      "CREATED:20240112T095511Z",
+      "DTEND:20240112T105511Z",
+      "DTSTAMP:20240112T095511Z",
+      "DTSTART:20240112T095511Z",
+      "SUMMARY:Test",
+      "UID:d908f270-64fa-4916-9f72-b48eb7222a63",
+      "END:VEVENT",
+      "END:VCALENDAR",
+    ]);
+
+    const calendar = convertIcsCalendar(undefined, calendarString, {
+      nonStandard,
+    });
+
+    expect(calendar.nonStandard?.wtf).toBe(nonStandardValue);
   });
 
-  expect(calendar.nonStandard?.wtf).toBe(nonStandardValue);
-});
+  it("in nested Event", async () => {
+    const calendarString = icsTestData([
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Test//NonStandard Event//EN",
+      "BEGIN:VEVENT",
+      "UID:test-non-standard-event@example.com",
+      "DTSTAMP:20240101T000000Z",
+      "DTSTART:20240101T100000Z",
+      "SUMMARY:Event with Non-Standard Field",
+      `X-WTF:${nonStandardValue}`,
+      "END:VEVENT",
+      "END:VCALENDAR",
+    ]);
 
-it("should parse a calendar with a non-standard event field but fail the test", async () => {
-  const nonStandardValue = "yeah";
+    const calendar = convertIcsCalendar(undefined, calendarString, {
+      nonStandard,
+    });
 
-  const calendarString = icsTestData([
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "PRODID:-//Test//NonStandard Event//EN",
-    "BEGIN:VEVENT",
-    "UID:test-non-standard-event@example.com",
-    "DTSTAMP:20240101T000000Z",
-    "DTSTART:20240101T100000Z",
-    "SUMMARY:Event with Non-Standard Field",
-    `X-WTF:${nonStandardValue}`,
-    "END:VEVENT",
-    "END:VCALENDAR",
-  ]);
-
-  const calendar = convertIcsCalendar(undefined, calendarString, {
-    nonStandard: {
-      wtf: {
-        name: "X-WTF",
-        convert: (line) => line.value,
-        schema: z.string(),
-      },
-    },
+    expect(calendar.events?.[0]?.nonStandard?.wtf).toBe(nonStandardValue);
   });
 
-  expect(calendar.events?.[0]?.nonStandard?.wtf).toBe(nonStandardValue);
+  it("in nested Alarm", async () => {
+    const calendarString = icsTestData([
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Test//NonStandard Event//EN",
+      "BEGIN:VEVENT",
+      "UID:test-non-standard-event@example.com",
+      "DTSTAMP:20240101T000000Z",
+      "DTSTART:20240101T100000Z",
+      "SUMMARY:Event with Non-Standard Field",
+      "BEGIN:VALARM",
+      `X-WTF:${nonStandardValue}`,
+      "ACTION:DISPLAY",
+      "TRIGGER:-PT2H",
+      "DESCRIPTION:Mozilla Standardbeschreibung",
+      "END:VALARM",
+      "END:VEVENT",
+      "END:VCALENDAR",
+    ]);
+
+    const calendar = convertIcsCalendar(undefined, calendarString, {
+      nonStandard,
+    });
+
+    expect(calendar.events?.[0]?.alarms?.[0].nonStandard?.wtf).toBe(
+      nonStandardValue
+    );
+  });
+
+  it("in nested Timezone", async () => {
+    const calendarString = icsTestData([
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Test//NonStandard Event//EN",
+      "BEGIN:VTIMEZONE",
+      `X-WTF:${nonStandardValue}`,
+      "TZID:Europe/Berlin",
+      "BEGIN:STANDARD",
+      "DTSTART:16011028T030000",
+      "RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=10",
+      "TZOFFSETFROM:+0200",
+      "TZOFFSETTO:+0100",
+      "END:STANDARD",
+      "END:VTIMEZONE",
+      "END:VCALENDAR",
+    ]);
+
+    const calendar = convertIcsCalendar(undefined, calendarString, {
+      nonStandard,
+    });
+
+    expect(calendar.timezones?.[0]?.nonStandard?.wtf).toBe(nonStandardValue);
+  });
+
+  it("in nested Timezone Prop - Standard", async () => {
+    const calendarString = icsTestData([
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Test//NonStandard Event//EN",
+      "BEGIN:VTIMEZONE",
+      "TZID:Europe/Berlin",
+      "BEGIN:STANDARD",
+      `X-WTF:${nonStandardValue}`,
+      "DTSTART:16011028T030000",
+      "RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=10",
+      "TZOFFSETFROM:+0200",
+      "TZOFFSETTO:+0100",
+      "END:STANDARD",
+      "END:VTIMEZONE",
+      "END:VCALENDAR",
+    ]);
+
+    const calendar = convertIcsCalendar(undefined, calendarString, {
+      nonStandard,
+    });
+
+    expect(calendar.timezones?.[0]?.props[0].nonStandard?.wtf).toBe(
+      nonStandardValue
+    );
+  });
+
+  it("in nested Timezone Prop - Daylight", async () => {
+    const calendarString = icsTestData([
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Test//NonStandard Event//EN",
+      "BEGIN:VTIMEZONE",
+      "TZID:Europe/Berlin",
+      "BEGIN:DAYLIGHT",
+      `X-WTF:${nonStandardValue}`,
+      "DTSTART:16011028T030000",
+      "RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=10",
+      "TZOFFSETFROM:+0200",
+      "TZOFFSETTO:+0100",
+      "END:DAYLIGHT",
+      "END:VTIMEZONE",
+      "END:VCALENDAR",
+    ]);
+
+    const calendar = convertIcsCalendar(undefined, calendarString, {
+      nonStandard,
+    });
+
+    expect(calendar.timezones?.[0]?.props[0].nonStandard?.wtf).toBe(
+      nonStandardValue
+    );
+  });
 });

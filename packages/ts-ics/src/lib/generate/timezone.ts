@@ -55,7 +55,9 @@ export const generateIcsTimezone = <T extends NonStandardValuesGeneric>(
 
   if (timezone.props && timezone.props.length > 0) {
     timezone.props.forEach((timezone) => {
-      icsString += generateIcsTimezoneProp(timezone);
+      icsString += generateIcsTimezoneProp(timezone, {
+        nonStandard: options?.nonStandard,
+      });
     });
   }
 

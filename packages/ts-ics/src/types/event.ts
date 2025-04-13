@@ -34,7 +34,7 @@ export type IcsEventBase<
   categories?: string[];
   exceptionDates?: IcsExceptionDates;
   recurrenceRule?: IcsRecurrenceRule;
-  alarms?: IcsAlarm[];
+  alarms?: IcsAlarm<TNonStandardValues>[];
   timeTransparent?: IcsTimeTransparentType;
   url?: string;
   geo?: string;

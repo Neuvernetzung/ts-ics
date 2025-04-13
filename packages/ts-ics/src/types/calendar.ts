@@ -22,8 +22,8 @@ export type IcsCalendar<
   version: IcsCalendarVersion;
   prodId: string;
   method?: IcsCalenderMethod | string;
-  timezones?: IcsTimezone[];
-  events?: IcsEvent[];
+  timezones?: IcsTimezone<TNonStandardValues>[];
+  events?: IcsEvent<TNonStandardValues>[];
   name?: string;
   nonStandard?: Partial<TNonStandardValues>;
 };

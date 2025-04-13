@@ -66,8 +66,9 @@ export const convertIcsTimezone = <T extends NonStandardValuesGeneric>(
   if (timezoneStandardPropStrings.length > 0) {
     timezoneStandardPropStrings.forEach((timezonePropString) => {
       timezone.props.push(
-        convertIcsTimezoneProp(undefined, timezonePropString, {
+        convertIcsTimezoneProp<T>(undefined, timezonePropString, {
           type: "STANDARD",
+          nonStandard: options?.nonStandard,
         })
       );
     });
@@ -80,8 +81,9 @@ export const convertIcsTimezone = <T extends NonStandardValuesGeneric>(
   if (timezoneDaylightPropStrings.length > 0) {
     timezoneDaylightPropStrings.forEach((timezonePropString) => {
       timezone.props.push(
-        convertIcsTimezoneProp(undefined, timezonePropString, {
+        convertIcsTimezoneProp<T>(undefined, timezonePropString, {
           type: "DAYLIGHT",
+          nonStandard: options?.nonStandard,
         })
       );
     });

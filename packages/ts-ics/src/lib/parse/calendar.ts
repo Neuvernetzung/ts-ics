@@ -63,7 +63,9 @@ export const convertIcsCalendar = <T extends NonStandardValuesGeneric>(
 
   if (timezoneStrings.length > 0) {
     const timezones = timezoneStrings.map((timezoneString) =>
-      convertIcsTimezone(undefined, timezoneString)
+      convertIcsTimezone<T>(undefined, timezoneString, {
+        nonStandard: options?.nonStandard,
+      })
     );
     calendar.timezones = timezones;
   }
@@ -74,7 +76,7 @@ export const convertIcsCalendar = <T extends NonStandardValuesGeneric>(
 
   if (eventStrings.length > 0) {
     const events = eventStrings.map((eventString) =>
-      convertIcsEvent(undefined, eventString, {
+      convertIcsEvent<T>(undefined, eventString, {
         timezones: calendar.timezones,
         nonStandard: options?.nonStandard,
       })
