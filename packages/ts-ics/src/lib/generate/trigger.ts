@@ -1,9 +1,9 @@
-import type { IcsDateObject, IcsDuration, IcsTrigger } from "@/types";
+import type { IcsTrigger } from "@/types";
 
 import { generateIcsDuration } from "./duration";
-import { generateIcsTimeStamp } from "./timeStamp";
 import { generateIcsLine } from "./utils/addLine";
 import { generateIcsOptions } from "./utils/generateOptions";
+import { generateIcsUtcDateTime } from "./date";
 
 export const generateIcsTrigger = (trigger: IcsTrigger) => {
   const options = generateIcsOptions(
@@ -16,13 +16,16 @@ export const generateIcsTrigger = (trigger: IcsTrigger) => {
   );
 
   if (trigger.type === "absolute") {
-    return generateIcsTimeStamp("TRIGGER", trigger.value as IcsDateObject);
+    return generateIcsLine(
+      "TRIGGER",
+      generateIcsUtcDateTime(trigger.value?.date)
+    );
   }
 
   if (trigger.type === "relative") {
     return generateIcsLine(
       "TRIGGER",
-      generateIcsDuration(trigger.value as IcsDuration),
+      generateIcsDuration(trigger.value),
       options
     );
   }

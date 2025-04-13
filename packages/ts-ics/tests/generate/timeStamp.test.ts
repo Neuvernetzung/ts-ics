@@ -1,15 +1,14 @@
-import { addMilliseconds, compareDesc } from "date-fns";
+import { compareDesc } from "date-fns";
 
 import { generateIcsTimeStamp, convertIcsTimeStamp } from "@/lib";
 import { getLine } from "@/lib/parse/utils/line";
 import { IcsDateObject } from "@/types";
 
 import { fictiveTimezone } from "./fixtures/timezones";
-import { timeZoneOffsetToMilliseconds } from "@/utils";
-import { getOffsetFromTimezoneId } from "@/utils/timezone/getOffsetFromTimezoneId";
+import { CRLF_BREAK } from "@/constants";
 
 it("Test Ics Timestamp Generate - UTC", async () => {
-  const date = new Date(2023, 6, 12, 14, 30);
+  const date = new Date("2025-04-10T08:30:00Z");
 
   const dateObject: IcsDateObject = { date, type: "DATE-TIME" };
 
@@ -23,7 +22,7 @@ it("Test Ics Timestamp Generate - UTC", async () => {
 });
 
 it("Test Ics Timestamp Generate - IcsTimezone", async () => {
-  const date = new Date(2023, 6, 2, 14, 30);
+  const date = new Date("2025-04-10T08:30:00Z");
 
   const offset = fictiveTimezone.props.sort((a, b) =>
     compareDesc(a.start, b.start)
@@ -33,13 +32,18 @@ it("Test Ics Timestamp Generate - IcsTimezone", async () => {
     date,
     type: "DATE-TIME",
     local: {
-      date: addMilliseconds(date, timeZoneOffsetToMilliseconds(offset)),
+      date,
       timezone: fictiveTimezone.id,
       tzoffset: offset,
     },
   };
 
-  const dateTimeString = generateIcsTimeStamp("DTSTART", dateObject);
+  const dateTimeString = generateIcsTimeStamp(
+    "DTSTART",
+    dateObject,
+    undefined,
+    { timezones: [fictiveTimezone] }
+  );
 
   const { line } = getLine(dateTimeString);
 
@@ -51,16 +55,13 @@ it("Test Ics Timestamp Generate - IcsTimezone", async () => {
 });
 
 it("Test Ics Timestamp Generate - IANA Timezone", async () => {
-  const date = new Date(2023, 6, 2, 14, 30);
+  const date = new Date("2025-04-10T08:30:00Z");
 
   const dateObject: IcsDateObject = {
     date,
     type: "DATE-TIME",
     local: {
-      date: addMilliseconds(
-        date,
-        getOffsetFromTimezoneId("America/New_York", date)
-      ),
+      date,
       timezone: "America/New_York",
       tzoffset: "-0400",
     },
@@ -73,4 +74,24 @@ it("Test Ics Timestamp Generate - IANA Timezone", async () => {
   const parsed = convertIcsTimeStamp(undefined, line);
 
   expect(parsed.date).toEqual(dateObject.date);
+});
+
+it("Test Ics Timestamp Generate - Z is stripped correctly when local date is provided - gh#165", async () => {
+  const date = new Date("2025-04-14T08:30+0200");
+
+  const dateObject: IcsDateObject = {
+    date,
+    type: "DATE-TIME",
+    local: {
+      date,
+      timezone: "Europe/Berlin",
+      tzoffset: "+0200",
+    },
+  };
+
+  const dateTimeString = generateIcsTimeStamp("DTSTART", dateObject);
+
+  expect(dateTimeString.replace(CRLF_BREAK, "")).toEqual(
+    "DTSTART;VALUE=DATE-TIME;TZID=Europe/Berlin:20250414T083000"
+  );
 });
