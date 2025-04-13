@@ -238,3 +238,33 @@ it("Test non standard value", async () => {
 
   expect(calendar.nonStandard?.wtf).toBe(nonStandardValue);
 });
+
+it("should parse a calendar with a non-standard event field but fail the test", async () => {
+  const nonStandardValue = "yeah";
+
+  const calendarString = icsTestData([
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Test//NonStandard Event//EN",
+    "BEGIN:VEVENT",
+    "UID:test-non-standard-event@example.com",
+    "DTSTAMP:20240101T000000Z",
+    "DTSTART:20240101T100000Z",
+    "SUMMARY:Event with Non-Standard Field",
+    `X-WTF:${nonStandardValue}`,
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ]);
+
+  const calendar = convertIcsCalendar(undefined, calendarString, {
+    nonStandard: {
+      wtf: {
+        name: "X-WTF",
+        convert: (line) => line.value,
+        schema: z.string(),
+      },
+    },
+  });
+
+  expect(calendar.events?.[0]?.nonStandard?.wtf).toBe(nonStandardValue);
+});
