@@ -1,5 +1,11 @@
 # ts-ics
 
+## 2.0.3
+
+### Patch Changes
+
+- 0a73bcb: Strip Z from timezone and apply offset to local timezone generation #166
+
 ## 2.0.2
 
 ### Patch Changes
