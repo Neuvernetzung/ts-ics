@@ -96,3 +96,20 @@ describe("Ensure Stamp is always generated in UTC Format", () => {
     expect(eventString).toContain("DTSTAMP:20250220T000000Z");
   });
 });
+
+it("SEQUENCE is generated correctly gh#174", () => {
+  const date = new Date("2025-02-20T00:00:00Z");
+
+  const event: IcsEvent = {
+    stamp: { date },
+    start: { date },
+    summary: "123",
+    uid: "123",
+    duration: { days: 2 },
+    sequence: 0,
+  };
+
+  const eventString = generateIcsEvent(event);
+
+  expect(eventString).toContain("SEQUENCE:0");
+});
