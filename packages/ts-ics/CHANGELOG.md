@@ -1,5 +1,11 @@
 # ts-ics
 
+## 2.0.5
+
+### Patch Changes
+
+- 5d3b862: Fix missing SEQUENCE key #174
+
 ## 2.0.4
 
 ### Patch Changes
