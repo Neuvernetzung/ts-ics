@@ -108,7 +108,7 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
     }
 
     if (key === "sequence") {
-      icsString += (value as number).toString();
+      icsString += generateIcsLine(icsKey, (value as number).toString());
       return;
     }
 
