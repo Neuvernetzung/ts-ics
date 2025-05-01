@@ -171,3 +171,23 @@ it("Generates Todo inside calendar", () => {
   expect(calendarString).toContain("BEGIN:VTODO");
   expect(calendarString).toContain("END:VTODO");
 });
+
+it("Generates Journal inside calendar", () => {
+  const date = new Date(2025, 4, 1);
+
+  const calendar: IcsCalendar = {
+    prodId: "abc",
+    version: "2.0",
+    journals: [
+      {
+        uid: "123",
+        stamp: { date },
+      },
+    ],
+  };
+
+  const calendarString = generateIcsCalendar(calendar);
+
+  expect(calendarString).toContain("BEGIN:VJOURNAL");
+  expect(calendarString).toContain("END:VJOURNAL");
+});
