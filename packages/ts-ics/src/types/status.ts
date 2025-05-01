@@ -28,3 +28,13 @@ export type IcsTodoStatusType = IcsTodoStatusTypes[number];
 export type ConvertTodoStatus = ConvertLineType<IcsTodoStatusType>;
 
 export type ParseTodoStatus = ParseLineType<IcsTodoStatusType>;
+
+// VJOURNAL
+export const journalStatusTypes = ["DRAFT", "FINAL", "CANCELLED"] as const;
+
+export type IcsJournalStatusTypes = typeof journalStatusTypes;
+export type IcsJournalStatusType = IcsJournalStatusTypes[number];
+
+export type ConvertJournalStatus = ConvertLineType<IcsJournalStatusType>;
+
+export type ParseJournalStatus = ParseLineType<IcsJournalStatusType>;
