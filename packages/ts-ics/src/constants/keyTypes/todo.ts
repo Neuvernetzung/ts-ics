@@ -6,6 +6,7 @@ const timeStampKeys = [
   "due",
   "created",
   "lastModified",
+  "completed",
 ] satisfies IcsTodoObjectKey[];
 
 type TimeStampKey = (typeof timeStampKeys)[number];

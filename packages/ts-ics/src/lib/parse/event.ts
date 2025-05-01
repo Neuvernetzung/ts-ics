@@ -23,7 +23,7 @@ import { convertIcsExceptionDates } from "./exceptionDate";
 import { unescapeTextString } from "./utils/unescapeText";
 import { convertIcsRecurrenceId } from "./recurrenceId";
 import { convertIcsClass } from "./class";
-import { convertIcsStatus } from "./status";
+import { convertIcsEventStatus } from "./status";
 import { convertIcsTimeTransparent } from "./timeTransparent";
 import { standardValidate } from "./utils/standardValidate";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
@@ -126,7 +126,7 @@ export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
     }
 
     if (objectKey === "status") {
-      event[objectKey] = convertIcsStatus(undefined, line);
+      event[objectKey] = convertIcsEventStatus(undefined, line);
       return;
     }
 
