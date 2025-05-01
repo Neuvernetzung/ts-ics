@@ -1,5 +1,6 @@
 import {
   getEventRegex,
+  getJournalRegex,
   getTimezoneRegex,
   getTodoRegex,
   replaceCalendarRegex,
@@ -24,6 +25,7 @@ import { convertNonStandardValues } from "./nonStandardValues";
 import { valueIsNonStandard } from "@/utils/nonStandardValue";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
 import { convertIcsTodo } from "./todo";
+import { convertIcsJournal } from "./journal";
 
 export const convertIcsCalendar = <T extends NonStandardValuesGeneric>(
   ...args: Parameters<ConvertCalendar<T>>
@@ -37,6 +39,7 @@ export const convertIcsCalendar = <T extends NonStandardValuesGeneric>(
       .replace(getEventRegex, "")
       .replace(getTimezoneRegex, "")
       .replace(getTodoRegex, "")
+      .replace(getJournalRegex, "")
   );
 
   const calendar: Partial<IcsCalendar> = {};
@@ -101,6 +104,20 @@ export const convertIcsCalendar = <T extends NonStandardValuesGeneric>(
       })
     );
     calendar.todos = todos;
+  }
+
+  const journalStrings = [...cleanedFileString.matchAll(getJournalRegex)].map(
+    (match) => match[0]
+  );
+
+  if (journalStrings.length > 0) {
+    const journals = journalStrings.map((journalString) =>
+      convertIcsJournal<T>(undefined, journalString, {
+        timezones: calendar.timezones,
+        nonStandard: options?.nonStandard,
+      })
+    );
+    calendar.journals = journals;
   }
 
   const validatedCalendar = standardValidate(

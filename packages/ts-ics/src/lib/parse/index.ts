@@ -20,3 +20,4 @@ export * from "./weekDay";
 export * from "./status";
 export * from "./nonStandardValues";
 export * from "./todo";
+export * from "./journal";
