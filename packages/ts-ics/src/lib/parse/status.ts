@@ -1,5 +1,13 @@
-import type { ConvertStatus, IcsStatusType } from "@/types";
+import type {
+  ConvertEventStatus,
+  ConvertTodoStatus,
+  IcsEventStatusType,
+  IcsTodoStatusType,
+} from "@/types";
 import { standardValidate } from "./utils/standardValidate";
 
-export const convertIcsStatus: ConvertStatus = (schema, line) =>
-  standardValidate(schema, line.value as IcsStatusType);
+export const convertIcsEventStatus: ConvertEventStatus = (schema, line) =>
+  standardValidate(schema, line.value as IcsEventStatusType);
+
+export const convertIcsTodoStatus: ConvertTodoStatus = (schema, line) =>
+  standardValidate(schema, line.value as IcsTodoStatusType);

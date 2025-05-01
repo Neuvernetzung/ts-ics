@@ -266,6 +266,29 @@ describe("Parse non standard values", async () => {
     expect(calendar.events?.[0]?.nonStandard?.wtf).toBe(nonStandardValue);
   });
 
+  it("in nested Todo", async () => {
+    const calendarString = icsTestData([
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Test//NonStandard Todo//EN",
+      "BEGIN:VTODO",
+      "UID:test-non-standard-todo@example.com",
+      "DTSTAMP:20240101T000000Z",
+      "DTSTART:20240101T100000Z",
+      "DUE:20240101T100000Z",
+      "SUMMARY:Event with Non-Standard Field",
+      `X-WTF:${nonStandardValue}`,
+      "END:VTODO",
+      "END:VCALENDAR",
+    ]);
+
+    const calendar = convertIcsCalendar(undefined, calendarString, {
+      nonStandard,
+    });
+
+    expect(calendar.todos?.[0]?.nonStandard?.wtf).toBe(nonStandardValue);
+  });
+
   it("in nested Alarm", async () => {
     const calendarString = icsTestData([
       "BEGIN:VCALENDAR",

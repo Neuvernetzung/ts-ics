@@ -7,9 +7,9 @@ import type { IcsEvent, IcsDateObject, ConvertEvent, Line } from "@/types";
 import type { IcsAttendee } from "@/types/attendee";
 
 import {
-  objectKeyIsArrayOfStrings,
-  objectKeyIsTextString,
-  objectKeyIsTimeStamp,
+  eventObjectKeyIsArrayOfStrings,
+  eventObjectKeyIsTextString,
+  eventObjectKeyIsTimeStamp,
 } from "../../constants/keyTypes/event";
 import { convertIcsAlarm } from "./alarm";
 import { convertIcsAttendee } from "./attendee";
@@ -23,7 +23,7 @@ import { convertIcsExceptionDates } from "./exceptionDate";
 import { unescapeTextString } from "./utils/unescapeText";
 import { convertIcsRecurrenceId } from "./recurrenceId";
 import { convertIcsClass } from "./class";
-import { convertIcsStatus } from "./status";
+import { convertIcsEventStatus } from "./status";
 import { convertIcsTimeTransparent } from "./timeTransparent";
 import { standardValidate } from "./utils/standardValidate";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
@@ -57,20 +57,20 @@ export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
 
     if (!objectKey) return; // unknown Object key
 
-    if (objectKeyIsTimeStamp(objectKey)) {
+    if (eventObjectKeyIsTimeStamp(objectKey)) {
       event[objectKey] = convertIcsTimeStamp(undefined, line, {
         timezones: options?.timezones,
       });
       return;
     }
 
-    if (objectKeyIsArrayOfStrings(objectKey)) {
+    if (eventObjectKeyIsArrayOfStrings(objectKey)) {
       event[objectKey] = line.value.split(COMMA);
 
       return;
     }
 
-    if (objectKeyIsTextString(objectKey)) {
+    if (eventObjectKeyIsTextString(objectKey)) {
       event[objectKey] = unescapeTextString(line.value);
       return;
     }
@@ -93,7 +93,7 @@ export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
     }
 
     if (objectKey === "sequence") {
-      event[objectKey] = Number(line.value);
+      event[objectKey] = Number.parseInt(line.value);
       return;
     }
 
@@ -126,7 +126,7 @@ export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
     }
 
     if (objectKey === "status") {
-      event[objectKey] = convertIcsStatus(undefined, line);
+      event[objectKey] = convertIcsEventStatus(undefined, line);
       return;
     }
 
