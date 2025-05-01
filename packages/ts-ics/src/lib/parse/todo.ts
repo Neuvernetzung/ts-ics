@@ -89,7 +89,7 @@ export const convertIcsTodo = <T extends NonStandardValuesGeneric>(
     }
 
     if (objectKey === "sequence" || objectKey === "percentComplete") {
-      todo[objectKey] = Number(line.value);
+      todo[objectKey] = parseInt(line.value);
       return;
     }
 

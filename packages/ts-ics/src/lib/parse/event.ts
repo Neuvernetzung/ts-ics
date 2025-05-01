@@ -93,7 +93,7 @@ export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
     }
 
     if (objectKey === "sequence") {
-      event[objectKey] = Number(line.value);
+      event[objectKey] = Number.parseInt(line.value);
       return;
     }
 

@@ -14,7 +14,7 @@ import type { IcsRecurrenceRule } from "./recurrenceRule";
 import type { IcsAttendee } from "./attendee";
 import type { IcsExceptionDates } from "./exceptionDate";
 
-export type IcsTodoDurationOrEnd =
+export type IcsTodoDurationOrDue =
   | { start: IcsDateObject; duration: IcsDuration; due?: never }
   | { start?: never; duration?: never; due: IcsDateObject };
 
@@ -49,7 +49,7 @@ export type IcsTodoBase<
 
 export type IcsTodo<
   TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric
-> = IcsTodoBase<TNonStandardValues> & IcsTodoDurationOrEnd;
+> = IcsTodoBase<TNonStandardValues> & IcsTodoDurationOrDue;
 
 export type ParseTodoOptions<
   TNonStandardValues extends NonStandardValuesGeneric
