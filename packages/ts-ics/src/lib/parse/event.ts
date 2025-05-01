@@ -7,9 +7,9 @@ import type { IcsEvent, IcsDateObject, ConvertEvent, Line } from "@/types";
 import type { IcsAttendee } from "@/types/attendee";
 
 import {
-  objectKeyIsArrayOfStrings,
-  objectKeyIsTextString,
-  objectKeyIsTimeStamp,
+  eventObjectKeyIsArrayOfStrings,
+  eventObjectKeyIsTextString,
+  eventObjectKeyIsTimeStamp,
 } from "../../constants/keyTypes/event";
 import { convertIcsAlarm } from "./alarm";
 import { convertIcsAttendee } from "./attendee";
@@ -57,20 +57,20 @@ export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
 
     if (!objectKey) return; // unknown Object key
 
-    if (objectKeyIsTimeStamp(objectKey)) {
+    if (eventObjectKeyIsTimeStamp(objectKey)) {
       event[objectKey] = convertIcsTimeStamp(undefined, line, {
         timezones: options?.timezones,
       });
       return;
     }
 
-    if (objectKeyIsArrayOfStrings(objectKey)) {
+    if (eventObjectKeyIsArrayOfStrings(objectKey)) {
       event[objectKey] = line.value.split(COMMA);
 
       return;
     }
 
-    if (objectKeyIsTextString(objectKey)) {
+    if (eventObjectKeyIsTextString(objectKey)) {
       event[objectKey] = unescapeTextString(line.value);
       return;
     }

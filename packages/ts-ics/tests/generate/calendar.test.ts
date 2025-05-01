@@ -150,3 +150,24 @@ describe("Generate non standard value", () => {
     expect(calendarString).toContain("X-WTF:yeah");
   });
 });
+
+it("Generates Todo inside calendar", () => {
+  const date = new Date(2025, 4, 1);
+
+  const calendar: IcsCalendar = {
+    prodId: "abc",
+    version: "2.0",
+    todos: [
+      {
+        uid: "123",
+        stamp: { date },
+        due: { date },
+      },
+    ],
+  };
+
+  const calendarString = generateIcsCalendar(calendar);
+
+  expect(calendarString).toContain("BEGIN:VTODO");
+  expect(calendarString).toContain("END:VTODO");
+});
