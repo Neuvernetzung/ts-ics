@@ -312,6 +312,28 @@ describe("Parse non standard values", async () => {
     expect(calendar.journals?.[0]?.nonStandard?.wtf).toBe(nonStandardValue);
   });
 
+  it("in nested FreeBusy", async () => {
+    const calendarString = icsTestData([
+      "BEGIN:VCALENDAR",
+      "VERSION:2.0",
+      "PRODID:-//Test//NonStandard FreeBusy//EN",
+      "BEGIN:VFREEBUSY",
+      "UID:test-non-standard-todo@example.com",
+      "DTSTAMP:20240101T100000Z",
+      "DTSTART:20240101T100000Z",
+      "DTEND:20240101T100000Z",
+      `X-WTF:${nonStandardValue}`,
+      "END:VFREEBUSY",
+      "END:VCALENDAR",
+    ]);
+
+    const calendar = convertIcsCalendar(undefined, calendarString, {
+      nonStandard,
+    });
+
+    expect(calendar.freeBusy?.[0]?.nonStandard?.wtf).toBe(nonStandardValue);
+  });
+
   it("in nested Alarm", async () => {
     const calendarString = icsTestData([
       "BEGIN:VCALENDAR",

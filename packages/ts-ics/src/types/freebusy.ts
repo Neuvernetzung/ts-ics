@@ -1,6 +1,11 @@
 import type { IcsDateObject } from "./date";
 import type { IcsTimezone } from "./timezone";
-import type { ConvertComponentType, ParseComponentType } from "./parse";
+import type {
+  ConvertComponentType,
+  ConvertLineType,
+  ParseComponentType,
+  ParseLineType,
+} from "./parse";
 import type {
   NonStandardValuesGeneric,
   ParseNonStandardValues,
@@ -34,6 +39,10 @@ export type IcsFreeBusyTime = {
   type?: FreeBusyType;
   values: IcsFreeBusyTimeValue[];
 };
+
+export type ConvertFreeBusyTime = ConvertLineType<IcsFreeBusyTime>;
+
+export type ParseFreeBusyTime = ParseLineType<IcsFreeBusyTime>;
 
 export type IcsFreeBusy<
   TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric
