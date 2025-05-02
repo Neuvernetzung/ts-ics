@@ -1,5 +1,20 @@
 # @ts-ics/schema-zod
 
+## 2.1.0
+
+### Minor Changes
+
+- 7dd6035: Add `VJOURNAL`
+- 24eca58: Add `VTODO`
+- a2cbe8c: Add `VFREEBUSY`
+
+### Patch Changes
+
+- Updated dependencies [7dd6035]
+- Updated dependencies [24eca58]
+- Updated dependencies [a2cbe8c]
+  - ts-ics@2.1.0
+
 ## 2.0.5
 
 ### Patch Changes
