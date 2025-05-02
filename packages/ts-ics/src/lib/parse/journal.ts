@@ -12,7 +12,6 @@ import {
   journalObjectKeyIsTimeStamp,
 } from "../../constants/keyTypes/journal";
 import { convertIcsAttendee } from "./attendee";
-import { convertIcsDuration } from "./duration";
 import { convertIcsOrganizer } from "./organizer";
 import { convertIcsRecurrenceRule } from "./recurrenceRule";
 import { convertIcsTimeStamp } from "./timeStamp";

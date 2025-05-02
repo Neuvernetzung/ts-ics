@@ -9,6 +9,7 @@ import {
   VTIMEZONE_STANDARD_OBJECT_KEY,
   VTODO_OBJECT_KEY,
   VJOURNAL_OBJECT_KEY,
+  VFREEBUSY_OBJECT_KEY,
 } from "../keys";
 
 const createGetRegex = (key: string) =>
@@ -31,6 +32,8 @@ export const getTodoRegex = createGetRegex(VTODO_OBJECT_KEY);
 
 export const getJournalRegex = createGetRegex(VJOURNAL_OBJECT_KEY);
 
+export const getFreeBusyRegex = createGetRegex(VFREEBUSY_OBJECT_KEY);
+
 const createReplaceRegex = (key: string) =>
   new RegExp(`${OBJECT_START}:${key}|${OBJECT_END}:${key}`, "g");
 
@@ -52,3 +55,5 @@ export const replaceAlarmRegex = createReplaceRegex(VALARM_OBJECT_KEY);
 export const replaceTodoRegex = createReplaceRegex(VTODO_OBJECT_KEY);
 
 export const replaceJournalRegex = createReplaceRegex(VJOURNAL_OBJECT_KEY);
+
+export const replaceFreeBusyRegex = createReplaceRegex(VFREEBUSY_OBJECT_KEY);

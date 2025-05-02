@@ -76,6 +76,77 @@ describe("Generate non standard value", () => {
     expect(calendarString).toContain("X-WTF:yeah");
   });
 
+  it("in nested todo", () => {
+    const date = new Date(2025, 3, 13);
+
+    const calendar: IcsCalendar = {
+      prodId: "abc",
+      version: "2.0",
+      todos: [
+        {
+          stamp: { date },
+          due: { date },
+          summary: "Title",
+          uid: "1",
+          description: "1",
+          nonStandard: { wtf: "yeah" },
+        },
+      ],
+    };
+
+    const calendarString = generateIcsCalendar<{ wtf: string }>(calendar, {
+      nonStandard,
+    });
+
+    expect(calendarString).toContain("X-WTF:yeah");
+  });
+
+  it("in nested journal", () => {
+    const date = new Date(2025, 3, 13);
+
+    const calendar: IcsCalendar = {
+      prodId: "abc",
+      version: "2.0",
+      journals: [
+        {
+          stamp: { date },
+          summary: "Title",
+          uid: "1",
+          description: "1",
+          nonStandard: { wtf: "yeah" },
+        },
+      ],
+    };
+
+    const calendarString = generateIcsCalendar<{ wtf: string }>(calendar, {
+      nonStandard,
+    });
+
+    expect(calendarString).toContain("X-WTF:yeah");
+  });
+
+  it("in nested freeBusy", () => {
+    const date = new Date(2025, 3, 13);
+
+    const calendar: IcsCalendar = {
+      prodId: "abc",
+      version: "2.0",
+      freeBusy: [
+        {
+          stamp: { date },
+          uid: "1",
+          nonStandard: { wtf: "yeah" },
+        },
+      ],
+    };
+
+    const calendarString = generateIcsCalendar<{ wtf: string }>(calendar, {
+      nonStandard,
+    });
+
+    expect(calendarString).toContain("X-WTF:yeah");
+  });
+
   it("in nested alarm", () => {
     const date = new Date(2025, 3, 13);
 
@@ -190,4 +261,24 @@ it("Generates Journal inside calendar", () => {
 
   expect(calendarString).toContain("BEGIN:VJOURNAL");
   expect(calendarString).toContain("END:VJOURNAL");
+});
+
+it("Generates FreeBusy inside calendar", () => {
+  const date = new Date(2025, 4, 1);
+
+  const calendar: IcsCalendar = {
+    prodId: "abc",
+    version: "2.0",
+    freeBusy: [
+      {
+        uid: "123",
+        stamp: { date },
+      },
+    ],
+  };
+
+  const calendarString = generateIcsCalendar(calendar);
+
+  expect(calendarString).toContain("BEGIN:VFREEBUSY");
+  expect(calendarString).toContain("END:VFREEBUSY");
 });

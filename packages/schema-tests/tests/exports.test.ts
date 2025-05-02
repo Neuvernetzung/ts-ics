@@ -17,6 +17,7 @@ describe("Tests if all parsing functions are exported from schema package", () =
         "parseIcsEvent",
         "parseIcsTodo",
         "parseIcsJournal",
+        "parseIcsFreeBusy",
         "parseIcsExceptionDate",
         "parseIcsOrganizer",
         "parseIcsRecurrenceId",

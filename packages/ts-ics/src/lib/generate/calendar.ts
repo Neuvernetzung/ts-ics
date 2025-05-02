@@ -17,6 +17,7 @@ import type {
 } from "@/types/nonStandardValues";
 import { generateIcsTodo } from "./todo";
 import { generateIcsJournal } from "./journal";
+import { generateIcsFreeBusy } from "./freebusy";
 
 export const generateIcsCalendar = <T extends NonStandardValuesGeneric>(
   calendar: IcsCalendar,
@@ -33,7 +34,8 @@ export const generateIcsCalendar = <T extends NonStandardValuesGeneric>(
       key === "events" ||
       key === "timezones" ||
       key === "todos" ||
-      key === "journals"
+      key === "journals" ||
+      key === "freeBusy"
     )
       return;
 
@@ -85,6 +87,16 @@ export const generateIcsCalendar = <T extends NonStandardValuesGeneric>(
   if (calendar.journals && calendar.journals.length > 0) {
     calendar.journals.forEach((journal) => {
       icsString += generateIcsJournal(journal, {
+        skipFormatLines: true,
+        timezones: calendar.timezones,
+        nonStandard: options?.nonStandard,
+      });
+    });
+  }
+
+  if (calendar.freeBusy && calendar.freeBusy.length > 0) {
+    calendar.freeBusy.forEach((freeBusy) => {
+      icsString += generateIcsFreeBusy(freeBusy, {
         skipFormatLines: true,
         timezones: calendar.timezones,
         nonStandard: options?.nonStandard,
