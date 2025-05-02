@@ -21,3 +21,4 @@ export * from "./weekDayNumber";
 export * from "./timezoneProp";
 export * from "./todo";
 export * from "./journal";
+export * from "./freebusy";
