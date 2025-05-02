@@ -1,5 +1,13 @@
 # ts-ics
 
+## 2.1.0
+
+### Minor Changes
+
+- 7dd6035: Add `VJOURNAL`
+- 24eca58: Add `VTODO`
+- a2cbe8c: Add `VFREEBUSY`
+
 ## 2.0.5
 
 ### Patch Changes
