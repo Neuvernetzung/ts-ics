@@ -1,16 +1,14 @@
-import { VEVENT_TO_KEYS } from "@/constants/keys/event";
+import { VJOURNAL_TO_KEYS } from "@/constants/keys/journal";
 
 import type {
   IcsDateObject,
-  IcsEvent,
-  IcsDuration,
+  IcsJournal,
   IcsRecurrenceRule,
   IcsRecurrenceId,
   IcsTimezone,
 } from "@/types";
 import type { IcsOrganizer } from "@/types/organizer";
 
-import { generateIcsAlarm } from "./alarm";
 import { generateIcsAttendee } from "./attendee";
 import { generateIcsExceptionDate } from "./exceptionDate";
 import { generateIcsDuration } from "./duration";
@@ -32,45 +30,47 @@ import type {
 } from "@/types/nonStandardValues";
 import { generateIcsRecurrenceId } from "./recurrenceId";
 import {
-  eventObjectKeyIsArrayOfStrings,
-  eventObjectKeyIsTextString,
-  eventObjectKeyIsTimeStamp,
-} from "@/constants/keyTypes";
+  journalObjectKeyIsArrayOfStrings,
+  journalObjectKeyIsTextString,
+  journalObjectKeyIsTimeStamp,
+} from "@/constants/keyTypes/journal";
 
-type GenerateIcsEventOptions<T extends NonStandardValuesGeneric> = {
+type GenerateIcsJournalOptions<T extends NonStandardValuesGeneric> = {
   skipFormatLines?: boolean;
   nonStandard?: GenerateNonStandardValues<T>;
   timezones?: IcsTimezone[];
 };
 
-export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
-  event: IcsEvent,
-  options?: GenerateIcsEventOptions<T>
+export const generateIcsJournal = <T extends NonStandardValuesGeneric>(
+  journal: IcsJournal,
+  options?: GenerateIcsJournalOptions<T>
 ) => {
-  const eventKeys = getKeys(event);
+  const journalKeys = getKeys(journal);
 
   let icsString = "";
 
-  icsString += getIcsStartLine("VEVENT");
+  icsString += getIcsStartLine("VJOURNAL");
 
-  eventKeys.forEach((key) => {
-    if (key === "alarms" || key === "attendees" || key === "exceptionDates")
-      return;
+  journalKeys.forEach((key) => {
+    if (key === "attendees" || key === "exceptionDates") return;
 
     if (key === "nonStandard") {
-      icsString += generateNonStandardValues(event[key], options?.nonStandard);
+      icsString += generateNonStandardValues(
+        journal[key],
+        options?.nonStandard
+      );
       return;
     }
 
-    const icsKey = VEVENT_TO_KEYS[key];
+    const icsKey = VJOURNAL_TO_KEYS[key];
 
     if (!icsKey) return;
 
-    const value = event[key];
+    const value = journal[key];
 
     if (value === undefined || value === null) return;
 
-    if (eventObjectKeyIsTimeStamp(key)) {
+    if (journalObjectKeyIsTimeStamp(key)) {
       icsString += generateIcsTimeStamp(
         icsKey,
         value as IcsDateObject,
@@ -80,26 +80,18 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
       return;
     }
 
-    if (eventObjectKeyIsArrayOfStrings(key)) {
+    if (journalObjectKeyIsArrayOfStrings(key)) {
       icsString += generateIcsLine(icsKey, (value as string[]).join(","));
       return;
     }
 
-    if (eventObjectKeyIsTextString(key)) {
+    if (journalObjectKeyIsTextString(key)) {
       icsString += generateIcsLine(icsKey, escapeTextString(value as string));
       return;
     }
 
     if (key === "recurrenceRule") {
       icsString += generateIcsRecurrenceRule(value as IcsRecurrenceRule);
-      return;
-    }
-
-    if (key === "duration") {
-      icsString += generateIcsLine(
-        icsKey,
-        generateIcsDuration(value as IcsDuration)
-      );
       return;
     }
 
@@ -123,29 +115,21 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
     icsString += generateIcsLine(icsKey, String(value));
   });
 
-  if (event.alarms && event.alarms.length > 0) {
-    event.alarms.forEach((alarm) => {
-      icsString += generateIcsAlarm(alarm, {
-        nonStandard: options?.nonStandard,
-      });
-    });
-  }
-
-  if (event.attendees && event.attendees.length > 0) {
-    event.attendees.forEach((attendee) => {
+  if (journal.attendees && journal.attendees.length > 0) {
+    journal.attendees.forEach((attendee) => {
       icsString += generateIcsAttendee(attendee, "ATTENDEE");
     });
   }
 
-  if (event.exceptionDates && event.exceptionDates.length > 0) {
-    event.exceptionDates.forEach((exceptionDate) => {
+  if (journal.exceptionDates && journal.exceptionDates.length > 0) {
+    journal.exceptionDates.forEach((exceptionDate) => {
       icsString += generateIcsExceptionDate(exceptionDate, "EXDATE", {
         timezones: options?.timezones,
       });
     });
   }
 
-  icsString += getIcsEndLine("VEVENT");
+  icsString += getIcsEndLine("VJOURNAL");
 
   if (options?.skipFormatLines) return icsString;
 

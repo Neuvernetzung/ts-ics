@@ -19,3 +19,6 @@ export * from "./line";
 export * from "./parse";
 export * from "./timezoneProp";
 export * from "./nonStandardValues";
+export * from "./todo";
+export * from "./journal";
+export * from "./freebusy";

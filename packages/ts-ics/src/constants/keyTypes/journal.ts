@@ -1,39 +1,37 @@
-import type { IcsEventObjectKey } from "@/constants/keys/event";
+import type { IcsJournalObjectKey } from "@/constants/keys/journal";
 
 const timeStampKeys = [
   "stamp",
   "start",
-  "end",
   "created",
   "lastModified",
-] satisfies IcsEventObjectKey[];
+] satisfies IcsJournalObjectKey[];
 
 type TimeStampKey = (typeof timeStampKeys)[number];
 
-export const eventObjectKeyIsTimeStamp = (
-  objectKey: IcsEventObjectKey
+export const journalObjectKeyIsTimeStamp = (
+  objectKey: IcsJournalObjectKey
 ): objectKey is TimeStampKey =>
   timeStampKeys.includes(objectKey as TimeStampKey);
 
-const arrayOfStringKeys = ["categories"] satisfies IcsEventObjectKey[];
+const arrayOfStringKeys = ["categories"] satisfies IcsJournalObjectKey[];
 
 type ArrayOfStringKey = (typeof arrayOfStringKeys)[number];
 
-export const eventObjectKeyIsArrayOfStrings = (
-  objectKey: IcsEventObjectKey
+export const journalObjectKeyIsArrayOfStrings = (
+  objectKey: IcsJournalObjectKey
 ): objectKey is ArrayOfStringKey =>
   arrayOfStringKeys.includes(objectKey as ArrayOfStringKey);
 
 const textStringKeys = [
   "description",
-  "location",
   "comment",
   "summary",
-] satisfies IcsEventObjectKey[];
+] satisfies IcsJournalObjectKey[];
 
 type TextStringKey = (typeof textStringKeys)[number];
 
-export const eventObjectKeyIsTextString = (
-  objectKey: IcsEventObjectKey
+export const journalObjectKeyIsTextString = (
+  objectKey: IcsJournalObjectKey
 ): objectKey is TextStringKey =>
   textStringKeys.includes(objectKey as TextStringKey);

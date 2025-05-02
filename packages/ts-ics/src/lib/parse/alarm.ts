@@ -59,7 +59,7 @@ export const convertIcsAlarm = <T extends NonStandardValuesGeneric>(
     }
 
     if (objectKey === "repeat") {
-      alarm[objectKey] = Number(line.value);
+      alarm[objectKey] = Number.parseInt(line.value);
       return;
     }
 

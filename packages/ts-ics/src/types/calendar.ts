@@ -1,10 +1,13 @@
 import type { IcsEvent } from "./event";
+import type { IcsFreeBusy } from "./freebusy";
+import type { IcsJournal } from "./journal";
 import type {
   NonStandardValuesGeneric,
   ParseNonStandardValues,
 } from "./nonStandardValues";
 import type { ConvertComponentType, ParseComponentType } from "./parse";
 import type { IcsTimezone } from "./timezone";
+import { IcsTodo } from "./todo";
 
 export const calendarMethods = ["PUBLISH"] as const;
 
@@ -24,6 +27,9 @@ export type IcsCalendar<
   method?: IcsCalenderMethod | string;
   timezones?: IcsTimezone<TNonStandardValues>[];
   events?: IcsEvent<TNonStandardValues>[];
+  todos?: IcsTodo<TNonStandardValues>[];
+  journals?: IcsJournal<TNonStandardValues>[];
+  freeBusy?: IcsFreeBusy<TNonStandardValues>[];
   name?: string;
   nonStandard?: Partial<TNonStandardValues>;
 };

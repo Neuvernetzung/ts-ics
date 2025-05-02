@@ -5,7 +5,7 @@ import type { IcsDuration } from "./duration";
 import type { IcsOrganizer } from "./organizer";
 import type { IcsRecurrenceRule } from "./recurrenceRule";
 import type { IcsRecurrenceId } from "./recurrenceId";
-import type { IcsStatusType } from "./status";
+import type { IcsEventStatusType } from "./status";
 import type { IcsExceptionDates } from "./exceptionDate";
 import type { IcsClassType } from "./class";
 import type { IcsTimeTransparentType } from "./timeTransparent";
@@ -42,7 +42,7 @@ export type IcsEventBase<
   organizer?: IcsOrganizer;
   priority?: string;
   sequence?: number;
-  status?: IcsStatusType;
+  status?: IcsEventStatusType;
   attach?: string;
   recurrenceId?: IcsRecurrenceId;
   attendees?: IcsAttendee[];

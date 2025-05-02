@@ -1,6 +1,9 @@
 import {
   getEventRegex,
+  getFreeBusyRegex,
+  getJournalRegex,
   getTimezoneRegex,
+  getTodoRegex,
   replaceCalendarRegex,
 } from "@/constants";
 import {
@@ -22,6 +25,9 @@ import { standardValidate } from "./utils/standardValidate";
 import { convertNonStandardValues } from "./nonStandardValues";
 import { valueIsNonStandard } from "@/utils/nonStandardValue";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import { convertIcsTodo } from "./todo";
+import { convertIcsJournal } from "./journal";
+import { convertIcsFreeBusy } from "./freebusy";
 
 export const convertIcsCalendar = <T extends NonStandardValuesGeneric>(
   ...args: Parameters<ConvertCalendar<T>>
@@ -31,7 +37,12 @@ export const convertIcsCalendar = <T extends NonStandardValuesGeneric>(
   const cleanedFileString = calendarString.replace(replaceCalendarRegex, "");
 
   const lineStrings = splitLines(
-    cleanedFileString.replace(getEventRegex, "").replace(getTimezoneRegex, "")
+    cleanedFileString
+      .replace(getEventRegex, "")
+      .replace(getTimezoneRegex, "")
+      .replace(getTodoRegex, "")
+      .replace(getJournalRegex, "")
+      .replace(getFreeBusyRegex, "")
   );
 
   const calendar: Partial<IcsCalendar> = {};
@@ -82,6 +93,48 @@ export const convertIcsCalendar = <T extends NonStandardValuesGeneric>(
       })
     );
     calendar.events = events;
+  }
+
+  const todoStrings = [...cleanedFileString.matchAll(getTodoRegex)].map(
+    (match) => match[0]
+  );
+
+  if (todoStrings.length > 0) {
+    const todos = todoStrings.map((todoString) =>
+      convertIcsTodo<T>(undefined, todoString, {
+        timezones: calendar.timezones,
+        nonStandard: options?.nonStandard,
+      })
+    );
+    calendar.todos = todos;
+  }
+
+  const journalStrings = [...cleanedFileString.matchAll(getJournalRegex)].map(
+    (match) => match[0]
+  );
+
+  if (journalStrings.length > 0) {
+    const journals = journalStrings.map((journalString) =>
+      convertIcsJournal<T>(undefined, journalString, {
+        timezones: calendar.timezones,
+        nonStandard: options?.nonStandard,
+      })
+    );
+    calendar.journals = journals;
+  }
+
+  const freeBusyStrings = [...cleanedFileString.matchAll(getFreeBusyRegex)].map(
+    (match) => match[0]
+  );
+
+  if (freeBusyStrings.length > 0) {
+    const freeBusys = freeBusyStrings.map((freeBusyString) =>
+      convertIcsFreeBusy<T>(undefined, freeBusyString, {
+        timezones: calendar.timezones,
+        nonStandard: options?.nonStandard,
+      })
+    );
+    calendar.freeBusy = freeBusys;
   }
 
   const validatedCalendar = standardValidate(

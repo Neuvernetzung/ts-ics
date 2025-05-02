@@ -1,10 +1,40 @@
 import type { ConvertLineType, ParseLineType } from "./parse";
 
-export const statusTypes = ["TENTATIVE", "CONFIRMED", "CANCELLED"] as const;
+// VEVENT
+export const eventStatusTypes = [
+  "TENTATIVE",
+  "CONFIRMED",
+  "CANCELLED",
+] as const;
 
-export type IcsStatusTypes = typeof statusTypes;
-export type IcsStatusType = IcsStatusTypes[number];
+export type IcsEventStatusTypes = typeof eventStatusTypes;
+export type IcsEventStatusType = IcsEventStatusTypes[number];
 
-export type ConvertStatus = ConvertLineType<IcsStatusType>;
+export type ConvertEventStatus = ConvertLineType<IcsEventStatusType>;
 
-export type ParseStatus = ParseLineType<IcsStatusType>;
+export type ParseEventStatus = ParseLineType<IcsEventStatusType>;
+
+// VTODO
+export const todoStatusTypes = [
+  "NEEDS-ACTION",
+  "COMPLETED",
+  "IN-PROGRESS",
+  "CANCELLED",
+] as const;
+
+export type IcsTodoStatusTypes = typeof todoStatusTypes;
+export type IcsTodoStatusType = IcsTodoStatusTypes[number];
+
+export type ConvertTodoStatus = ConvertLineType<IcsTodoStatusType>;
+
+export type ParseTodoStatus = ParseLineType<IcsTodoStatusType>;
+
+// VJOURNAL
+export const journalStatusTypes = ["DRAFT", "FINAL", "CANCELLED"] as const;
+
+export type IcsJournalStatusTypes = typeof journalStatusTypes;
+export type IcsJournalStatusType = IcsJournalStatusTypes[number];
+
+export type ConvertJournalStatus = ConvertLineType<IcsJournalStatusType>;
+
+export type ParseJournalStatus = ParseLineType<IcsJournalStatusType>;

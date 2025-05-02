@@ -1,26 +1,27 @@
-import type { IcsEventObjectKey } from "@/constants/keys/event";
+import type { IcsTodoObjectKey } from "@/constants/keys/todo";
 
 const timeStampKeys = [
   "stamp",
   "start",
-  "end",
+  "due",
   "created",
   "lastModified",
-] satisfies IcsEventObjectKey[];
+  "completed",
+] satisfies IcsTodoObjectKey[];
 
 type TimeStampKey = (typeof timeStampKeys)[number];
 
-export const eventObjectKeyIsTimeStamp = (
-  objectKey: IcsEventObjectKey
+export const todoObjectKeyIsTimeStamp = (
+  objectKey: IcsTodoObjectKey
 ): objectKey is TimeStampKey =>
   timeStampKeys.includes(objectKey as TimeStampKey);
 
-const arrayOfStringKeys = ["categories"] satisfies IcsEventObjectKey[];
+const arrayOfStringKeys = ["categories"] satisfies IcsTodoObjectKey[];
 
 type ArrayOfStringKey = (typeof arrayOfStringKeys)[number];
 
-export const eventObjectKeyIsArrayOfStrings = (
-  objectKey: IcsEventObjectKey
+export const todoObjectKeyIsArrayOfStrings = (
+  objectKey: IcsTodoObjectKey
 ): objectKey is ArrayOfStringKey =>
   arrayOfStringKeys.includes(objectKey as ArrayOfStringKey);
 
@@ -29,11 +30,11 @@ const textStringKeys = [
   "location",
   "comment",
   "summary",
-] satisfies IcsEventObjectKey[];
+] satisfies IcsTodoObjectKey[];
 
 type TextStringKey = (typeof textStringKeys)[number];
 
-export const eventObjectKeyIsTextString = (
-  objectKey: IcsEventObjectKey
+export const todoObjectKeyIsTextString = (
+  objectKey: IcsTodoObjectKey
 ): objectKey is TextStringKey =>
   textStringKeys.includes(objectKey as TextStringKey);

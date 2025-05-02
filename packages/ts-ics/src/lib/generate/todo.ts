@@ -1,8 +1,8 @@
-import { VEVENT_TO_KEYS } from "@/constants/keys/event";
+import { VTODO_TO_KEYS } from "@/constants/keys/todo";
 
 import type {
   IcsDateObject,
-  IcsEvent,
+  IcsTodo,
   IcsDuration,
   IcsRecurrenceRule,
   IcsRecurrenceId,
@@ -10,7 +10,6 @@ import type {
 } from "@/types";
 import type { IcsOrganizer } from "@/types/organizer";
 
-import { generateIcsAlarm } from "./alarm";
 import { generateIcsAttendee } from "./attendee";
 import { generateIcsExceptionDate } from "./exceptionDate";
 import { generateIcsDuration } from "./duration";
@@ -32,45 +31,44 @@ import type {
 } from "@/types/nonStandardValues";
 import { generateIcsRecurrenceId } from "./recurrenceId";
 import {
-  eventObjectKeyIsArrayOfStrings,
-  eventObjectKeyIsTextString,
-  eventObjectKeyIsTimeStamp,
-} from "@/constants/keyTypes";
+  todoObjectKeyIsArrayOfStrings,
+  todoObjectKeyIsTextString,
+  todoObjectKeyIsTimeStamp,
+} from "@/constants/keyTypes/todo";
 
-type GenerateIcsEventOptions<T extends NonStandardValuesGeneric> = {
+type GenerateIcsTodoOptions<T extends NonStandardValuesGeneric> = {
   skipFormatLines?: boolean;
   nonStandard?: GenerateNonStandardValues<T>;
   timezones?: IcsTimezone[];
 };
 
-export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
-  event: IcsEvent,
-  options?: GenerateIcsEventOptions<T>
+export const generateIcsTodo = <T extends NonStandardValuesGeneric>(
+  todo: IcsTodo,
+  options?: GenerateIcsTodoOptions<T>
 ) => {
-  const eventKeys = getKeys(event);
+  const todoKeys = getKeys(todo);
 
   let icsString = "";
 
-  icsString += getIcsStartLine("VEVENT");
+  icsString += getIcsStartLine("VTODO");
 
-  eventKeys.forEach((key) => {
-    if (key === "alarms" || key === "attendees" || key === "exceptionDates")
-      return;
+  todoKeys.forEach((key) => {
+    if (key === "attendees" || key === "exceptionDates") return;
 
     if (key === "nonStandard") {
-      icsString += generateNonStandardValues(event[key], options?.nonStandard);
+      icsString += generateNonStandardValues(todo[key], options?.nonStandard);
       return;
     }
 
-    const icsKey = VEVENT_TO_KEYS[key];
+    const icsKey = VTODO_TO_KEYS[key];
 
     if (!icsKey) return;
 
-    const value = event[key];
+    const value = todo[key];
 
     if (value === undefined || value === null) return;
 
-    if (eventObjectKeyIsTimeStamp(key)) {
+    if (todoObjectKeyIsTimeStamp(key)) {
       icsString += generateIcsTimeStamp(
         icsKey,
         value as IcsDateObject,
@@ -80,12 +78,12 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
       return;
     }
 
-    if (eventObjectKeyIsArrayOfStrings(key)) {
+    if (todoObjectKeyIsArrayOfStrings(key)) {
       icsString += generateIcsLine(icsKey, (value as string[]).join(","));
       return;
     }
 
-    if (eventObjectKeyIsTextString(key)) {
+    if (todoObjectKeyIsTextString(key)) {
       icsString += generateIcsLine(icsKey, escapeTextString(value as string));
       return;
     }
@@ -123,29 +121,21 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
     icsString += generateIcsLine(icsKey, String(value));
   });
 
-  if (event.alarms && event.alarms.length > 0) {
-    event.alarms.forEach((alarm) => {
-      icsString += generateIcsAlarm(alarm, {
-        nonStandard: options?.nonStandard,
-      });
-    });
-  }
-
-  if (event.attendees && event.attendees.length > 0) {
-    event.attendees.forEach((attendee) => {
+  if (todo.attendees && todo.attendees.length > 0) {
+    todo.attendees.forEach((attendee) => {
       icsString += generateIcsAttendee(attendee, "ATTENDEE");
     });
   }
 
-  if (event.exceptionDates && event.exceptionDates.length > 0) {
-    event.exceptionDates.forEach((exceptionDate) => {
+  if (todo.exceptionDates && todo.exceptionDates.length > 0) {
+    todo.exceptionDates.forEach((exceptionDate) => {
       icsString += generateIcsExceptionDate(exceptionDate, "EXDATE", {
         timezones: options?.timezones,
       });
     });
   }
 
-  icsString += getIcsEndLine("VEVENT");
+  icsString += getIcsEndLine("VTODO");
 
   if (options?.skipFormatLines) return icsString;
 

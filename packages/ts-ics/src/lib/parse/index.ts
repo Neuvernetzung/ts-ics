@@ -19,3 +19,6 @@ export * from "./exceptionDate";
 export * from "./weekDay";
 export * from "./status";
 export * from "./nonStandardValues";
+export * from "./todo";
+export * from "./journal";
+export * from "./freebusy";
