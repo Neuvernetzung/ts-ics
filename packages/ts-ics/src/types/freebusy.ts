@@ -19,17 +19,21 @@ export const freeBusyTypes = [
 export type FreeBusyTypes = typeof freeBusyTypes;
 export type FreeBusyType = FreeBusyTypes[number];
 
-export type IcsFreeBusyTimeDurationOrEnd =
+export type IcsFreeBusyTimeValueDurationOrEnd =
   | { duration: IcsDuration; end?: never }
-  | { duration?: never; end: IcsDateObject };
+  | { duration?: never; end: Date };
 
-export type IcsFreeBusyTimeBase = {
-  type?: FreeBusyType;
-  start: IcsDateObject;
+export type IcsFreeBusyTimeValueBase = {
+  start: Date;
 };
 
-export type IcsFreeBusyTime = IcsFreeBusyTimeBase &
-  IcsFreeBusyTimeDurationOrEnd;
+export type IcsFreeBusyTimeValue = IcsFreeBusyTimeValueBase &
+  IcsFreeBusyTimeValueDurationOrEnd;
+
+export type IcsFreeBusyTime = {
+  type?: FreeBusyType;
+  values: IcsFreeBusyTimeValue[];
+};
 
 export type IcsFreeBusy<
   TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric

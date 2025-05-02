@@ -1,5 +1,6 @@
 import type { IcsEvent } from "./event";
-import { IcsJournal } from "./journal";
+import type { IcsFreeBusy } from "./freebusy";
+import type { IcsJournal } from "./journal";
 import type {
   NonStandardValuesGeneric,
   ParseNonStandardValues,
@@ -28,6 +29,7 @@ export type IcsCalendar<
   events?: IcsEvent<TNonStandardValues>[];
   todos?: IcsTodo<TNonStandardValues>[];
   journals?: IcsJournal<TNonStandardValues>[];
+  freeBusy?: IcsFreeBusy<TNonStandardValues>[];
   name?: string;
   nonStandard?: Partial<TNonStandardValues>;
 };

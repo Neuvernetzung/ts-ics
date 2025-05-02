@@ -3,7 +3,7 @@ import { invertKeys, keysFromObject } from "./utils";
 
 export type IcsCalendarObjectKey = Exclude<
   keyof IcsCalendar,
-  "events" | "timezones" | "nonStandard" | "todos" | "journals"
+  "events" | "timezones" | "nonStandard" | "todos" | "journals" | "freeBusy"
 >;
 export type IcsCalendarObjectKeys = IcsCalendarObjectKey[];
 

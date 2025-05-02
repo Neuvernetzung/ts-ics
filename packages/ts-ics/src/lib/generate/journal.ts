@@ -3,7 +3,6 @@ import { VJOURNAL_TO_KEYS } from "@/constants/keys/journal";
 import type {
   IcsDateObject,
   IcsJournal,
-  IcsDuration,
   IcsRecurrenceRule,
   IcsRecurrenceId,
   IcsTimezone,

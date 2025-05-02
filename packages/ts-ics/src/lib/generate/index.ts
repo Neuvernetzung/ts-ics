@@ -16,3 +16,4 @@ export * from "./weekdayNumber";
 export * from "./nonStandardValues";
 export * from "./todo";
 export * from "./journal";
+export * from "./freebusy";
