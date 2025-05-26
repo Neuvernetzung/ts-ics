@@ -1,34 +1,54 @@
 import { CRLF_BREAK, CRLF_BREAK_REGEX, MAX_LINE_LENGTH } from "@/constants";
 
+// Hilfsfunktion zur Berechnung der tatsächlichen Länge unter Berücksichtigung von \n
+const getActualLength = (str: string): number => {
+  // Zähle jedes \n als zwei Zeichen
+  const newlineCount = (str.match(/\n/g) || []).length;
+  return str.length + newlineCount;
+};
+
 export const formatLines = (lines: string) => {
   const newLines = lines.split(CRLF_BREAK_REGEX);
-
   const formattedLines: string[] = [];
 
   newLines.forEach((line) => {
-    const escapedLine = line.replace(/\n/g, "\\n"); // "\n" needs to be escaped because javascript counts "\n".length as 1, but i needs to be 2
-
-    if (escapedLine.length < MAX_LINE_LENGTH) {
-      formattedLines.push(escapedLine);
+    if (getActualLength(line) < MAX_LINE_LENGTH) {
+      formattedLines.push(line);
       return;
     }
-    foldLine(escapedLine, MAX_LINE_LENGTH).forEach((l) => {
+    foldLine(line, MAX_LINE_LENGTH).forEach((l) => {
       formattedLines.push(l);
     });
   });
 
-  return formattedLines.join(CRLF_BREAK).replace(/\\n/g, "\n"); // Add back the original "\n", so it can be correctly displayed inside the ics string
+  return formattedLines.join(CRLF_BREAK);
 };
 
-const foldLine = (line: string, length: number) => {
-  let l = line;
+const foldLine = (line: string, maxLength: number) => {
   const lines = [];
+  let currentLine = "";
+  let currentLength = 0;
 
-  while (Math.ceil(l.length / length) >= 1) {
-    lines.push(
-      lines.length === 0 ? l.substring(0, length) : ` ${l.substring(0, length)}`
-    );
-    l = l.substring(length);
+  // Zeichen für Zeichen durchgehen
+  for (let i = 0; i < line.length; i++) {
+    const char = line[i];
+    const isNewline = char === "\n";
+    const charLength = isNewline ? 2 : 1; // \n zählt als 2 Zeichen
+
+    // Prüfen ob das nächste Zeichen noch in die Zeile passt
+    if (currentLength + charLength > maxLength) {
+      lines.push(lines.length === 0 ? currentLine : ` ${currentLine}`);
+      currentLine = char;
+      currentLength = charLength;
+    } else {
+      currentLine += char;
+      currentLength += charLength;
+    }
+  }
+
+  // Letzte Zeile hinzufügen
+  if (currentLine) {
+    lines.push(lines.length === 0 ? currentLine : ` ${currentLine}`);
   }
 
   return lines;

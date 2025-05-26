@@ -24,3 +24,11 @@ it("Correctly handle LF line breaks", async () => {
 
   expect(formatLines(unformatted)).toEqual(formatted);
 });
+
+it("Correctly handles escaped newlines in description - gh#183", async () => {
+  const unformatted = "DESCRIPTION:Test\n\\nb";
+
+  const formatted = icsTestData(["DESCRIPTION:Test\n\\nb"]);
+
+  expect(formatLines(unformatted)).toStrictEqual(formatted);
+});
