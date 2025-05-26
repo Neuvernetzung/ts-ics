@@ -1,5 +1,11 @@
 # ts-ics
 
+## 2.1.1
+
+### Patch Changes
+
+- 34f2592: Fix: Correct handling of escaped newlines (\\n) in ICS files. Previously, escaped newlines were incorrectly processed during line folding, now they are preserved correctly in the output.
+
 ## 2.1.0
 
 ### Minor Changes
