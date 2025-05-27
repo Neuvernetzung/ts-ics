@@ -12,6 +12,9 @@ describe("escapeTextString", () => {
       "text\\,with\\;special\\,chars"
     );
 
+    // Test remaining new lines
+    expect(escapeTextString("text\nwith\nbreaks")).toBe("text\nwith\nbreaks");
+
     // Test that \n remains unchanged and \N is converted to \n
     expect(escapeTextString("text\\nwith\\Nbreaks")).toBe(
       "text\\nwith\\nbreaks"
