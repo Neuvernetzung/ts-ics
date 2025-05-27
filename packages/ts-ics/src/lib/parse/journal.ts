@@ -85,7 +85,7 @@ export const convertIcsJournal = <T extends NonStandardValuesGeneric>(
     }
 
     if (objectKey === "sequence") {
-      journal[objectKey] = parseInt(line.value);
+      journal[objectKey] = Number.parseInt(line.value);
       return;
     }
 
