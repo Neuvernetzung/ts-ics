@@ -12,7 +12,7 @@ import type {
 } from "./nonStandardValues";
 import type { IcsOrganizer } from "./organizer";
 import type { IcsAttendee } from "./attendee";
-import { IcsDuration } from "./duration";
+import type { IcsDuration } from "./duration";
 
 export const freeBusyTypes = [
   "FREE",
