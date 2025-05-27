@@ -7,7 +7,7 @@ import type {
 } from "./nonStandardValues";
 import type { ConvertComponentType, ParseComponentType } from "./parse";
 import type { IcsTimezone } from "./timezone";
-import { IcsTodo } from "./todo";
+import type { IcsTodo } from "./todo";
 
 export const calendarMethods = ["PUBLISH"] as const;
 

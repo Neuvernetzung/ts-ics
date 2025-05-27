@@ -1,23 +1,49 @@
 import { escapeTextString } from "./escapeText";
 
-it("TEXT Location is escaped correctly", () => {
-  const location = "Alt-Moabit 140, 10557 Berlin, Germany";
+describe("escapeTextString", () => {
+  it("escapes special characters according to RFC 5545", () => {
+    // Test backslash escaping
+    expect(escapeTextString("text\\with\\backslash")).toBe(
+      "text\\\\with\\\\backslash"
+    );
 
-  const escapedLocation = escapeTextString(location);
+    // Test comma and semicolon escaping
+    expect(escapeTextString("text,with;special,chars")).toBe(
+      "text\\,with\\;special\\,chars"
+    );
 
-  expect(escapedLocation).toEqual("Alt-Moabit 140\\, 10557 Berlin\\, Germany");
-});
+    // Test new lines escaping
+    expect(escapeTextString("text\nwith\nbreaks")).toBe("text\\nwith\\nbreaks");
 
-it("TEXT Description is escaped correctly", async () => {
-  const description = `Comma, multiple Commas,,, SemiColon; multiple Semicolons;;; line Break
-multiple Line Breaks
+    // Test that raw \n and \n remains unchanged
+    expect(escapeTextString("text\\nwithout\\Nbreaks")).toBe(
+      "text\\\\nwithout\\\\Nbreaks"
+    );
 
+    // Test that colons are NOT escaped
+    expect(escapeTextString("time:12:00")).toBe("time:12:00");
+  });
 
-end of the description.`;
+  it("handles backslashes correctly", () => {
+    // Normal backslashes should be escaped
+    expect(escapeTextString("C:\\path\\file")).toBe("C:\\\\path\\\\file");
 
-  const escapedDescription = escapeTextString(description);
+    // Backslashes before n should be escaped
+    expect(escapeTextString("text\\nmore\\Ntext\\other")).toBe(
+      "text\\\\nmore\\\\Ntext\\\\other"
+    );
+  });
 
-  expect(escapedDescription).toEqual(
-    "Comma\\, multiple Commas\\,\\,\\, SemiColon\\; multiple Semicolons\\;\\;\\; line Break\nmultiple Line Breaks\n\n\nend of the description."
-  );
+  it("handles multiple special characters", () => {
+    const input = "test,,;;\\\\text\\nmore\ntext";
+    const expected = "test\\,\\,\\;\\;\\\\\\\\text\\\\nmore\\ntext";
+    expect(escapeTextString(input)).toBe(expected);
+  });
+
+  it("handles complex combinations", () => {
+    const input = "Path\\to\\file,Description;with\\n\\N\nnewline";
+    const expected =
+      "Path\\\\to\\\\file\\,Description\\;with\\\\n\\\\N\\nnewline";
+    expect(escapeTextString(input)).toBe(expected);
+  });
 });

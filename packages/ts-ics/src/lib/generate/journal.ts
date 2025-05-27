@@ -11,7 +11,6 @@ import type { IcsOrganizer } from "@/types/organizer";
 
 import { generateIcsAttendee } from "./attendee";
 import { generateIcsExceptionDate } from "./exceptionDate";
-import { generateIcsDuration } from "./duration";
 import { generateIcsOrganizer } from "./organizer";
 import { generateIcsRecurrenceRule } from "./recurrenceRule";
 import { generateIcsTimeStamp } from "./timeStamp";
