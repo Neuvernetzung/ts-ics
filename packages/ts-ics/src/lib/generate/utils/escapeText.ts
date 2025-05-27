@@ -5,5 +5,9 @@
 //    ; \; encodes ;, \, encodes ,
 //    ; Note: A COLON character in a TEXT property value SHALL NOT be escaped
 export const escapeTextString = (inputString: string) => {
-  return inputString.replace(/\\(?![nN])/g, "\\\\").replace(/([,;])/g, "\\$1");
+  return inputString
+    .replace(/\\/g, "\\\\") // First escape all backslashes
+    .replace(/([,;])/g, "\\$1") // Then escape commas and semicolons
+    .replace(/\\\\([nN])/g, "\\$1") // Fix double-escaped \n and \N
+    .replace(/\\N/g, "\\n"); // Replace \N with \n
 };

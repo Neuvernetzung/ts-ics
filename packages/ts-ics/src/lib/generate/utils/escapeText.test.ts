@@ -12,9 +12,9 @@ describe("escapeTextString", () => {
       "text\\,with\\;special\\,chars"
     );
 
-    // Test that \n and \N sequences remain unchanged
+    // Test that \n remains unchanged and \N is converted to \n
     expect(escapeTextString("text\\nwith\\Nbreaks")).toBe(
-      "text\\nwith\\Nbreaks"
+      "text\\nwith\\nbreaks"
     );
 
     // Test that colons are NOT escaped
@@ -25,9 +25,9 @@ describe("escapeTextString", () => {
     // Normal backslashes should be escaped
     expect(escapeTextString("C:\\path\\file")).toBe("C:\\\\path\\\\file");
 
-    // Backslashes before n or N should not be escaped
+    // Backslashes before n should not be escaped, \N should be converted to \n
     expect(escapeTextString("text\\nmore\\Ntext\\other")).toBe(
-      "text\\nmore\\Ntext\\\\other"
+      "text\\nmore\\ntext\\\\other"
     );
   });
 
@@ -40,7 +40,7 @@ describe("escapeTextString", () => {
   it("handles complex combinations", () => {
     const input = "Path\\to\\file,Description;with\\n\\Nand\\backslash";
     const expected =
-      "Path\\\\to\\\\file\\,Description\\;with\\n\\Nand\\\\backslash";
+      "Path\\\\to\\\\file\\,Description\\;with\\n\\nand\\\\backslash";
     expect(escapeTextString(input)).toBe(expected);
   });
 });
