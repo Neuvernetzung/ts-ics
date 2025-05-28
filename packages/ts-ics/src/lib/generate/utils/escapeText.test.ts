@@ -1,4 +1,7 @@
+import type { IcsEvent } from "@/types";
+
 import { escapeTextString } from "./escapeText";
+import { generateIcsEvent } from "../event";
 
 describe("escapeTextString", () => {
   it("escapes special characters according to RFC 5545", () => {
@@ -15,7 +18,7 @@ describe("escapeTextString", () => {
     // Test new lines escaping
     expect(escapeTextString("text\nwith\nbreaks")).toBe("text\\nwith\\nbreaks");
 
-    // Test that raw \n and \n remains unchanged
+    // Test that raw \n and \N remains unchanged
     expect(escapeTextString("text\\nwithout\\Nbreaks")).toBe(
       "text\\\\nwithout\\\\Nbreaks"
     );
@@ -45,5 +48,32 @@ describe("escapeTextString", () => {
     const expected =
       "Path\\\\to\\\\file\\,Description\\;with\\\\n\\\\N\\nnewline";
     expect(escapeTextString(input)).toBe(expected);
+  });
+});
+
+describe("Test in IcsEvent", () => {
+  const date = new Date("2021-01-01");
+
+  it("should escape text - gh#183", () => {
+    const event: IcsEvent = {
+      description: `Start,-;-\n-\\N-\\-
+-\\n-\\\\End`,
+      summary: "Summary",
+      start: {
+        date,
+      },
+      end: {
+        date,
+      },
+      stamp: {
+        date,
+      },
+      uid: "123",
+    };
+    const icsCalendar = generateIcsEvent(event);
+
+    expect(icsCalendar).toContain(
+      "DESCRIPTION:Start\\,-\\;-\\n-\\\\N-\\\\-\\n-\\\\n-\\\\\\\\End"
+    );
   });
 });
