@@ -1,5 +1,12 @@
 # @ts-ics/schema-zod
 
+## 2.1.3
+
+### Patch Changes
+
+- 41a08e8: Add missing properties to zIcsCalendar schema (todos, journals, freeBusy)
+  - ts-ics@2.1.3
+
 ## 2.1.2
 
 ### Patch Changes
