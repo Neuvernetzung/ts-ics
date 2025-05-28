@@ -1,5 +1,11 @@
 # ts-ics
 
+## 2.1.2
+
+### Patch Changes
+
+- 916e073: Update text escaping to strictly follow RFC 5545
+
 ## 2.1.1
 
 ### Patch Changes
