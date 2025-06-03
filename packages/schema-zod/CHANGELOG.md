@@ -1,5 +1,13 @@
 # @ts-ics/schema-zod
 
+## 2.1.4
+
+### Patch Changes
+
+- 7c9fab9: Add RSVP support to attendee schema and parsing logic and fix double generation of attendee role
+- Updated dependencies [7c9fab9]
+  - ts-ics@2.1.4
+
 ## 2.1.3
 
 ### Patch Changes
