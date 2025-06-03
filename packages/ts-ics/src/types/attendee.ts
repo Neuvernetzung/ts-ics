@@ -20,6 +20,7 @@ export type IcsAttendee = {
   partstat?: IcsAttendeePartStatusType;
   dir?: string;
   sentBy?: string;
+  rsvp?: boolean;
 };
 
 export type ConvertAttendee = ConvertLineType<IcsAttendee>;

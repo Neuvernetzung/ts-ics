@@ -1,7 +1,5 @@
 import { formatLines } from "./formatLines";
 import { icsTestData } from "../../../../tests/utils";
-import { convertIcsCalendar } from "@/lib/parse";
-import { generateIcsCalendar } from "../calendar";
 
 it("Correcly break lines longer than the max line length", async () => {
   const unformatted = `ORGANIZER;CN=JohnSmith;DIR="ldap://example.com:6666/o=DC%20Associates,c=US???(cn=John%20Smith)":mailto:jsmith@example.com`;
