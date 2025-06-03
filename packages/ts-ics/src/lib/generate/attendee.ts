@@ -19,11 +19,15 @@ export const generateIcsAttendee = (attendee: IcsAttendee, key: string) => {
       attendee.role && { key: "ROLE", value: attendee.role },
       attendee.name && { key: "CN", value: attendee.name },
       attendee.partstat && { key: "PARTSTAT", value: attendee.partstat },
-      attendee.role && { key: "ROLE", value: attendee.role },
       attendee.sentBy && {
         key: "SENT-BY",
         value: generateIcsMail(attendee.sentBy, true),
       },
+      attendee.rsvp !== undefined &&
+        (attendee.rsvp === true || attendee.rsvp === false) && {
+          key: "RSVP",
+          value: attendee.rsvp === true ? "TRUE" : "FALSE",
+        },
     ].filter((v) => !!v)
   );
 

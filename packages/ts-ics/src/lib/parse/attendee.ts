@@ -22,4 +22,11 @@ export const convertIcsAttendee: ConvertAttendee = (schema, line) =>
     sentBy: line.options?.["SENT-BY"]
       ? replaceMailTo(line.options["SENT-BY"])
       : undefined,
+    rsvp: line.options?.RSVP
+      ? line.options?.RSVP === "TRUE"
+        ? true
+        : line.options?.RSVP === "FALSE"
+        ? false
+        : undefined
+      : undefined,
   });
