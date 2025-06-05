@@ -31,6 +31,7 @@ export type IcsEventBase<
   start: IcsDateObject;
   location?: string;
   description?: string;
+  descriptionAltRep?: string;
   categories?: string[];
   exceptionDates?: IcsExceptionDates;
   recurrenceRule?: IcsRecurrenceRule;

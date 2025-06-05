@@ -62,6 +62,10 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
       return;
     }
 
+    if (key === "descriptionAltRep") {
+      return;
+    }
+
     const icsKey = VEVENT_TO_KEYS[key];
 
     if (!icsKey) return;
@@ -122,6 +126,14 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
 
     icsString += generateIcsLine(icsKey, String(value));
   });
+
+  if (event.description && event.descriptionAltRep) {
+    // Add ALTREP if not already added
+    icsString = icsString.replace(
+      /\r\nDESCRIPTION:/,
+      `\r\nDESCRIPTION;ALTREP="${event.descriptionAltRep}":`
+    );
+  }
 
   if (event.alarms && event.alarms.length > 0) {
     event.alarms.forEach((alarm) => {

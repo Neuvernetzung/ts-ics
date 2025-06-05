@@ -142,3 +142,19 @@ it("Test non standard value", async () => {
 
   expect(event.nonStandard?.wtf).toBe(nonStandardValue);
 });
+
+it("Event Description AltRep support #197", async () => {
+  const event = icsTestData([
+    "BEGIN:VEVENT",
+    "UID:19970901T130000Z-123401@example.com",
+    "DTSTAMP:19970901T130000Z",
+    "DTSTART:19970903T163000Z",
+    "DTEND:19970903T190000Z",
+    "SUMMARY:Annual Employee Review",
+    `DESCRIPTION;ALTREP="data:text/html,%3Cb%3Erich%20%3Ci%3Etext%3C%2Fi%3E%3C%2Fb%3E":rich text`,
+    "END:VEVENT",
+  ]);
+  expect(convertIcsEvent(undefined, event).descriptionAltRep).toBe(
+    "data:text/html,%3Cb%3Erich%20%3Ci%3Etext%3C%2Fi%3E%3C%2Fb%3E"
+  );
+});

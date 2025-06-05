@@ -71,6 +71,9 @@ export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
     }
 
     if (eventObjectKeyIsTextString(objectKey)) {
+      if (objectKey === "description" && line.options?.ALTREP) {
+        event.descriptionAltRep = line.options.ALTREP;
+      }
       event[objectKey] = unescapeTextString(line.value);
       return;
     }
