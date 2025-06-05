@@ -1,5 +1,12 @@
 # @ts-ics/schema-zod
 
+## 2.1.6
+
+### Patch Changes
+
+- 69ffcb4: Add description ALTREP for event in zod schema
+  - ts-ics@2.1.6
+
 ## 2.1.5
 
 ### Patch Changes
