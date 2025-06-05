@@ -33,6 +33,7 @@ export const zIcsEventBase: z.ZodType<IcsEventBase> = z.object({
   start: zIcsDateObject,
   location: z.string().optional(),
   description: z.string().optional(),
+  descriptionAltRep: z.string().optional(),
   categories: z.array(z.string()).optional(),
   exceptionDates: zIcsExceptionDates.optional(),
   recurrenceRule: zIcsRecurrenceRule.optional(),
