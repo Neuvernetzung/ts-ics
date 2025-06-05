@@ -1,5 +1,11 @@
 # ts-ics
 
+## 2.1.5
+
+### Patch Changes
+
+- 4fd87b3: Description AltRep support for Event #197
+
 ## 2.1.4
 
 ### Patch Changes
