@@ -36,6 +36,7 @@ import {
   eventObjectKeyIsTextString,
   eventObjectKeyIsTimeStamp,
 } from "@/constants/keyTypes";
+import { generateIcsOptions } from "./utils/generateOptions";
 
 type GenerateIcsEventOptions<T extends NonStandardValuesGeneric> = {
   skipFormatLines?: boolean;
@@ -62,6 +63,10 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
       return;
     }
 
+    if (key === "descriptionAltRep") {
+      return;
+    }
+
     const icsKey = VEVENT_TO_KEYS[key];
 
     if (!icsKey) return;
@@ -82,6 +87,17 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
 
     if (eventObjectKeyIsArrayOfStrings(key)) {
       icsString += generateIcsLine(icsKey, (value as string[]).join(","));
+      return;
+    }
+
+    if (key === "description" && event.descriptionAltRep) {
+      icsString += generateIcsLine(
+        icsKey,
+        escapeTextString(value as string),
+        generateIcsOptions([
+          { key: "ALTREP", value: `"${event.descriptionAltRep}"` },
+        ])
+      );
       return;
     }
 

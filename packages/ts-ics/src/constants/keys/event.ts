@@ -1,7 +1,10 @@
 import type { IcsEvent } from "@/types";
 import { invertKeys, keysFromObject } from "./utils";
 
-export type IcsEventObjectKey = Exclude<keyof IcsEvent, "nonStandard">;
+export type IcsEventObjectKey = Exclude<
+  keyof IcsEvent,
+  "nonStandard" | "descriptionAltRep"
+>;
 
 export type IcsEventObjectKeys = IcsEventObjectKey[];
 

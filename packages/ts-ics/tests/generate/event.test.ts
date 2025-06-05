@@ -1,3 +1,4 @@
+import { LF_BREAK } from "@/constants";
 import { generateIcsEvent } from "@/lib";
 import type { IcsEvent } from "@/types";
 
@@ -112,4 +113,24 @@ it("SEQUENCE is generated correctly gh#174", () => {
   const eventString = generateIcsEvent(event);
 
   expect(eventString).toContain("SEQUENCE:0");
+});
+
+it("Generate Description AltRep - gh#197", () => {
+  const date = new Date(2025, 2, 13);
+
+  const event: IcsEvent = {
+    stamp: { date },
+    start: { date },
+    summary: "123",
+    uid: "123",
+    duration: { days: 2 },
+    descriptionAltRep: "data:text/html,%3Cb%3Erich%3C%2Fb%3E",
+    description: "rich",
+  };
+
+  const eventString = generateIcsEvent(event);
+
+  expect(eventString).toContain(
+    `DESCRIPTION;ALTREP="data:text/html,%3Cb%3Erich%3C%2Fb%3E":rich`
+  );
 });
