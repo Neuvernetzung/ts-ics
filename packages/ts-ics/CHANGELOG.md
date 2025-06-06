@@ -1,5 +1,11 @@
 # ts-ics
 
+## 2.1.7
+
+### Patch Changes
+
+- 6c2b1de: Fix empty generation of duration #206
+
 ## 2.1.6
 
 ## 2.1.5
