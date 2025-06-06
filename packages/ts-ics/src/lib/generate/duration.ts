@@ -1,6 +1,9 @@
 import type { IcsDuration } from "@/types";
 
 export const generateIcsDuration = (duration: IcsDuration) => {
+  if (Object.values(duration).filter((v) => typeof v === "number").length === 0)
+    return;
+
   let icsString = "";
 
   if (duration.before) {
@@ -9,26 +12,30 @@ export const generateIcsDuration = (duration: IcsDuration) => {
 
   icsString += "P";
 
-  if (duration.weeks) {
+  if (duration.weeks !== undefined) {
     icsString += `${duration.weeks}W`;
   }
 
-  if (duration.days) {
+  if (duration.days !== undefined) {
     icsString += `${duration.days}D`;
   }
 
-  if (duration.hours || duration.minutes || duration.seconds) {
+  if (
+    duration.hours !== undefined ||
+    duration.minutes !== undefined ||
+    duration.seconds !== undefined
+  ) {
     icsString += "T";
 
-    if (duration.hours) {
+    if (duration.hours !== undefined) {
       icsString += `${duration.hours}H`;
     }
 
-    if (duration.minutes) {
+    if (duration.minutes !== undefined) {
       icsString += `${duration.minutes}M`;
     }
 
-    if (duration.seconds) {
+    if (duration.seconds !== undefined) {
       icsString += `${duration.seconds}S`;
     }
   }
