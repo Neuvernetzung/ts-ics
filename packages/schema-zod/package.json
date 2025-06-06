@@ -1,7 +1,7 @@
 {
   "name": "@ts-ics/schema-zod",
   "author": "Neuvernetzung Medienagentur UG",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "description": "Zod schema validators for ts-ics",
   "type": "module",
   "main": "dist/index.cjs",
@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "zod": "^3.24.0",
-    "ts-ics": "^2.1.6"
+    "ts-ics": "^2.1.7"
   },
   "devDependencies": {
     "@types/node": "^22.13.10",
