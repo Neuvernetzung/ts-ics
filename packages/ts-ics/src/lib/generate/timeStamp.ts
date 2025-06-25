@@ -35,7 +35,7 @@ export const generateIcsTimeStamp = (
     dateObject.type === "DATE"
       ? generateIcsDate(dateObject.date)
       : dateObject.local && !options?.forceUtc
-      ? generateIcsLocalDateTime(dateObject.local, options?.timezones)
+      ? generateIcsLocalDateTime(dateObject.date, dateObject.local, options?.timezones)
       : generateIcsUtcDateTime(dateObject.date);
 
   return generateIcsLine(icsKey, value, icsOptions);

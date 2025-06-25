@@ -22,17 +22,15 @@ it("Test Ics Timestamp Generate - UTC", async () => {
 });
 
 it("Test Ics Timestamp Generate - IcsTimezone", async () => {
-  const date = new Date("2025-04-10T08:30:00Z");
-
   const offset = fictiveTimezone.props.sort((a, b) =>
     compareDesc(a.start, b.start)
   )[0]?.offsetTo;
 
   const dateObject: IcsDateObject = {
-    date,
+    date: new Date("2025-04-10T08:30:00"+offset),
     type: "DATE-TIME",
     local: {
-      date,
+      date: new Date("2025-04-10T08:30:00Z"),
       timezone: fictiveTimezone.id,
       tzoffset: offset,
     },
@@ -51,17 +49,17 @@ it("Test Ics Timestamp Generate - IcsTimezone", async () => {
     timezones: [fictiveTimezone],
   });
 
-  expect(parsed.date).toEqual(dateObject.date);
+  expect(parsed).toEqual(dateObject);
 });
 
 it("Test Ics Timestamp Generate - IANA Timezone", async () => {
   const date = new Date("2025-04-10T08:30:00Z");
 
   const dateObject: IcsDateObject = {
-    date,
+    date: new Date("2025-04-10T08:30:00-0400"),
     type: "DATE-TIME",
     local: {
-      date,
+      date: new Date("2025-04-10T08:30:00Z"),
       timezone: "America/New_York",
       tzoffset: "-0400",
     },
@@ -73,17 +71,15 @@ it("Test Ics Timestamp Generate - IANA Timezone", async () => {
 
   const parsed = convertIcsTimeStamp(undefined, line);
 
-  expect(parsed.date).toEqual(dateObject.date);
+  expect(parsed).toEqual(dateObject);
 });
 
 it("Test Ics Timestamp Generate - Z is stripped correctly when local date is provided - gh#165", async () => {
-  const date = new Date("2025-04-14T08:30+0200");
-
   const dateObject: IcsDateObject = {
-    date,
+    date: new Date("2025-04-14T08:30+0200"),
     type: "DATE-TIME",
     local: {
-      date,
+      date: new Date("2025-04-14T08:30Z"),
       timezone: "Europe/Berlin",
       tzoffset: "+0200",
     },
