@@ -1,5 +1,11 @@
 # ts-ics
 
+## 2.1.8
+
+### Patch Changes
+
+- 2162874: Fix IcsDateObject serialization when a timezone is present #210
+
 ## 2.1.7
 
 ### Patch Changes
