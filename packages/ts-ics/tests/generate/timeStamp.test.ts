@@ -27,7 +27,7 @@ it("Test Ics Timestamp Generate - IcsTimezone", async () => {
   )[0]?.offsetTo;
 
   const dateObject: IcsDateObject = {
-    date: new Date("2025-04-10T08:30:00"+offset),
+    date: new Date("2025-04-10T08:30:00" + offset),
     type: "DATE-TIME",
     local: {
       date: new Date("2025-04-10T08:30:00Z"),
@@ -53,8 +53,6 @@ it("Test Ics Timestamp Generate - IcsTimezone", async () => {
 });
 
 it("Test Ics Timestamp Generate - IANA Timezone", async () => {
-  const date = new Date("2025-04-10T08:30:00Z");
-
   const dateObject: IcsDateObject = {
     date: new Date("2025-04-10T08:30:00-0400"),
     type: "DATE-TIME",
