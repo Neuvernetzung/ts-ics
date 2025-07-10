@@ -7,10 +7,13 @@ import {
   type ParseExceptionDates,
 } from "ts-ics";
 
-export const zIcsExceptionDate: z.ZodType<IcsExceptionDate> = zIcsDateObject;
+export const zIcsExceptionDate: z.ZodType<IcsExceptionDate, IcsExceptionDate> =
+  zIcsDateObject;
 
-export const zIcsExceptionDates: z.ZodType<IcsExceptionDates> =
-  z.array(zIcsExceptionDate);
+export const zIcsExceptionDates: z.ZodType<
+  IcsExceptionDates,
+  IcsExceptionDates
+> = z.array(zIcsExceptionDate);
 
 export const parseIcsExceptionDate: ParseExceptionDates = (...props) =>
   convertIcsExceptionDates(zIcsExceptionDates, ...props);

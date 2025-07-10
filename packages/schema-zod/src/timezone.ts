@@ -8,12 +8,15 @@ import { z } from "zod";
 import { zIcsTimezoneProp } from "./timezoneProp";
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const zIcsTimezone: z.ZodType<IcsTimezone<any>> = z.object({
+export const zIcsTimezone: z.ZodType<
+  IcsTimezone<any>,
+  IcsTimezone<any>
+> = z.object({
   id: z.string(),
   lastModified: z.date().optional(),
-  url: z.string().url().optional(),
+  url: z.url().optional(),
   props: z.array(zIcsTimezoneProp),
-  nonStandard: z.record(z.any()).optional(),
+  nonStandard: z.record(z.string(), z.any()).optional(),
 });
 
 export const parseIcsTimezone = <T extends NonStandardValuesGeneric>(

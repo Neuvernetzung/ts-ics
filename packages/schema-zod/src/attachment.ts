@@ -6,10 +6,10 @@ import {
 } from "ts-ics";
 import { z } from "zod";
 
-export const zIcsAttachment: z.ZodType<IcsAttachment> = z.union([
+export const zIcsAttachment: z.ZodType<IcsAttachment, IcsAttachment> = z.union([
   z.object({
     type: z.literal("uri"),
-    url: z.string().url(),
+    url: z.url(),
     formatType: z.string().optional(),
     encoding: z.never().optional(),
     value: z.never().optional(),

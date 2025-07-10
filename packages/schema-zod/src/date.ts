@@ -13,11 +13,13 @@ export const zIcsDateObjectTzProps = z.object({
   tzoffset: z.string(),
 });
 
-export const zIcsDateObject: z.ZodType<IcsDateObject> = z.object({
-  date: z.date(),
-  type: z.enum(dateObjectTypes).optional(),
-  local: zIcsDateObjectTzProps.optional(),
-});
+export const zIcsDateObject: z.ZodType<IcsDateObject, IcsDateObject> = z.object(
+  {
+    date: z.date(),
+    type: z.enum(dateObjectTypes).optional(),
+    local: zIcsDateObjectTzProps.optional(),
+  }
+);
 
 export const parseIcsDate: ParseDate = (...props) =>
   convertIcsDate(z.date(), ...props);

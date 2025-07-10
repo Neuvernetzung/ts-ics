@@ -10,7 +10,10 @@ import { zIcsRecurrenceRule } from "./recurrenceRule";
 import { zIcsDateObject } from "./date";
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const zIcsTimezoneProp: z.ZodType<IcsTimezoneProp<any>> = z.object({
+export const zIcsTimezoneProp: z.ZodType<
+  IcsTimezoneProp<any>,
+  IcsTimezoneProp<any>
+> = z.object({
   type: z.enum(timezonePropTypes),
   start: z.date(),
   offsetTo: z.string(),
@@ -19,7 +22,7 @@ export const zIcsTimezoneProp: z.ZodType<IcsTimezoneProp<any>> = z.object({
   comment: z.string().optional(),
   recurrenceDate: zIcsDateObject.optional(),
   name: z.string().optional(),
-  nonStandard: z.record(z.any()).optional(),
+  nonStandard: z.record(z.string(), z.any()).optional(),
 });
 
 export const parseIcsTimezoneProp = <T extends NonStandardValuesGeneric>(
