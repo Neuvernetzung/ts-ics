@@ -6,10 +6,11 @@ import {
 import { z } from "zod";
 import { zIcsDateObject } from "./date";
 
-export const zIcsRecurrenceId: z.ZodType<IcsRecurrenceId> = z.object({
-  range: z.literal("THISANDFUTURE").optional(),
-  value: zIcsDateObject,
-});
+export const zIcsRecurrenceId: z.ZodType<IcsRecurrenceId, IcsRecurrenceId> =
+  z.object({
+    range: z.literal("THISANDFUTURE").optional(),
+    value: zIcsDateObject,
+  });
 
 export const parseIcsRecurrenceId: ParseRecurrenceId = (...props) =>
   convertIcsRecurrenceId(zIcsRecurrenceId, ...props);

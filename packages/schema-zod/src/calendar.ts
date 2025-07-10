@@ -20,8 +20,12 @@ export const zIcsCalendarMethod = z.union([
   z.string(),
 ]);
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const zIcsCalendar: z.ZodType<IcsCalendar<any>> = z.object({
+export const zIcsCalendar: z.ZodType<
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  IcsCalendar<any>,
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  IcsCalendar<any>
+> = z.object({
   version: zIcsCalenderVersion,
   prodId: z.string(),
   method: zIcsCalendarMethod.optional(),
@@ -31,7 +35,7 @@ export const zIcsCalendar: z.ZodType<IcsCalendar<any>> = z.object({
   journals: z.array(zIcsJournal).optional(),
   freeBusy: z.array(zIcsFreeBusy).optional(),
   name: z.string().optional(),
-  nonStandard: z.record(z.any()).optional(),
+  nonStandard: z.record(z.string(), z.any()).optional(),
 });
 
 export const parseIcsCalendar = <T extends NonStandardValuesGeneric>(

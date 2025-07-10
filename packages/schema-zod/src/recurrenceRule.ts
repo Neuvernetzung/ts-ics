@@ -8,7 +8,10 @@ import { z } from "zod";
 import { zIcsDateObject } from "./date";
 import { zIcsWeekDay, zIcsWeekdayNumber } from "./weekDay";
 
-export const zIcsRecurrenceRule: z.ZodType<IcsRecurrenceRule> = z.object({
+export const zIcsRecurrenceRule: z.ZodType<
+  IcsRecurrenceRule,
+  IcsRecurrenceRule
+> = z.object({
   frequency: z.enum(recurrenceRuleFrequencies),
   until: zIcsDateObject.optional(),
   count: z.number().optional(),

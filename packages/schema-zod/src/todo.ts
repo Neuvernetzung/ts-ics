@@ -17,7 +17,10 @@ import { zIcsOrganizer } from "./organizer";
 import { zIcsTodoStatusType } from "./status";
 import { zIcsRecurrenceId } from "./recurrenceId";
 
-export const zIcsDurationOrDue: z.ZodType<IcsTodoDurationOrDue> = z.union([
+export const zIcsDurationOrDue: z.ZodType<
+  IcsTodoDurationOrDue,
+  IcsTodoDurationOrDue
+> = z.union([
   z.object({
     duration: zIcsDuration,
     start: zIcsDateObject,
@@ -26,7 +29,7 @@ export const zIcsDurationOrDue: z.ZodType<IcsTodoDurationOrDue> = z.union([
   z.object({ duration: z.never().optional(), due: zIcsDateObject }),
 ]);
 
-export const zIcsTodoBase: z.ZodType<IcsTodoBase> = z.object({
+export const zIcsTodoBase: z.ZodType<IcsTodoBase, IcsTodoBase> = z.object({
   summary: z.string().optional(),
   uid: z.string(),
   created: zIcsDateObject.optional(),
@@ -38,7 +41,7 @@ export const zIcsTodoBase: z.ZodType<IcsTodoBase> = z.object({
   categories: z.array(z.string()).optional(),
   exceptionDates: zIcsExceptionDates.optional(),
   recurrenceRule: zIcsRecurrenceRule.optional(),
-  url: z.string().url().optional(),
+  url: z.url().optional(),
   geo: z.string().optional(),
   class: zIcsClassType.optional(),
   organizer: zIcsOrganizer.optional(),
@@ -49,12 +52,12 @@ export const zIcsTodoBase: z.ZodType<IcsTodoBase> = z.object({
   recurrenceId: zIcsRecurrenceId.optional(),
   attendees: z.array(zIcsAttendee).optional(),
   comment: z.string().optional(),
-  nonStandard: z.record(z.any()).optional(),
+  nonStandard: z.record(z.string(), z.any()).optional(),
   percentComplete: z.number().int().optional(),
 });
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const zIcsTodo: z.ZodType<IcsTodo<any>> = z.intersection(
+export const zIcsTodo: z.ZodType<IcsTodo<any>, IcsTodo<any>> = z.intersection(
   zIcsTodoBase,
   zIcsDurationOrDue
 );

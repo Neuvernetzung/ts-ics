@@ -19,12 +19,15 @@ import { zIcsOrganizer } from "./organizer";
 import { zIcsEventStatusType } from "./status";
 import { zIcsRecurrenceId } from "./recurrenceId";
 
-export const zIcsDurationOrEnd: z.ZodType<IcsEventDurationOrEnd> = z.union([
+export const zIcsDurationOrEnd: z.ZodType<
+  IcsEventDurationOrEnd,
+  IcsEventDurationOrEnd
+> = z.union([
   z.object({ duration: zIcsDuration, end: z.never().optional() }),
   z.object({ duration: z.never().optional(), end: zIcsDateObject }),
 ]);
 
-export const zIcsEventBase: z.ZodType<IcsEventBase> = z.object({
+export const zIcsEventBase: z.ZodType<IcsEventBase, IcsEventBase> = z.object({
   summary: z.string(),
   uid: z.string(),
   created: zIcsDateObject.optional(),
@@ -39,7 +42,7 @@ export const zIcsEventBase: z.ZodType<IcsEventBase> = z.object({
   recurrenceRule: zIcsRecurrenceRule.optional(),
   alarms: z.array(zIcsAlarm).optional(),
   timeTransparent: zIcsTimeTransparentType.optional(),
-  url: z.string().url().optional(),
+  url: z.url().optional(),
   geo: z.string().optional(),
   class: zIcsClassType.optional(),
   organizer: zIcsOrganizer.optional(),
@@ -50,14 +53,15 @@ export const zIcsEventBase: z.ZodType<IcsEventBase> = z.object({
   recurrenceId: zIcsRecurrenceId.optional(),
   attendees: z.array(zIcsAttendee).optional(),
   comment: z.string().optional(),
-  nonStandard: z.record(z.any()).optional(),
+  nonStandard: z.record(z.string(), z.any()).optional(),
 });
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const zIcsEvent: z.ZodType<IcsEvent<any>> = z.intersection(
-  zIcsEventBase,
-  zIcsDurationOrEnd
-);
+export const zIcsEvent: z.ZodType<
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  IcsEvent<any>,
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  IcsEvent<any>
+> = z.intersection(zIcsEventBase, zIcsDurationOrEnd);
 
 export const parseIcsEvent = <T extends NonStandardValuesGeneric>(
   ...props: Parameters<ParseEvent<T>>

@@ -11,7 +11,7 @@ import { zIcsDuration } from "./duration";
 import { zIcsAttachment } from "./attachment";
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const zIcsAlarm: z.ZodType<IcsAlarm<any>> = z.object({
+export const zIcsAlarm: z.ZodType<IcsAlarm<any>, IcsAlarm<any>> = z.object({
   action: z.string().default("DISPLAY"),
   description: z.string().optional(),
   trigger: zIcsTrigger,
@@ -20,7 +20,7 @@ export const zIcsAlarm: z.ZodType<IcsAlarm<any>> = z.object({
   repeat: z.number().optional(),
   summary: z.string().optional(),
   attachments: z.array(zIcsAttachment).optional(),
-  nonStandard: z.record(z.any()).optional(),
+  nonStandard: z.record(z.string(), z.any()).optional(),
 });
 
 export const parseIcsAlarm = <T extends NonStandardValuesGeneric>(

@@ -14,8 +14,12 @@ import { zIcsOrganizer } from "./organizer";
 import { zIcsJournalStatusType } from "./status";
 import { zIcsRecurrenceId } from "./recurrenceId";
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const zIcsJournal: z.ZodType<IcsJournal<any>> = z.object({
+export const zIcsJournal: z.ZodType<
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  IcsJournal<any>,
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  IcsJournal<any>
+> = z.object({
   summary: z.string().optional(),
   uid: z.string(),
   created: zIcsDateObject.optional(),
@@ -28,7 +32,7 @@ export const zIcsJournal: z.ZodType<IcsJournal<any>> = z.object({
   categories: z.array(z.string()).optional(),
   exceptionDates: zIcsExceptionDates.optional(),
   recurrenceRule: zIcsRecurrenceRule.optional(),
-  url: z.string().url().optional(),
+  url: z.url().optional(),
   geo: z.string().optional(),
   class: zIcsClassType.optional(),
   organizer: zIcsOrganizer.optional(),
@@ -39,7 +43,7 @@ export const zIcsJournal: z.ZodType<IcsJournal<any>> = z.object({
   recurrenceId: zIcsRecurrenceId.optional(),
   attendees: z.array(zIcsAttendee).optional(),
   comment: z.string().optional(),
-  nonStandard: z.record(z.any()).optional(),
+  nonStandard: z.record(z.string(), z.any()).optional(),
   percentComplete: z.number().int().optional(),
 });
 

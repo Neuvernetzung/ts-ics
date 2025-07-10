@@ -6,15 +6,15 @@ import {
 } from "ts-ics";
 import { z } from "zod";
 
-export const zIcsAttendee: z.ZodType<IcsAttendee> = z.object({
-  email: z.string().email(),
+export const zIcsAttendee: z.ZodType<IcsAttendee, IcsAttendee> = z.object({
+  email: z.email(),
   name: z.string().optional(),
-  member: z.string().email().optional(),
-  delegatedFrom: z.string().email().optional(),
+  member: z.email().optional(),
+  delegatedFrom: z.email().optional(),
   role: z.string().optional(),
   partstat: z.enum(attendeePartStatusTypes).optional(),
-  dir: z.string().url().optional(),
-  sentBy: z.string().email().optional(),
+  dir: z.url().optional(),
+  sentBy: z.email().optional(),
   rsvp: z.boolean().optional(),
 });
 
