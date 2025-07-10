@@ -20,9 +20,10 @@ export const zIcsCalendarMethod = z.union([
   z.string(),
 ]);
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const zIcsCalendar: z.ZodType<
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   IcsCalendar<any>,
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   IcsCalendar<any>
 > = z.object({
   version: zIcsCalenderVersion,

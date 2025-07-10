@@ -9,9 +9,10 @@ import { z } from "zod";
 import { zIcsRecurrenceRule } from "./recurrenceRule";
 import { zIcsDateObject } from "./date";
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const zIcsTimezoneProp: z.ZodType<
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   IcsTimezoneProp<any>,
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   IcsTimezoneProp<any>
 > = z.object({
   type: z.enum(timezonePropTypes),

@@ -42,9 +42,10 @@ export const zIcsFreeBusyTime: z.ZodType<IcsFreeBusyTime, IcsFreeBusyTime> =
     values: z.array(zIcsFreeBusyValue),
   });
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const zIcsFreeBusy: z.ZodType<
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   IcsFreeBusy<any>,
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   IcsFreeBusy<any>
 > = z.object({
   uid: z.string(),

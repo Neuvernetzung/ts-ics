@@ -14,9 +14,10 @@ import { zIcsOrganizer } from "./organizer";
 import { zIcsJournalStatusType } from "./status";
 import { zIcsRecurrenceId } from "./recurrenceId";
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const zIcsJournal: z.ZodType<
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   IcsJournal<any>,
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   IcsJournal<any>
 > = z.object({
   summary: z.string().optional(),
