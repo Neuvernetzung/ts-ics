@@ -1,5 +1,15 @@
 # @ts-ics/schema-zod
 
+## 2.2.0
+
+### Minor Changes
+
+- f73149a: upgrade zod to version 4.0.1 and update schema definitions
+
+### Patch Changes
+
+- ts-ics@2.2.0
+
 ## 2.1.8
 
 ### Patch Changes
