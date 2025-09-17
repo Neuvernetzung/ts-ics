@@ -14,18 +14,18 @@ import type { IcsAttendee } from "@/types/attendee";
 import {
   freeBusyObjectKeyIsTextString,
   freeBusyObjectKeyIsTimeStamp,
-} from "../../constants/keyTypes/freebusy";
-import { convertIcsAttendee } from "./attendee";
-import { convertIcsOrganizer } from "./organizer";
-import { convertIcsTimeStamp } from "./timeStamp";
-import { getLine } from "./utils/line";
-import { splitLines } from "./utils/splitLines";
-import { unescapeTextString } from "./utils/unescapeText";
-import { standardValidate } from "./utils/standardValidate";
+} from "@/constants/keyTypes/freebusy";
+import { convertIcsAttendee } from "../values/attendee";
+import { convertIcsOrganizer } from "../values/organizer";
+import { convertIcsTimeStamp } from "../values/timeStamp";
+import { getLine } from "../utils/line";
+import { splitLines } from "../utils/splitLines";
+import { unescapeTextString } from "../utils/unescapeText";
+import { standardValidate } from "../utils/standardValidate";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
-import { convertNonStandardValues } from "./nonStandardValues";
+import { convertNonStandardValues } from "../nonStandard/nonStandardValues";
 import { valueIsNonStandard } from "@/utils/nonStandardValue";
-import { convertIcsFreeBusyTime } from "./freebusyValue";
+import { convertIcsFreeBusyTime } from "../values/freebusyValue";
 
 export const convertIcsFreeBusy = <T extends NonStandardValuesGeneric>(
   ...args: Parameters<ConvertFreeBusy<T>>

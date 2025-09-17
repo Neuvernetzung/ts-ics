@@ -12,7 +12,7 @@ import { generateIcsLine } from "../utils/addLine";
 import { escapeTextString } from "../utils/escapeText";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
 import { generateIcsRecurrenceId } from "../values/recurrenceId";
-import { _generateIcsComponent, GenerateIcsComponentProps } from "./_component";
+import { _generateIcsComponent, type GenerateIcsComponentProps } from "./_component";
 import { VTODO_OBJECT_KEY } from "@/constants";
 
 export const generateIcsTodo = <T extends NonStandardValuesGeneric>(

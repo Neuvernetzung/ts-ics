@@ -1,4 +1,4 @@
-import { convertIcsFreeBusy } from "@/lib/parse/freebusy";
+import { convertIcsFreeBusy } from "@/lib/parse/components/freebusy";
 import { icsTestData } from "../utils";
 import { z } from "zod";
 

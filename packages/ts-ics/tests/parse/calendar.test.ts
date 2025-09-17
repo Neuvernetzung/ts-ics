@@ -1,4 +1,4 @@
-import { convertIcsCalendar } from "@/lib/parse/calendar";
+import { convertIcsCalendar } from "@/lib/parse/components/calendar";
 import { icsTestData } from "../utils";
 import { readFile } from "node:fs/promises";
 import { z } from "zod";

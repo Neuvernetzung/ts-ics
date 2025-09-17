@@ -1,5 +1,5 @@
 import type { ConvertWeekDayNumber, IcsWeekDay } from "@/types/weekday";
-import { standardValidate } from "./utils/standardValidate";
+import { standardValidate } from "../utils/standardValidate";
 import type { Line } from "@/types";
 
 const __convertIcsWeekDayNumber = (value: Line["value"]) => {

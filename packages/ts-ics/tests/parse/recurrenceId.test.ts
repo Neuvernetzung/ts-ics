@@ -1,6 +1,6 @@
 import { getLine } from "@/lib/parse/utils/line";
 
-import { convertIcsRecurrenceId } from "@/lib/parse/recurrenceId";
+import { convertIcsRecurrenceId } from "@/lib/parse/values/recurrenceId";
 
 it("Test Ics Recurrence Id Parse", async () => {
   const rId = `RECURRENCE-ID;VALUE=DATE:19960401`;

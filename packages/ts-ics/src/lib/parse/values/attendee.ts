@@ -3,8 +3,8 @@ import type {
   IcsAttendeePartStatusType,
 } from "@/types/attendee";
 
-import { replaceMailTo } from "./utils/replaceMailTo";
-import { standardValidate } from "./utils/standardValidate";
+import { replaceMailTo } from "../utils/replaceMailTo";
+import { standardValidate } from "../utils/standardValidate";
 
 export const convertIcsAttendee: ConvertAttendee = (schema, line) =>
   standardValidate(schema, {

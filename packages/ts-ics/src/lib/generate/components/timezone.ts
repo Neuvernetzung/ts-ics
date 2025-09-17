@@ -5,7 +5,7 @@ import { generateIcsUtcDateTime } from "../values/date";
 import { generateIcsTimezoneProp } from "./timezoneProp";
 import { generateIcsLine } from "../utils/addLine";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
-import { _generateIcsComponent, GenerateIcsComponentProps } from "./_component";
+import { _generateIcsComponent, type GenerateIcsComponentProps } from "./_component";
 import { VTIMEZONE_OBJECT_KEY } from "@/constants";
 
 export const generateIcsTimezone = <T extends NonStandardValuesGeneric>(

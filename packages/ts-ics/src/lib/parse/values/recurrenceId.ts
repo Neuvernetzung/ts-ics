@@ -2,7 +2,7 @@ import type { IcsRecurrenceId } from "@/types/recurrenceId";
 
 import { convertIcsTimeStamp } from "./timeStamp";
 import type { ConvertRecurrenceId } from "@/types";
-import { standardValidate } from "./utils/standardValidate";
+import { standardValidate } from "../utils/standardValidate";
 
 export const convertIcsRecurrenceId: ConvertRecurrenceId = (
   schema,

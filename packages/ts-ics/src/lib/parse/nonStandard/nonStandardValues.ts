@@ -4,7 +4,7 @@ import type {
   ParseNonStandardValue,
   ParseNonStandardValues,
 } from "@/types/nonStandardValues";
-import { standardValidate } from "./utils/standardValidate";
+import { standardValidate } from "../utils/standardValidate";
 
 export const convertNonStandardValues = <
   T extends { nonStandard?: NonStandardValuesGeneric },

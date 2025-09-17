@@ -6,7 +6,7 @@ import { generateIcsRecurrenceRule } from "../values/recurrenceRule";
 import { generateIcsTimeStamp } from "../values/timeStamp";
 import { generateIcsLine } from "../utils/addLine";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
-import { _generateIcsComponent, GenerateIcsComponentProps } from "./_component";
+import { _generateIcsComponent, type GenerateIcsComponentProps } from "./_component";
 
 export const generateIcsTimezoneProp = <T extends NonStandardValuesGeneric>(
   timezoneProp: IcsTimezoneProp,

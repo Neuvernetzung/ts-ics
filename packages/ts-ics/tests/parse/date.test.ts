@@ -1,5 +1,5 @@
 import { generateIcsUtcDateTime } from "@/lib";
-import { convertIcsDate, convertIcsDateTime } from "@/lib/parse/date";
+import { convertIcsDate, convertIcsDateTime } from "@/lib/parse/values/date";
 import { setMilliseconds } from "date-fns";
 
 it("Test Ics Date Time Parse", async () => {

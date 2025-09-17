@@ -9,13 +9,13 @@ import {
 } from "@/constants/keys/timezone";
 import type { ConvertTimezone, IcsTimezone } from "@/types/timezone";
 
-import { convertIcsDateTime } from "./date";
-import { convertIcsTimezoneProp } from "./timezoneProp";
-import { getLine } from "./utils/line";
-import { splitLines } from "./utils/splitLines";
-import { standardValidate } from "./utils/standardValidate";
+import { convertIcsDateTime } from "../values/date";
+import { convertIcsTimezoneProp } from "../components/timezoneProp";
+import { getLine } from "../utils/line";
+import { splitLines } from "../utils/splitLines";
+import { standardValidate } from "../utils/standardValidate";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
-import { convertNonStandardValues } from "./nonStandardValues";
+import { convertNonStandardValues } from "../nonStandard/nonStandardValues";
 import type { Line } from "@/types";
 import { valueIsNonStandard } from "@/utils/nonStandardValue";
 

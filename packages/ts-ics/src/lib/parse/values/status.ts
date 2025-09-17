@@ -6,7 +6,7 @@ import type {
   IcsJournalStatusType,
   IcsTodoStatusType,
 } from "@/types";
-import { standardValidate } from "./utils/standardValidate";
+import { standardValidate } from "../utils/standardValidate";
 
 export const convertIcsEventStatus: ConvertEventStatus = (schema, line) =>
   standardValidate(schema, line.value as IcsEventStatusType);

@@ -5,7 +5,7 @@ import type { DateObjectType } from "@/types/date";
 
 import { convertIcsDateTime, convertIcsDate } from "./date";
 import { getTimezoneObjectOffset } from "@/utils/timezone/getTimezone";
-import { standardValidate } from "./utils/standardValidate";
+import { standardValidate } from "../utils/standardValidate";
 
 const __convertIcsTimeStamp = (line: Line, options?: ParseTimeStampOptions) => {
   if (line.options?.VALUE === "DATE")

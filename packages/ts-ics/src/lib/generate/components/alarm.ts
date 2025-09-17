@@ -7,7 +7,7 @@ import { generateIcsDuration } from "../values/duration";
 import { generateIcsTrigger } from "../values/trigger";
 import { generateIcsLine } from "../utils/addLine";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
-import { _generateIcsComponent, GenerateIcsComponentProps } from "./_component";
+import { _generateIcsComponent, type GenerateIcsComponentProps } from "./_component";
 import { VALARM_OBJECT_KEY } from "@/constants";
 
 export const generateIcsAlarm = <T extends NonStandardValuesGeneric>(

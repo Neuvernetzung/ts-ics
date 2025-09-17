@@ -2,7 +2,7 @@ import type { ConvertTrigger, IcsTriggerRelation, IcsTrigger } from "@/types";
 
 import { convertIcsDuration } from "./duration";
 import { convertIcsTimeStamp } from "./timeStamp";
-import { standardValidate } from "./utils/standardValidate";
+import { standardValidate } from "../utils/standardValidate";
 
 export const convertIcsTrigger: ConvertTrigger = (schema, line, options) => {
   const trigger: IcsTrigger =

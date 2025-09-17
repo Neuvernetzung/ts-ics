@@ -1,5 +1,5 @@
 import { icsTestData } from "../../../../tests/utils";
-import { convertIcsEvent } from "../event";
+import { convertIcsEvent } from "../components/event";
 import { unescapeTextString } from "./unescapeText";
 
 describe("unescapeTextString", () => {

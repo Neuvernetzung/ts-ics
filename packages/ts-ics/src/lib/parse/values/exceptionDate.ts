@@ -1,6 +1,6 @@
 import type { ConvertExceptionDates } from "@/types/exceptionDate";
 import { convertIcsTimeStamp } from "./timeStamp";
-import { standardValidate } from "./utils/standardValidate";
+import { standardValidate } from "../utils/standardValidate";
 
 export const convertIcsExceptionDates: ConvertExceptionDates = (
   schema,

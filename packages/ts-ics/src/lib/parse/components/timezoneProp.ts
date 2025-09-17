@@ -11,14 +11,14 @@ import type {
   IcsTimezoneProp,
 } from "@/types/timezoneProp";
 
-import { convertIcsDateTime } from "./date";
-import { convertIcsRecurrenceRule } from "./recurrenceRule";
-import { convertIcsTimeStamp } from "./timeStamp";
-import { getLine } from "./utils/line";
-import { splitLines } from "./utils/splitLines";
-import { standardValidate } from "./utils/standardValidate";
+import { convertIcsDateTime } from "../values/date";
+import { convertIcsRecurrenceRule } from "../values/recurrenceRule";
+import { convertIcsTimeStamp } from "../values/timeStamp";
+import { getLine } from "../utils/line";
+import { splitLines } from "../utils/splitLines";
+import { standardValidate } from "../utils/standardValidate";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
-import { convertNonStandardValues } from "./nonStandardValues";
+import { convertNonStandardValues } from "../nonStandard/nonStandardValues";
 import type { Line } from "@/types";
 import { valueIsNonStandard } from "@/utils/nonStandardValue";
 

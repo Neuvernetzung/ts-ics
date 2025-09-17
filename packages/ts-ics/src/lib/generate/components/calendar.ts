@@ -7,7 +7,7 @@ import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
 import { generateIcsTodo } from "./todo";
 import { generateIcsJournal } from "./journal";
 import { generateIcsFreeBusy } from "./freebusy";
-import { _generateIcsComponent, GenerateIcsComponentProps } from "./_component";
+import { _generateIcsComponent, type GenerateIcsComponentProps } from "./_component";
 
 export const generateIcsCalendar = <T extends NonStandardValuesGeneric>(
   calendar: IcsCalendar,

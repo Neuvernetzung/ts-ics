@@ -1,5 +1,5 @@
 import { generateIcsEvent } from "@/lib";
-import { convertIcsEvent } from "@/lib/parse/event";
+import { convertIcsEvent } from "@/lib/parse/components/event";
 import type { IcsEvent } from "@/types";
 import { readFile } from "node:fs/promises";
 import { icsTestData } from "../utils";

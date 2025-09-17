@@ -1,5 +1,5 @@
 import type { ConvertFreeBusyTime, FreeBusyType } from "@/types";
-import { standardValidate } from "./utils/standardValidate";
+import { standardValidate } from "../utils/standardValidate";
 import { convertIcsDateTime } from "./date";
 import { convertIcsDuration } from "./duration";
 

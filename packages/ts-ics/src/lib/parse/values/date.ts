@@ -1,4 +1,4 @@
-import { standardValidate } from "./utils/standardValidate";
+import { standardValidate } from "../utils/standardValidate";
 import type { ConvertDate } from "@/types";
 
 export const convertIcsDate: ConvertDate = (schema, line) => {

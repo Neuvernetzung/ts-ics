@@ -7,15 +7,15 @@ import type { ConvertAlarm, IcsAlarm, Line } from "@/types";
 import type { IcsAttachment } from "@/types/attachment";
 import type { IcsAttendee } from "@/types/attendee";
 
-import { convertIcsAttachment } from "./attachment";
-import { convertIcsAttendee } from "./attendee";
-import { convertIcsDuration } from "./duration";
-import { convertIcsTrigger } from "./trigger";
-import { getLine } from "./utils/line";
-import { splitLines } from "./utils/splitLines";
-import { standardValidate } from "./utils/standardValidate";
+import { convertIcsAttachment } from "../values/attachment";
+import { convertIcsAttendee } from "../values/attendee";
+import { convertIcsDuration } from "../values/duration";
+import { convertIcsTrigger } from "../values/trigger";
+import { getLine } from "../utils/line";
+import { splitLines } from "../utils/splitLines";
+import { standardValidate } from "../utils/standardValidate";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
-import { convertNonStandardValues } from "./nonStandardValues";
+import { convertNonStandardValues } from "../nonStandard/nonStandardValues";
 import { valueIsNonStandard } from "@/utils/nonStandardValue";
 
 export const convertIcsAlarm = <T extends NonStandardValuesGeneric>(

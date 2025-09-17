@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 
 import { getTimezoneRegex } from "@/constants";
 import { convertIcsTimezone } from "@/lib";
-import { convertIcsTimeStamp } from "@/lib/parse/timeStamp";
+import { convertIcsTimeStamp } from "@/lib/parse/values/timeStamp";
 import { getLine } from "@/lib/parse/utils/line";
 
 it("Test Ics Timestamp Parse - Date", async () => {

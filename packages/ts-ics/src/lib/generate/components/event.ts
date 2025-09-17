@@ -14,7 +14,7 @@ import { escapeTextString } from "../utils/escapeText";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
 import { generateIcsRecurrenceId } from "../values/recurrenceId";
 import { generateIcsOptions } from "../utils/generateOptions";
-import { _generateIcsComponent, GenerateIcsComponentProps } from "./_component";
+import { _generateIcsComponent, type GenerateIcsComponentProps } from "./_component";
 import { VEVENT_OBJECT_KEY } from "@/constants";
 
 export const generateIcsEvent = <T extends NonStandardValuesGeneric>(

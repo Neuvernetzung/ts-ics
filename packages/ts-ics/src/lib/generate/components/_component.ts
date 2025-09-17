@@ -1,5 +1,5 @@
-import { IcsComponent } from "@/constants";
-import {
+import type { IcsComponent } from "@/constants";
+import type {
   GenerateNonStandardValues,
   IcsTimezone,
   NonStandardValuesGeneric,
@@ -14,7 +14,9 @@ import { generateNonStandardValues } from "../nonStandard";
 import { formatLines } from "../utils/formatLines";
 
 type PickArrays<T> = {
-  [K in keyof T as Exclude<T[K], undefined> extends any[] ? K : never]: T[K];
+  [K in keyof T as Exclude<T[K], undefined> extends unknown[]
+    ? K
+    : never]: T[K];
 };
 
 type ArrayElement<T> = T extends (infer U)[] ? U : never;
@@ -167,6 +169,4 @@ export const _generateIcsComponent = <
   if (options?.skipFormatLines) return icsString;
 
   return formatLines(icsString);
-
-  return icsString;
 };

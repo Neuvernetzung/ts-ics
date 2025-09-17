@@ -1,4 +1,4 @@
-import { convertIcsAlarm } from "@/lib/parse/alarm";
+import { convertIcsAlarm } from "@/lib/parse/components/alarm";
 import { icsTestData } from "../utils";
 import { z } from "zod";
 

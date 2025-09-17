@@ -7,22 +7,22 @@ import {
   todoObjectKeyIsArrayOfStrings,
   todoObjectKeyIsTextString,
   todoObjectKeyIsTimeStamp,
-} from "../../constants/keyTypes/todo";
-import { convertIcsAttendee } from "./attendee";
-import { convertIcsDuration } from "./duration";
-import { convertIcsOrganizer } from "./organizer";
-import { convertIcsRecurrenceRule } from "./recurrenceRule";
-import { convertIcsTimeStamp } from "./timeStamp";
-import { getLine } from "./utils/line";
-import { splitLines } from "./utils/splitLines";
-import { convertIcsExceptionDates } from "./exceptionDate";
-import { unescapeTextString } from "./utils/unescapeText";
-import { convertIcsRecurrenceId } from "./recurrenceId";
-import { convertIcsClass } from "./class";
-import { convertIcsTodoStatus } from "./status";
-import { standardValidate } from "./utils/standardValidate";
+} from "@/constants/keyTypes/todo";
+import { convertIcsAttendee } from "../values/attendee";
+import { convertIcsDuration } from "../values/duration";
+import { convertIcsOrganizer } from "../values/organizer";
+import { convertIcsRecurrenceRule } from "../values/recurrenceRule";
+import { convertIcsTimeStamp } from "../values/timeStamp";
+import { getLine } from "../utils/line";
+import { splitLines } from "../utils/splitLines";
+import { convertIcsExceptionDates } from "../values/exceptionDate";
+import { unescapeTextString } from "../utils/unescapeText";
+import { convertIcsRecurrenceId } from "../values/recurrenceId";
+import { convertIcsClass } from "../values/class";
+import { convertIcsTodoStatus } from "../values/status";
+import { standardValidate } from "../utils/standardValidate";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
-import { convertNonStandardValues } from "./nonStandardValues";
+import { convertNonStandardValues } from "../nonStandard/nonStandardValues";
 import { valueIsNonStandard } from "@/utils/nonStandardValue";
 
 export const convertIcsTodo = <T extends NonStandardValuesGeneric>(

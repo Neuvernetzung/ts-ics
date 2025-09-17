@@ -1,5 +1,5 @@
 import type { ConvertDuration, IcsDuration } from "@/types";
-import { standardValidate } from "./utils/standardValidate";
+import { standardValidate } from "../utils/standardValidate";
 
 export const convertIcsDuration: ConvertDuration = (schema, line) => {
   let newString = line.value;

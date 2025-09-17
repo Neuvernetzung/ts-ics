@@ -17,17 +17,17 @@ import type {
   Line,
 } from "@/types";
 
-import { convertIcsEvent } from "./event";
-import { convertIcsTimezone } from "./timezone";
-import { getLine } from "./utils/line";
-import { splitLines } from "./utils/splitLines";
-import { standardValidate } from "./utils/standardValidate";
-import { convertNonStandardValues } from "./nonStandardValues";
+import { convertIcsEvent } from "../components/event";
+import { convertIcsTimezone } from "../components/timezone";
+import { getLine } from "../utils/line";
+import { splitLines } from "../utils/splitLines";
+import { standardValidate } from "../utils/standardValidate";
+import { convertNonStandardValues } from "../nonStandard/nonStandardValues";
 import { valueIsNonStandard } from "@/utils/nonStandardValue";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
-import { convertIcsTodo } from "./todo";
-import { convertIcsJournal } from "./journal";
-import { convertIcsFreeBusy } from "./freebusy";
+import { convertIcsTodo } from "../components/todo";
+import { convertIcsJournal } from "../components/journal";
+import { convertIcsFreeBusy } from "../components/freebusy";
 
 export const convertIcsCalendar = <T extends NonStandardValuesGeneric>(
   ...args: Parameters<ConvertCalendar<T>>
