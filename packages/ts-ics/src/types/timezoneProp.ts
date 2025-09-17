@@ -1,3 +1,7 @@
+import {
+  VTIMEZONE_DAYLIGHT_OBJECT_KEY,
+  VTIMEZONE_STANDARD_OBJECT_KEY,
+} from "@/constants";
 import type { IcsDateObject } from "./date";
 import type {
   NonStandardValuesGeneric,
@@ -7,7 +11,10 @@ import type { ConvertComponentType, ParseComponentType } from "./parse";
 import type { IcsRecurrenceRule } from "./recurrenceRule";
 import type { IcsTimezone } from "./timezone";
 
-export const timezonePropTypes = ["STANDARD", "DAYLIGHT"] as const;
+export const timezonePropTypes = [
+  VTIMEZONE_STANDARD_OBJECT_KEY,
+  VTIMEZONE_DAYLIGHT_OBJECT_KEY,
+] as const;
 
 export type IcsTimezonePropTypes = typeof timezonePropTypes;
 export type IcsTimezonePropType = IcsTimezonePropTypes[number];

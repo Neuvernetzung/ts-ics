@@ -1,71 +1,31 @@
 import { VTIMEZONE_PROP_TO_KEYS } from "@/constants/keys/timezoneProp";
-import type { IcsDateObject, IcsRecurrenceRule } from "@/types";
 import type { IcsTimezoneProp } from "@/types/timezoneProp";
 
 import { generateIcsUtcDateTime } from "../values/date";
 import { generateIcsRecurrenceRule } from "../values/recurrenceRule";
 import { generateIcsTimeStamp } from "../values/timeStamp";
-import {
-  generateIcsLine,
-  getIcsEndLine,
-  getIcsStartLine,
-} from "../utils/addLine";
-import { getKeys } from "../utils/getKeys";
-import { generateNonStandardValues } from "../nonStandard/nonStandardValues";
-import type {
-  GenerateNonStandardValues,
-  NonStandardValuesGeneric,
-} from "@/types/nonStandardValues";
+import { generateIcsLine } from "../utils/addLine";
+import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import { _generateIcsComponent, GenerateIcsComponentProps } from "./_component";
 
 export const generateIcsTimezoneProp = <T extends NonStandardValuesGeneric>(
   timezoneProp: IcsTimezoneProp,
-  options?: { nonStandard?: GenerateNonStandardValues<T> }
-) => {
-  const timezonePropKeys = getKeys(timezoneProp);
-
-  let icsString = "";
-
-  icsString += getIcsStartLine(timezoneProp.type);
-
-  timezonePropKeys.forEach((key) => {
-    if (key === "type") return;
-
-    if (key === "nonStandard") {
-      icsString += generateNonStandardValues(
-        timezoneProp[key],
-        options?.nonStandard
-      );
-      return;
-    }
-
-    const icsKey = VTIMEZONE_PROP_TO_KEYS[key];
-
-    if (!icsKey) return;
-
-    const value = timezoneProp[key];
-
-    if (key === "start") {
-      icsString += generateIcsLine(
-        icsKey,
-        generateIcsUtcDateTime(value as Date)
-      );
-      return;
-    }
-
-    if (key === "recurrenceRule") {
-      icsString += generateIcsRecurrenceRule(value as IcsRecurrenceRule);
-      return;
-    }
-
-    if (key === "recurrenceDate") {
-      icsString += generateIcsTimeStamp(icsKey, value as IcsDateObject);
-      return;
-    }
-
-    icsString += generateIcsLine(icsKey, String(value));
+  options?: Pick<
+    GenerateIcsComponentProps<IcsTimezoneProp, T>,
+    "nonStandard" | "skipFormatLines"
+  >
+) =>
+  _generateIcsComponent(timezoneProp, {
+    icsComponent: timezoneProp.type,
+    icsKeyMap: VTIMEZONE_PROP_TO_KEYS,
+    generateValues: {
+      start: ({ icsKey, value }) =>
+        generateIcsLine(icsKey, generateIcsUtcDateTime(value)),
+      recurrenceRule: ({ value }) => generateIcsRecurrenceRule(value),
+      recurrenceDate: ({ icsKey, value }) =>
+        generateIcsTimeStamp(icsKey, value),
+    },
+    omitGenerateKeys: ["type"],
+    nonStandard: options?.nonStandard,
+    skipFormatLines: options?.skipFormatLines,
   });
-
-  icsString += getIcsEndLine(timezoneProp.type);
-
-  return icsString;
-};

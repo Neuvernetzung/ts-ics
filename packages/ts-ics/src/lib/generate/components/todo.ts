@@ -1,14 +1,6 @@
 import { VTODO_TO_KEYS } from "@/constants/keys/todo";
 
-import type {
-  IcsDateObject,
-  IcsTodo,
-  IcsDuration,
-  IcsRecurrenceRule,
-  IcsRecurrenceId,
-  IcsTimezone,
-} from "@/types";
-import type { IcsOrganizer } from "@/types/organizer";
+import type { IcsTodo } from "@/types";
 
 import { generateIcsAttendee } from "../values/attendee";
 import { generateIcsExceptionDate } from "../values/exceptionDate";
@@ -16,128 +8,78 @@ import { generateIcsDuration } from "../values/duration";
 import { generateIcsOrganizer } from "../values/organizer";
 import { generateIcsRecurrenceRule } from "../values/recurrenceRule";
 import { generateIcsTimeStamp } from "../values/timeStamp";
-import {
-  generateIcsLine,
-  getIcsEndLine,
-  getIcsStartLine,
-} from "../utils/addLine";
-import { getKeys } from "../utils/getKeys";
-import { formatLines } from "../utils/formatLines";
+import { generateIcsLine } from "../utils/addLine";
 import { escapeTextString } from "../utils/escapeText";
-import { generateNonStandardValues } from "../nonStandard/nonStandardValues";
-import type {
-  GenerateNonStandardValues,
-  NonStandardValuesGeneric,
-} from "@/types/nonStandardValues";
+import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
 import { generateIcsRecurrenceId } from "../values/recurrenceId";
-import {
-  todoObjectKeyIsArrayOfStrings,
-  todoObjectKeyIsTextString,
-  todoObjectKeyIsTimeStamp,
-} from "@/constants/keyTypes/todo";
-
-type GenerateIcsTodoOptions<T extends NonStandardValuesGeneric> = {
-  skipFormatLines?: boolean;
-  nonStandard?: GenerateNonStandardValues<T>;
-  timezones?: IcsTimezone[];
-};
+import { _generateIcsComponent, GenerateIcsComponentProps } from "./_component";
+import { VTODO_OBJECT_KEY } from "@/constants";
 
 export const generateIcsTodo = <T extends NonStandardValuesGeneric>(
   todo: IcsTodo,
-  options?: GenerateIcsTodoOptions<T>
-) => {
-  const todoKeys = getKeys(todo);
-
-  let icsString = "";
-
-  icsString += getIcsStartLine("VTODO");
-
-  todoKeys.forEach((key) => {
-    if (key === "attendees" || key === "exceptionDates") return;
-
-    if (key === "nonStandard") {
-      icsString += generateNonStandardValues(todo[key], options?.nonStandard);
-      return;
-    }
-
-    const icsKey = VTODO_TO_KEYS[key];
-
-    if (!icsKey) return;
-
-    const value = todo[key];
-
-    if (value === undefined || value === null) return;
-
-    if (todoObjectKeyIsTimeStamp(key)) {
-      icsString += generateIcsTimeStamp(
-        icsKey,
-        value as IcsDateObject,
-        undefined,
-        { timezones: options?.timezones, forceUtc: key === "stamp" }
-      );
-      return;
-    }
-
-    if (todoObjectKeyIsArrayOfStrings(key)) {
-      icsString += generateIcsLine(icsKey, (value as string[]).join(","));
-      return;
-    }
-
-    if (todoObjectKeyIsTextString(key)) {
-      icsString += generateIcsLine(icsKey, escapeTextString(value as string));
-      return;
-    }
-
-    if (key === "recurrenceRule") {
-      icsString += generateIcsRecurrenceRule(value as IcsRecurrenceRule);
-      return;
-    }
-
-    if (key === "duration") {
-      icsString += generateIcsLine(
-        icsKey,
-        generateIcsDuration(value as IcsDuration)
-      );
-      return;
-    }
-
-    if (key === "organizer") {
-      icsString += generateIcsOrganizer(value as IcsOrganizer);
-      return;
-    }
-
-    if (key === "sequence") {
-      icsString += generateIcsLine(icsKey, (value as number).toString());
-      return;
-    }
-
-    if (key === "recurrenceId") {
-      icsString += generateIcsRecurrenceId(value as IcsRecurrenceId, {
-        timezones: options?.timezones,
-      });
-      return;
-    }
-
-    icsString += generateIcsLine(icsKey, String(value));
+  options?: Pick<
+    GenerateIcsComponentProps<IcsTodo, T>,
+    "nonStandard" | "skipFormatLines" | "timezones"
+  >
+) =>
+  _generateIcsComponent(todo, {
+    icsComponent: VTODO_OBJECT_KEY,
+    icsKeyMap: VTODO_TO_KEYS,
+    generateValues: {
+      stamp: ({ icsKey, value }) =>
+        generateIcsTimeStamp(icsKey, value, undefined, {
+          timezones: options?.timezones,
+          forceUtc: true,
+        }),
+      start: ({ icsKey, value }) =>
+        generateIcsTimeStamp(icsKey, value, undefined, {
+          timezones: options?.timezones,
+        }),
+      due: ({ icsKey, value }) =>
+        generateIcsTimeStamp(icsKey, value, undefined, {
+          timezones: options?.timezones,
+        }),
+      created: ({ icsKey, value }) =>
+        generateIcsTimeStamp(icsKey, value, undefined, {
+          timezones: options?.timezones,
+        }),
+      lastModified: ({ icsKey, value }) =>
+        generateIcsTimeStamp(icsKey, value, undefined, {
+          timezones: options?.timezones,
+        }),
+      completed: ({ icsKey, value }) =>
+        generateIcsTimeStamp(icsKey, value, undefined, {
+          timezones: options?.timezones,
+        }),
+      categories: ({ icsKey, value }) =>
+        generateIcsLine(icsKey, value.join(",")),
+      description: ({ icsKey, value }) =>
+        generateIcsLine(icsKey, escapeTextString(value)),
+      location: ({ icsKey, value }) =>
+        generateIcsLine(icsKey, escapeTextString(value)),
+      comment: ({ icsKey, value }) =>
+        generateIcsLine(icsKey, escapeTextString(value)),
+      summary: ({ icsKey, value }) =>
+        generateIcsLine(icsKey, escapeTextString(value)),
+      recurrenceRule: ({ value }) => generateIcsRecurrenceRule(value),
+      duration: ({ icsKey, value }) =>
+        generateIcsLine(icsKey, generateIcsDuration(value)),
+      organizer: ({ value }) => generateIcsOrganizer(value),
+      sequence: ({ icsKey, value }) =>
+        generateIcsLine(icsKey, value.toString()),
+      recurrenceId: ({ value }) =>
+        generateIcsRecurrenceId(value, {
+          timezones: options?.timezones,
+        }),
+    },
+    generateArrayValues: {
+      attendees: ({ value }) => generateIcsAttendee(value, "ATTENDEE"),
+      exceptionDates: ({ value }) =>
+        generateIcsExceptionDate(value, "EXDATE", {
+          timezones: options?.timezones,
+        }),
+    },
+    nonStandard: options?.nonStandard,
+    skipFormatLines: options?.skipFormatLines,
+    timezones: options?.timezones,
   });
-
-  if (todo.attendees && todo.attendees.length > 0) {
-    todo.attendees.forEach((attendee) => {
-      icsString += generateIcsAttendee(attendee, "ATTENDEE");
-    });
-  }
-
-  if (todo.exceptionDates && todo.exceptionDates.length > 0) {
-    todo.exceptionDates.forEach((exceptionDate) => {
-      icsString += generateIcsExceptionDate(exceptionDate, "EXDATE", {
-        timezones: options?.timezones,
-      });
-    });
-  }
-
-  icsString += getIcsEndLine("VTODO");
-
-  if (options?.skipFormatLines) return icsString;
-
-  return formatLines(icsString);
-};

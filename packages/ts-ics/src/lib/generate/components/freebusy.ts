@@ -1,109 +1,50 @@
 import { VFREEBUSY_TO_KEYS } from "@/constants/keys/freebusy";
 
-import type {
-  IcsDateObject,
-  IcsFreeBusy,
-  IcsFreeBusyTime,
-  IcsTimezone,
-} from "@/types";
-import type { IcsOrganizer } from "@/types/organizer";
+import type { IcsFreeBusy } from "@/types";
 
 import { generateIcsAttendee } from "../values/attendee";
 import { generateIcsOrganizer } from "../values/organizer";
 import { generateIcsTimeStamp } from "../values/timeStamp";
-import {
-  generateIcsLine,
-  getIcsEndLine,
-  getIcsStartLine,
-} from "../utils/addLine";
-import { getKeys } from "../utils/getKeys";
-import { formatLines } from "../utils/formatLines";
+import { generateIcsLine } from "../utils/addLine";
 import { escapeTextString } from "../utils/escapeText";
-import { generateNonStandardValues } from "../nonStandard/nonStandardValues";
-import type {
-  GenerateNonStandardValues,
-  NonStandardValuesGeneric,
-} from "@/types/nonStandardValues";
-import {
-  freeBusyObjectKeyIsTextString,
-  freeBusyObjectKeyIsTimeStamp,
-} from "@/constants/keyTypes/freebusy";
+import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
 import { generateIcsFreeBusyTime } from "../values/freebusyValue";
-
-type GenerateIcsFreeBusyOptions<T extends NonStandardValuesGeneric> = {
-  skipFormatLines?: boolean;
-  nonStandard?: GenerateNonStandardValues<T>;
-  timezones?: IcsTimezone[];
-};
+import { _generateIcsComponent, GenerateIcsComponentProps } from "./_component";
+import { VFREEBUSY_OBJECT_KEY } from "@/constants";
 
 export const generateIcsFreeBusy = <T extends NonStandardValuesGeneric>(
   freeBusy: IcsFreeBusy,
-  options?: GenerateIcsFreeBusyOptions<T>
-) => {
-  const freeBusyKeys = getKeys(freeBusy);
-
-  let icsString = "";
-
-  icsString += getIcsStartLine("VFREEBUSY");
-
-  freeBusyKeys.forEach((key) => {
-    if (key === "attendees") return;
-
-    if (key === "nonStandard") {
-      icsString += generateNonStandardValues(
-        freeBusy[key],
-        options?.nonStandard
-      );
-      return;
-    }
-
-    const icsKey = VFREEBUSY_TO_KEYS[key];
-
-    if (!icsKey) return;
-
-    const value = freeBusy[key];
-
-    if (value === undefined || value === null) return;
-
-    if (freeBusyObjectKeyIsTimeStamp(key)) {
-      icsString += generateIcsTimeStamp(
-        icsKey,
-        value as IcsDateObject,
-        undefined,
-        { timezones: options?.timezones, forceUtc: key === "stamp" }
-      );
-      return;
-    }
-
-    if (freeBusyObjectKeyIsTextString(key)) {
-      icsString += generateIcsLine(icsKey, escapeTextString(value as string));
-      return;
-    }
-
-    if (key === "organizer") {
-      icsString += generateIcsOrganizer(value as IcsOrganizer);
-      return;
-    }
-
-    if (key === "freeBusy") {
-      (value as IcsFreeBusyTime[]).forEach((v) => {
-        icsString += generateIcsFreeBusyTime(v, "FREEBUSY");
-      });
-      return;
-    }
-
-    icsString += generateIcsLine(icsKey, String(value));
+  options?: Pick<
+    GenerateIcsComponentProps<IcsFreeBusy, T>,
+    "nonStandard" | "skipFormatLines" | "timezones"
+  >
+) =>
+  _generateIcsComponent(freeBusy, {
+    icsComponent: VFREEBUSY_OBJECT_KEY,
+    icsKeyMap: VFREEBUSY_TO_KEYS,
+    generateValues: {
+      stamp: ({ icsKey, value }) =>
+        generateIcsTimeStamp(icsKey, value, undefined, {
+          timezones: options?.timezones,
+          forceUtc: true,
+        }),
+      start: ({ icsKey, value }) =>
+        generateIcsTimeStamp(icsKey, value, undefined, {
+          timezones: options?.timezones,
+        }),
+      end: ({ icsKey, value }) =>
+        generateIcsTimeStamp(icsKey, value, undefined, {
+          timezones: options?.timezones,
+        }),
+      comment: ({ icsKey, value }) =>
+        generateIcsLine(icsKey, escapeTextString(value)),
+      organizer: ({ value }) => generateIcsOrganizer(value),
+    },
+    generateArrayValues: {
+      attendees: ({ value }) => generateIcsAttendee(value, "ATTENDEE"),
+      freeBusy: ({ value }) => generateIcsFreeBusyTime(value, "FREEBUSY"),
+    },
+    nonStandard: options?.nonStandard,
+    skipFormatLines: options?.skipFormatLines,
+    timezones: options?.timezones,
   });
-
-  if (freeBusy.attendees && freeBusy.attendees.length > 0) {
-    freeBusy.attendees.forEach((attendee) => {
-      icsString += generateIcsAttendee(attendee, "ATTENDEE");
-    });
-  }
-
-  icsString += getIcsEndLine("VFREEBUSY");
-
-  if (options?.skipFormatLines) return icsString;
-
-  return formatLines(icsString);
-};
