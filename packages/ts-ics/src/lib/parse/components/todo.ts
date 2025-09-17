@@ -1,146 +1,81 @@
-import { COMMA, getAlarmRegex, replaceTodoRegex } from "@/constants";
-import { VTODO_TO_OBJECT_KEYS, type IcsTodoKey } from "@/constants/keys/todo";
-import type { IcsTodo, IcsDateObject, ConvertTodo, Line } from "@/types";
-import type { IcsAttendee } from "@/types/attendee";
+import { COMMA, VTODO_OBJECT_KEY } from "@/constants";
+import { VTODO_TO_OBJECT_KEYS } from "@/constants/keys/todo";
+import type { ConvertTodo } from "@/types";
 
-import {
-  todoObjectKeyIsArrayOfStrings,
-  todoObjectKeyIsTextString,
-  todoObjectKeyIsTimeStamp,
-} from "@/constants/keyTypes/todo";
 import { convertIcsAttendee } from "../values/attendee";
 import { convertIcsDuration } from "../values/duration";
 import { convertIcsOrganizer } from "../values/organizer";
 import { convertIcsRecurrenceRule } from "../values/recurrenceRule";
 import { convertIcsTimeStamp } from "../values/timeStamp";
-import { getLine } from "../utils/line";
-import { splitLines } from "../utils/splitLines";
 import { convertIcsExceptionDates } from "../values/exceptionDate";
 import { unescapeTextString } from "../utils/unescapeText";
 import { convertIcsRecurrenceId } from "../values/recurrenceId";
 import { convertIcsClass } from "../values/class";
 import { convertIcsTodoStatus } from "../values/status";
-import { standardValidate } from "../utils/standardValidate";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
-import { convertNonStandardValues } from "../nonStandard/nonStandardValues";
-import { valueIsNonStandard } from "@/utils/nonStandardValue";
+import { _convertIcsComponent } from "./_component";
 
 export const convertIcsTodo = <T extends NonStandardValuesGeneric>(
   ...args: Parameters<ConvertTodo<T>>
 ): ReturnType<ConvertTodo<T>> => {
   const [schema, rawTodoString, options] = args;
 
-  const todoString = rawTodoString.replace(replaceTodoRegex, "");
-
-  const lineStrings = splitLines(todoString.replace(getAlarmRegex, ""));
-
-  const todo: Partial<IcsTodo> = {};
-
-  const attendees: IcsAttendee[] = [];
-  const exceptionDates: IcsDateObject[] = [];
-
-  const nonStandardValues: Record<string, Line> = {};
-
-  lineStrings.forEach((lineString) => {
-    const { property, line } = getLine<IcsTodoKey>(lineString);
-
-    if (valueIsNonStandard(property)) {
-      nonStandardValues[property] = line;
-    }
-
-    const objectKey = VTODO_TO_OBJECT_KEYS[property];
-
-    if (!objectKey) return; // unknown Object key
-
-    if (todoObjectKeyIsTimeStamp(objectKey)) {
-      todo[objectKey] = convertIcsTimeStamp(undefined, line, {
-        timezones: options?.timezones,
-      });
-      return;
-    }
-
-    if (todoObjectKeyIsArrayOfStrings(objectKey)) {
-      todo[objectKey] = line.value.split(COMMA);
-
-      return;
-    }
-
-    if (todoObjectKeyIsTextString(objectKey)) {
-      todo[objectKey] = unescapeTextString(line.value);
-      return;
-    }
-
-    if (objectKey === "recurrenceRule") {
-      todo[objectKey] = convertIcsRecurrenceRule(undefined, line, {
-        timezones: options?.timezones,
-      });
-      return;
-    }
-
-    if (objectKey === "duration") {
-      todo[objectKey] = convertIcsDuration(undefined, line);
-      return;
-    }
-
-    if (objectKey === "organizer") {
-      todo[objectKey] = convertIcsOrganizer(undefined, line);
-      return;
-    }
-
-    if (objectKey === "sequence" || objectKey === "percentComplete") {
-      todo[objectKey] = Number.parseInt(line.value);
-      return;
-    }
-
-    if (objectKey === "attendees") {
-      attendees.push(convertIcsAttendee(undefined, line));
-      return;
-    }
-
-    if (objectKey === "exceptionDates") {
-      exceptionDates.push(
-        ...convertIcsExceptionDates(undefined, line, {
+  return _convertIcsComponent(schema, rawTodoString, {
+    icsComponent: VTODO_OBJECT_KEY,
+    objectKeyMap: VTODO_TO_OBJECT_KEYS,
+    convertValues: {
+      stamp: ({ line }) =>
+        convertIcsTimeStamp(undefined, line, {
           timezones: options?.timezones,
-        })
-      );
-      return;
-    }
-
-    if (objectKey === "class") {
-      todo[objectKey] = convertIcsClass(undefined, line);
-      return;
-    }
-
-    if (objectKey === "recurrenceId") {
-      todo[objectKey] = convertIcsRecurrenceId(undefined, line, {
-        timezones: options?.timezones,
-      });
-      return;
-    }
-
-    if (objectKey === "status") {
-      todo[objectKey] = convertIcsTodoStatus(undefined, line);
-      return;
-    }
-
-    todo[objectKey] = line.value; // Set string value
+        }),
+      start: ({ line }) =>
+        convertIcsTimeStamp(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      due: ({ line }) =>
+        convertIcsTimeStamp(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      created: ({ line }) =>
+        convertIcsTimeStamp(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      lastModified: ({ line }) =>
+        convertIcsTimeStamp(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      completed: ({ line }) =>
+        convertIcsTimeStamp(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      categories: ({ line }) => line.value.split(COMMA),
+      description: ({ line }) => unescapeTextString(line.value),
+      location: ({ line }) => unescapeTextString(line.value),
+      comment: ({ line }) => unescapeTextString(line.value),
+      summary: ({ line }) => unescapeTextString(line.value),
+      recurrenceRule: ({ line }) =>
+        convertIcsRecurrenceRule(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      duration: ({ line }) => convertIcsDuration(undefined, line),
+      organizer: ({ line }) => convertIcsOrganizer(undefined, line),
+      sequence: ({ line }) => Number.parseInt(line.value),
+      percentComplete: ({ line }) => Number.parseInt(line.value),
+      class: ({ line }) => convertIcsClass(undefined, line),
+      recurrenceId: ({ line }) =>
+        convertIcsRecurrenceId(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      status: ({ line }) => convertIcsTodoStatus(undefined, line),
+    },
+    convertArrayValues: {
+      attendees: ({ line }) => convertIcsAttendee(undefined, line),
+      exceptionDates: ({ line }) =>
+        convertIcsExceptionDates(undefined, line, {
+          timezones: options?.timezones,
+        }),
+    },
+    nonStandard: options?.nonStandard,
+    timezones: options?.timezones,
   });
-
-  if (attendees.length > 0) {
-    todo.attendees = attendees;
-  }
-
-  if (exceptionDates.length > 0) {
-    todo.exceptionDates = exceptionDates;
-  }
-
-  const validatedTodo = standardValidate(schema, todo as IcsTodo<T>);
-
-  if (!options?.nonStandard) return validatedTodo;
-
-  return convertNonStandardValues(
-    validatedTodo,
-    nonStandardValues,
-    options?.nonStandard
-  );
 };

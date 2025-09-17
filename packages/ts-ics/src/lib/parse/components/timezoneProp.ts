@@ -1,90 +1,49 @@
+import { VTIMEZONE_PROP_TO_OBJECT_KEYS } from "@/constants/keys/timezoneProp";
 import {
-  replaceTimezoneDaylightRegex,
-  replaceTimezoneStandardRegex,
-} from "@/constants";
-import {
-  VTIMEZONE_PROP_TO_OBJECT_KEYS,
-  type IcsTimezonePropKey,
-} from "@/constants/keys/timezoneProp";
-import type {
-  ConvertTimezoneProp,
-  IcsTimezoneProp,
+  type IcsTimezonePropType,
+  TIMEZONE_PROP_COMPONENTS,
+  type ConvertTimezoneProp,
 } from "@/types/timezoneProp";
 
 import { convertIcsDateTime } from "../values/date";
 import { convertIcsRecurrenceRule } from "../values/recurrenceRule";
 import { convertIcsTimeStamp } from "../values/timeStamp";
-import { getLine } from "../utils/line";
-import { splitLines } from "../utils/splitLines";
-import { standardValidate } from "../utils/standardValidate";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
-import { convertNonStandardValues } from "../nonStandard/nonStandardValues";
-import type { Line } from "@/types";
-import { valueIsNonStandard } from "@/utils/nonStandardValue";
+import { _convertIcsComponent } from "./_component";
+import { BREAK_REGEX } from "@/constants";
 
 export const convertIcsTimezoneProp = <T extends NonStandardValuesGeneric>(
   ...args: Parameters<ConvertTimezoneProp<T>>
 ): ReturnType<ConvertTimezoneProp<T>> => {
   const [schema, rawTimezonePropString, options] = args;
 
-  const timezonePropString = rawTimezonePropString
-    .replace(replaceTimezoneStandardRegex, "")
-    .replace(replaceTimezoneDaylightRegex, "");
+  const rawType = rawTimezonePropString
+    .split("BEGIN:")[1]
+    .split(BREAK_REGEX)[0];
 
-  const lineStrings = splitLines(timezonePropString);
+  const type = TIMEZONE_PROP_COMPONENTS.includes(rawType as IcsTimezonePropType)
+    ? (rawType as IcsTimezonePropType)
+    : "STANDARD";
 
-  const timezoneProp: Partial<IcsTimezoneProp> = {
-    type: options?.type || "STANDARD",
-  };
-
-  const nonStandardValues: Record<string, Line> = {};
-
-  lineStrings.forEach((lineString) => {
-    const { property, line } = getLine<IcsTimezonePropKey>(lineString);
-
-    if (valueIsNonStandard(property)) {
-      nonStandardValues[property] = line;
-    }
-
-    const objectKey = VTIMEZONE_PROP_TO_OBJECT_KEYS[property];
-
-    if (!objectKey) return;
-
-    if (objectKey === "start") {
-      timezoneProp[objectKey] = convertIcsDateTime(undefined, line);
-
-      return;
-    }
-
-    if (objectKey === "recurrenceRule") {
-      timezoneProp[objectKey] = convertIcsRecurrenceRule(undefined, line, {
-        timezones: options?.timezones,
-      });
-
-      return;
-    }
-
-    if (objectKey === "recurrenceDate") {
-      timezoneProp[objectKey] = convertIcsTimeStamp(undefined, line, {
-        timezones: options?.timezones,
-      });
-
-      return;
-    }
-
-    timezoneProp[objectKey] = line.value;
+  const icsTimeZone = _convertIcsComponent(schema, rawTimezonePropString, {
+    icsComponent: type,
+    objectKeyMap: VTIMEZONE_PROP_TO_OBJECT_KEYS,
+    convertValues: {
+      start: ({ line }) => convertIcsDateTime(undefined, line),
+      recurrenceRule: ({ line }) =>
+        convertIcsRecurrenceRule(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      recurrenceDate: ({ line }) =>
+        convertIcsTimeStamp(undefined, line, {
+          timezones: options?.timezones,
+        }),
+    },
+    nonStandard: options?.nonStandard,
+    timezones: options?.timezones,
   });
 
-  const validatedTimezoneProp = standardValidate(
-    schema,
-    timezoneProp as IcsTimezoneProp<T>
-  );
+  icsTimeZone.type = type;
 
-  if (!options?.nonStandard) return validatedTimezoneProp;
-
-  return convertNonStandardValues(
-    validatedTimezoneProp,
-    nonStandardValues,
-    options?.nonStandard
-  );
+  return icsTimeZone;
 };

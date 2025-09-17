@@ -213,5 +213,7 @@ it("Test non standard value", async () => {
     },
   });
 
+  console.log(timeZone);
+
   expect(timeZone.nonStandard?.wtf).toBe(nonStandardValue);
 });

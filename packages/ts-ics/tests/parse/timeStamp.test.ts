@@ -88,9 +88,13 @@ it("Test Ics Timestamp Parse - IcsTimezones - Daylight", async () => {
     convertIcsTimezone(undefined, timezoneString)
   );
 
+  console.log(timezones[0].props);
+
   const { line } = getLine(timestamp);
 
   const parsed = convertIcsTimeStamp(undefined, line, { timezones });
+
+  console.log(parsed);
 
   expect(parsed.date.getUTCHours()).toEqual(12);
 

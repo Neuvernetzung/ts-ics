@@ -11,12 +11,12 @@ import type { ConvertComponentType, ParseComponentType } from "./parse";
 import type { IcsRecurrenceRule } from "./recurrenceRule";
 import type { IcsTimezone } from "./timezone";
 
-export const timezonePropTypes = [
+export const TIMEZONE_PROP_COMPONENTS = [
   VTIMEZONE_STANDARD_OBJECT_KEY,
   VTIMEZONE_DAYLIGHT_OBJECT_KEY,
 ] as const;
 
-export type IcsTimezonePropTypes = typeof timezonePropTypes;
+export type IcsTimezonePropTypes = typeof TIMEZONE_PROP_COMPONENTS;
 export type IcsTimezonePropType = IcsTimezonePropTypes[number];
 
 export type IcsTimezoneProp<
@@ -36,7 +36,6 @@ export type IcsTimezoneProp<
 export type ParseTimezonePropOptions<
   TNonStandardValues extends NonStandardValuesGeneric
 > = {
-  type?: IcsTimezonePropType;
   timezones?: IcsTimezone[];
   nonStandard?: ParseNonStandardValues<TNonStandardValues>;
 };

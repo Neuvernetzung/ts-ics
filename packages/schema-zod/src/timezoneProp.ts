@@ -3,7 +3,7 @@ import {
   type IcsTimezoneProp,
   type NonStandardValuesGeneric,
   type ParseTimezoneProp,
-  timezonePropTypes,
+  TIMEZONE_PROP_COMPONENTS,
 } from "ts-ics";
 import { z } from "zod";
 import { zIcsRecurrenceRule } from "./recurrenceRule";
@@ -15,7 +15,7 @@ export const zIcsTimezoneProp: z.ZodType<
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>
   IcsTimezoneProp<any>
 > = z.object({
-  type: z.enum(timezonePropTypes),
+  type: z.enum(TIMEZONE_PROP_COMPONENTS),
   start: z.date(),
   offsetTo: z.string(),
   offsetFrom: z.string(),

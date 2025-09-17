@@ -19,6 +19,7 @@ export type ParseTimezoneOptions<
   TNonStandardValues extends NonStandardValuesGeneric
 > = {
   nonStandard?: ParseNonStandardValues<TNonStandardValues>;
+  timezones?: IcsTimezone[];
 };
 
 export type ConvertTimezone<

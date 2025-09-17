@@ -1,143 +1,69 @@
-import { COMMA, getAlarmRegex, replaceJournalRegex } from "@/constants";
-import {
-  VJOURNAL_TO_OBJECT_KEYS,
-  type IcsJournalKey,
-} from "@/constants/keys/journal";
-import type { IcsJournal, IcsDateObject, ConvertJournal, Line } from "@/types";
-import type { IcsAttendee } from "@/types/attendee";
+import { COMMA, VJOURNAL_OBJECT_KEY } from "@/constants";
+import { VJOURNAL_TO_OBJECT_KEYS } from "@/constants/keys/journal";
+import type { ConvertJournal } from "@/types";
 
-import {
-  journalObjectKeyIsArrayOfStrings,
-  journalObjectKeyIsTextString,
-  journalObjectKeyIsTimeStamp,
-} from "@/constants/keyTypes/journal";
 import { convertIcsAttendee } from "../values/attendee";
 import { convertIcsOrganizer } from "../values/organizer";
 import { convertIcsRecurrenceRule } from "../values/recurrenceRule";
 import { convertIcsTimeStamp } from "../values/timeStamp";
-import { getLine } from "../utils/line";
-import { splitLines } from "../utils/splitLines";
 import { convertIcsExceptionDates } from "../values/exceptionDate";
 import { unescapeTextString } from "../utils/unescapeText";
 import { convertIcsRecurrenceId } from "../values/recurrenceId";
 import { convertIcsClass } from "../values/class";
 import { convertIcsJournalStatus } from "../values/status";
-import { standardValidate } from "../utils/standardValidate";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
-import { convertNonStandardValues } from "../nonStandard/nonStandardValues";
-import { valueIsNonStandard } from "@/utils/nonStandardValue";
+import { _convertIcsComponent } from "./_component";
 
 export const convertIcsJournal = <T extends NonStandardValuesGeneric>(
   ...args: Parameters<ConvertJournal<T>>
 ): ReturnType<ConvertJournal<T>> => {
   const [schema, rawJournalString, options] = args;
 
-  const journalString = rawJournalString.replace(replaceJournalRegex, "");
-
-  const lineStrings = splitLines(journalString.replace(getAlarmRegex, ""));
-
-  const journal: Partial<IcsJournal> = {};
-
-  const attendees: IcsAttendee[] = [];
-  const exceptionDates: IcsDateObject[] = [];
-
-  const nonStandardValues: Record<string, Line> = {};
-
-  lineStrings.forEach((lineString) => {
-    const { property, line } = getLine<IcsJournalKey>(lineString);
-
-    if (valueIsNonStandard(property)) {
-      nonStandardValues[property] = line;
-    }
-
-    const objectKey = VJOURNAL_TO_OBJECT_KEYS[property];
-
-    if (!objectKey) return; // unknown Object key
-
-    if (journalObjectKeyIsTimeStamp(objectKey)) {
-      journal[objectKey] = convertIcsTimeStamp(undefined, line, {
-        timezones: options?.timezones,
-      });
-      return;
-    }
-
-    if (journalObjectKeyIsArrayOfStrings(objectKey)) {
-      journal[objectKey] = line.value.split(COMMA);
-
-      return;
-    }
-
-    if (journalObjectKeyIsTextString(objectKey)) {
-      journal[objectKey] = unescapeTextString(line.value);
-      return;
-    }
-
-    if (objectKey === "recurrenceRule") {
-      journal[objectKey] = convertIcsRecurrenceRule(undefined, line, {
-        timezones: options?.timezones,
-      });
-      return;
-    }
-
-    if (objectKey === "organizer") {
-      journal[objectKey] = convertIcsOrganizer(undefined, line);
-      return;
-    }
-
-    if (objectKey === "sequence") {
-      journal[objectKey] = Number.parseInt(line.value);
-      return;
-    }
-
-    if (objectKey === "attendees") {
-      attendees.push(convertIcsAttendee(undefined, line));
-      return;
-    }
-
-    if (objectKey === "exceptionDates") {
-      exceptionDates.push(
-        ...convertIcsExceptionDates(undefined, line, {
+  return _convertIcsComponent(schema, rawJournalString, {
+    icsComponent: VJOURNAL_OBJECT_KEY,
+    objectKeyMap: VJOURNAL_TO_OBJECT_KEYS,
+    convertValues: {
+      stamp: ({ line }) =>
+        convertIcsTimeStamp(undefined, line, {
           timezones: options?.timezones,
-        })
-      );
-      return;
-    }
-
-    if (objectKey === "class") {
-      journal[objectKey] = convertIcsClass(undefined, line);
-      return;
-    }
-
-    if (objectKey === "recurrenceId") {
-      journal[objectKey] = convertIcsRecurrenceId(undefined, line, {
-        timezones: options?.timezones,
-      });
-      return;
-    }
-
-    if (objectKey === "status") {
-      journal[objectKey] = convertIcsJournalStatus(undefined, line);
-      return;
-    }
-
-    journal[objectKey] = line.value; // Set string value
+        }),
+      start: ({ line }) =>
+        convertIcsTimeStamp(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      created: ({ line }) =>
+        convertIcsTimeStamp(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      lastModified: ({ line }) =>
+        convertIcsTimeStamp(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      categories: ({ line }) => line.value.split(COMMA),
+      description: ({ line }) => unescapeTextString(line.value),
+      comment: ({ line }) => unescapeTextString(line.value),
+      summary: ({ line }) => unescapeTextString(line.value),
+      recurrenceRule: ({ line }) =>
+        convertIcsRecurrenceRule(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      organizer: ({ line }) => convertIcsOrganizer(undefined, line),
+      sequence: ({ line }) => Number.parseInt(line.value),
+      class: ({ line }) => convertIcsClass(undefined, line),
+      recurrenceId: ({ line }) =>
+        convertIcsRecurrenceId(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      status: ({ line }) => convertIcsJournalStatus(undefined, line),
+    },
+    convertArrayValues: {
+      attendees: ({ line }) => convertIcsAttendee(undefined, line),
+      exceptionDates: ({ line }) =>
+        convertIcsExceptionDates(undefined, line, {
+          timezones: options?.timezones,
+        }),
+    },
+    nonStandard: options?.nonStandard,
+    timezones: options?.timezones,
   });
-
-  if (attendees.length > 0) {
-    journal.attendees = attendees;
-  }
-
-  if (exceptionDates.length > 0) {
-    journal.exceptionDates = exceptionDates;
-  }
-
-  const validatedJournal = standardValidate(schema, journal as IcsJournal<T>);
-
-  if (!options?.nonStandard) return validatedJournal;
-
-  return convertNonStandardValues(
-    validatedJournal,
-    nonStandardValues,
-    options?.nonStandard
-  );
 };
