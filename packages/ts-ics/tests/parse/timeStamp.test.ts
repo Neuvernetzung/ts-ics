@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 
-import { getTimezoneRegex } from "@/constants";
+import { createGetRegex, VTIMEZONE_OBJECT_KEY } from "@/constants";
 import { convertIcsTimezone } from "@/lib";
 import { convertIcsTimeStamp } from "@/lib/parse/values/timeStamp";
 import { getLine } from "@/lib/parse/utils/line";
@@ -53,9 +53,9 @@ it("Test Ics Timestamp Parse - IcsTimezones - Standard", async () => {
     `${__dirname}/fixtures/timezones.ics`,
     "utf8"
   );
-  const timezoneStrings = [...timezoneString.matchAll(getTimezoneRegex)].map(
-    (match) => match[0]
-  );
+  const timezoneStrings = [
+    ...timezoneString.matchAll(createGetRegex(VTIMEZONE_OBJECT_KEY)),
+  ].map((match) => match[0]);
 
   const timezones = timezoneStrings.map((timezoneString) =>
     convertIcsTimezone(undefined, timezoneString)
@@ -80,9 +80,9 @@ it("Test Ics Timestamp Parse - IcsTimezones - Daylight", async () => {
     `${__dirname}/fixtures/timezones.ics`,
     "utf8"
   );
-  const timezoneStrings = [...timezoneString.matchAll(getTimezoneRegex)].map(
-    (match) => match[0]
-  );
+  const timezoneStrings = [
+    ...timezoneString.matchAll(createGetRegex(VTIMEZONE_OBJECT_KEY)),
+  ].map((match) => match[0]);
 
   const timezones = timezoneStrings.map((timezoneString) =>
     convertIcsTimezone(undefined, timezoneString)
