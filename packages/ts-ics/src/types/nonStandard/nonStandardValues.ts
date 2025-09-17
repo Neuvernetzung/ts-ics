@@ -3,7 +3,7 @@ import type { Line } from "../line";
 
 export type NonStandardValueName = `X-${string}`;
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+// biome-ignore lint/suspicious/noExplicitAny: <Generic lässt sich aktuell nicht besser darstellen>
 export type NonStandardValuesGeneric = Record<string, any>;
 
 export type ParseNonStandardValue<TValue = unknown> = {

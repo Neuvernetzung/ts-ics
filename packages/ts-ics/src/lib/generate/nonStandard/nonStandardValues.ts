@@ -13,7 +13,7 @@ export const generateNonStandardValues = <T extends NonStandardValuesGeneric>(
 
   let nonStandardValuesString = "";
 
-  Object.entries(nonStandardValues).map(([key, value]) => {
+  Object.entries(nonStandardValues).forEach(([key, value]) => {
     const option = nonStandardOptions?.[key];
 
     if (!option) {

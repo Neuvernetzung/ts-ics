@@ -59,8 +59,8 @@ export const convertIcsTodo = <T extends NonStandardValuesGeneric>(
         }),
       duration: ({ line }) => convertIcsDuration(undefined, line),
       organizer: ({ line }) => convertIcsOrganizer(undefined, line),
-      sequence: ({ line }) => Number.parseInt(line.value),
-      percentComplete: ({ line }) => Number.parseInt(line.value),
+      sequence: ({ line }) => Number.parseInt(line.value, 10),
+      percentComplete: ({ line }) => Number.parseInt(line.value, 10),
       class: ({ line }) => convertIcsClass(undefined, line),
       recurrenceId: ({ line }) =>
         convertIcsRecurrenceId(undefined, line, {

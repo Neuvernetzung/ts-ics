@@ -48,7 +48,7 @@ export const convertIcsJournal = <T extends NonStandardValuesGeneric>(
           timezones: options?.timezones,
         }),
       organizer: ({ line }) => convertIcsOrganizer(undefined, line),
-      sequence: ({ line }) => Number.parseInt(line.value),
+      sequence: ({ line }) => Number.parseInt(line.value, 10),
       class: ({ line }) => convertIcsClass(undefined, line),
       recurrenceId: ({ line }) =>
         convertIcsRecurrenceId(undefined, line, {

@@ -5,7 +5,7 @@
 //    ; \; encodes ;, \, encodes ,
 //    ; Note: A COLON character in a TEXT property value SHALL NOT be escaped
 export const escapeTextString = (inputString: string) => {
-  return inputString.replace(/([\\;,])|(\n)/g, (m, g1, g2) => {
+  return inputString.replace(/([\\;,])|(\n)/g, (_m, g1) => {
     if (g1) return `\\${g1}`;
     return "\\n";
   });

@@ -22,7 +22,7 @@ export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
 ): ReturnType<ConvertEvent<T>> => {
   const [schema, rawEventString, options] = args;
 
-  let altRep: string | undefined = undefined;
+  let altRep: string | undefined;
 
   const event = _convertIcsComponent(schema, rawEventString, {
     icsComponent: VEVENT_OBJECT_KEY,
@@ -65,7 +65,7 @@ export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
         }),
       duration: ({ line }) => convertIcsDuration(undefined, line),
       organizer: ({ line }) => convertIcsOrganizer(undefined, line),
-      sequence: ({ line }) => Number.parseInt(line.value),
+      sequence: ({ line }) => Number.parseInt(line.value, 10),
       class: ({ line }) => convertIcsClass(undefined, line),
       recurrenceId: ({ line }) =>
         convertIcsRecurrenceId(undefined, line, {

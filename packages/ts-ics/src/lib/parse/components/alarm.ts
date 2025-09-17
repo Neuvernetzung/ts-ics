@@ -23,7 +23,7 @@ export const convertIcsAlarm = <T extends NonStandardValuesGeneric>(
           timezones: options?.timezones,
         }),
       duration: ({ line }) => convertIcsDuration(undefined, line),
-      repeat: ({ line }) => Number.parseInt(line.value),
+      repeat: ({ line }) => Number.parseInt(line.value, 10),
     },
     convertArrayValues: {
       attachments: ({ line }) => convertIcsAttachment(undefined, line),
