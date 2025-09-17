@@ -7,15 +7,15 @@ import {
   type ParseTodo,
 } from "ts-ics";
 import { z } from "zod";
-import { zIcsDateObject } from "./date";
-import { zIcsExceptionDates } from "./exceptionDate";
-import { zIcsAttendee } from "./attendee";
-import { zIcsDuration } from "./duration";
-import { zIcsRecurrenceRule } from "./recurrenceRule";
-import { zIcsClassType } from "./class";
-import { zIcsOrganizer } from "./organizer";
-import { zIcsTodoStatusType } from "./status";
-import { zIcsRecurrenceId } from "./recurrenceId";
+import { zIcsDateObject } from "../values/date";
+import { zIcsExceptionDates } from "../values/exceptionDate";
+import { zIcsAttendee } from "../values/attendee";
+import { zIcsDuration } from "../values/duration";
+import { zIcsRecurrenceRule } from "../values/recurrenceRule";
+import { zIcsClassType } from "../values/class";
+import { zIcsOrganizer } from "../values/organizer";
+import { zIcsTodoStatusType } from "../values/status";
+import { zIcsRecurrenceId } from "../values/recurrenceId";
 
 export const zIcsDurationOrDue: z.ZodType<
   IcsTodoDurationOrDue,

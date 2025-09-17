@@ -5,10 +5,10 @@ import {
   type NonStandardValuesGeneric,
 } from "ts-ics";
 import { z } from "zod";
-import { zIcsTrigger } from "./trigger";
-import { zIcsAttendee } from "./attendee";
-import { zIcsDuration } from "./duration";
-import { zIcsAttachment } from "./attachment";
+import { zIcsTrigger } from "../values/trigger";
+import { zIcsAttendee } from "../values/attendee";
+import { zIcsDuration } from "../values/duration";
+import { zIcsAttachment } from "../values/attachment";
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const zIcsAlarm: z.ZodType<IcsAlarm<any>, IcsAlarm<any>> = z.object({

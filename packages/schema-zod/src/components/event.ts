@@ -7,17 +7,17 @@ import {
   type ParseEvent,
 } from "ts-ics";
 import { z } from "zod";
-import { zIcsDateObject } from "./date";
-import { zIcsExceptionDates } from "./exceptionDate";
-import { zIcsAttendee } from "./attendee";
-import { zIcsDuration } from "./duration";
-import { zIcsRecurrenceRule } from "./recurrenceRule";
+import { zIcsDateObject } from "../values/date";
+import { zIcsExceptionDates } from "../values/exceptionDate";
+import { zIcsAttendee } from "../values/attendee";
+import { zIcsDuration } from "../values/duration";
+import { zIcsRecurrenceRule } from "../values/recurrenceRule";
 import { zIcsAlarm } from "./alarm";
-import { zIcsTimeTransparentType } from "./timeTransparent";
-import { zIcsClassType } from "./class";
-import { zIcsOrganizer } from "./organizer";
-import { zIcsEventStatusType } from "./status";
-import { zIcsRecurrenceId } from "./recurrenceId";
+import { zIcsTimeTransparentType } from "../values/timeTransparent";
+import { zIcsClassType } from "../values/class";
+import { zIcsOrganizer } from "../values/organizer";
+import { zIcsEventStatusType } from "../values/status";
+import { zIcsRecurrenceId } from "../values/recurrenceId";
 
 export const zIcsDurationOrEnd: z.ZodType<
   IcsEventDurationOrEnd,

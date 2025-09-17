@@ -5,14 +5,14 @@ import {
   type ParseJournal,
 } from "ts-ics";
 import { z } from "zod";
-import { zIcsDateObject } from "./date";
-import { zIcsExceptionDates } from "./exceptionDate";
-import { zIcsAttendee } from "./attendee";
-import { zIcsRecurrenceRule } from "./recurrenceRule";
-import { zIcsClassType } from "./class";
-import { zIcsOrganizer } from "./organizer";
-import { zIcsJournalStatusType } from "./status";
-import { zIcsRecurrenceId } from "./recurrenceId";
+import { zIcsDateObject } from "../values/date";
+import { zIcsExceptionDates } from "../values/exceptionDate";
+import { zIcsAttendee } from "../values/attendee";
+import { zIcsRecurrenceRule } from "../values/recurrenceRule";
+import { zIcsClassType } from "../values/class";
+import { zIcsOrganizer } from "../values/organizer";
+import { zIcsJournalStatusType } from "../values/status";
+import { zIcsRecurrenceId } from "../values/recurrenceId";
 
 export const zIcsJournal: z.ZodType<
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>

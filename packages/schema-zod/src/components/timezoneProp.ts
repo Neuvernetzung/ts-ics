@@ -6,8 +6,8 @@ import {
   TIMEZONE_PROP_COMPONENTS,
 } from "ts-ics";
 import { z } from "zod";
-import { zIcsRecurrenceRule } from "./recurrenceRule";
-import { zIcsDateObject } from "./date";
+import { zIcsRecurrenceRule } from "../values/recurrenceRule";
+import { zIcsDateObject } from "../values/date";
 
 export const zIcsTimezoneProp: z.ZodType<
   // biome-ignore lint/suspicious/noExplicitAny: <explanation>

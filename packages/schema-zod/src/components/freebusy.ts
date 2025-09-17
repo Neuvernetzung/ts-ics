@@ -10,11 +10,11 @@ import {
   type IcsFreeBusyTime,
 } from "ts-ics";
 import { z } from "zod";
-import { zIcsDateObject } from "./date";
-import { zIcsAttendee } from "./attendee";
-import { zIcsClassType } from "./class";
-import { zIcsOrganizer } from "./organizer";
-import { zIcsDuration } from "./duration";
+import { zIcsDateObject } from "../values/date";
+import { zIcsAttendee } from "../values/attendee";
+import { zIcsClassType } from "../values/class";
+import { zIcsOrganizer } from "../values/organizer";
+import { zIcsDuration } from "../values/duration";
 
 export const zIcsFreeBusyValueDurationOrEnd: z.ZodType<
   IcsFreeBusyTimeValueDurationOrEnd,
