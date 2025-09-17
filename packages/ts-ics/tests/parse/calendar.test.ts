@@ -3,7 +3,7 @@ import { icsTestData } from "../utils";
 import { readFile } from "node:fs/promises";
 import { z } from "zod";
 import { describe } from "node:test";
-import { ParseNonStandardValues } from "@/types";
+import type { ParseNonStandardValues } from "@/types";
 
 it("Test Ics Calendar Parse", async () => {
   const calendar = icsTestData([

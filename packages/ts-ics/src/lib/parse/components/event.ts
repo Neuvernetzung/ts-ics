@@ -1,173 +1,103 @@
-import { COMMA, getAlarmRegex, replaceEventRegex } from "@/constants";
-import {
-  VEVENT_TO_OBJECT_KEYS,
-  type IcsEventKey,
-} from "@/constants/keys/event";
-import type { IcsEvent, IcsDateObject, ConvertEvent, Line } from "@/types";
-import type { IcsAttendee } from "@/types/attendee";
+import { COMMA, VALARM_OBJECT_KEY, VEVENT_OBJECT_KEY } from "@/constants";
+import { VEVENT_TO_OBJECT_KEYS } from "@/constants/keys/event";
+import type { ConvertEvent } from "@/types";
 
-import {
-  eventObjectKeyIsArrayOfStrings,
-  eventObjectKeyIsTextString,
-  eventObjectKeyIsTimeStamp,
-} from "@/constants/keyTypes/event";
 import { convertIcsAlarm } from "./alarm";
 import { convertIcsAttendee } from "../values/attendee";
 import { convertIcsDuration } from "../values/duration";
 import { convertIcsOrganizer } from "../values/organizer";
 import { convertIcsRecurrenceRule } from "../values/recurrenceRule";
 import { convertIcsTimeStamp } from "../values/timeStamp";
-import { getLine } from "../utils/line";
-import { splitLines } from "../utils/splitLines";
 import { convertIcsExceptionDates } from "../values/exceptionDate";
 import { unescapeTextString } from "../utils/unescapeText";
 import { convertIcsRecurrenceId } from "../values/recurrenceId";
 import { convertIcsClass } from "../values/class";
 import { convertIcsEventStatus } from "../values/status";
 import { convertIcsTimeTransparent } from "../values/timeTransparent";
-import { standardValidate } from "../utils/standardValidate";
 import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
-import { convertNonStandardValues } from "../nonStandard/nonStandardValues";
-import { valueIsNonStandard } from "@/utils/nonStandardValue";
+import { _convertIcsComponent } from "./_component";
 
 export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
   ...args: Parameters<ConvertEvent<T>>
 ): ReturnType<ConvertEvent<T>> => {
   const [schema, rawEventString, options] = args;
 
-  const eventString = rawEventString.replace(replaceEventRegex, "");
+  let altRep: string | undefined = undefined;
 
-  const lineStrings = splitLines(eventString.replace(getAlarmRegex, ""));
-
-  const event: Partial<IcsEvent> = {};
-
-  const attendees: IcsAttendee[] = [];
-  const exceptionDates: IcsDateObject[] = [];
-
-  const nonStandardValues: Record<string, Line> = {};
-
-  lineStrings.forEach((lineString) => {
-    const { property, line } = getLine<IcsEventKey>(lineString);
-
-    if (valueIsNonStandard(property)) {
-      nonStandardValues[property] = line;
-    }
-
-    const objectKey = VEVENT_TO_OBJECT_KEYS[property];
-
-    if (!objectKey) return; // unknown Object key
-
-    if (eventObjectKeyIsTimeStamp(objectKey)) {
-      event[objectKey] = convertIcsTimeStamp(undefined, line, {
-        timezones: options?.timezones,
-      });
-      return;
-    }
-
-    if (eventObjectKeyIsArrayOfStrings(objectKey)) {
-      event[objectKey] = line.value.split(COMMA);
-
-      return;
-    }
-
-    if (eventObjectKeyIsTextString(objectKey)) {
-      if (objectKey === "description" && line.options?.ALTREP) {
-        event.descriptionAltRep = line.options.ALTREP;
-      }
-      event[objectKey] = unescapeTextString(line.value);
-      return;
-    }
-
-    if (objectKey === "recurrenceRule") {
-      event[objectKey] = convertIcsRecurrenceRule(undefined, line, {
-        timezones: options?.timezones,
-      });
-      return;
-    }
-
-    if (objectKey === "duration") {
-      event[objectKey] = convertIcsDuration(undefined, line);
-      return;
-    }
-
-    if (objectKey === "organizer") {
-      event[objectKey] = convertIcsOrganizer(undefined, line);
-      return;
-    }
-
-    if (objectKey === "sequence") {
-      event[objectKey] = Number.parseInt(line.value);
-      return;
-    }
-
-    if (objectKey === "attendees") {
-      attendees.push(convertIcsAttendee(undefined, line));
-      return;
-    }
-
-    if (objectKey === "exceptionDates") {
-      exceptionDates.push(
-        ...convertIcsExceptionDates(undefined, line, {
+  const event = _convertIcsComponent(schema, rawEventString, {
+    icsComponent: VEVENT_OBJECT_KEY,
+    objectKeyMap: VEVENT_TO_OBJECT_KEYS,
+    convertValues: {
+      stamp: ({ line }) =>
+        convertIcsTimeStamp(undefined, line, {
           timezones: options?.timezones,
-        })
-      );
-      return;
-    }
+        }),
+      start: ({ line }) =>
+        convertIcsTimeStamp(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      end: ({ line }) =>
+        convertIcsTimeStamp(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      created: ({ line }) =>
+        convertIcsTimeStamp(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      lastModified: ({ line }) =>
+        convertIcsTimeStamp(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      categories: ({ line }) => line.value.split(COMMA),
+      description: ({ line }) => {
+        if (line.options?.ALTREP) {
+          altRep = line.options.ALTREP;
+        }
 
-    if (objectKey === "alarms") return;
-
-    if (objectKey === "class") {
-      event[objectKey] = convertIcsClass(undefined, line);
-      return;
-    }
-
-    if (objectKey === "recurrenceId") {
-      event[objectKey] = convertIcsRecurrenceId(undefined, line, {
-        timezones: options?.timezones,
-      });
-      return;
-    }
-
-    if (objectKey === "status") {
-      event[objectKey] = convertIcsEventStatus(undefined, line);
-      return;
-    }
-
-    if (objectKey === "timeTransparent") {
-      event[objectKey] = convertIcsTimeTransparent(undefined, line);
-      return;
-    }
-
-    event[objectKey] = line.value; // Set string value
+        return unescapeTextString(line.value);
+      },
+      location: ({ line }) => unescapeTextString(line.value),
+      comment: ({ line }) => unescapeTextString(line.value),
+      summary: ({ line }) => unescapeTextString(line.value),
+      recurrenceRule: ({ line }) =>
+        convertIcsRecurrenceRule(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      duration: ({ line }) => convertIcsDuration(undefined, line),
+      organizer: ({ line }) => convertIcsOrganizer(undefined, line),
+      sequence: ({ line }) => Number.parseInt(line.value),
+      class: ({ line }) => convertIcsClass(undefined, line),
+      recurrenceId: ({ line }) =>
+        convertIcsRecurrenceId(undefined, line, {
+          timezones: options?.timezones,
+        }),
+      status: ({ line }) => convertIcsEventStatus(undefined, line),
+      timeTransparent: ({ line }) => convertIcsTimeTransparent(undefined, line),
+    },
+    convertArrayValues: {
+      attendees: ({ line }) => convertIcsAttendee(undefined, line),
+      exceptionDates: ({ line }) =>
+        convertIcsExceptionDates(undefined, line, {
+          timezones: options?.timezones,
+        }),
+    },
+    childComponents: {
+      alarms: {
+        icsComponent: VALARM_OBJECT_KEY,
+        convert: (rawAlarmString) =>
+          convertIcsAlarm(undefined, rawAlarmString, {
+            nonStandard: options?.nonStandard,
+            timezones: options?.timezones,
+          }),
+      },
+    },
+    timezones: options?.timezones,
+    nonStandard: options?.nonStandard,
   });
 
-  const alarmStrings = [...rawEventString.matchAll(getAlarmRegex)].map(
-    (match) => match[0]
-  );
-
-  if (alarmStrings.length > 0) {
-    const alarms = alarmStrings.map((alarmString) =>
-      convertIcsAlarm(undefined, alarmString, options)
-    );
-
-    event.alarms = alarms;
+  if (altRep) {
+    event.descriptionAltRep = altRep;
   }
 
-  if (attendees.length > 0) {
-    event.attendees = attendees;
-  }
-
-  if (exceptionDates.length > 0) {
-    event.exceptionDates = exceptionDates;
-  }
-
-  const validatedEvent = standardValidate(schema, event as IcsEvent<T>);
-
-  if (!options?.nonStandard) return validatedEvent;
-
-  return convertNonStandardValues(
-    validatedEvent,
-    nonStandardValues,
-    options?.nonStandard
-  );
+  return event;
 };

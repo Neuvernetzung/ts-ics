@@ -12,7 +12,7 @@ import {
   VFREEBUSY_OBJECT_KEY,
 } from "../keys";
 
-const createGetRegex = (key: string) =>
+export const createGetRegex = (key: string) =>
   new RegExp(`${OBJECT_START}:${key}([\\s\\S]*?)${OBJECT_END}:${key}`, "g");
 
 export const getTimezoneRegex = createGetRegex(VTIMEZONE_OBJECT_KEY);
@@ -34,7 +34,7 @@ export const getJournalRegex = createGetRegex(VJOURNAL_OBJECT_KEY);
 
 export const getFreeBusyRegex = createGetRegex(VFREEBUSY_OBJECT_KEY);
 
-const createReplaceRegex = (key: string) =>
+export const createReplaceRegex = (key: string) =>
   new RegExp(`${OBJECT_START}:${key}|${OBJECT_END}:${key}`, "g");
 
 export const replaceCalendarRegex = createReplaceRegex(VCALENDAR_OBJECT_KEY);
