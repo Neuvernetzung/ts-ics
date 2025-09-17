@@ -1,4 +1,4 @@
-import { generateNonStandardValues } from "@/lib/generate/nonStandardValues";
+import { generateNonStandardValues } from "@/lib/generate/nonStandard/nonStandardValues";
 
 it("Generate non standard values", () => {
   const nonStandardValue = "Test";

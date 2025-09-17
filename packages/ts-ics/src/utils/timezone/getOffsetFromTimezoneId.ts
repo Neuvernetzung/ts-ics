@@ -11,7 +11,7 @@ export const getOffsetFromTimezoneId = (
   try {
     const tzDate = new Date(date.toLocaleString(defaultLocale, { timeZone }));
     return tzDate.getTime() - utcDate.getTime();
-  } catch (err) {
+  } catch {
     // Fallback to local timezone - https://github.com/Neuvernetzung/ts-ics/issues/104
 
     return date.getTime() - utcDate.getTime();

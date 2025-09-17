@@ -1,6 +1,6 @@
 import { COMMA } from "@/constants";
 
-import { convertIcsWeekDayNumber } from "@/lib/parse/weekDayNumber";
+import { convertIcsWeekDayNumber } from "@/lib/parse/values/weekDayNumber";
 
 it("Test Ics Weekday Number Parse", async () => {
   const weekdayNumber = `MO,TU,WE,TH,FR,SA,SU`;

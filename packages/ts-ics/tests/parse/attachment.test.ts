@@ -1,4 +1,4 @@
-import { convertIcsAttachment } from "@/lib/parse/attachment";
+import { convertIcsAttachment } from "@/lib/parse/values/attachment";
 import { getLine } from "@/lib/parse/utils/line";
 
 it("Test Ics IcsAttachment Parse", async () => {

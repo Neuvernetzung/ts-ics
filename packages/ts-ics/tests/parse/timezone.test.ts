@@ -1,5 +1,5 @@
 import { convertIcsEvent } from "@/lib";
-import { convertIcsTimezone } from "@/lib/parse/timezone";
+import { convertIcsTimezone } from "@/lib/parse/components/timezone";
 import { icsTestData } from "../utils";
 import { z } from "zod";
 

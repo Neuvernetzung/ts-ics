@@ -4,7 +4,7 @@
 //    ; \\ encodes \, \N or \n encodes newline
 //    ; \; encodes ;, \, encodes ,
 export const unescapeTextString = (value: string) => {
-  return value.replace(/\\(([,;\\])|([nN]))/g, (m, g1, g2, g3) => {
+  return value.replace(/\\(([,;\\])|([nN]))/g, (_m, _g1, g2) => {
     if (g2) return g2;
     return "\n";
   });
