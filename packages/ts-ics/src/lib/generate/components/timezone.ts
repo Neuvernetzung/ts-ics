@@ -1,15 +1,15 @@
 import { VTIMEZONE_TO_KEYS } from "@/constants/keys/timezone";
 import type { IcsTimezone } from "@/types/timezone";
 
-import { generateIcsUtcDateTime } from "./date";
+import { generateIcsUtcDateTime } from "../values/date";
 import { generateIcsTimezoneProp } from "./timezoneProp";
 import {
   generateIcsLine,
   getIcsEndLine,
   getIcsStartLine,
-} from "./utils/addLine";
-import { getKeys } from "./utils/getKeys";
-import { generateNonStandardValues } from "./nonStandardValues";
+} from "../utils/addLine";
+import { getKeys } from "../utils/getKeys";
+import { generateNonStandardValues } from "../nonStandard/nonStandardValues";
 import type {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,

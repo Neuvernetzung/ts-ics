@@ -1,75 +1,74 @@
-import { VJOURNAL_TO_KEYS } from "@/constants/keys/journal";
+import { VTODO_TO_KEYS } from "@/constants/keys/todo";
 
 import type {
   IcsDateObject,
-  IcsJournal,
+  IcsTodo,
+  IcsDuration,
   IcsRecurrenceRule,
   IcsRecurrenceId,
   IcsTimezone,
 } from "@/types";
 import type { IcsOrganizer } from "@/types/organizer";
 
-import { generateIcsAttendee } from "./attendee";
-import { generateIcsExceptionDate } from "./exceptionDate";
-import { generateIcsOrganizer } from "./organizer";
-import { generateIcsRecurrenceRule } from "./recurrenceRule";
-import { generateIcsTimeStamp } from "./timeStamp";
+import { generateIcsAttendee } from "../values/attendee";
+import { generateIcsExceptionDate } from "../values/exceptionDate";
+import { generateIcsDuration } from "../values/duration";
+import { generateIcsOrganizer } from "../values/organizer";
+import { generateIcsRecurrenceRule } from "../values/recurrenceRule";
+import { generateIcsTimeStamp } from "../values/timeStamp";
 import {
   generateIcsLine,
   getIcsEndLine,
   getIcsStartLine,
-} from "./utils/addLine";
-import { getKeys } from "./utils/getKeys";
-import { formatLines } from "./utils/formatLines";
-import { escapeTextString } from "./utils/escapeText";
-import { generateNonStandardValues } from "./nonStandardValues";
+} from "../utils/addLine";
+import { getKeys } from "../utils/getKeys";
+import { formatLines } from "../utils/formatLines";
+import { escapeTextString } from "../utils/escapeText";
+import { generateNonStandardValues } from "../nonStandard/nonStandardValues";
 import type {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,
 } from "@/types/nonStandardValues";
-import { generateIcsRecurrenceId } from "./recurrenceId";
+import { generateIcsRecurrenceId } from "../values/recurrenceId";
 import {
-  journalObjectKeyIsArrayOfStrings,
-  journalObjectKeyIsTextString,
-  journalObjectKeyIsTimeStamp,
-} from "@/constants/keyTypes/journal";
+  todoObjectKeyIsArrayOfStrings,
+  todoObjectKeyIsTextString,
+  todoObjectKeyIsTimeStamp,
+} from "@/constants/keyTypes/todo";
 
-type GenerateIcsJournalOptions<T extends NonStandardValuesGeneric> = {
+type GenerateIcsTodoOptions<T extends NonStandardValuesGeneric> = {
   skipFormatLines?: boolean;
   nonStandard?: GenerateNonStandardValues<T>;
   timezones?: IcsTimezone[];
 };
 
-export const generateIcsJournal = <T extends NonStandardValuesGeneric>(
-  journal: IcsJournal,
-  options?: GenerateIcsJournalOptions<T>
+export const generateIcsTodo = <T extends NonStandardValuesGeneric>(
+  todo: IcsTodo,
+  options?: GenerateIcsTodoOptions<T>
 ) => {
-  const journalKeys = getKeys(journal);
+  const todoKeys = getKeys(todo);
 
   let icsString = "";
 
-  icsString += getIcsStartLine("VJOURNAL");
+  icsString += getIcsStartLine("VTODO");
 
-  journalKeys.forEach((key) => {
+  todoKeys.forEach((key) => {
     if (key === "attendees" || key === "exceptionDates") return;
 
     if (key === "nonStandard") {
-      icsString += generateNonStandardValues(
-        journal[key],
-        options?.nonStandard
-      );
+      icsString += generateNonStandardValues(todo[key], options?.nonStandard);
       return;
     }
 
-    const icsKey = VJOURNAL_TO_KEYS[key];
+    const icsKey = VTODO_TO_KEYS[key];
 
     if (!icsKey) return;
 
-    const value = journal[key];
+    const value = todo[key];
 
     if (value === undefined || value === null) return;
 
-    if (journalObjectKeyIsTimeStamp(key)) {
+    if (todoObjectKeyIsTimeStamp(key)) {
       icsString += generateIcsTimeStamp(
         icsKey,
         value as IcsDateObject,
@@ -79,18 +78,26 @@ export const generateIcsJournal = <T extends NonStandardValuesGeneric>(
       return;
     }
 
-    if (journalObjectKeyIsArrayOfStrings(key)) {
+    if (todoObjectKeyIsArrayOfStrings(key)) {
       icsString += generateIcsLine(icsKey, (value as string[]).join(","));
       return;
     }
 
-    if (journalObjectKeyIsTextString(key)) {
+    if (todoObjectKeyIsTextString(key)) {
       icsString += generateIcsLine(icsKey, escapeTextString(value as string));
       return;
     }
 
     if (key === "recurrenceRule") {
       icsString += generateIcsRecurrenceRule(value as IcsRecurrenceRule);
+      return;
+    }
+
+    if (key === "duration") {
+      icsString += generateIcsLine(
+        icsKey,
+        generateIcsDuration(value as IcsDuration)
+      );
       return;
     }
 
@@ -114,21 +121,21 @@ export const generateIcsJournal = <T extends NonStandardValuesGeneric>(
     icsString += generateIcsLine(icsKey, String(value));
   });
 
-  if (journal.attendees && journal.attendees.length > 0) {
-    journal.attendees.forEach((attendee) => {
+  if (todo.attendees && todo.attendees.length > 0) {
+    todo.attendees.forEach((attendee) => {
       icsString += generateIcsAttendee(attendee, "ATTENDEE");
     });
   }
 
-  if (journal.exceptionDates && journal.exceptionDates.length > 0) {
-    journal.exceptionDates.forEach((exceptionDate) => {
+  if (todo.exceptionDates && todo.exceptionDates.length > 0) {
+    todo.exceptionDates.forEach((exceptionDate) => {
       icsString += generateIcsExceptionDate(exceptionDate, "EXDATE", {
         timezones: options?.timezones,
       });
     });
   }
 
-  icsString += getIcsEndLine("VJOURNAL");
+  icsString += getIcsEndLine("VTODO");
 
   if (options?.skipFormatLines) return icsString;
 

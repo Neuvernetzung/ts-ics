@@ -1,8 +1,8 @@
 import type { IcsRecurrenceRule } from "@/types";
 
-import { generateIcsLine } from "./utils/addLine";
-import { generateIcsOptions } from "./utils/generateOptions";
-import { generateIcsWeekdayNumber } from "./weekdayNumber";
+import { generateIcsLine } from "../utils/addLine";
+import { generateIcsOptions } from "../utils/generateOptions";
+import { generateIcsWeekdayNumber } from "../values/weekdayNumber";
 import { generateIcsDate, generateIcsUtcDateTime } from "./date";
 
 export const generateIcsRecurrenceRule = (value: IcsRecurrenceRule) => {

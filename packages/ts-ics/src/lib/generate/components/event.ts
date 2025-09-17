@@ -11,32 +11,32 @@ import type {
 import type { IcsOrganizer } from "@/types/organizer";
 
 import { generateIcsAlarm } from "./alarm";
-import { generateIcsAttendee } from "./attendee";
-import { generateIcsExceptionDate } from "./exceptionDate";
-import { generateIcsDuration } from "./duration";
-import { generateIcsOrganizer } from "./organizer";
-import { generateIcsRecurrenceRule } from "./recurrenceRule";
-import { generateIcsTimeStamp } from "./timeStamp";
+import { generateIcsAttendee } from "../values/attendee";
+import { generateIcsExceptionDate } from "../values/exceptionDate";
+import { generateIcsDuration } from "../values/duration";
+import { generateIcsOrganizer } from "../values/organizer";
+import { generateIcsRecurrenceRule } from "../values/recurrenceRule";
+import { generateIcsTimeStamp } from "../values/timeStamp";
 import {
   generateIcsLine,
   getIcsEndLine,
   getIcsStartLine,
-} from "./utils/addLine";
-import { getKeys } from "./utils/getKeys";
-import { formatLines } from "./utils/formatLines";
-import { escapeTextString } from "./utils/escapeText";
-import { generateNonStandardValues } from "./nonStandardValues";
+} from "../utils/addLine";
+import { getKeys } from "../utils/getKeys";
+import { formatLines } from "../utils/formatLines";
+import { escapeTextString } from "../utils/escapeText";
+import { generateNonStandardValues } from "../nonStandard/nonStandardValues";
 import type {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,
 } from "@/types/nonStandardValues";
-import { generateIcsRecurrenceId } from "./recurrenceId";
+import { generateIcsRecurrenceId } from "../values/recurrenceId";
 import {
   eventObjectKeyIsArrayOfStrings,
   eventObjectKeyIsTextString,
   eventObjectKeyIsTimeStamp,
 } from "@/constants/keyTypes";
-import { generateIcsOptions } from "./utils/generateOptions";
+import { generateIcsOptions } from "../utils/generateOptions";
 
 type GenerateIcsEventOptions<T extends NonStandardValuesGeneric> = {
   skipFormatLines?: boolean;

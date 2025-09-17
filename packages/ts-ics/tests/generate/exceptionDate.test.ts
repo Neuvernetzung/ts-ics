@@ -1,4 +1,4 @@
-import { generateIcsExceptionDate } from "@/lib/generate/exceptionDate";
+import { generateIcsExceptionDate } from "@/lib/generate/values/exceptionDate";
 import { convertIcsExceptionDates } from "@/lib/parse/exceptionDate";
 import { getLine } from "@/lib/parse/utils/line";
 import { splitLines } from "@/lib/parse/utils/splitLines";

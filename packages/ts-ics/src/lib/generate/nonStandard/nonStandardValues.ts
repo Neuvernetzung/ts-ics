@@ -2,8 +2,8 @@ import type {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,
 } from "@/types/nonStandardValues";
-import { generateIcsLine } from "./utils/addLine";
-import { generateIcsOptions } from "./utils/generateOptions";
+import { generateIcsLine } from "../utils/addLine";
+import { generateIcsOptions } from "../utils/generateOptions";
 
 export const generateNonStandardValues = <T extends NonStandardValuesGeneric>(
   nonStandardValues?: T,

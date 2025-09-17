@@ -1,6 +1,6 @@
 import type { IcsFreeBusyTime } from "@/types/freebusy";
-import { generateIcsLine } from "./utils/addLine";
-import { generateIcsOptions } from "./utils/generateOptions";
+import { generateIcsLine } from "../utils/addLine";
+import { generateIcsOptions } from "../utils/generateOptions";
 import { generateIcsUtcDateTime } from "./date";
 import { generateIcsDuration } from "./duration";
 

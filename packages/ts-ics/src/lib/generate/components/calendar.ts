@@ -7,10 +7,10 @@ import {
   generateIcsLine,
   getIcsEndLine,
   getIcsStartLine,
-} from "./utils/addLine";
-import { formatLines } from "./utils/formatLines";
-import { getKeys } from "./utils/getKeys";
-import { generateNonStandardValues } from "./nonStandardValues";
+} from "../utils/addLine";
+import { formatLines } from "../utils/formatLines";
+import { getKeys } from "../utils/getKeys";
+import { generateNonStandardValues } from "../nonStandard/nonStandardValues";
 import type {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,

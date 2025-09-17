@@ -1,8 +1,8 @@
 import type { IcsOrganizer } from "@/types/organizer";
 
 import { generateIcsMail } from "./mail";
-import { generateIcsLine } from "./utils/addLine";
-import { generateIcsOptions } from "./utils/generateOptions";
+import { generateIcsLine } from "../utils/addLine";
+import { generateIcsOptions } from "../utils/generateOptions";
 
 export const generateIcsOrganizer = (organizer: IcsOrganizer) => {
   const options = generateIcsOptions(

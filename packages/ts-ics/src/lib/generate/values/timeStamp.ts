@@ -5,11 +5,11 @@ import {
   generateIcsLocalDateTime,
   generateIcsUtcDateTime,
 } from "./date";
-import { generateIcsLine } from "./utils/addLine";
+import { generateIcsLine } from "../utils/addLine";
 import {
   generateIcsOptions,
   type GenerateIcsOptionsProps,
-} from "./utils/generateOptions";
+} from "../utils/generateOptions";
 
 type GenerateIcsTimeStampOptions = {
   timezones?: IcsTimezone[];
@@ -35,7 +35,11 @@ export const generateIcsTimeStamp = (
     dateObject.type === "DATE"
       ? generateIcsDate(dateObject.date)
       : dateObject.local && !options?.forceUtc
-      ? generateIcsLocalDateTime(dateObject.date, dateObject.local, options?.timezones)
+      ? generateIcsLocalDateTime(
+          dateObject.date,
+          dateObject.local,
+          options?.timezones
+        )
       : generateIcsUtcDateTime(dateObject.date);
 
   return generateIcsLine(icsKey, value, icsOptions);

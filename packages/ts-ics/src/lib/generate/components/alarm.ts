@@ -1,17 +1,17 @@
 import { VALARM_TO_KEYS } from "@/constants/keys/alarm";
 import type { IcsAlarm, IcsDuration, IcsTrigger } from "@/types";
 
-import { generateIcsAttachment } from "./attachment";
-import { generateIcsAttendee } from "./attendee";
-import { generateIcsDuration } from "./duration";
-import { generateIcsTrigger } from "./trigger";
+import { generateIcsAttachment } from "../values/attachment";
+import { generateIcsAttendee } from "../values/attendee";
+import { generateIcsDuration } from "../values/duration";
+import { generateIcsTrigger } from "../values/trigger";
 import {
   generateIcsLine,
   getIcsEndLine,
   getIcsStartLine,
-} from "./utils/addLine";
-import { getKeys } from "./utils/getKeys";
-import { generateNonStandardValues } from "./nonStandardValues";
+} from "../utils/addLine";
+import { getKeys } from "../utils/getKeys";
+import { generateNonStandardValues } from "../nonStandard/nonStandardValues";
 import type {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,

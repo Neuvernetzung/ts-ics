@@ -1,8 +1,8 @@
 import type { IcsTrigger } from "@/types";
 
 import { generateIcsDuration } from "./duration";
-import { generateIcsLine } from "./utils/addLine";
-import { generateIcsOptions } from "./utils/generateOptions";
+import { generateIcsLine } from "../utils/addLine";
+import { generateIcsOptions } from "../utils/generateOptions";
 import { generateIcsUtcDateTime } from "./date";
 
 export const generateIcsTrigger = (trigger: IcsTrigger) => {

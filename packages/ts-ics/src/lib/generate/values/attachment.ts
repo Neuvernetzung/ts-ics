@@ -1,7 +1,7 @@
 import type { IcsAttachment } from "@/types/attachment";
 
-import { generateIcsLine } from "./utils/addLine";
-import { generateIcsOptions } from "./utils/generateOptions";
+import { generateIcsLine } from "../utils/addLine";
+import { generateIcsOptions } from "../utils/generateOptions";
 
 export const generateIcsAttachment = (attachment: IcsAttachment) => {
   if (attachment.type === "uri") {

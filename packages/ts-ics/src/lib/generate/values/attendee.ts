@@ -1,8 +1,8 @@
 import type { IcsAttendee } from "@/types/attendee";
 
-import { generateIcsMail } from "./mail";
-import { generateIcsLine } from "./utils/addLine";
-import { generateIcsOptions } from "./utils/generateOptions";
+import { generateIcsMail } from "../values/mail";
+import { generateIcsLine } from "../utils/addLine";
+import { generateIcsOptions } from "../utils/generateOptions";
 
 export const generateIcsAttendee = (attendee: IcsAttendee, key: string) => {
   const options = generateIcsOptions(

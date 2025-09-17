@@ -2,16 +2,16 @@ import { VTIMEZONE_PROP_TO_KEYS } from "@/constants/keys/timezoneProp";
 import type { IcsDateObject, IcsRecurrenceRule } from "@/types";
 import type { IcsTimezoneProp } from "@/types/timezoneProp";
 
-import { generateIcsUtcDateTime } from "./date";
-import { generateIcsRecurrenceRule } from "./recurrenceRule";
-import { generateIcsTimeStamp } from "./timeStamp";
+import { generateIcsUtcDateTime } from "../values/date";
+import { generateIcsRecurrenceRule } from "../values/recurrenceRule";
+import { generateIcsTimeStamp } from "../values/timeStamp";
 import {
   generateIcsLine,
   getIcsEndLine,
   getIcsStartLine,
-} from "./utils/addLine";
-import { getKeys } from "./utils/getKeys";
-import { generateNonStandardValues } from "./nonStandardValues";
+} from "../utils/addLine";
+import { getKeys } from "../utils/getKeys";
+import { generateNonStandardValues } from "../nonStandard/nonStandardValues";
 import type {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,

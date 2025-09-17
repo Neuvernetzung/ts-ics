@@ -8,18 +8,18 @@ import type {
 } from "@/types";
 import type { IcsOrganizer } from "@/types/organizer";
 
-import { generateIcsAttendee } from "./attendee";
-import { generateIcsOrganizer } from "./organizer";
-import { generateIcsTimeStamp } from "./timeStamp";
+import { generateIcsAttendee } from "../values/attendee";
+import { generateIcsOrganizer } from "../values/organizer";
+import { generateIcsTimeStamp } from "../values/timeStamp";
 import {
   generateIcsLine,
   getIcsEndLine,
   getIcsStartLine,
-} from "./utils/addLine";
-import { getKeys } from "./utils/getKeys";
-import { formatLines } from "./utils/formatLines";
-import { escapeTextString } from "./utils/escapeText";
-import { generateNonStandardValues } from "./nonStandardValues";
+} from "../utils/addLine";
+import { getKeys } from "../utils/getKeys";
+import { formatLines } from "../utils/formatLines";
+import { escapeTextString } from "../utils/escapeText";
+import { generateNonStandardValues } from "../nonStandard/nonStandardValues";
 import type {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,
@@ -28,7 +28,7 @@ import {
   freeBusyObjectKeyIsTextString,
   freeBusyObjectKeyIsTimeStamp,
 } from "@/constants/keyTypes/freebusy";
-import { generateIcsFreeBusyTime } from "./freebusyValue";
+import { generateIcsFreeBusyTime } from "../values/freebusyValue";
 
 type GenerateIcsFreeBusyOptions<T extends NonStandardValuesGeneric> = {
   skipFormatLines?: boolean;
