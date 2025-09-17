@@ -25,6 +25,7 @@ type ConvertIcsComponentProps<
 > = {
   icsComponent: IcsComponent;
   objectKeyMap: Partial<Omit<Record<string, keyof TData>, "nonStandard">>;
+  defaultValues?: Partial<TData>;
   convertValues: {
     [K in keyof NoInfer<TData>]?: (props: {
       line: Line;
@@ -82,7 +83,7 @@ export const _convertIcsComponent = <
     }, cleanedFileString)
   );
 
-  const data: Partial<TData> = {};
+  const data: Partial<TData> = options.defaultValues || {};
 
   const nonStandardValues: Record<string, Line> = {};
 

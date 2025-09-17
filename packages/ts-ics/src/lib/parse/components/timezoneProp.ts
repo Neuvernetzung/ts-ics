@@ -28,6 +28,7 @@ export const convertIcsTimezoneProp = <T extends NonStandardValuesGeneric>(
   const icsTimeZone = _convertIcsComponent(schema, rawTimezonePropString, {
     icsComponent: type,
     objectKeyMap: VTIMEZONE_PROP_TO_OBJECT_KEYS,
+    defaultValues: { type },
     convertValues: {
       start: ({ line }) => convertIcsDateTime(undefined, line),
       recurrenceRule: ({ line }) =>
