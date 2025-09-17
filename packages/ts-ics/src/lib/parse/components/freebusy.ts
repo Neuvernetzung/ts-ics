@@ -6,7 +6,7 @@ import { convertIcsAttendee } from "../values/attendee";
 import { convertIcsOrganizer } from "../values/organizer";
 import { convertIcsTimeStamp } from "../values/timeStamp";
 import { unescapeTextString } from "../utils/unescapeText";
-import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { convertIcsFreeBusyTime } from "../values/freebusyValue";
 import { _convertIcsComponent } from "./_component";
 

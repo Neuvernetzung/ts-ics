@@ -1,4 +1,4 @@
-import type { ConvertLineType, ParseLineType } from "./parse";
+import type { ConvertLineType, ParseLineType } from "../parse";
 
 // VEVENT
 export const eventStatusTypes = [

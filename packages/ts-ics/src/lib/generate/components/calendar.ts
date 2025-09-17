@@ -3,11 +3,14 @@ import type { IcsCalendar } from "@/types";
 
 import { generateIcsEvent } from "./event";
 import { generateIcsTimezone } from "./timezone";
-import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { generateIcsTodo } from "./todo";
 import { generateIcsJournal } from "./journal";
 import { generateIcsFreeBusy } from "./freebusy";
-import { _generateIcsComponent, type GenerateIcsComponentProps } from "./_component";
+import {
+  _generateIcsComponent,
+  type GenerateIcsComponentProps,
+} from "./_component";
 
 export const generateIcsCalendar = <T extends NonStandardValuesGeneric>(
   calendar: IcsCalendar,

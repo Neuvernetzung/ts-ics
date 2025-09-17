@@ -1,7 +1,7 @@
 import type {
   ConvertAttendee,
   IcsAttendeePartStatusType,
-} from "@/types/attendee";
+} from "@/types/values/attendee";
 
 import { replaceMailTo } from "../utils/replaceMailTo";
 import { standardValidate } from "../utils/standardValidate";

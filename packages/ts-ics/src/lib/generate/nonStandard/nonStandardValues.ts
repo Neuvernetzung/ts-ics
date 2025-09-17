@@ -1,7 +1,7 @@
 import type {
   GenerateNonStandardValues,
   NonStandardValuesGeneric,
-} from "@/types/nonStandardValues";
+} from "@/types/nonStandard/nonStandardValues";
 import { generateIcsLine } from "../utils/addLine";
 import { generateIcsOptions } from "../utils/generateOptions";
 

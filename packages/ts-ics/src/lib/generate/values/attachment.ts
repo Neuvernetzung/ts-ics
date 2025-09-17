@@ -1,4 +1,4 @@
-import type { IcsAttachment } from "@/types/attachment";
+import type { IcsAttachment } from "@/types/values/attachment";
 
 import { generateIcsLine } from "../utils/addLine";
 import { generateIcsOptions } from "../utils/generateOptions";

@@ -14,7 +14,7 @@ import { convertIcsRecurrenceId } from "../values/recurrenceId";
 import { convertIcsClass } from "../values/class";
 import { convertIcsEventStatus } from "../values/status";
 import { convertIcsTimeTransparent } from "../values/timeTransparent";
-import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { _convertIcsComponent } from "./_component";
 
 export const convertIcsEvent = <T extends NonStandardValuesGeneric>(

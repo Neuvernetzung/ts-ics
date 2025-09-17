@@ -1,7 +1,7 @@
 import type { IcsDateObject } from "./date";
 import type { IcsDuration } from "./duration";
-import type { ConvertLineType, ParseLineType } from "./parse";
-import type { IcsTimezone } from "./timezone";
+import type { ConvertLineType, ParseLineType } from "../parse";
+import type { IcsTimezone } from "../components/timezone";
 
 export const triggerRelations = ["START", "END"] as const;
 

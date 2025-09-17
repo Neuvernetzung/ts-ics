@@ -1,10 +1,10 @@
 import { VTIMEZONE_OBJECT_KEY } from "@/constants";
 import { VTIMEZONE_TO_OBJECT_KEYS } from "@/constants/keys/timezone";
-import type { ConvertTimezone, IcsTimezone } from "@/types/timezone";
+import type { ConvertTimezone, IcsTimezone } from "@/types/components/timezone";
 
 import { convertIcsDateTime } from "../values/date";
 import { convertIcsTimezoneProp } from "../components/timezoneProp";
-import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { _convertIcsComponent } from "./_component";
 
 export const convertIcsTimezone = <T extends NonStandardValuesGeneric>(

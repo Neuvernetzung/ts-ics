@@ -1,12 +1,15 @@
 import { VTIMEZONE_PROP_TO_KEYS } from "@/constants/keys/timezoneProp";
-import type { IcsTimezoneProp } from "@/types/timezoneProp";
+import type { IcsTimezoneProp } from "@/types/components/timezoneProp";
 
 import { generateIcsUtcDateTime } from "../values/date";
 import { generateIcsRecurrenceRule } from "../values/recurrenceRule";
 import { generateIcsTimeStamp } from "../values/timeStamp";
 import { generateIcsLine } from "../utils/addLine";
-import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
-import { _generateIcsComponent, type GenerateIcsComponentProps } from "./_component";
+import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
+import {
+  _generateIcsComponent,
+  type GenerateIcsComponentProps,
+} from "./_component";
 
 export const generateIcsTimezoneProp = <T extends NonStandardValuesGeneric>(
   timezoneProp: IcsTimezoneProp,

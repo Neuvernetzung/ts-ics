@@ -7,9 +7,12 @@ import { generateIcsOrganizer } from "../values/organizer";
 import { generateIcsTimeStamp } from "../values/timeStamp";
 import { generateIcsLine } from "../utils/addLine";
 import { escapeTextString } from "../utils/escapeText";
-import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { generateIcsFreeBusyTime } from "../values/freebusyValue";
-import { _generateIcsComponent, type GenerateIcsComponentProps } from "./_component";
+import {
+  _generateIcsComponent,
+  type GenerateIcsComponentProps,
+} from "./_component";
 import { VFREEBUSY_OBJECT_KEY } from "@/constants";
 
 export const generateIcsFreeBusy = <T extends NonStandardValuesGeneric>(

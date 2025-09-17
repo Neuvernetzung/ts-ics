@@ -6,7 +6,7 @@ import { convertIcsAttachment } from "../values/attachment";
 import { convertIcsAttendee } from "../values/attendee";
 import { convertIcsDuration } from "../values/duration";
 import { convertIcsTrigger } from "../values/trigger";
-import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { _convertIcsComponent } from "./_component";
 
 export const convertIcsAlarm = <T extends NonStandardValuesGeneric>(

@@ -6,7 +6,7 @@ import { generateIcsAttendee } from "../values/attendee";
 import { generateIcsDuration } from "../values/duration";
 import { generateIcsTrigger } from "../values/trigger";
 import { generateIcsLine } from "../utils/addLine";
-import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import {
   _generateIcsComponent,
   type GenerateIcsComponentProps,

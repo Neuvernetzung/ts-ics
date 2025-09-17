@@ -1,4 +1,4 @@
-import type { ConvertExceptionDates } from "@/types/exceptionDate";
+import type { ConvertExceptionDates } from "@/types/values/exceptionDate";
 import { convertIcsTimeStamp } from "./timeStamp";
 import { standardValidate } from "../utils/standardValidate";
 

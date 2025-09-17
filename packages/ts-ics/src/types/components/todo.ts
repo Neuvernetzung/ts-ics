@@ -1,18 +1,18 @@
-import type { IcsDateObject } from "./date";
-import type { IcsDuration } from "./duration";
+import type { IcsDateObject } from "../values/date";
+import type { IcsDuration } from "../values/duration";
 import type { IcsTimezone } from "./timezone";
-import type { ConvertComponentType, ParseComponentType } from "./parse";
+import type { ConvertComponentType, ParseComponentType } from "../parse";
 import type {
   NonStandardValuesGeneric,
   ParseNonStandardValues,
-} from "./nonStandardValues";
-import type { IcsClassType } from "./class";
-import type { IcsOrganizer } from "./organizer";
-import type { IcsRecurrenceId } from "./recurrenceId";
-import type { IcsTodoStatusType } from "./status";
-import type { IcsRecurrenceRule } from "./recurrenceRule";
-import type { IcsAttendee } from "./attendee";
-import type { IcsExceptionDates } from "./exceptionDate";
+} from "../nonStandard/nonStandardValues";
+import type { IcsClassType } from "../values/class";
+import type { IcsOrganizer } from "../values/organizer";
+import type { IcsRecurrenceId } from "../values/recurrenceId";
+import type { IcsTodoStatusType } from "../values/status";
+import type { IcsRecurrenceRule } from "../values/recurrenceRule";
+import type { IcsAttendee } from "../values/attendee";
+import type { IcsExceptionDates } from "../values/exceptionDate";
 
 export type IcsTodoDurationOrDue =
   | { start: IcsDateObject; duration: IcsDuration; due?: never }

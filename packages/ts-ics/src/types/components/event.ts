@@ -1,20 +1,20 @@
 import type { IcsAlarm } from "./alarm";
-import type { IcsAttendee } from "./attendee";
-import type { IcsDateObject } from "./date";
-import type { IcsDuration } from "./duration";
-import type { IcsOrganizer } from "./organizer";
-import type { IcsRecurrenceRule } from "./recurrenceRule";
-import type { IcsRecurrenceId } from "./recurrenceId";
-import type { IcsEventStatusType } from "./status";
-import type { IcsExceptionDates } from "./exceptionDate";
-import type { IcsClassType } from "./class";
-import type { IcsTimeTransparentType } from "./timeTransparent";
+import type { IcsAttendee } from "../values/attendee";
+import type { IcsDateObject } from "../values/date";
+import type { IcsDuration } from "../values/duration";
+import type { IcsOrganizer } from "../values/organizer";
+import type { IcsRecurrenceRule } from "../values/recurrenceRule";
+import type { IcsRecurrenceId } from "../values/recurrenceId";
+import type { IcsEventStatusType } from "../values/status";
+import type { IcsExceptionDates } from "../values/exceptionDate";
+import type { IcsClassType } from "../values/class";
+import type { IcsTimeTransparentType } from "../values/timeTransparent";
 import type { IcsTimezone } from "./timezone";
-import type { ConvertComponentType, ParseComponentType } from "./parse";
+import type { ConvertComponentType, ParseComponentType } from "../parse";
 import type {
   NonStandardValuesGeneric,
   ParseNonStandardValues,
-} from "./nonStandardValues";
+} from "../nonStandard/nonStandardValues";
 
 export type IcsEventDurationOrEnd =
   | { duration: IcsDuration; end?: never }

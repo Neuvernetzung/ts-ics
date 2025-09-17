@@ -1,4 +1,4 @@
-import type { ConvertWeekDayNumber, IcsWeekDay } from "@/types/weekday";
+import type { ConvertWeekDayNumber, IcsWeekDay } from "@/types/values/weekday";
 import { standardValidate } from "../utils/standardValidate";
 import type { Line } from "@/types";
 

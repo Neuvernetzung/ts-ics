@@ -1,4 +1,4 @@
-import type { ConvertOrganizer } from "@/types/organizer";
+import type { ConvertOrganizer } from "@/types/values/organizer";
 
 import { replaceMailTo } from "../utils/replaceMailTo";
 import { standardValidate } from "../utils/standardValidate";

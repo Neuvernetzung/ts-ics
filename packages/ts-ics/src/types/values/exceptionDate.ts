@@ -1,6 +1,6 @@
 import type { IcsDateObject } from "./date";
-import type { ConvertLineType, ParseLineType } from "./parse";
-import type { IcsTimezone } from "./timezone";
+import type { ConvertLineType, ParseLineType } from "../parse";
+import type { IcsTimezone } from "../components/timezone";
 
 export type IcsExceptionDate = IcsDateObject;
 

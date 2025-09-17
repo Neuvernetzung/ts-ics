@@ -1,7 +1,7 @@
 import { addMilliseconds } from "date-fns";
 
 import type { Line, ParseTimeStampOptions, ConvertTimeStamp } from "@/types";
-import type { DateObjectType } from "@/types/date";
+import type { DateObjectType } from "@/types/values/date";
 
 import { convertIcsDateTime, convertIcsDate } from "./date";
 import { getTimezoneObjectOffset } from "@/utils/timezone/getTimezone";

@@ -4,8 +4,8 @@ import type { IcsJournal } from "./journal";
 import type {
   NonStandardValuesGeneric,
   ParseNonStandardValues,
-} from "./nonStandardValues";
-import type { ConvertComponentType, ParseComponentType } from "./parse";
+} from "../nonStandard/nonStandardValues";
+import type { ConvertComponentType, ParseComponentType } from "../parse";
 import type { IcsTimezone } from "./timezone";
 import type { IcsTodo } from "./todo";
 

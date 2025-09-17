@@ -1,18 +1,18 @@
-import type { IcsDateObject } from "./date";
+import type { IcsDateObject } from "../values/date";
 import type { IcsTimezone } from "./timezone";
 import type {
   ConvertComponentType,
   ConvertLineType,
   ParseComponentType,
   ParseLineType,
-} from "./parse";
+} from "../parse";
 import type {
   NonStandardValuesGeneric,
   ParseNonStandardValues,
-} from "./nonStandardValues";
-import type { IcsOrganizer } from "./organizer";
-import type { IcsAttendee } from "./attendee";
-import type { IcsDuration } from "./duration";
+} from "../nonStandard/nonStandardValues";
+import type { IcsOrganizer } from "../values/organizer";
+import type { IcsAttendee } from "../values/attendee";
+import type { IcsDuration } from "../values/duration";
 
 export const freeBusyTypes = [
   "FREE",

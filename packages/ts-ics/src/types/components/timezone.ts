@@ -1,8 +1,8 @@
 import type {
   NonStandardValuesGeneric,
   ParseNonStandardValues,
-} from "./nonStandardValues";
-import type { ConvertComponentType, ParseComponentType } from "./parse";
+} from "../nonStandard/nonStandardValues";
+import type { ConvertComponentType, ParseComponentType } from "../parse";
 import type { IcsTimezoneProp } from "./timezoneProp";
 
 export type IcsTimezone<

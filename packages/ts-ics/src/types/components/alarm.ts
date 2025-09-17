@@ -1,13 +1,13 @@
-import type { IcsAttachment } from "./attachment";
-import type { IcsAttendee } from "./attendee";
-import type { IcsDuration } from "./duration";
+import type { IcsAttachment } from "../values/attachment";
+import type { IcsAttendee } from "../values/attendee";
+import type { IcsDuration } from "../values/duration";
 import type {
   NonStandardValuesGeneric,
   ParseNonStandardValues,
-} from "./nonStandardValues";
-import type { ConvertComponentType, ParseComponentType } from "./parse";
+} from "../nonStandard/nonStandardValues";
+import type { ConvertComponentType, ParseComponentType } from "../parse";
 import type { IcsTimezone } from "./timezone";
-import type { IcsTrigger } from "./trigger";
+import type { IcsTrigger } from "../values/trigger";
 
 export type IcsAlarm<
   TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric

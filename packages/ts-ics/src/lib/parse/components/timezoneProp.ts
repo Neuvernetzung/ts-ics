@@ -3,12 +3,12 @@ import {
   type IcsTimezonePropType,
   TIMEZONE_PROP_COMPONENTS,
   type ConvertTimezoneProp,
-} from "@/types/timezoneProp";
+} from "@/types/components/timezoneProp";
 
 import { convertIcsDateTime } from "../values/date";
 import { convertIcsRecurrenceRule } from "../values/recurrenceRule";
 import { convertIcsTimeStamp } from "../values/timeStamp";
-import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { _convertIcsComponent } from "./_component";
 import { BREAK_REGEX } from "@/constants";
 

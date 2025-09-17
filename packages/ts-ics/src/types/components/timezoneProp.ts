@@ -2,13 +2,13 @@ import {
   VTIMEZONE_DAYLIGHT_OBJECT_KEY,
   VTIMEZONE_STANDARD_OBJECT_KEY,
 } from "@/constants";
-import type { IcsDateObject } from "./date";
+import type { IcsDateObject } from "../values/date";
 import type {
   NonStandardValuesGeneric,
   ParseNonStandardValues,
-} from "./nonStandardValues";
-import type { ConvertComponentType, ParseComponentType } from "./parse";
-import type { IcsRecurrenceRule } from "./recurrenceRule";
+} from "../nonStandard/nonStandardValues";
+import type { ConvertComponentType, ParseComponentType } from "../parse";
+import type { IcsRecurrenceRule } from "../values/recurrenceRule";
 import type { IcsTimezone } from "./timezone";
 
 export const TIMEZONE_PROP_COMPONENTS = [

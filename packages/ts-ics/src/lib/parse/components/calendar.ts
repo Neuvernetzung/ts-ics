@@ -11,7 +11,7 @@ import type { ConvertCalendar, IcsCalendarVersion } from "@/types";
 
 import { convertIcsEvent } from "../components/event";
 import { convertIcsTimezone } from "../components/timezone";
-import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { convertIcsTodo } from "../components/todo";
 import { convertIcsJournal } from "../components/journal";
 import { convertIcsFreeBusy } from "../components/freebusy";

@@ -3,7 +3,7 @@ import type {
   NonStandardValuesGeneric,
   ParseNonStandardValue,
   ParseNonStandardValues,
-} from "@/types/nonStandardValues";
+} from "@/types/nonStandard/nonStandardValues";
 import { standardValidate } from "../utils/standardValidate";
 
 export const convertNonStandardValues = <

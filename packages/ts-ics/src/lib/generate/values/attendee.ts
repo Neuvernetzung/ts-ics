@@ -1,4 +1,4 @@
-import type { IcsAttendee } from "@/types/attendee";
+import type { IcsAttendee } from "@/types/values/attendee";
 
 import { generateIcsMail } from "../values/mail";
 import { generateIcsLine } from "../utils/addLine";

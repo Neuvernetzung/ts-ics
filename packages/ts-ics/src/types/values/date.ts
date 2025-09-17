@@ -1,5 +1,5 @@
-import type { ConvertLineType, ParseLineType } from "./parse";
-import type { IcsTimezone } from "./timezone";
+import type { ConvertLineType, ParseLineType } from "../parse";
+import type { IcsTimezone } from "../components/timezone";
 
 export const dateObjectTypes = ["DATE", "DATE-TIME"] as const;
 

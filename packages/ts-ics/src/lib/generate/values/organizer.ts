@@ -1,4 +1,4 @@
-import type { IcsOrganizer } from "@/types/organizer";
+import type { IcsOrganizer } from "@/types/values/organizer";
 
 import { generateIcsMail } from "./mail";
 import { generateIcsLine } from "../utils/addLine";

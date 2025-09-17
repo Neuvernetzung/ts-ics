@@ -12,7 +12,7 @@ import { unescapeTextString } from "../utils/unescapeText";
 import { convertIcsRecurrenceId } from "../values/recurrenceId";
 import { convertIcsClass } from "../values/class";
 import { convertIcsTodoStatus } from "../values/status";
-import type { NonStandardValuesGeneric } from "@/types/nonStandardValues";
+import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { _convertIcsComponent } from "./_component";
 
 export const convertIcsTodo = <T extends NonStandardValuesGeneric>(

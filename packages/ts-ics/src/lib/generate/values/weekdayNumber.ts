@@ -1,4 +1,4 @@
-import type { IcsWeekdayNumber } from "@/types/weekday";
+import type { IcsWeekdayNumber } from "@/types/values/weekday";
 
 export const generateIcsWeekdayNumber = (value: IcsWeekdayNumber) => {
   if (value.occurence) {

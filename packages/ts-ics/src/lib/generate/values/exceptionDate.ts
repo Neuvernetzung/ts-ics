@@ -1,4 +1,4 @@
-import type { IcsExceptionDate } from "@/types/exceptionDate";
+import type { IcsExceptionDate } from "@/types/values/exceptionDate";
 import { generateIcsTimeStamp } from "./timeStamp";
 import type { IcsTimezone } from "@/types";
 

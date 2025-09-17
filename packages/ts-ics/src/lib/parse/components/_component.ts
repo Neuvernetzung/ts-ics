@@ -11,7 +11,7 @@ import { standardValidate } from "../utils/standardValidate";
 import type {
   NonStandardValuesGeneric,
   ParseNonStandardValues,
-} from "@/types/nonStandardValues";
+} from "@/types/nonStandard/nonStandardValues";
 import { convertNonStandardValues } from "../nonStandard/nonStandardValues";
 import { valueIsNonStandard } from "@/utils/nonStandardValue";
 import type { StandardSchemaV1 } from "@standard-schema/spec";

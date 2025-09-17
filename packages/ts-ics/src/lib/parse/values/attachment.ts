@@ -1,4 +1,7 @@
-import type { ConvertAttachment, IcsAttachment } from "@/types/attachment";
+import type {
+  ConvertAttachment,
+  IcsAttachment,
+} from "@/types/values/attachment";
 import { standardValidate } from "../utils/standardValidate";
 
 export const convertIcsAttachment: ConvertAttachment = (schema, line) => {

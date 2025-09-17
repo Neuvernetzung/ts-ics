@@ -1,4 +1,4 @@
-import type { ConvertLineType, ParseLineType } from "./parse";
+import type { ConvertLineType, ParseLineType } from "../parse";
 
 export const attachmentEncodingTypes = ["BASE64"] as const;
 
