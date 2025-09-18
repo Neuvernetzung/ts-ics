@@ -1,5 +1,14 @@
 # ts-ics
 
+## 2.3.0
+
+### Minor Changes
+
+- 2d371ae: Fix typo in IcsWeekdayNumber.occurence #216
+- e0eba50: Add integer value type
+- 3d5ed04: Refactor the internal components into a more reusable pattern and also reduce the bundle size slightly.
+- ba62b8a: Add text value type
+
 ## 2.2.0
 
 ## 2.1.8
