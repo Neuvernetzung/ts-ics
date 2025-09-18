@@ -11,7 +11,7 @@ export type ParseWeekDay = ParseLineType<IcsWeekDay>;
 
 export type IcsWeekdayNumber = {
   day: IcsWeekDay;
-  occurence?: number;
+  occurrence?: number;
 };
 
 export type WeekDayNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6;
