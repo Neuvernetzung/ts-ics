@@ -5,8 +5,6 @@ import type { IcsFreeBusy } from "@/types";
 import { generateIcsAttendee } from "../values/attendee";
 import { generateIcsOrganizer } from "../values/organizer";
 import { generateIcsTimeStamp } from "../values/timeStamp";
-import { generateIcsLine } from "../utils/addLine";
-import { escapeTextString } from "../utils/escapeText";
 import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { generateIcsFreeBusyTime } from "../values/freebusyValue";
 import {
@@ -14,6 +12,7 @@ import {
   type GenerateIcsComponentProps,
 } from "./_component";
 import { VFREEBUSY_OBJECT_KEY } from "@/constants";
+import { generateIcsText } from "../values";
 
 export const generateIcsFreeBusy = <T extends NonStandardValuesGeneric>(
   freeBusy: IcsFreeBusy,
@@ -39,8 +38,7 @@ export const generateIcsFreeBusy = <T extends NonStandardValuesGeneric>(
         generateIcsTimeStamp(icsKey, value, undefined, {
           timezones: options?.timezones,
         }),
-      comment: ({ icsKey, value }) =>
-        generateIcsLine(icsKey, escapeTextString(value)),
+      comment: ({ icsKey, value }) => generateIcsText(icsKey, value),
       organizer: ({ value }) => generateIcsOrganizer(value),
     },
     generateArrayValues: {

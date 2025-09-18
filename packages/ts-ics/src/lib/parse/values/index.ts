@@ -14,3 +14,4 @@ export * from "./exceptionDate";
 export * from "./weekDay";
 export * from "./status";
 export * from "./integer";
+export * from "./text";
