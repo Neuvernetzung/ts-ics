@@ -17,6 +17,7 @@ import {
   type GenerateIcsComponentProps,
 } from "./_component";
 import { VTODO_OBJECT_KEY } from "@/constants";
+import { generateIcsInteger } from "../values/integer";
 
 export const generateIcsTodo = <T extends NonStandardValuesGeneric>(
   todo: IcsTodo,
@@ -68,8 +69,8 @@ export const generateIcsTodo = <T extends NonStandardValuesGeneric>(
       duration: ({ icsKey, value }) =>
         generateIcsLine(icsKey, generateIcsDuration(value)),
       organizer: ({ value }) => generateIcsOrganizer(value),
-      sequence: ({ icsKey, value }) =>
-        generateIcsLine(icsKey, value.toString()),
+      sequence: ({ icsKey, value }) => generateIcsInteger(icsKey, value),
+      percentComplete: ({ icsKey, value }) => generateIcsInteger(icsKey, value),
       recurrenceId: ({ value }) =>
         generateIcsRecurrenceId(value, {
           timezones: options?.timezones,

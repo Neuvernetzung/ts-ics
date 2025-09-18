@@ -19,6 +19,7 @@ import {
   type GenerateIcsComponentProps,
 } from "./_component";
 import { VEVENT_OBJECT_KEY } from "@/constants";
+import { generateIcsInteger } from "../values/integer";
 
 export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
   event: IcsEvent,
@@ -75,8 +76,7 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
       duration: ({ icsKey, value }) =>
         generateIcsLine(icsKey, generateIcsDuration(value)),
       organizer: ({ value }) => generateIcsOrganizer(value),
-      sequence: ({ icsKey, value }) =>
-        generateIcsLine(icsKey, value.toString()),
+      sequence: ({ icsKey, value }) => generateIcsInteger(icsKey, value),
       recurrenceId: ({ value }) =>
         generateIcsRecurrenceId(value, {
           timezones: options?.timezones,

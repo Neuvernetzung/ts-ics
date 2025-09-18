@@ -13,6 +13,7 @@ import { convertIcsClass } from "../values/class";
 import { convertIcsJournalStatus } from "../values/status";
 import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { _convertIcsComponent } from "./_component";
+import { convertIcsInteger } from "../values";
 
 export const convertIcsJournal = <T extends NonStandardValuesGeneric>(
   ...args: Parameters<ConvertJournal<T>>
@@ -48,7 +49,7 @@ export const convertIcsJournal = <T extends NonStandardValuesGeneric>(
           timezones: options?.timezones,
         }),
       organizer: ({ line }) => convertIcsOrganizer(undefined, line),
-      sequence: ({ line }) => Number.parseInt(line.value, 10),
+      sequence: ({ line }) => convertIcsInteger(undefined, line),
       class: ({ line }) => convertIcsClass(undefined, line),
       recurrenceId: ({ line }) =>
         convertIcsRecurrenceId(undefined, line, {

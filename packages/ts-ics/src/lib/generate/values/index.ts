@@ -8,3 +8,4 @@ export * from "./recurrenceRule";
 export * from "./timeStamp";
 export * from "./trigger";
 export * from "./weekdayNumber";
+export * from "./integer";

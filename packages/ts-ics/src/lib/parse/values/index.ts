@@ -13,3 +13,4 @@ export * from "./timeTransparent";
 export * from "./exceptionDate";
 export * from "./weekDay";
 export * from "./status";
+export * from "./integer";
