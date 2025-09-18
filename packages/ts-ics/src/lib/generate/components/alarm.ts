@@ -12,6 +12,7 @@ import {
   type GenerateIcsComponentProps,
 } from "./_component";
 import { VALARM_OBJECT_KEY } from "@/constants";
+import { generateIcsInteger } from "../values/integer";
 
 export const generateIcsAlarm = <T extends NonStandardValuesGeneric>(
   alarm: IcsAlarm,
@@ -27,7 +28,7 @@ export const generateIcsAlarm = <T extends NonStandardValuesGeneric>(
       trigger: ({ value }) => generateIcsTrigger(value),
       duration: ({ icsKey, value }) =>
         generateIcsLine(icsKey, generateIcsDuration(value)),
-      repeat: ({ icsKey, value }) => generateIcsLine(icsKey, value?.toString()),
+      repeat: ({ icsKey, value }) => generateIcsInteger(icsKey, value),
     },
     generateArrayValues: {
       attendees: ({ value }) => generateIcsAttendee(value, "ATTENDEE"),

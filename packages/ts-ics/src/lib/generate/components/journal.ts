@@ -16,6 +16,7 @@ import {
   type GenerateIcsComponentProps,
 } from "./_component";
 import { VJOURNAL_OBJECT_KEY } from "@/constants";
+import { generateIcsInteger } from "../values/integer";
 
 export const generateIcsJournal = <T extends NonStandardValuesGeneric>(
   journal: IcsJournal,
@@ -55,8 +56,7 @@ export const generateIcsJournal = <T extends NonStandardValuesGeneric>(
         generateIcsLine(icsKey, escapeTextString(value)),
       recurrenceRule: ({ value }) => generateIcsRecurrenceRule(value),
       organizer: ({ value }) => generateIcsOrganizer(value),
-      sequence: ({ icsKey, value }) =>
-        generateIcsLine(icsKey, value.toString()),
+      sequence: ({ icsKey, value }) => generateIcsInteger(icsKey, value),
       recurrenceId: ({ value }) =>
         generateIcsRecurrenceId(value, {
           timezones: options?.timezones,

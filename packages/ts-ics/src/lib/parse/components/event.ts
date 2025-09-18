@@ -16,6 +16,7 @@ import { convertIcsEventStatus } from "../values/status";
 import { convertIcsTimeTransparent } from "../values/timeTransparent";
 import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { _convertIcsComponent } from "./_component";
+import { convertIcsInteger } from "../values/integer";
 
 export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
   ...args: Parameters<ConvertEvent<T>>
@@ -65,7 +66,7 @@ export const convertIcsEvent = <T extends NonStandardValuesGeneric>(
         }),
       duration: ({ line }) => convertIcsDuration(undefined, line),
       organizer: ({ line }) => convertIcsOrganizer(undefined, line),
-      sequence: ({ line }) => Number.parseInt(line.value, 10),
+      sequence: ({ line }) => convertIcsInteger(undefined, line),
       class: ({ line }) => convertIcsClass(undefined, line),
       recurrenceId: ({ line }) =>
         convertIcsRecurrenceId(undefined, line, {

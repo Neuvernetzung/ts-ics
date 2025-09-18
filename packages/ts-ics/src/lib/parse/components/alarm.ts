@@ -8,6 +8,7 @@ import { convertIcsDuration } from "../values/duration";
 import { convertIcsTrigger } from "../values/trigger";
 import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { _convertIcsComponent } from "./_component";
+import { convertIcsInteger } from "../values";
 
 export const convertIcsAlarm = <T extends NonStandardValuesGeneric>(
   ...args: Parameters<ConvertAlarm<T>>
@@ -23,7 +24,7 @@ export const convertIcsAlarm = <T extends NonStandardValuesGeneric>(
           timezones: options?.timezones,
         }),
       duration: ({ line }) => convertIcsDuration(undefined, line),
-      repeat: ({ line }) => Number.parseInt(line.value, 10),
+      repeat: ({ line }) => convertIcsInteger(undefined, line),
     },
     convertArrayValues: {
       attachments: ({ line }) => convertIcsAttachment(undefined, line),

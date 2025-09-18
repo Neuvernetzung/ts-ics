@@ -14,6 +14,7 @@ import { convertIcsClass } from "../values/class";
 import { convertIcsTodoStatus } from "../values/status";
 import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { _convertIcsComponent } from "./_component";
+import { convertIcsInteger } from "../values";
 
 export const convertIcsTodo = <T extends NonStandardValuesGeneric>(
   ...args: Parameters<ConvertTodo<T>>
@@ -59,8 +60,8 @@ export const convertIcsTodo = <T extends NonStandardValuesGeneric>(
         }),
       duration: ({ line }) => convertIcsDuration(undefined, line),
       organizer: ({ line }) => convertIcsOrganizer(undefined, line),
-      sequence: ({ line }) => Number.parseInt(line.value, 10),
-      percentComplete: ({ line }) => Number.parseInt(line.value, 10),
+      sequence: ({ line }) => convertIcsInteger(undefined, line),
+      percentComplete: ({ line }) => convertIcsInteger(undefined, line),
       class: ({ line }) => convertIcsClass(undefined, line),
       recurrenceId: ({ line }) =>
         convertIcsRecurrenceId(undefined, line, {
