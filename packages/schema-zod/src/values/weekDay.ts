@@ -11,7 +11,7 @@ export const zIcsWeekDay = z.enum(weekDays);
 export const zIcsWeekdayNumber: z.ZodType<IcsWeekdayNumber, IcsWeekdayNumber> =
   z.object({
     day: zIcsWeekDay,
-    occurence: z.number().optional(),
+    occurrence: z.number().optional(),
   });
 
 export const parseIcsWeekDay: ParseWeekDay = (...props) =>

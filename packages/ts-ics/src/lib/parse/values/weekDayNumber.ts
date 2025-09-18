@@ -7,10 +7,10 @@ const __convertIcsWeekDayNumber = (value: Line["value"]) => {
 
   if (isWeekdayOnly) return { day: value as IcsWeekDay };
 
-  const occurence = value.slice(0, -2);
-  const day = value.replace(occurence, "");
+  const occurrence = value.slice(0, -2);
+  const day = value.replace(occurrence, "");
 
-  return { day: day as IcsWeekDay, occurence: Number(occurence) };
+  return { day: day as IcsWeekDay, occurrence: Number(occurrence) };
 };
 
 export const convertIcsWeekDayNumber: ConvertWeekDayNumber = (schema, line) =>
