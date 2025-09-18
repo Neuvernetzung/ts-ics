@@ -1,5 +1,19 @@
 # @ts-ics/schema-zod
 
+## 2.3.0
+
+### Minor Changes
+
+- 2d371ae: Fix typo in IcsWeekdayNumber.occurence #216
+
+### Patch Changes
+
+- Updated dependencies [2d371ae]
+- Updated dependencies [e0eba50]
+- Updated dependencies [3d5ed04]
+- Updated dependencies [ba62b8a]
+  - ts-ics@2.3.0
+
 ## 2.2.0
 
 ### Minor Changes
