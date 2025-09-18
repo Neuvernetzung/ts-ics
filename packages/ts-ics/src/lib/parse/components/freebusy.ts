@@ -5,10 +5,10 @@ import type { ConvertFreeBusy } from "@/types";
 import { convertIcsAttendee } from "../values/attendee";
 import { convertIcsOrganizer } from "../values/organizer";
 import { convertIcsTimeStamp } from "../values/timeStamp";
-import { unescapeTextString } from "../utils/unescapeText";
 import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { convertIcsFreeBusyTime } from "../values/freebusyValue";
 import { _convertIcsComponent } from "./_component";
+import { convertIcsText } from "../values";
 
 export const convertIcsFreeBusy = <T extends NonStandardValuesGeneric>(
   ...args: Parameters<ConvertFreeBusy<T>>
@@ -31,7 +31,7 @@ export const convertIcsFreeBusy = <T extends NonStandardValuesGeneric>(
         convertIcsTimeStamp(undefined, line, {
           timezones: options?.timezones,
         }),
-      comment: ({ line }) => unescapeTextString(line.value),
+      comment: ({ line }) => convertIcsText(undefined, line),
       organizer: ({ line }) => convertIcsOrganizer(undefined, line),
     },
     convertArrayValues: {

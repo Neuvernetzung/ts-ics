@@ -12,3 +12,4 @@ export * from "./class";
 export * from "./timeTransparent";
 export * from "./exceptionDate";
 export * from "./integer";
+export * from "./text";

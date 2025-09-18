@@ -8,13 +8,12 @@ import { convertIcsOrganizer } from "../values/organizer";
 import { convertIcsRecurrenceRule } from "../values/recurrenceRule";
 import { convertIcsTimeStamp } from "../values/timeStamp";
 import { convertIcsExceptionDates } from "../values/exceptionDate";
-import { unescapeTextString } from "../utils/unescapeText";
 import { convertIcsRecurrenceId } from "../values/recurrenceId";
 import { convertIcsClass } from "../values/class";
 import { convertIcsTodoStatus } from "../values/status";
 import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { _convertIcsComponent } from "./_component";
-import { convertIcsInteger } from "../values";
+import { convertIcsInteger, convertIcsText } from "../values";
 
 export const convertIcsTodo = <T extends NonStandardValuesGeneric>(
   ...args: Parameters<ConvertTodo<T>>
@@ -50,10 +49,10 @@ export const convertIcsTodo = <T extends NonStandardValuesGeneric>(
           timezones: options?.timezones,
         }),
       categories: ({ line }) => line.value.split(COMMA),
-      description: ({ line }) => unescapeTextString(line.value),
-      location: ({ line }) => unescapeTextString(line.value),
-      comment: ({ line }) => unescapeTextString(line.value),
-      summary: ({ line }) => unescapeTextString(line.value),
+      description: ({ line }) => convertIcsText(undefined, line),
+      location: ({ line }) => convertIcsText(undefined, line),
+      comment: ({ line }) => convertIcsText(undefined, line),
+      summary: ({ line }) => convertIcsText(undefined, line),
       recurrenceRule: ({ line }) =>
         convertIcsRecurrenceRule(undefined, line, {
           timezones: options?.timezones,

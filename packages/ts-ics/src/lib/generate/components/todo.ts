@@ -9,7 +9,6 @@ import { generateIcsOrganizer } from "../values/organizer";
 import { generateIcsRecurrenceRule } from "../values/recurrenceRule";
 import { generateIcsTimeStamp } from "../values/timeStamp";
 import { generateIcsLine } from "../utils/addLine";
-import { escapeTextString } from "../utils/escapeText";
 import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { generateIcsRecurrenceId } from "../values/recurrenceId";
 import {
@@ -18,6 +17,7 @@ import {
 } from "./_component";
 import { VTODO_OBJECT_KEY } from "@/constants";
 import { generateIcsInteger } from "../values/integer";
+import { generateIcsText } from "../values";
 
 export const generateIcsTodo = <T extends NonStandardValuesGeneric>(
   todo: IcsTodo,
@@ -57,14 +57,10 @@ export const generateIcsTodo = <T extends NonStandardValuesGeneric>(
         }),
       categories: ({ icsKey, value }) =>
         generateIcsLine(icsKey, value.join(",")),
-      description: ({ icsKey, value }) =>
-        generateIcsLine(icsKey, escapeTextString(value)),
-      location: ({ icsKey, value }) =>
-        generateIcsLine(icsKey, escapeTextString(value)),
-      comment: ({ icsKey, value }) =>
-        generateIcsLine(icsKey, escapeTextString(value)),
-      summary: ({ icsKey, value }) =>
-        generateIcsLine(icsKey, escapeTextString(value)),
+      description: ({ icsKey, value }) => generateIcsText(icsKey, value),
+      location: ({ icsKey, value }) => generateIcsText(icsKey, value),
+      comment: ({ icsKey, value }) => generateIcsText(icsKey, value),
+      summary: ({ icsKey, value }) => generateIcsText(icsKey, value),
       recurrenceRule: ({ value }) => generateIcsRecurrenceRule(value),
       duration: ({ icsKey, value }) =>
         generateIcsLine(icsKey, generateIcsDuration(value)),

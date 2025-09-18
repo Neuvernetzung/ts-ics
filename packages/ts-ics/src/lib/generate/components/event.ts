@@ -10,16 +10,15 @@ import { generateIcsOrganizer } from "../values/organizer";
 import { generateIcsRecurrenceRule } from "../values/recurrenceRule";
 import { generateIcsTimeStamp } from "../values/timeStamp";
 import { generateIcsLine } from "../utils/addLine";
-import { escapeTextString } from "../utils/escapeText";
 import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
 import { generateIcsRecurrenceId } from "../values/recurrenceId";
-import { generateIcsOptions } from "../utils/generateOptions";
 import {
   _generateIcsComponent,
   type GenerateIcsComponentProps,
 } from "./_component";
 import { VEVENT_OBJECT_KEY } from "@/constants";
 import { generateIcsInteger } from "../values/integer";
+import { generateIcsText } from "../values/text";
 
 export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
   event: IcsEvent,
@@ -57,21 +56,16 @@ export const generateIcsEvent = <T extends NonStandardValuesGeneric>(
       categories: ({ icsKey, value }) =>
         generateIcsLine(icsKey, value.join(",")),
       description: ({ icsKey, value }) =>
-        generateIcsLine(
+        generateIcsText(
           icsKey,
-          escapeTextString(value),
+          value,
           event.descriptionAltRep
-            ? generateIcsOptions([
-                { key: "ALTREP", value: `"${event.descriptionAltRep}"` },
-              ])
+            ? [{ key: "ALTREP", value: `"${event.descriptionAltRep}"` }]
             : undefined
         ),
-      location: ({ icsKey, value }) =>
-        generateIcsLine(icsKey, escapeTextString(value)),
-      comment: ({ icsKey, value }) =>
-        generateIcsLine(icsKey, escapeTextString(value)),
-      summary: ({ icsKey, value }) =>
-        generateIcsLine(icsKey, escapeTextString(value)),
+      location: ({ icsKey, value }) => generateIcsText(icsKey, value),
+      comment: ({ icsKey, value }) => generateIcsText(icsKey, value),
+      summary: ({ icsKey, value }) => generateIcsText(icsKey, value),
       recurrenceRule: ({ value }) => generateIcsRecurrenceRule(value),
       duration: ({ icsKey, value }) =>
         generateIcsLine(icsKey, generateIcsDuration(value)),
