@@ -1,4 +1,4 @@
-import { convertIcsDuration } from "@/lib/parse/duration";
+import { convertIcsDuration } from "@/lib/parse/values/duration";
 
 it("Test Ics IcsDuration Parse", async () => {
   const value = "P15DT5H0M20S";

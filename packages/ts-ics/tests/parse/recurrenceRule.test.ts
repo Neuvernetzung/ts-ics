@@ -1,6 +1,6 @@
 import { getLine } from "@/lib/parse/utils/line";
 
-import { convertIcsRecurrenceRule } from "@/lib/parse/recurrenceRule";
+import { convertIcsRecurrenceRule } from "@/lib/parse/values/recurrenceRule";
 
 it("Test Ics Recurrence Rule Parse", async () => {
   const rRule =

@@ -1,7 +1,7 @@
 import type { IcsEvent } from "@/types";
 
 import { escapeTextString } from "./escapeText";
-import { generateIcsEvent } from "../event";
+import { generateIcsEvent } from "../components/event";
 
 describe("escapeTextString", () => {
   it("escapes special characters according to RFC 5545", () => {

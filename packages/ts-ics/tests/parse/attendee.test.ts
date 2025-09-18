@@ -1,7 +1,6 @@
 import { getLine } from "@/lib/parse/utils/line";
 
-import { convertIcsAttendee } from "@/lib/parse/attendee";
-import { IcsAttendee } from "@/types";
+import { convertIcsAttendee } from "@/lib/parse/values/attendee";
 
 it("Test Ics IcsAttendee Parse", async () => {
   const attendee = `ATTENDEE;MEMBER="mailto:DEV-GROUP@example.com":mailto:joecool@example.com`;

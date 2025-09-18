@@ -1,5 +1,5 @@
 import { generateIcsEvent } from "@/lib";
-import { convertIcsEvent } from "@/lib/parse/event";
+import { convertIcsEvent } from "@/lib/parse/components/event";
 import type { IcsEvent } from "@/types";
 import { readFile } from "node:fs/promises";
 import { icsTestData } from "../utils";
@@ -67,6 +67,29 @@ it("Test Ics Event Parse", async () => {
   ]);
 
   expect(() => convertIcsEvent(undefined, event)).not.toThrow();
+});
+
+it("Test Ics Event Parse - parse nested Alarm", async () => {
+  const event = icsTestData([
+    "BEGIN:VEVENT",
+    "UID:20070423T123432Z-541111@example.com",
+    "DTSTAMP:20070423T123432Z",
+    "DTSTART;VALUE=DATE:20070628",
+    "DTEND;VALUE=DATE:20070709",
+    "SUMMARY:Festival International de Jazz de Montreal",
+    "TRANSP:TRANSPARENT",
+    "BEGIN:VALARM",
+    "TRIGGER;VALUE=DATE-TIME:19970317T133000Z",
+    "REPEAT:4",
+    "DURATION:PT15M",
+    "ACTION:AUDIO",
+    "ATTACH;FMTTYPE=audio/basic:ftp://example.com/pub/sounds/bell-01.aud",
+    "END:VALARM",
+    "END:VEVENT",
+  ]);
+
+  const parsed = convertIcsEvent(undefined, event);
+  expect(parsed.alarms?.length).toEqual(1);
 });
 
 it("Test Ics Event Parse - recurrenceId gh#140", async () => {

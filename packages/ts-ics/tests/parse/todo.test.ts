@@ -1,5 +1,5 @@
 import { generateIcsTodo } from "@/lib";
-import { convertIcsTodo } from "@/lib/parse/todo";
+import { convertIcsTodo } from "@/lib/parse/components/todo";
 import type { IcsTodo } from "@/types";
 import { icsTestData } from "../utils";
 import { z } from "zod";

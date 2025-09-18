@@ -111,5 +111,22 @@ it("SEQUENCE is generated correctly gh#174", () => {
 
   const todoString = generateIcsTodo(todo);
 
-  expect(todoString).toContain("SEQUENCE:0");
+  expect(todoString).toContain("SEQUENCE:0\r\n");
+});
+
+it("PERCENT-COMPLETE is generated correctly", () => {
+  const date = new Date("2025-02-20T00:00:00Z");
+
+  const todo: IcsTodo = {
+    stamp: { date },
+    start: { date },
+    summary: "123",
+    uid: "123",
+    duration: { days: 2 },
+    percentComplete: 25,
+  };
+
+  const todoString = generateIcsTodo(todo);
+
+  expect(todoString).toContain("PERCENT-COMPLETE:25\r\n");
 });

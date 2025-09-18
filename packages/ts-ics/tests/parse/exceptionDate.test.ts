@@ -1,5 +1,5 @@
 import { convertIcsEvent } from "@/lib";
-import { convertIcsExceptionDates } from "@/lib/parse/exceptionDate";
+import { convertIcsExceptionDates } from "@/lib/parse/values/exceptionDate";
 import { icsTestData } from "../utils";
 
 it("Test Ics Event Parse - Exception Date-Times, comma separated", async () => {

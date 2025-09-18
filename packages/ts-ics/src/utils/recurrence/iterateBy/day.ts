@@ -21,8 +21,8 @@ export const iterateByDay = (
   byDay: NonNullable<IcsRecurrenceRule["byDay"]>,
   weekStartsOn: WeekDayNumber
 ): Date[][] => {
-  const dayIndeces = byDay.map(({ day, occurence }) => ({
-    occurence,
+  const dayIndeces = byDay.map(({ day, occurrence }) => ({
+    occurrence,
     day: weekDays.indexOf(day),
   }));
 
@@ -46,13 +46,13 @@ export const iterateByDay = (
     if (rule.byMonth) {
       return dateGroups.map((dates) =>
         dates.flatMap((date) =>
-          dayIndeces.flatMap(({ day, occurence }) =>
+          dayIndeces.flatMap(({ day, occurrence }) =>
             expandByOccurence(
               ignoreLocalTz(startOfMonth(date)),
               ignoreLocalTz(endOfMonth(date)),
               day,
               weekStartsOn,
-              occurence
+              occurrence
             )
           )
         )
@@ -61,13 +61,13 @@ export const iterateByDay = (
 
     return dateGroups.map((dates) =>
       dates.flatMap((date) =>
-        dayIndeces.flatMap(({ day, occurence }) =>
+        dayIndeces.flatMap(({ day, occurrence }) =>
           expandByOccurence(
             ignoreLocalTz(startOfYear(date)),
             ignoreLocalTz(endOfYear(date)),
             day,
             weekStartsOn,
-            occurence
+            occurrence
           )
         )
       )
@@ -85,13 +85,13 @@ export const iterateByDay = (
 
     return dateGroups.map((dates) =>
       dates.flatMap((date) =>
-        dayIndeces.flatMap(({ day, occurence }) =>
+        dayIndeces.flatMap(({ day, occurrence }) =>
           expandByOccurence(
             ignoreLocalTz(startOfMonth(date)),
             ignoreLocalTz(endOfMonth(date)),
             day,
             weekStartsOn,
-            occurence
+            occurrence
           )
         )
       )
@@ -116,10 +116,10 @@ const expandByOccurence = (
   end: Date,
   day: number,
   weekStartsOn: WeekDayNumber,
-  occurence?: number
+  occurrence?: number
 ) => {
-  if (occurence !== undefined) {
-    const isNegative = occurence < 0;
+  if (occurrence !== undefined) {
+    const isNegative = occurrence < 0;
 
     if (!isNegative) {
       const firstDay = setDay(start, day, { weekStartsOn });
@@ -127,7 +127,7 @@ const expandByOccurence = (
 
       const nthDay = addWeeks(
         firstDay,
-        (occurence || 1) - 1 + (isPrevious ? 1 : 0)
+        (occurrence || 1) - 1 + (isPrevious ? 1 : 0)
       );
       return nthDay;
     }
@@ -136,7 +136,7 @@ const expandByOccurence = (
     const isAfter = end < lastDay;
 
     const nthDay = ignoreLocalTz(
-      startOfDay(subWeeks(lastDay, -(occurence || 1) - 1 + (isAfter ? 1 : 0)))
+      startOfDay(subWeeks(lastDay, -(occurrence || 1) - 1 + (isAfter ? 1 : 0)))
     );
     return nthDay;
   }

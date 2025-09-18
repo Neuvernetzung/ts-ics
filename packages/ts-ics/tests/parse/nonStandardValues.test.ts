@@ -1,4 +1,4 @@
-import { convertNonStandardValues } from "@/lib/parse/nonStandardValues";
+import { convertNonStandardValues } from "@/lib/parse/nonStandard/nonStandardValues";
 import type { Line, NonStandardValuesGeneric } from "@/types";
 import { z } from "zod";
 

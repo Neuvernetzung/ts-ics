@@ -1,5 +1,5 @@
 import { generateIcsJournal } from "@/lib";
-import { convertIcsJournal } from "@/lib/parse/journal";
+import { convertIcsJournal } from "@/lib/parse/components/journal";
 import type { IcsJournal } from "@/types";
 import { icsTestData } from "../utils";
 import { z } from "zod";

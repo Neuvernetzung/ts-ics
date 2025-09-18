@@ -1,6 +1,6 @@
 import { getLine } from "@/lib/parse/utils/line";
 
-import { convertIcsOrganizer } from "@/lib/parse/organizer";
+import { convertIcsOrganizer } from "@/lib/parse/values/organizer";
 
 it("Test Ics IcsOrganizer Parse", async () => {
   const organizer = `ORGANIZER;CN=John Smith:mailto:jsmith@example.com`;
