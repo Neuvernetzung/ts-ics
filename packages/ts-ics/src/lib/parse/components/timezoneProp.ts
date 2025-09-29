@@ -25,7 +25,7 @@ export const convertIcsTimezoneProp = <T extends NonStandardValuesGeneric>(
     ? (rawType as IcsTimezonePropType)
     : "STANDARD";
 
-  const icsTimeZone = _convertIcsComponent(schema, rawTimezonePropString, {
+  return _convertIcsComponent(schema, rawTimezonePropString, {
     icsComponent: type,
     objectKeyMap: VTIMEZONE_PROP_TO_OBJECT_KEYS,
     defaultValues: { type },
@@ -43,8 +43,4 @@ export const convertIcsTimezoneProp = <T extends NonStandardValuesGeneric>(
     nonStandard: options?.nonStandard,
     timezones: options?.timezones,
   });
-
-  icsTimeZone.type = type;
-
-  return icsTimeZone;
 };
