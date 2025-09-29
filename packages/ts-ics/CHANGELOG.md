@@ -1,5 +1,12 @@
 # ts-ics
 
+## 2.3.1
+
+### Patch Changes
+
+- 69a0bcc: Small optimization on component parsing
+- c7409c3: Parses whitespace correctly when next line starts with whitespace
+
 ## 2.3.0
 
 ### Minor Changes
