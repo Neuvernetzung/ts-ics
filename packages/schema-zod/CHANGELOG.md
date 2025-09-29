@@ -1,5 +1,13 @@
 # @ts-ics/schema-zod
 
+## 2.3.1
+
+### Patch Changes
+
+- Updated dependencies [69a0bcc]
+- Updated dependencies [c7409c3]
+  - ts-ics@2.3.1
+
 ## 2.3.0
 
 ### Minor Changes
