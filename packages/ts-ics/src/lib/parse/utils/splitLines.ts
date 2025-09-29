@@ -33,7 +33,7 @@ export const splitLines = (str: string) => {
         line += LF_BREAK;
       } else {
         if (startsWithWhiteSpace(rawLines[i])) {
-          line += rawLines[i].trimStart();
+          line += rawLines[i].substring(1);
         } else {
           line += LF_BREAK;
           line += rawLines[i];

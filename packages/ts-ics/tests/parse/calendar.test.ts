@@ -442,3 +442,31 @@ describe("Parse non standard values", async () => {
     );
   });
 });
+
+it("Parses whitespace correctly when next line starts with whitespace", () => {
+  const longdescription =
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sedd do eiusmod tempor";
+
+  const calendarString = icsTestData([
+    "BEGIN:VCALENDAR",
+    "X-WR-CALNAME:test",
+    "VERSION:2.0",
+    "PRODID:-//test//abc//EN",
+    "BEGIN:VEVENT",
+    "SUMMARY:word fold bug",
+    "DESCRIPTION:Lorem ipsum dolor sit amet\\, consectetur adipiscing elit\\, sedd",
+    "  do eiusmod tempor",
+    "DTSTART;VALUE=DATE:20250929",
+    "DTEND;VALUE=DATE:20250930",
+    "UID:2943835c@test.com",
+    "DTSTAMP:20250929T115358Z",
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ]);
+
+  const parsedLongDescription = convertIcsCalendar(undefined, calendarString)
+    .events?.[0].description;
+
+  console.log(parsedLongDescription, "\n", longdescription);
+  expect(parsedLongDescription).toEqual(longdescription);
+});

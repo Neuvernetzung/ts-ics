@@ -135,47 +135,45 @@ export const _convertIcsComponent = <
   });
 
   const childComponents = options.childComponents;
+  const childComponentKeys = childComponents
+    ? (Object.keys(childComponents || {}) as (keyof typeof childComponents)[])
+    : [];
 
-  if (childComponents && Object.keys(childComponents).length > 0) {
-    (Object.keys(childComponents) as (keyof typeof childComponents)[]).forEach(
-      (childComponentKey) => {
-        const childComponentFunction =
-          options.childComponents?.[childComponentKey];
+  if (childComponents && childComponentKeys.length > 0) {
+    childComponentKeys.forEach((childComponentKey) => {
+      const childComponentFunction = childComponents?.[childComponentKey];
 
-        if (childComponentFunction) {
-          const icsComponents = Array.isArray(
-            childComponentFunction.icsComponent
-          )
-            ? childComponentFunction.icsComponent
-            : [childComponentFunction.icsComponent];
+      if (!childComponentFunction) return;
 
-          const childData: unknown[] = [];
+      const icsComponents = Array.isArray(childComponentFunction.icsComponent)
+        ? childComponentFunction.icsComponent
+        : [childComponentFunction.icsComponent];
 
-          const rawChildStrings: RegExpExecArray[] = [];
+      const childData: unknown[] = [];
 
-          icsComponents.forEach((icsComponent) => {
-            rawChildStrings.push(
-              ...cleanedFileString.matchAll(createGetRegex(icsComponent))
-            );
-          });
+      const rawChildStrings: RegExpExecArray[] = [];
 
-          const childStrings = rawChildStrings.map((match) => match[0]);
+      icsComponents.forEach((icsComponent) => {
+        rawChildStrings.push(
+          ...cleanedFileString.matchAll(createGetRegex(icsComponent))
+        );
+      });
 
-          childStrings.forEach((childString) => {
-            const childValue = childComponentFunction.convert(childString, {
-              data,
-            });
+      const childStrings = rawChildStrings.map((match) => match[0]);
 
-            if (!childValue) return;
+      childStrings.forEach((childString) => {
+        const childValue = childComponentFunction.convert(childString, {
+          data,
+        });
 
-            childData.push(childValue);
-          });
+        if (!childValue) return;
 
-          if (childData.length === 0) return;
-          data[childComponentKey] = childData as TData[keyof TData];
-        }
-      }
-    );
+        childData.push(childValue);
+      });
+
+      if (childData.length === 0) return;
+      data[childComponentKey] = childData as TData[keyof TData];
+    });
   }
 
   const validatedData = standardValidate(schema, data as TData);
