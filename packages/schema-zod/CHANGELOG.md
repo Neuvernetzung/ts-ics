@@ -1,5 +1,12 @@
 # @ts-ics/schema-zod
 
+## 2.4.0
+
+### Patch Changes
+
+- Updated dependencies [bf5320f]
+  - ts-ics@2.4.0
+
 ## 2.3.1
 
 ### Patch Changes

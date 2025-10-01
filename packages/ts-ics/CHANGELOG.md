@@ -1,5 +1,11 @@
 # ts-ics
 
+## 2.4.0
+
+### Minor Changes
+
+- bf5320f: Timezone DTSTART in local time #232
+
 ## 2.3.1
 
 ### Patch Changes
