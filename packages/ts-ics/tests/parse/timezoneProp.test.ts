@@ -57,3 +57,20 @@ it("Test non standard value", async () => {
 
   expect(timeZoneProp.nonStandard?.wtf).toBe(nonStandardValue);
 });
+
+it("Convert DTSTART - MUST be specified as a date with a local time value - gh#232", async () => {
+  const date = new Date("2025-10-01T12:00:00-04:00");
+
+  const timeZonePropString = icsTestData([
+    "BEGIN:DAYLIGHT",
+    "DTSTART:20251001T120000",
+    "TZOFFSETFROM:-0500",
+    "TZOFFSETTO:-0400",
+    "TZNAME:EDT",
+    "END:DAYLIGHT",
+  ]);
+
+  const timeZoneProp = convertIcsTimezoneProp(undefined, timeZonePropString);
+
+  expect(timeZoneProp.start).toStrictEqual(date);
+});

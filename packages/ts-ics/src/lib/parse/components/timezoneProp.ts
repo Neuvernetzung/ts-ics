@@ -5,7 +5,7 @@ import {
   type ConvertTimezoneProp,
 } from "@/types/components/timezoneProp";
 
-import { convertIcsDateTime } from "../values/date";
+import { convertIcsLocalOnlyDateTime } from "../values/date";
 import { convertIcsRecurrenceRule } from "../values/recurrenceRule";
 import { convertIcsTimeStamp } from "../values/timeStamp";
 import type { NonStandardValuesGeneric } from "@/types/nonStandard/nonStandardValues";
@@ -25,12 +25,17 @@ export const convertIcsTimezoneProp = <T extends NonStandardValuesGeneric>(
     ? (rawType as IcsTimezonePropType)
     : "STANDARD";
 
+  const offsetTo = rawTimezonePropString
+    .split("TZOFFSETTO:")[1]
+    .split(BREAK_REGEX)[0];
+
   return _convertIcsComponent(schema, rawTimezonePropString, {
     icsComponent: type,
     objectKeyMap: VTIMEZONE_PROP_TO_OBJECT_KEYS,
     defaultValues: { type },
     convertValues: {
-      start: ({ line }) => convertIcsDateTime(undefined, line),
+      start: ({ line }) =>
+        convertIcsLocalOnlyDateTime(undefined, line, offsetTo),
       recurrenceRule: ({ line }) =>
         convertIcsRecurrenceRule(undefined, line, {
           timezones: options?.timezones,
