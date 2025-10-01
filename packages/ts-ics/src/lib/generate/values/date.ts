@@ -1,6 +1,6 @@
 import type { DateObjectTzProps, IcsTimezone } from "@/types";
-import { getTimezoneObjectOffset } from "@/utils";
-import { isDate } from "date-fns";
+import { getTimezoneObjectOffset, timeZoneOffsetToMilliseconds } from "@/utils";
+import { addMilliseconds, isDate } from "date-fns";
 
 export const generateIcsDate = (date: Date) => {
   if (!isDate(date)) throw Error(`Incorrect date object: ${date}`);
@@ -29,7 +29,11 @@ export const generateIcsLocalDateTime = (
 
   if (!isDate(localDate)) throw Error(`Incorrect date object: ${localDate}`);
 
-  const timezone = getTimezoneObjectOffset(localDate, local.timezone, timezones);
+  const timezone = getTimezoneObjectOffset(
+    localDate,
+    local.timezone,
+    timezones
+  );
 
   if (!timezone) {
     return generateIcsUtcDateTime(date);
@@ -49,4 +53,11 @@ const generateIcsDateTime = (date: Date, isLocal?: boolean): string => {
   const seconds = isoDate.slice(17, 19);
 
   return `${year}${month}${d}T${hour}${minutes}${seconds}${isLocal ? "" : "Z"}`;
+};
+
+export const generateIcsLocalOnlyDateTime = (date: Date, offset: string) => {
+  const offsetMs = timeZoneOffsetToMilliseconds(offset);
+  const offsetDate = addMilliseconds(date, offsetMs);
+
+  return generateIcsDateTime(offsetDate, true);
 };
