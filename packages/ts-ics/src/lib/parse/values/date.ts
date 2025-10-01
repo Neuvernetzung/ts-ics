@@ -1,5 +1,7 @@
+import { timeZoneOffsetToMilliseconds } from "@/utils";
 import { standardValidate } from "../utils/standardValidate";
 import type { ConvertDate } from "@/types";
+import { subMilliseconds } from "date-fns";
 
 export const convertIcsDate: ConvertDate = (schema, line) => {
   const year = Number.parseInt(line.value.slice(0, 4), 10);
@@ -22,4 +24,17 @@ export const convertIcsDateTime: ConvertDate = (schema, line) => {
   const newDate = new Date(Date.UTC(year, month, day, hour, minute, second));
 
   return standardValidate(schema, newDate);
+};
+
+export const convertIcsLocalOnlyDateTime = (
+  schema: Parameters<ConvertDate>[0],
+  line: Parameters<ConvertDate>[1],
+  offset: string
+) => {
+  const offsetMs = timeZoneOffsetToMilliseconds(offset);
+  const date = convertIcsDateTime(undefined, line);
+
+  const offsetDate = subMilliseconds(date, offsetMs);
+
+  return standardValidate(schema, offsetDate);
 };
