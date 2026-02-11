@@ -1,5 +1,11 @@
 # ts-ics
 
+## 2.4.1
+
+### Patch Changes
+
+- 94ad687: To ensure backward and Apple compatibility, ensure that the RRULE's FREQ is specified as the first rule part. #237
+
 ## 2.4.0
 
 ### Minor Changes
