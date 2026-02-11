@@ -10,6 +10,7 @@ export const generateIcsRecurrenceRule = (value: IcsRecurrenceRule) => {
 
   const options = generateIcsOptions(
     [
+      value.frequency && { key: "FREQ", value: value.frequency },
       value.byDay && {
         key: "BYDAY",
         value: value.byDay.map((v) => generateIcsWeekdayNumber(v)).join(","),
@@ -29,7 +30,6 @@ export const generateIcsRecurrenceRule = (value: IcsRecurrenceRule) => {
       value.byWeekNo && { key: "BYWEEKNO", value: value.byWeekNo.join(",") },
       value.byYearday && { key: "BYYEARDAY", value: value.byYearday.join(",") },
       value.count && { key: "COUNT", value: value.count.toString() },
-      value.frequency && { key: "FREQ", value: value.frequency },
       value.interval && { key: "INTERVAL", value: value.interval.toString() },
       value.until && {
         key: "UNTIL",
@@ -37,11 +37,11 @@ export const generateIcsRecurrenceRule = (value: IcsRecurrenceRule) => {
           value.until.type === "DATE"
             ? generateIcsDate(value.until.date)
             : generateIcsUtcDateTime(
-                value.until.local?.date || value.until.date
+                value.until.local?.date || value.until.date,
               ),
       },
       value.workweekStart && { key: "WKST", value: value.workweekStart },
-    ].filter((v) => !!v)
+    ].filter((v) => !!v),
   );
 
   icsString += generateIcsLine("RRULE", options);
