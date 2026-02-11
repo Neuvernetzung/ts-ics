@@ -51,3 +51,31 @@ it("IcsRecurrenceRule UNTIL is not 'undefined' when left empty", async () => {
 
 //   expect(rule).toEqual(parsed);
 // });
+
+// https://icalendar.org/iCalendar-RFC-5545/3-3-10-recurrence-rule.html
+// Compliant applications MUST accept rule parts ordered in any sequence, but to ensure backward
+// compatibility with applications that pre-date this revision of iCalendar the FREQ rule part
+// MUST be the first rule part specified in a RECUR value.
+it("IcsRecurrenceRule - FREQ rule part MUST be the first rule part to ensure backward and apple compatibility - GH#237", async () => {
+  const rule: IcsRecurrenceRule = {
+    until: { date: new Date(2024, 10, 3) },
+    byDay: [{ day: "MO" }],
+    byHour: [1],
+    byMinute: [1],
+    byMonth: [1],
+    byMonthday: [1],
+    bySecond: [1],
+    bySetPos: [1],
+    byWeekNo: [1],
+    byYearday: [1],
+    count: 1,
+    interval: 1,
+    workweekStart: "MO",
+    frequency: "WEEKLY",
+  };
+
+  const ruleString = generateIcsRecurrenceRule(rule);
+
+  console.log(ruleString);
+  expect(ruleString.startsWith("RRULE:FREQ=WEEKLY;")).toBe(true);
+});
