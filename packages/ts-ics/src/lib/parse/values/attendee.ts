@@ -29,4 +29,5 @@ export const convertIcsAttendee: ConvertAttendee = (schema, line) =>
         ? false
         : undefined
       : undefined,
+    cutype: line.options?.CUTYPE,
   });

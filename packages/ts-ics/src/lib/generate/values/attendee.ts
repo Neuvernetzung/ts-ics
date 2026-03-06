@@ -28,6 +28,7 @@ export const generateIcsAttendee = (attendee: IcsAttendee, key: string) => {
           key: "RSVP",
           value: attendee.rsvp === true ? "TRUE" : "FALSE",
         },
+      attendee.cutype && { key: "CUTYPE", value: attendee.cutype },
     ].filter((v) => !!v)
   );
 

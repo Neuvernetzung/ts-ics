@@ -17,6 +17,17 @@ it("Dont generate attendee role twice - #194", () => {
   );
 });
 
+it("Generate CUTYPE param", () => {
+  const attendee: IcsAttendee = {
+    email: "room-a@example.com",
+    cutype: "ROOM",
+  };
+
+  const attendeeString = generateIcsAttendee(attendee, "ATTENDEE");
+
+  expect(attendeeString).toContain("CUTYPE=ROOM");
+});
+
 describe("Generate RSPV Param - #194", () => {
   it("RSVP=TRUE", () => {
     const attendee: IcsAttendee = {
