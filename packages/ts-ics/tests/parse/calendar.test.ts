@@ -359,7 +359,7 @@ describe("Parse non standard values", async () => {
     });
 
     expect(calendar.events?.[0]?.alarms?.[0].nonStandard?.wtf).toBe(
-      nonStandardValue
+      nonStandardValue,
     );
   });
 
@@ -411,7 +411,7 @@ describe("Parse non standard values", async () => {
     });
 
     expect(calendar.timezones?.[0]?.props[0].nonStandard?.wtf).toBe(
-      nonStandardValue
+      nonStandardValue,
     );
   });
 
@@ -438,7 +438,7 @@ describe("Parse non standard values", async () => {
     });
 
     expect(calendar.timezones?.[0]?.props[0].nonStandard?.wtf).toBe(
-      nonStandardValue
+      nonStandardValue,
     );
   });
 });
@@ -467,6 +467,5 @@ it("Parses whitespace correctly when next line starts with whitespace", () => {
   const parsedLongDescription = convertIcsCalendar(undefined, calendarString)
     .events?.[0].description;
 
-  console.log(parsedLongDescription, "\n", longdescription);
   expect(parsedLongDescription).toEqual(longdescription);
 });

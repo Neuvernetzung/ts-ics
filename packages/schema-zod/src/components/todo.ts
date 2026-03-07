@@ -24,9 +24,9 @@ export const zIcsDurationOrDue: z.ZodType<
   z.object({
     duration: zIcsDuration,
     start: zIcsDateObject,
-    due: z.never().optional(),
+    due: z.never().nullish(),
   }),
-  z.object({ duration: z.never().optional(), due: zIcsDateObject }),
+  z.object({ duration: z.never().nullish(), due: zIcsDateObject }),
 ]);
 
 export const zIcsTodoBase: z.ZodType<IcsTodoBase, IcsTodoBase> = z.object({
@@ -59,7 +59,7 @@ export const zIcsTodoBase: z.ZodType<IcsTodoBase, IcsTodoBase> = z.object({
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
 export const zIcsTodo: z.ZodType<IcsTodo<any>, IcsTodo<any>> = z.intersection(
   zIcsTodoBase,
-  zIcsDurationOrDue
+  zIcsDurationOrDue,
 );
 
 export const parseIcsTodo = <T extends NonStandardValuesGeneric>(

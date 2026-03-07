@@ -20,8 +20,8 @@ export const zIcsFreeBusyValueDurationOrEnd: z.ZodType<
   IcsFreeBusyTimeValueDurationOrEnd,
   IcsFreeBusyTimeValueDurationOrEnd
 > = z.union([
-  z.object({ duration: zIcsDuration, end: z.never().optional() }),
-  z.object({ duration: z.never().optional(), end: z.date() }),
+  z.object({ duration: zIcsDuration, end: z.never().nullish() }),
+  z.object({ duration: z.never().nullish(), end: z.date() }),
 ]);
 
 export const zIcsFreeBusyValueBase: z.ZodType<

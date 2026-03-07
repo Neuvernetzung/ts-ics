@@ -25,8 +25,8 @@ export type FreeBusyTypes = typeof freeBusyTypes;
 export type FreeBusyType = FreeBusyTypes[number];
 
 export type IcsFreeBusyTimeValueDurationOrEnd =
-  | { duration: IcsDuration; end?: never }
-  | { duration?: never; end: Date };
+  | { duration: IcsDuration; end?: never | null }
+  | { duration?: never | null; end: Date };
 
 export type IcsFreeBusyTimeValueBase = {
   start: Date;
@@ -45,7 +45,7 @@ export type ConvertFreeBusyTime = ConvertLineType<IcsFreeBusyTime>;
 export type ParseFreeBusyTime = ParseLineType<IcsFreeBusyTime>;
 
 export type IcsFreeBusy<
-  TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric
+  TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric,
 > = {
   stamp: IcsDateObject;
   uid: string;
@@ -60,14 +60,14 @@ export type IcsFreeBusy<
 };
 
 export type ParseFreeBusyOptions<
-  TNonStandardValues extends NonStandardValuesGeneric
+  TNonStandardValues extends NonStandardValuesGeneric,
 > = {
   timezones?: IcsTimezone[];
   nonStandard?: ParseNonStandardValues<TNonStandardValues>;
 };
 
 export type ConvertFreeBusy<
-  TNonStandardValues extends NonStandardValuesGeneric
+  TNonStandardValues extends NonStandardValuesGeneric,
 > = ConvertComponentType<
   IcsFreeBusy<TNonStandardValues>,
   ParseFreeBusyOptions<TNonStandardValues>
