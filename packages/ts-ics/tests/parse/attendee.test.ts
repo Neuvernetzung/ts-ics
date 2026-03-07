@@ -28,6 +28,19 @@ it("Test Ics IcsAttendee Parse", async () => {
   });
 });
 
+it("Parse CUTYPE param", () => {
+  const attendeeString =
+    "ATTENDEE;CUTYPE=ROOM;CN=Room A:MAILTO:room-a@example.com";
+
+  const { line } = getLine(attendeeString);
+
+  const attendee = convertIcsAttendee(undefined, line);
+
+  expect(attendee.cutype).toEqual("ROOM");
+  expect(attendee.name).toEqual("Room A");
+  expect(attendee.email).toEqual("room-a@example.com");
+});
+
 describe("Parse RSPV Param - #194", () => {
   it("RSVP=TRUE", () => {
     const attendeeString =

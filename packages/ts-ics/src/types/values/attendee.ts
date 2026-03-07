@@ -21,6 +21,7 @@ export type IcsAttendee = {
   dir?: string;
   sentBy?: string;
   rsvp?: boolean;
+  cutype?: string;
 };
 
 export type ConvertAttendee = ConvertLineType<IcsAttendee>;

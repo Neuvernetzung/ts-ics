@@ -16,6 +16,7 @@ export const zIcsAttendee: z.ZodType<IcsAttendee, IcsAttendee> = z.object({
   dir: z.url().optional(),
   sentBy: z.email().optional(),
   rsvp: z.boolean().optional(),
+  cutype: z.string().optional(),
 });
 
 export const parseIcsAttendee: ParseAttendee = (...props) =>
