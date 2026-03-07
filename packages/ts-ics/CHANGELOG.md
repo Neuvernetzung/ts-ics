@@ -1,5 +1,11 @@
 # ts-ics
 
+## 2.4.3
+
+### Patch Changes
+
+- 5defdc6: Allow a null value for the Duration or End Union field.
+
 ## 2.4.2
 
 ### Patch Changes

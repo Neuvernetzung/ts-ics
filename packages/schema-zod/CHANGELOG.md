@@ -1,5 +1,13 @@
 # @ts-ics/schema-zod
 
+## 2.4.3
+
+### Patch Changes
+
+- 5defdc6: Allow a null value for the Duration or End Union field.
+- Updated dependencies [5defdc6]
+  - ts-ics@2.4.3
+
 ## 2.4.2
 
 ### Patch Changes
