@@ -1,5 +1,13 @@
 # @ts-ics/schema-zod
 
+## 2.4.2
+
+### Patch Changes
+
+- 284ae27: Add CUTYPE support to IcsAttendee for calendar resource types (ROOM, RESOURCE, etc.) per RFC 5545
+- Updated dependencies [284ae27]
+  - ts-ics@2.4.2
+
 ## 2.4.1
 
 ### Patch Changes
