@@ -76,6 +76,5 @@ it("IcsRecurrenceRule - FREQ rule part MUST be the first rule part to ensure bac
 
   const ruleString = generateIcsRecurrenceRule(rule);
 
-  console.log(ruleString);
   expect(ruleString.startsWith("RRULE:FREQ=WEEKLY;")).toBe(true);
 });

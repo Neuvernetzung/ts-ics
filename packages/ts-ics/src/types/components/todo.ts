@@ -15,11 +15,11 @@ import type { IcsAttendee } from "../values/attendee";
 import type { IcsExceptionDates } from "../values/exceptionDate";
 
 export type IcsTodoDurationOrDue =
-  | { start: IcsDateObject; duration: IcsDuration; due?: never }
-  | { start?: never; duration?: never; due: IcsDateObject };
+  | { start: IcsDateObject; duration: IcsDuration; due?: never | null }
+  | { start?: never | null; duration?: never | null; due: IcsDateObject };
 
 export type IcsTodoBase<
-  TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric
+  TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric,
 > = {
   stamp: IcsDateObject;
   uid: string;
@@ -48,11 +48,11 @@ export type IcsTodoBase<
 };
 
 export type IcsTodo<
-  TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric
+  TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric,
 > = IcsTodoBase<TNonStandardValues> & IcsTodoDurationOrDue;
 
 export type ParseTodoOptions<
-  TNonStandardValues extends NonStandardValuesGeneric
+  TNonStandardValues extends NonStandardValuesGeneric,
 > = {
   timezones?: IcsTimezone[];
   nonStandard?: ParseNonStandardValues<TNonStandardValues>;

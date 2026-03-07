@@ -23,8 +23,8 @@ export const zIcsDurationOrEnd: z.ZodType<
   IcsEventDurationOrEnd,
   IcsEventDurationOrEnd
 > = z.union([
-  z.object({ duration: zIcsDuration, end: z.never().optional() }),
-  z.object({ duration: z.never().optional(), end: zIcsDateObject }),
+  z.object({ duration: zIcsDuration, end: z.never().nullish() }),
+  z.object({ duration: z.never().nullish(), end: zIcsDateObject }),
 ]);
 
 export const zIcsEventBase: z.ZodType<IcsEventBase, IcsEventBase> = z.object({

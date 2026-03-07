@@ -17,11 +17,11 @@ import type {
 } from "../nonStandard/nonStandardValues";
 
 export type IcsEventDurationOrEnd =
-  | { duration: IcsDuration; end?: never }
-  | { duration?: never; end: IcsDateObject };
+  | { duration: IcsDuration; end?: never | null }
+  | { duration?: never | null; end: IcsDateObject };
 
 export type IcsEventBase<
-  TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric
+  TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric,
 > = {
   summary: string;
   uid: string;
@@ -52,11 +52,11 @@ export type IcsEventBase<
 };
 
 export type IcsEvent<
-  TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric
+  TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric,
 > = IcsEventBase<TNonStandardValues> & IcsEventDurationOrEnd;
 
 export type ParseEventOptions<
-  TNonStandardValues extends NonStandardValuesGeneric
+  TNonStandardValues extends NonStandardValuesGeneric,
 > = {
   timezones?: IcsTimezone[];
   nonStandard?: ParseNonStandardValues<TNonStandardValues>;
