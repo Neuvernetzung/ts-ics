@@ -1,27 +1,27 @@
 import {
-  convertIcsEventStatus,
-  type ParseEventStatus,
-  eventStatusTypes,
-  todoStatusTypes,
-  type ParseTodoStatus,
-  convertIcsTodoStatus,
-  journalStatusTypes,
-  convertIcsJournalStatus,
-  type ParseJournalStatus,
+	convertIcsEventStatus,
+	convertIcsJournalStatus,
+	convertIcsTodoStatus,
+	eventStatusTypes,
+	journalStatusTypes,
+	type ParseEventStatus,
+	type ParseJournalStatus,
+	type ParseTodoStatus,
+	todoStatusTypes,
 } from "ts-ics";
-import { z } from "zod";
+import * as z from "zod";
 
 export const zIcsEventStatusType = z.enum(eventStatusTypes);
 
 export const parseIcsEventStatus: ParseEventStatus = (...props) =>
-  convertIcsEventStatus(zIcsEventStatusType, ...props);
+	convertIcsEventStatus(zIcsEventStatusType, ...props);
 
 export const zIcsTodoStatusType = z.enum(todoStatusTypes);
 
 export const parseIcsTodoStatus: ParseTodoStatus = (...props) =>
-  convertIcsTodoStatus(zIcsTodoStatusType, ...props);
+	convertIcsTodoStatus(zIcsTodoStatusType, ...props);
 
 export const zIcsJournalStatusType = z.enum(journalStatusTypes);
 
 export const parseIcsJournalStatus: ParseJournalStatus = (...props) =>
-  convertIcsJournalStatus(zIcsJournalStatusType, ...props);
+	convertIcsJournalStatus(zIcsJournalStatusType, ...props);

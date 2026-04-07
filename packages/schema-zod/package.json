@@ -1,33 +1,34 @@
 {
-  "name": "@ts-ics/schema-zod",
-  "author": "Neuvernetzung Medienagentur UG",
-  "version": "2.4.3",
-  "description": "Zod schema validators for ts-ics",
-  "type": "module",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "scripts": {
-    "lint": "npx @biomejs/biome lint ./src --write",
-    "type-check": "tsc --noEmit",
-    "dev": "tsup --watch",
-    "build": "tsup"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "zod": "^4.1.9",
-    "ts-ics": "^2.4.3"
-  },
-  "devDependencies": {
-    "@types/node": "^24.5.1",
-    "@biomejs/biome": "^2.2.4",
-    "tsup": "^8.5.0",
-    "typescript": "^5.9.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Neuvernetzung/ts-ics.git"
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+	"name": "@ts-ics/schema-zod",
+	"author": "Neuvernetzung Medienagentur UG",
+	"version": "2.4.3",
+	"description": "Zod schema validators for ts-ics",
+	"type": "module",
+	"main": "dist/index.cjs",
+	"module": "dist/index.js",
+	"sideEffects": false,
+	"scripts": {
+		"lint": "npx @biomejs/biome lint ./src --write",
+		"type-check": "tsc --noEmit",
+		"dev": "tsup --watch",
+		"build": "tsup"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"zod": "^4.1.9",
+		"ts-ics": "^2.4.3"
+	},
+	"devDependencies": {
+		"@types/node": "^24.5.1",
+		"@biomejs/biome": "^2.2.4",
+		"tsup": "^8.5.0",
+		"typescript": "^5.9.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Neuvernetzung/ts-ics.git"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
 }

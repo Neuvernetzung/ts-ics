@@ -4,7 +4,7 @@ import {
   type IcsAlarm,
   type NonStandardValuesGeneric,
 } from "ts-ics";
-import { z } from "zod";
+import * as z from "zod";
 import { zIcsTrigger } from "../values/trigger";
 import { zIcsAttendee } from "../values/attendee";
 import { zIcsDuration } from "../values/duration";
