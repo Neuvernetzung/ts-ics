@@ -1,5 +1,13 @@
 # @ts-ics/schema-zod
 
+## 2.4.4
+
+### Patch Changes
+
+- 090419b: refactor: switch Zod import to v4 syntax
+- Updated dependencies [090419b]
+  - ts-ics@2.4.4
+
 ## 2.4.3
 
 ### Patch Changes
