@@ -1,41 +1,42 @@
 {
-  "name": "ts-ics",
-  "author": "Neuvernetzung Medienagentur UG",
-  "version": "2.4.3",
-  "description": "Create and parse ICS format for TypeScript",
-  "type": "module",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "scripts": {
-    "lint": "npx @biomejs/biome lint ./src --write",
-    "type-check": "tsc --noEmit",
-    "dev": "tsup --watch",
-    "build": "tsup",
-    "test": "jest"
-  },
-  "license": "MIT",
-  "dependencies": {
-    "@standard-schema/spec": "^1.0.0"
-  },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^6.8.0",
-    "@biomejs/biome": "^2.2.4",
-    "@types/jest": "^30.0.0",
-    "@types/node": "^24.5.1",
-    "date-fns": "^4.1.0",
-    "jest": "^30.1.3",
-    "jest-environment-jsdom": "^30.1.2",
-    "jest-environment-node": "^30.1.2",
-    "ts-jest": "^29.4.2",
-    "ts-node": "^10.9.2",
-    "tsup": "^8.5.0",
-    "typescript": "^5.9.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Neuvernetzung/ts-ics.git"
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+	"name": "ts-ics",
+	"author": "Neuvernetzung Medienagentur UG",
+	"version": "2.4.3",
+	"description": "Create and parse ICS format for TypeScript",
+	"type": "module",
+	"main": "dist/index.cjs",
+	"module": "dist/index.js",
+	"sideEffects": false,
+	"scripts": {
+		"lint": "npx @biomejs/biome lint ./src --write",
+		"type-check": "tsc --noEmit",
+		"dev": "tsup --watch",
+		"build": "tsup",
+		"test": "jest"
+	},
+	"license": "MIT",
+	"dependencies": {
+		"@standard-schema/spec": "^1.0.0"
+	},
+	"devDependencies": {
+		"@testing-library/jest-dom": "^6.8.0",
+		"@biomejs/biome": "^2.2.4",
+		"@types/jest": "^30.0.0",
+		"@types/node": "^24.5.1",
+		"date-fns": "^4.1.0",
+		"jest": "^30.1.3",
+		"jest-environment-jsdom": "^30.1.2",
+		"jest-environment-node": "^30.1.2",
+		"ts-jest": "^29.4.2",
+		"ts-node": "^10.9.2",
+		"tsup": "^8.5.0",
+		"typescript": "^5.9.2"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Neuvernetzung/ts-ics.git"
+	},
+	"publishConfig": {
+		"access": "public"
+	}
 }

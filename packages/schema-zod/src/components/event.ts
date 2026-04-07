@@ -6,7 +6,7 @@ import {
   type IcsEventDurationOrEnd,
   type ParseEvent,
 } from "ts-ics";
-import { z } from "zod";
+import * as z from "zod";
 import { zIcsDateObject } from "../values/date";
 import { zIcsExceptionDates } from "../values/exceptionDate";
 import { zIcsAttendee } from "../values/attendee";
