@@ -1,5 +1,11 @@
 # ts-ics
 
+## 2.4.4
+
+### Patch Changes
+
+- 090419b: refactor: switch Zod import to v4 syntax
+
 ## 2.4.3
 
 ### Patch Changes
