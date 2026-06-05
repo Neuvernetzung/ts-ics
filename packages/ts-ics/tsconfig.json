@@ -1,32 +1,34 @@
 {
-  "compilerOptions": {
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": ["./*"]
-    },
-    "target": "esnext",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": false,
-    "composite": false,
-    "declaration": true,
-    "declarationMap": true,
-    "inlineSources": false,
-    "moduleResolution": "node",
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "preserveWatchOutput": true,
-    "erasableSyntaxOnly": true
-  },
-  "include": ["./src/**/*.ts", "./src/**/*.tsx", "./tests/**/*.ts"],
-  "exclude": ["dist", "node_modules"]
+	"compilerOptions": {
+		"rootDir": ".",
+		"paths": {
+			"@/*": ["./src/*"]
+		},
+		"types": ["node", "jest"],
+		"target": "esnext",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"forceConsistentCasingInFileNames": true,
+		"noEmit": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "preserve",
+		"incremental": false,
+		"composite": false,
+		"declaration": true,
+		"declarationMap": true,
+		"inlineSources": false,
+		"moduleResolution": "bundler",
+		"noUnusedLocals": false,
+		"noUnusedParameters": false,
+		"preserveWatchOutput": true,
+		"erasableSyntaxOnly": true,
+		"ignoreDeprecations": "6.0"
+	},
+	"include": ["./src/**/*.ts", "./src/**/*.tsx", "./tests/**/*.ts"],
+	"exclude": ["dist", "node_modules"]
 }
