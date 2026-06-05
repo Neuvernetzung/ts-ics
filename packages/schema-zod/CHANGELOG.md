@@ -1,5 +1,13 @@
 # @ts-ics/schema-zod
 
+## 2.4.5
+
+### Patch Changes
+
+- 3761884: fix: find active VTIMEZONE observance instead of using last element #247
+- Updated dependencies [3761884]
+  - ts-ics@2.4.5
+
 ## 2.4.4
 
 ### Patch Changes
