@@ -215,3 +215,61 @@ it("Test non standard value", async () => {
 
 	expect(timeZone.nonStandard?.wtf).toBe(nonStandardValue);
 });
+
+it('should resolve correct offset (+0900) when VTIMEZONE contains historical DST observances (regression for #246)', async () => {
+  const icsString = icsTestData([
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'BEGIN:VEVENT',
+    'DTSTART;TZID=Asia/Tokyo:20260527T125500',
+    'DTEND;TZID=Asia/Tokyo:20260527T160500',
+    'UID:test-jst-regression',
+    'END:VEVENT',
+    'BEGIN:VTIMEZONE',
+    'TZID:Asia/Tokyo',
+    'BEGIN:STANDARD',
+    'DTSTART:18880101T001859',
+    'RDATE:18880101T001859',
+    'TZNAME:JST',
+    'TZOFFSETFROM:+091859',
+    'TZOFFSETTO:+0900',
+    'END:STANDARD',
+    'BEGIN:DAYLIGHT',
+    'DTSTART:19480501T235959',
+    'RDATE:19480501T235959',
+    'RDATE:19490402T235959',
+    'TZNAME:JDT',
+    'TZOFFSETFROM:+0900',
+    'TZOFFSETTO:+1000',
+    'END:DAYLIGHT',
+    'BEGIN:STANDARD',
+    'DTSTART:19480912T010000',
+    'RRULE:FREQ=YEARLY;UNTIL=19510908T150000Z;BYMONTH=9;BYMONTHDAY=9,10,11,12,13,14,15;BYDAY=SU',
+    'TZNAME:JST',
+    'TZOFFSETFROM:+1000',
+    'TZOFFSETTO:+0900',
+    'END:STANDARD',
+    'BEGIN:DAYLIGHT',
+    'DTSTART:19500506T235959',
+    'RRULE:FREQ=YEARLY;UNTIL=19510505T145959Z;BYMONTH=5;BYDAY=1SA',
+    'TZNAME:JDT',
+    'TZOFFSETFROM:+0900',
+    'TZOFFSETTO:+1000',
+    'END:DAYLIGHT',
+    'END:VTIMEZONE',
+    'END:VCALENDAR',
+  ]);
+
+  const { convertIcsCalendar } = await import('@/lib');
+  const cal = convertIcsCalendar(undefined, icsString);
+
+  // Regression: historical JDT (+1000) should NOT apply to 2026 dates
+  expect(cal.events).toHaveLength(1);
+  expect(cal.events[0].start.date.toISOString()).toBe('2026-05-27T03:55:00.000Z');
+  expect(cal.events[0].end.date.toISOString()).toBe('2026-05-27T07:05:00.000Z');
+  expect(cal.events[0].start.local).toEqual({
+    date: expect.any(Date),
+    timezone: 'Asia/Tokyo',
+    tzoffset: '+0900',
+  });
+});

@@ -36,10 +36,26 @@ export const getTimezoneObjectOffset = (
       }
     }
 
-    const icsOffset = sortedProps[sortedProps.length - 1].offsetTo;
-    const offset = icsOffset.length > 5 ? icsOffset.substring(0, 5) : icsOffset;
+    // Find the most recent observance that is still active for the given date
+    for (let i = sortedProps.length - 1; i >= 0; i -= 1) {
+      const prop = sortedProps[i];
 
-    return { offset, milliseconds: timeZoneOffsetToMilliseconds(offset) };
+      // Skip if this observance hasn't started yet
+      if (date < prop.start) continue;
+
+      // Check if this observance has ended (via RRULE UNTIL or RDATE)
+      const until = prop.recurrenceRule?.until?.date;
+      const rdate = prop.recurrenceDate?.date;
+
+      // Skip if this observance has already ended
+      if (until && date > until) continue;
+      if (rdate && date > rdate) continue;
+
+      // Found the correct active observance
+      const icsOffset = prop.offsetTo;
+      const offset = icsOffset.length > 5 ? icsOffset.substring(0, 5) : icsOffset;
+      return { offset, milliseconds: timeZoneOffsetToMilliseconds(offset) };
+    }
   }
 
   const ianaTimezone = getOffsetFromTimezoneId(tzid, date);
