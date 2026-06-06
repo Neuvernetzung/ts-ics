@@ -19,7 +19,7 @@ jobs:
           persist-credentials: false
 
       - name: NodeJs aufsetzen
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: 24
           cache: "npm"
@@ -34,7 +34,7 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          publish: npx changeset publish
+          publish: npm stage publish
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
