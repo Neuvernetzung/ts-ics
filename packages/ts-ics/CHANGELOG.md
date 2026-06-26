@@ -1,5 +1,11 @@
 # ts-ics
 
+## 2.4.6
+
+### Patch Changes
+
+- c8d6fc3: Duration conversion Issue with week value #250
+
 ## 2.4.5
 
 ### Patch Changes
