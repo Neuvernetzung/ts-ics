@@ -2,58 +2,58 @@ import type { ConvertDuration, IcsDuration } from "@/types";
 import { standardValidate } from "../utils/standardValidate";
 
 export const convertIcsDuration: ConvertDuration = (schema, line) => {
-  let newString = line.value;
+	let newString = line.value;
 
-  const duration: Partial<IcsDuration> = {};
+	const duration: Partial<IcsDuration> = {};
 
-  if (newString[0] === "-") {
-    duration.before = true;
-    newString = newString.slice(1);
-  }
-  newString = newString.slice(1); // P entfernen
+	if (newString[0] === "-") {
+		duration.before = true;
+		newString = newString.slice(1);
+	}
+	newString = newString.slice(1); // P entfernen
 
-  const parts = newString.split("T");
+	const parts = newString.split("T");
 
-  let datePart = parts[0];
+	let datePart = parts[0];
 
-  if (datePart.includes("D")) {
-    const [days, rest] = datePart.split("D");
+	if (datePart.includes("W")) {
+		const [weeks, rest] = datePart.split("W");
 
-    duration.days = Number(days);
-    datePart = rest;
-  }
+		duration.weeks = Number(weeks);
+		datePart = rest;
+	}
 
-  if (datePart.includes("W")) {
-    const [weeks, rest] = datePart.split("W");
+	if (datePart.includes("D")) {
+		const [days, rest] = datePart.split("D");
 
-    duration.weeks = Number(weeks);
-    datePart = rest;
-  }
+		duration.days = Number(days);
+		datePart = rest;
+	}
 
-  let timePart = parts[1];
+	let timePart = parts[1];
 
-  if (timePart) {
-    if (timePart.includes("H")) {
-      const [hours, rest] = timePart.split("H");
+	if (timePart) {
+		if (timePart.includes("H")) {
+			const [hours, rest] = timePart.split("H");
 
-      duration.hours = Number(hours);
-      timePart = rest;
-    }
+			duration.hours = Number(hours);
+			timePart = rest;
+		}
 
-    if (timePart.includes("M")) {
-      const [minutes, rest] = timePart.split("M");
+		if (timePart.includes("M")) {
+			const [minutes, rest] = timePart.split("M");
 
-      duration.minutes = Number(minutes);
-      timePart = rest;
-    }
+			duration.minutes = Number(minutes);
+			timePart = rest;
+		}
 
-    if (timePart.includes("S")) {
-      const [seconds, rest] = timePart.split("S");
+		if (timePart.includes("S")) {
+			const [seconds, rest] = timePart.split("S");
 
-      duration.seconds = Number(seconds);
-      timePart = rest;
-    }
-  }
+			duration.seconds = Number(seconds);
+			timePart = rest;
+		}
+	}
 
-  return standardValidate(schema, duration as IcsDuration);
+	return standardValidate(schema, duration as IcsDuration);
 };
