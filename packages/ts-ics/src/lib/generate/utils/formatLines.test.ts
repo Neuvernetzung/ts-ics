@@ -18,8 +18,8 @@ it("Correctly handle LF line breaks", async () => {
 
   const formatted = icsTestData([
     "DESCRIPTION:Dear Mr. Admin,\n\nWe would like to use the appointment to disc",
-    " uss the information regarding the administration of travel documents for th",
-    " e trip to Norway for [Travel Company].\n\n\n\nBest regards,\n\nTest User",
+    " uss the information regarding the administration of travel documents for t",
+    " he trip to Norway for [Travel Company].\n\n\n\nBest regards,\n\nTest User",
   ]);
 
   expect(formatLines(unformatted)).toEqual(formatted);
@@ -31,4 +31,23 @@ it("Correctly handles escaped newlines in description - gh#183", async () => {
   const formatted = icsTestData(["DESCRIPTION:Test\n\\nb"]);
 
   expect(formatLines(unformatted)).toStrictEqual(formatted);
+});
+
+it.each(["a".repeat(75), `${"a".repeat(73)}é`, `${"a".repeat(71)}🎾`])(
+  "Leaves a line of exactly 75 bytes unchanged",
+  (line) => {
+    expect(formatLines(line)).toEqual(line);
+  }
+);
+
+it("Reserves two bytes for a raw line feed when folding", () => {
+  const line = `${"a".repeat(74)}\nb`;
+
+  expect(formatLines(line)).toEqual(`${"a".repeat(74)}\r\n \nb`);
+});
+
+it("Preserves empty lines and a trailing line break", () => {
+  expect(formatLines("\r\nSUMMARY:short\r\n\r\n")).toEqual(
+    "\r\nSUMMARY:short\r\n\r\n"
+  );
 });
