@@ -17,6 +17,20 @@ const values = [
   ["escaped text", "é;漢,🎾\\\n".repeat(15)],
 ];
 
+const generate = (component: string, event: IcsEvent) =>
+  component === "event"
+    ? generateIcsEvent(event)
+    : generateIcsCalendar({
+        prodId: "line folding test",
+        version: "2.0",
+        events: [event],
+      });
+
+const parse = (component: string, ics: string) =>
+  component === "event"
+    ? convertIcsEvent(undefined, ics)
+    : convertIcsCalendar(undefined, ics).events?.[0];
+
 describe.each(["event", "calendar"])("%s line folding", (component) => {
   it.each(values)("Preserves %s through UTF-8 export", (_name, summary) => {
     const date = new Date("2025-05-01T12:00:00Z");
@@ -28,24 +42,17 @@ describe.each(["event", "calendar"])("%s line folding", (component) => {
       summary,
       description: summary,
     };
-    const generated =
-      component === "event"
-        ? generateIcsEvent(event)
-        : generateIcsCalendar({
-            prodId: "line folding test",
-            version: "2.0",
-            events: [event],
-          });
-    const exported = Buffer.from(generated, "utf8").toString("utf8");
-    const parsed =
-      component === "event"
-        ? convertIcsEvent(undefined, exported)
-        : convertIcsCalendar(undefined, exported).events?.[0];
+    const exported = Buffer.from(generate(component, event), "utf8").toString(
+      "utf8"
+    );
+    const parsed = parse(component, exported);
 
     expect(parsed?.summary).toEqual(summary);
     expect(parsed?.description).toEqual(summary);
     for (const line of exported.split(CRLF_BREAK)) {
-      expect(Buffer.byteLength(line, "utf8")).toBeLessThanOrEqual(MAX_LINE_LENGTH);
+      expect(Buffer.byteLength(line, "utf8")).toBeLessThanOrEqual(
+        MAX_LINE_LENGTH
+      );
     }
   });
 });

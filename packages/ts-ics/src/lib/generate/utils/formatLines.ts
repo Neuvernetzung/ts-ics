@@ -1,12 +1,18 @@
 import { CRLF_BREAK, CRLF_BREAK_REGEX, MAX_LINE_LENGTH } from "@/constants";
 
+const MAX_ONE_BYTE_CODE_UNIT = 0x7f;
+const MAX_TWO_BYTE_CODE_UNIT = 0x7ff;
+// A raw line feed is escaped later on, so it reserves two bytes.
+const LINE_FEED_LENGTH = 2;
+// A surrogate pair (a code point outside the BMP) is four bytes in UTF-8.
+const SURROGATE_PAIR_LENGTH = 4;
+
 const getCharacterLength = (char: string): number => {
-  // Preserve the escaped width reserved for raw line feeds.
-  if (char === "\n") return 2;
-  if (char.length === 2) return 4;
+  if (char === "\n") return LINE_FEED_LENGTH;
+  if (char.length === 2) return SURROGATE_PAIR_LENGTH;
   const codeUnit = char.charCodeAt(0);
-  if (codeUnit <= 0x7f) return 1;
-  if (codeUnit <= 0x7ff) return 2;
+  if (codeUnit <= MAX_ONE_BYTE_CODE_UNIT) return 1;
+  if (codeUnit <= MAX_TWO_BYTE_CODE_UNIT) return 2;
   return 3;
 };
 
