@@ -1,5 +1,12 @@
 # @ts-ics/schema-zod
 
+## 2.4.7
+
+### Patch Changes
+
+- Updated dependencies [03ee225]
+  - ts-ics@2.4.7
+
 ## 2.4.6
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # ts-ics
 
+## 2.4.7
+
+### Patch Changes
+
+- 03ee225: Preserve Unicode text when folding calendar lines and count continuation spaces within the 75 byte limit.
+
 ## 2.4.6
 
 ### Patch Changes
