@@ -1,5 +1,11 @@
 # ts-ics
 
+## 2.4.8
+
+### Patch Changes
+
+- 9badda9: Support date-less todo components (no `DTSTART`, `DUE` or `DURATION`) as allowed by RFC 5545 (gh#257).
+
 ## 2.4.7
 
 ### Patch Changes
