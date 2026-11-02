@@ -46,3 +46,26 @@ describe("Tests if all values from IcsTodo are parsed from schema package", () =
     });
   });
 });
+
+describe("Date-less todo is parsed from schema package gh#257", () => {
+  schemaPackageNames.forEach((name) => {
+    const todoString = icsTestData([
+      "BEGIN:VTODO",
+      "UID:19970901T130000Z-123404@example.com",
+      "DTSTAMP:19970901T130000Z",
+      "SUMMARY:Todo without any dates",
+      "END:VTODO",
+    ]);
+
+    it(name, async () => {
+      const schemaPackage = await import(name);
+
+      const todo = schemaPackage.parseIcsTodo(todoString);
+
+      expect(todo.summary).toBe("Todo without any dates");
+      expect(todo.start).toBeUndefined();
+      expect(todo.due).toBeUndefined();
+      expect(todo.duration).toBeUndefined();
+    });
+  });
+});

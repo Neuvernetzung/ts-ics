@@ -130,3 +130,20 @@ it("PERCENT-COMPLETE is generated correctly", () => {
 
   expect(todoString).toContain("PERCENT-COMPLETE:25\r\n");
 });
+
+it("Generate date-less todo gh#257", () => {
+  const todo: IcsTodo = {
+    stamp: { date: new Date("2025-02-20T00:00:00Z") },
+    summary: "123",
+    uid: "123",
+  };
+
+  const todoString = generateIcsTodo(todo);
+
+  expect(todoString).toContain("BEGIN:VTODO");
+  expect(todoString).toContain("UID:123");
+  expect(todoString).toContain("DTSTAMP:20250220T000000Z");
+  expect(todoString).not.toContain("DTSTART");
+  expect(todoString).not.toContain("DUE");
+  expect(todoString).not.toContain("DURATION");
+});
