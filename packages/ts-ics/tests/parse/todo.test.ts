@@ -122,3 +122,22 @@ it("Test non standard value", async () => {
 
 	expect(todo.nonStandard?.wtf).toBe(nonStandardValue);
 });
+
+it("Test Ics Todo Parse - date-less todo gh#257", async () => {
+	const todo = icsTestData([
+		"BEGIN:VTODO",
+		"UID:19970901T130000Z-123404@example.com",
+		"DTSTAMP:19970901T130000Z",
+		"SUMMARY:Todo without any dates",
+		"END:VTODO",
+	]);
+
+	expect(() => convertIcsTodo(undefined, todo)).not.toThrow();
+
+	const parsed = convertIcsTodo(undefined, todo);
+
+	expect(parsed.summary).toBe("Todo without any dates");
+	expect(parsed.start).toBeUndefined();
+	expect(parsed.due).toBeUndefined();
+	expect(parsed.duration).toBeUndefined();
+});
