@@ -16,7 +16,8 @@ import type { IcsExceptionDates } from "../values/exceptionDate";
 
 export type IcsTodoDurationOrDue =
   | { start: IcsDateObject; duration: IcsDuration; due?: never | null }
-  | { start?: never | null; duration?: never | null; due: IcsDateObject };
+  | { start?: never | null; duration?: never | null; due: IcsDateObject }
+  | { start?: never | null; duration?: never | null; due?: never | null };
 
 export type IcsTodoBase<
   TNonStandardValues extends NonStandardValuesGeneric = NonStandardValuesGeneric,
