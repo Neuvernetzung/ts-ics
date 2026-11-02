@@ -27,6 +27,7 @@ export const zIcsDurationOrDue: z.ZodType<
 		due: z.never().nullish(),
 	}),
 	z.object({ duration: z.never().nullish(), due: zIcsDateObject }),
+	z.object({})
 ]);
 
 export const zIcsTodoBase: z.ZodType<IcsTodoBase, IcsTodoBase> = z.object({
