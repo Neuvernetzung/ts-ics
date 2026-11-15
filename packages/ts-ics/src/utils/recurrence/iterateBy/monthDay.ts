@@ -1,6 +1,13 @@
-import { getDaysInMonth, getMonth, setDate } from "date-fns";
+import { getDate, getDaysInMonth, setDate } from "date-fns";
 
 import type { IcsRecurrenceRule } from "@/types";
+
+// Löst negative Werte vom Monatsende her auf (-1 = letzter Tag) und gibt `undefined` für Tage zurück, die es im Monat nicht gibt (z.B. 30. FEB).
+const resolveMonthDay = (day: number, daysInMonth: number) => {
+  const resolved = day < 0 ? daysInMonth + day + 1 : day;
+  if (resolved < 1 || resolved > daysInMonth) return undefined;
+  return resolved;
+};
 
 export const iterateByMonthDay = (
   rule: IcsRecurrenceRule,
@@ -12,11 +19,10 @@ export const iterateByMonthDay = (
       dates.flatMap((date) => {
         const daysInMonth = getDaysInMonth(date);
 
-        return byMonthday
-          .map(
-            (day) => (day > daysInMonth ? undefined : setDate(date, day)) // Invalide Dates entfernen z.B. 30. FEB
-          )
-          .filter((v) => !!v);
+        return byMonthday.flatMap((day) => {
+          const resolved = resolveMonthDay(day, daysInMonth);
+          return resolved === undefined ? [] : [setDate(date, resolved)];
+        });
       })
     );
   }
@@ -24,6 +30,11 @@ export const iterateByMonthDay = (
   if (rule.frequency === "WEEKLY") return dateGroups; // Nicht verfügbar für Weekly
 
   return dateGroups.map((dates) =>
-    dates.filter((date) => byMonthday.includes(getMonth(date)))
+    dates.filter((date) => {
+      const daysInMonth = getDaysInMonth(date);
+      return byMonthday.some(
+        (day) => resolveMonthDay(day, daysInMonth) === getDate(date)
+      );
+    })
   );
 };
