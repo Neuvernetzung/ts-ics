@@ -1,4 +1,4 @@
-import { addYears } from "date-fns";
+import { addYears, isEqual } from "date-fns";
 
 import type { IcsRecurrenceRule, WeekDayNumber } from "@/types";
 import { weekDays } from "@/types";
@@ -29,19 +29,20 @@ export const extendByRecurrenceRule = (
     ? weekDays.indexOf(rule.workweekStart)
     : 1) % 7) as WeekDayNumber;
 
-  const dateGroups: Date[][] = [[start]];
+  const occurrences: Date[] = [];
 
-  iterateBase(rule, { start, end }, dateGroups);
+  // Periode für Periode erweitern und filtern, damit COUNT erst nach den BY*-Regeln greift.
+  for (const date of iterateBase(rule, { start, end })) {
+    const [dates] = iterateBy(rule, { start, end, weekStartsOn }, [[date]]);
+    occurrences.push(...dates);
 
-  const finalDateGroups = iterateBy(
-    rule,
-    { start, end, exceptions, weekStartsOn },
-    dateGroups
+    if (rule.count && occurrences.length >= rule.count) break;
+  }
+
+  const counted = rule.count ? occurrences.slice(0, rule.count) : occurrences;
+
+  // EXDATE wird nach COUNT angewendet und verbraucht damit Vorkommen (RFC 5545 3.8.5.1).
+  return counted.filter(
+    (date) => !exceptions.some((exception) => isEqual(exception, date))
   );
-
-  const finalDates = rule.count
-    ? finalDateGroups.flat().splice(0, rule.count)
-    : finalDateGroups.flat();
-
-  return finalDates;
 };
