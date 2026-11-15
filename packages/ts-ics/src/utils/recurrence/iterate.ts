@@ -8,87 +8,36 @@ import {
   addYears,
 } from "date-fns";
 
-import type { ExtendByRecurrenceRuleOptions } from ".";
-import type { IcsRecurrenceRule } from "@/types";
+import type { IcsRecurrenceRule, IcsRecurrenceRuleFrequency } from "@/types";
 
-const limitReached = (length: number, limit?: number) => {
-  if (limit === undefined) return false;
-  return length >= limit;
+const addByFrequency: Record<
+  IcsRecurrenceRuleFrequency,
+  (date: Date, amount: number) => Date
+> = {
+  SECONDLY: addSeconds,
+  MINUTELY: addMinutes,
+  HOURLY: addHours,
+  DAILY: addDays,
+  WEEKLY: addWeeks,
+  MONTHLY: addMonths,
+  YEARLY: addYears,
 };
 
-export const iterateBase = (
+// Liefert den Startzeitpunkt jeder Periode, beginnend mit `start`. Der erste Wert nach `end` wird noch geliefert, da seine Periode in den Zeitraum hineinreichen kann.
+export function* iterateBase(
   rule: IcsRecurrenceRule,
-  { start, end }: Required<Omit<ExtendByRecurrenceRuleOptions, "exceptions">>,
-  dateGroups: Date[][]
-) => {
-  if (limitReached(dateGroups.length, rule.count)) return;
+  { start, end }: { start: Date; end: Date }
+): Generator<Date> {
+  let date = start;
+  yield date;
 
-  const frequency = rule.frequency;
+  if (!rule.frequency) return;
+
+  const add = addByFrequency[rule.frequency];
   const interval = rule.interval || 1;
 
-  if (!frequency) return;
-
-  let date = start;
-
-  if (frequency === "SECONDLY") {
-    while (date < end) {
-      if (limitReached(dateGroups.length, rule.count)) return;
-      date = addSeconds(date, interval);
-      dateGroups.push([date]);
-    }
-    return;
+  while (date < end) {
+    date = add(date, interval);
+    yield date;
   }
-
-  if (frequency === "MINUTELY") {
-    while (date < end) {
-      if (limitReached(dateGroups.length, rule.count)) return;
-      date = addMinutes(date, interval);
-      dateGroups.push([date]);
-    }
-    return;
-  }
-
-  if (frequency === "HOURLY") {
-    while (date < end) {
-      if (limitReached(dateGroups.length, rule.count)) return;
-      date = addHours(date, interval);
-      dateGroups.push([date]);
-    }
-    return;
-  }
-
-  if (frequency === "DAILY") {
-    while (date < end) {
-      if (limitReached(dateGroups.length, rule.count)) return;
-      date = addDays(date, interval);
-      dateGroups.push([date]);
-    }
-    return;
-  }
-
-  if (frequency === "WEEKLY") {
-    while (date < end) {
-      if (limitReached(dateGroups.length, rule.count)) return;
-      date = addWeeks(date, interval);
-      dateGroups.push([date]);
-    }
-    return;
-  }
-
-  if (frequency === "MONTHLY") {
-    while (date < end) {
-      date = addMonths(date, interval);
-      dateGroups.push([date]);
-    }
-    return;
-  }
-
-  if (frequency === "YEARLY") {
-    while (date < end) {
-      date = addYears(date, interval);
-      dateGroups.push([date]);
-    }
-    // eslint-disable-next-line no-useless-return
-    return;
-  }
-};
+}
