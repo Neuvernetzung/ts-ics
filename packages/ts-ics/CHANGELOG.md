@@ -1,5 +1,12 @@
 # ts-ics
 
+## 2.4.9
+
+### Patch Changes
+
+- 93de8f0: Apply `COUNT` in `extendByRecurrenceRule` after the `BY*` rules have expanded and filtered each period, so filtering rules such as `FREQ=DAILY;BYDAY=TU;COUNT=3` return the requested number of occurrences. Exceptions (`EXDATE`) are now removed after `COUNT` for every frequency, as RFC 5545 specifies (gh#260).
+- c32476e: Fix `extendByRecurrenceRule` for negative `BYMONTHDAY`, `BYMONTHDAY` on daily or shorter frequencies, `BYDAY` expansion on `MONTHLY`/`YEARLY` rules (keeps the `DTSTART` time of day, skips missing nth weekdays) and `BYSETPOS` indexing (gh#260).
+
 ## 2.4.8
 
 ### Patch Changes
