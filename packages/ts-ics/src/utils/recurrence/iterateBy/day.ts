@@ -1,16 +1,16 @@
 import {
-	addMinutes,
-	addWeeks,
 	eachDayOfInterval,
 	endOfMonth,
 	endOfYear,
 	getDay,
-	isWithinInterval,
+	getHours,
+	getMilliseconds,
+	getMinutes,
+	getSeconds,
+	set,
 	setDay,
-	startOfDay,
 	startOfMonth,
 	startOfYear,
-	subWeeks,
 } from "date-fns";
 
 import { type IcsRecurrenceRule, type WeekDayNumber, weekDays } from "@/types";
@@ -48,10 +48,10 @@ export const iterateByDay = (
 				dates.flatMap((date) =>
 					dayIndeces.flatMap(({ day, occurrence }) =>
 						expandByOccurence(
+							date,
 							startOfMonth(date),
 							endOfMonth(date),
 							day,
-							weekStartsOn,
 							occurrence,
 						),
 					),
@@ -63,10 +63,10 @@ export const iterateByDay = (
 			dates.flatMap((date) =>
 				dayIndeces.flatMap(({ day, occurrence }) =>
 					expandByOccurence(
+						date,
 						startOfYear(date),
 						endOfYear(date),
 						day,
-						weekStartsOn,
 						occurrence,
 					),
 				),
@@ -87,10 +87,10 @@ export const iterateByDay = (
 			dates.flatMap((date) =>
 				dayIndeces.flatMap(({ day, occurrence }) =>
 					expandByOccurence(
-						ignoreLocalTz(startOfMonth(date)),
-						ignoreLocalTz(endOfMonth(date)),
+						date,
+						startOfMonth(date),
+						endOfMonth(date),
 						day,
-						weekStartsOn,
 						occurrence,
 					),
 				),
@@ -111,45 +111,29 @@ export const iterateByDay = (
 	);
 };
 
+// Liefert alle passenden Wochentage im Zeitraum bzw. bei gesetzter occurrence nur den n-ten (negativ: vom Ende her). Die Uhrzeit wird von `date` übernommen.
 const expandByOccurence = (
+	date: Date,
 	start: Date,
 	end: Date,
 	day: number,
-	weekStartsOn: WeekDayNumber,
 	occurrence?: number,
-) => {
-	if (occurrence !== undefined) {
-		const isNegative = occurrence < 0;
+): Date[] => {
+	const days = eachDayOfInterval({ start, end })
+		.filter((d) => getDay(d) === day)
+		.map((d) => withTimeOf(d, date));
 
-		if (!isNegative) {
-			const firstDay = setDay(start, day, { weekStartsOn });
-			const isPrevious = start > firstDay;
+	if (!occurrence) return days;
 
-			const nthDay = addWeeks(
-				firstDay,
-				(occurrence || 1) - 1 + (isPrevious ? 1 : 0),
-			);
-			return nthDay;
-		}
-		const lastDay = setDay(end, day, { weekStartsOn });
+	const nthDay = days.at(occurrence > 0 ? occurrence - 1 : occurrence);
 
-		const isAfter = end < lastDay;
-
-		const nthDay = ignoreLocalTz(
-			startOfDay(subWeeks(lastDay, -(occurrence || 1) - 1 + (isAfter ? 1 : 0))),
-		);
-		return nthDay;
-	}
-
-	const days = eachDayOfInterval({
-		start,
-		end,
-	})
-		.map((d) => ignoreLocalTz(d))
-		.filter((d) => isWithinInterval(d, { start, end }));
-
-	return days.filter((d) => day === getDay(d));
+	return nthDay ? [nthDay] : [];
 };
 
-const ignoreLocalTz = (date: Date) =>
-	addMinutes(date, -date.getTimezoneOffset());
+const withTimeOf = (day: Date, time: Date) =>
+	set(day, {
+		hours: getHours(time),
+		minutes: getMinutes(time),
+		seconds: getSeconds(time),
+		milliseconds: getMilliseconds(time),
+	});

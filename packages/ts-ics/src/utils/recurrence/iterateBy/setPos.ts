@@ -19,18 +19,14 @@ export const iterateBySetPos = (
   )
     return dateGroups; // setPos muss immer mit anderer by-Rule verwendet werden
 
-  return dateGroups.map((dates) =>
-    dates.sort(compareAsc).filter((_, i) =>
-      bySetPos.some((pos) => {
-        if (pos > 0) {
-          if (i === 0) return false;
-          return i % pos === 0;
-        }
-        if (i === 0) {
-          return dates.length - 1 + pos === 0;
-        }
-        return i % (dates.length - 1 + pos) === 0;
-      })
-    )
-  );
+  return dateGroups.map((dates) => {
+    const sorted = [...dates].sort(compareAsc);
+
+    // BYSETPOS ist 1-basiert, negative Werte zählen vom Ende des Sets (-1 = letztes Element).
+    return sorted.filter((_, i) =>
+      bySetPos.some((pos) =>
+        pos > 0 ? i === pos - 1 : i === sorted.length + pos
+      )
+    );
+  });
 };
